@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Laboratorio — Aristotele, la logica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script type="module">
+// ═══════════════════════════════════════════════
+// FIREBASE CONFIG
+// ═══════════════════════════════════════════════
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",
+  authDomain: "laboratorio-vico.firebaseapp.com",
+  databaseURL: "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "laboratorio-vico",
+  storageBucket: "laboratorio-vico.firebasestorage.app",
+  messagingSenderId: "551766473976",
+  appId: "1:551766473976:web:190c0907ce2987e2d78f0d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Esponi le funzioni Firebase al contesto globale
+window._fbSet = (path, data) => set(ref(db, path), data);
+window._fbGet = (path) => get(ref(db, path));
+window._fbRemove = (path) => remove(ref(db, path));
+window._fbListen = (path, cb) => onValue(ref(db, path), snap => cb(snap.val()));
+window._dbReady = true;
+
+// Notifica che Firebase è pronto
+document.dispatchEvent(new Event('firebase-ready'));
+</script>
+<style>
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --border: #e8e2d8;
+  --border-strong: #c8bfb0;
+  --text: #1a1612;
+  --text-muted: #6b6258;
+  --text-faint: #a09890;
+  --orange: #c4520a;
+  --orange-light: #fdf0e8;
+  --orange-mid: #f5d4be;
+  --teal: #0f6e56;
+  --teal-light: #e8f5f0;
+  --red: #a32d2d;
+  --red-light: #fdf0f0;
+  --gold: #8a6a1a;
+  --gold-light: #fdf7e8;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  color: var(--orange);
+  letter-spacing: 0.02em;
+}
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.student-pill {
+  font-size: 12px;
+  background: var(--orange-light);
+  color: var(--orange);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-weight: 500;
+  display: none;
+}
+.progress-dots { display: flex; gap: 5px; }
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: background 0.2s;
+}
+.dot.done { background: var(--teal); }
+.dot.current { background: var(--orange); }
+
+/* ── CONTENT WRAP ── */
+.wrap { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+/* ── ROLE SCREEN ── */
+.role-hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.role-hero h1 { font-size: 2rem; margin-bottom: 6px; }
+.role-hero p { color: var(--text-muted); margin-bottom: 2.5rem; }
+.role-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.role-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.5rem;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.role-card:hover { border-color: var(--orange); box-shadow: var(--shadow-md); }
+.role-card .role-icon { font-size: 2rem; margin-bottom: 12px; }
+.role-card h3 { font-size: 15px; color: var(--text); }
+.role-card p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px;
+  padding: 9px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { background: var(--bg); }
+.btn-primary {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+}
+.btn-primary:hover { background: #a84407; border-color: #a84407; }
+.btn-success {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+}
+.btn-success:hover { background: #0a5a44; }
+.btn-sm { font-size: 12px; padding: 6px 14px; }
+.btn-ghost { border-color: transparent; background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { color: var(--text); background: var(--bg); }
+.btn-danger { color: var(--red); border-color: var(--red); background: transparent; }
+.btn-danger:hover { background: var(--red-light); }
+
+/* ── LOGIN ── */
+.login-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 380px;
+  margin: 3rem auto;
+}
+.login-box h2 { margin-bottom: 6px; }
+.login-box p { color: var(--text-muted); font-size: 13px; margin-bottom: 1.5rem; }
+input[type=text] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: 'Source Sans 3', sans-serif;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input[type=text]:focus { border-color: var(--orange); }
+input[type=text]::placeholder { color: var(--text-faint); }
+
+/* ── EXERCISE CARD ── */
+.ex-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.ex-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.ex-title { font-size: 1.15rem; margin-bottom: 6px; }
+.ex-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+
+/* ── DRAG & DROP ── */
+.drag-list { display: flex; flex-direction: column; gap: 6px; }
+.drag-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: grab;
+  font-size: 14px;
+  user-select: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.drag-item:hover { border-color: var(--border-strong); }
+.drag-item.dragging { opacity: 0.4; cursor: grabbing; }
+.drag-item.drag-over { border-color: var(--orange); background: var(--orange-light); }
+.drag-handle { color: var(--text-faint); font-size: 16px; flex-shrink: 0; }
+.order-rank {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── ANSWER FEEDBACK ── */
+.feedback {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  display: none;
+}
+.feedback.correct { background: var(--teal-light); border: 1px solid #9fe1cb; color: var(--teal); }
+.feedback.wrong { background: var(--red-light); border: 1px solid #f0999b; color: var(--red); }
+.feedback.neutral { background: var(--gold-light); border: 1px solid #e8d08a; color: var(--gold); }
+.feedback strong { font-weight: 600; }
+
+/* ── CHOICE BUTTONS ── */
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice-btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.choice-btn:hover { background: var(--bg); border-color: var(--orange); }
+.choice-btn.selected { background: var(--orange-light); border-color: var(--orange); color: var(--orange); }
+.choice-btn.correct { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+.choice-btn.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+
+/* ── PAIRS ── */
+.pair-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.pair-row:last-of-type { border-bottom: none; }
+.pair-label { font-size: 14px; font-weight: 500; min-width: 140px; }
+.pair-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── CHAIN ── */
+.chain-slots {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 52px;
+  margin-bottom: 1rem;
+}
+.chain-slot {
+  min-width: 90px;
+  padding: 6px 12px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-faint);
+  background: var(--surface);
+}
+.chain-slot.filled {
+  border-style: solid;
+  border-color: var(--orange);
+  color: var(--orange);
+  background: var(--orange-light);
+}
+.arrow-sep { color: var(--text-faint); font-size: 14px; }
+.chain-pool { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+.pool-btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: pointer;
+  transition: 0.12s;
+  color: var(--text);
+}
+.pool-btn:hover { border-color: var(--orange); background: var(--orange-light); color: var(--orange); }
+.pool-btn.used { opacity: 0.35; cursor: default; pointer-events: none; }
+
+/* ── DEFINE ── */
+.define-item { margin-bottom: 1.25rem; }
+.define-concept {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--orange);
+}
+.define-fields { display: flex; gap: 10px; flex-wrap: wrap; }
+.define-field { flex: 1; min-width: 160px; }
+.define-field label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); display: block; margin-bottom: 5px; }
+
+/* ── NAV ── */
+.ex-nav { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem; }
+
+/* ── DONE ── */
+.done-screen {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+.done-icon { font-size: 3rem; margin-bottom: 1rem; }
+.done-screen h2 { font-size: 1.6rem; margin-bottom: 8px; }
+.done-screen p { color: var(--text-muted); margin-bottom: 2rem; }
+.score-circle {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  border: 2px solid var(--teal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+}
+.score-circle .num { font-size: 1.5rem; font-weight: 600; color: var(--teal); }
+.score-circle .lbl { font-size: 10px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── DASHBOARD ── */
+.dash-stats { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.stat-card {
+  flex: 1; min-width: 120px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  text-align: center;
+}
+.stat-num { font-size: 1.8rem; font-weight: 600; color: var(--text); }
+.stat-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.dash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.dash-card h3 { font-size: 14px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 1rem; color: var(--text-muted); text-transform: uppercase; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 6px 8px; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+td { padding: 9px 8px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.badge-ok { background: var(--teal-light); color: var(--teal); }
+.badge-mid { background: var(--gold-light); color: var(--gold); }
+.badge-low { background: var(--red-light); color: var(--red); }
+.badge-none { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+.pbar-wrap { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; width: 100px; }
+.pbar-fill { height: 100%; background: var(--teal); border-radius: 3px; transition: width 0.4s; }
+.ex-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.ex-bar-name { font-size: 13px; min-width: 180px; }
+.ex-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.ex-bar-fill { height: 100%; background: var(--orange); border-radius: 4px; transition: width 0.5s; }
+
+/* ── FOOTER ── */
+.footer { text-align: center; padding: 2rem; font-size: 11px; color: var(--text-faint); }
+
+/* ── PRINT / no-js fallback ── */
+@media print { .topbar, .ex-nav, .btn { display: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-title">Aristotele — la logica</span>
+  <div class="topbar-right">
+    <span class="student-pill" id="student-pill"></span>
+    <div class="progress-dots" id="progress-dots"></div>
+  </div>
+</div>
+
+<!-- ══ ROLE ══ -->
+<div id="screen-role" class="screen active">
+  <div class="wrap">
+    <div class="role-hero">
+      <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-faint);margin-bottom:8px">Laboratorio sui concetti</p>
+      <h1>Estensione, comprensione, definizione</h1>
+      <p>Seleziona il tuo ruolo per iniziare</p>
+      <div class="role-cards">
+        <div class="role-card" onclick="startStudent()">
+          <div class="role-icon">📖</div>
+          <h3>Studente</h3>
+          <p>Svolgi gli esercizi</p>
+        </div>
+        <div class="role-card" onclick="showScreen('screen-prof-login')">
+          <div class="role-icon">📊</div>
+          <h3>Professore</h3>
+          <p>Visualizza i risultati</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STUDENT LOGIN ══ -->
+<div id="screen-student-login" class="screen">
+  <div class="wrap">
+    <div class="login-box">
+      <h2>Il tuo nome</h2>
+      <p>Inserisci nome e cognome per salvare i tuoi risultati</p>
+      <input type="text" id="student-name-input" placeholder="Es. Mario Rossi" onkeydown="if(event.key==='Enter')confirmStudentName()"/>
+      <button class="btn btn-primary" onclick="confirmStudentName()" style="width:100%;justify-content:center">Inizia il laboratorio →</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role')" style="margin-top:8px">← Indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXERCISES ══ -->
+<div id="screen-exercises" class="screen">
+  <div class="wrap" id="ex-container"></div>
+</div>
+
+<!-- ══ DONE ══ -->
+<div id="screen-done" class="screen">
+  <div class="wrap">
+    <div class="done-screen">
+      <div class="done-icon">✓</div>
+      <h2>Laboratorio completato!</h2>
+      <p id="done-summary">Ottimo lavoro.</p>
+      <div class="score-circle" id="score-circle">
+        <span class="num" id="score-num">—</span>
+        <span class="lbl">punteggio</span>
+      </div>
+      <button class="btn btn-ghost" onclick="restartStudent()">Ricomincia</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROF LOGIN ══ -->
+<div id="screen-prof-login" class="screen">
+  <div class="wrap">
+    <div class="login-box">
+      <h2>Dashboard professore</h2>
+      <p>Inserisci il PIN per accedere ai risultati della classe.</p>
+      <input type="password" id="prof-pin-input" placeholder="PIN" maxlength="8"
+        onkeydown="if(event.key==='Enter')checkProfPin()"
+        style="letter-spacing:0.3em;font-size:1.2rem;text-align:center;margin-bottom:12px"/>
+      <div id="pin-error" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;text-align:center">
+        PIN non corretto.
+      </div>
+      <button class="btn btn-primary" onclick="checkProfPin()" style="width:100%;justify-content:center;margin-bottom:8px">Accedi →</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role');document.getElementById('prof-pin-input').value='';document.getElementById('pin-error').style.display='none'">← Indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="screen-dashboard" class="screen">
+  <div class="wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px">
+      <h2 style="font-size:1.4rem">Dashboard</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="font-size:11px;color:var(--teal);background:var(--teal-light);padding:4px 10px;border-radius:20px;font-weight:500">● In tempo reale</span>
+        <button class="btn btn-sm btn-danger" onclick="clearData()">Azzera dati classe</button>
+        <button class="btn btn-sm btn-ghost" onclick="showScreen('screen-role')">← Esci</button>
+      </div>
+    </div>
+    <div class="dash-stats" id="dash-stats"></div>
+    <div class="dash-card">
+      <h3>Risultati per studente</h3>
+      <div id="dash-table"></div>
+    </div>
+    <div class="dash-card">
+      <h3>Difficoltà per esercizio</h3>
+      <div id="dash-exercises"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Liceo Classico G.B. Vico — Chieti</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATI ESERCIZI
+// ═══════════════════════════════════════════════
+const EXERCISES = [
+  {
+    id:'ext1', type:'order',
+    label:'Estensione',
+    title:'Ordina per estensione',
+    sub:'Trascina le etichette per ordinarle dal concetto più esteso (contiene il maggior numero di casi singoli) al meno esteso.',
+    items:['Animale','Mammifero','Vertebrato','Felino','Leone'],
+    correct:['Animale','Vertebrato','Mammifero','Felino','Leone']
+  },
+  {
+    id:'ext2', type:'order',
+    label:'Estensione',
+    title:'Ordina per estensione',
+    sub:'Trascina le etichette dal concetto più esteso al meno esteso. I termini si riferiscono alla tassonomia biologica.',
+    items:['Specie','Regno','Razza','Genere','Famiglia','Classe','Ordine'],
+    correct:['Regno','Classe','Ordine','Famiglia','Genere','Specie','Razza']
+  },
+  {
+    id:'comp1', type:'order',
+    label:'Comprensione',
+    title:'Ordina per comprensione',
+    sub:'Trascina le etichette dal concetto con il minor numero di caratteri specifici (bassa comprensione) a quello con il maggior numero (alta comprensione).',
+    items:['Margherita','Fiore','Essere vivente','Vegetale','Pianta'],
+    correct:['Essere vivente','Vegetale','Pianta','Fiore','Margherita']
+  },
+  {
+    id:'comp2', type:'order',
+    label:'Comprensione',
+    title:'Ordina per comprensione',
+    sub:'Trascina le etichette dalla comprensione minima alla comprensione massima.',
+    items:['Pinza da elettricista','Pinza','Attrezzo da lavoro','Utensile','Oggetto'],
+    correct:['Oggetto','Utensile','Attrezzo da lavoro','Pinza','Pinza da elettricista']
+  },
+  {
+    id:'pair1', type:'pairs',
+    label:'Genere e specie',
+    title:'Identifica genere e specie',
+    sub:'Per ciascuna coppia di termini, indica quale è il genere e quale è la specie, cliccando il pulsante corrispondente.',
+    pairs:[
+      {a:'Ciliegia', b:'Frutta', correct:{genere:'Frutta', specie:'Ciliegia'}},
+      {a:'Albero', b:'Pino', correct:{genere:'Albero', specie:'Pino'}},
+      {a:'Uomo', b:'Mortale', correct:{genere:'Mortale', specie:'Uomo'}},
+      {a:'Cane', b:'Boxer', correct:{genere:'Cane', specie:'Boxer'}},
+      {a:'Città', b:'Roma', correct:{genere:'Città', specie:'Roma'}},
+      {a:'Aristotele', b:'Filosofo', correct:{genere:'Filosofo', specie:'Aristotele'}},
+      {a:'Capitali', b:'Roma', correct:{genere:'Capitali', specie:'Roma'}}
+    ]
+  },
+  {
+    id:'chain1', type:'chain',
+    label:'Catena concettuale',
+    title:'Costruisci la catena concettuale',
+    sub:'Partendo dal genere sommo, costruisci la catena fino alla sostanza prima. Clicca i nodi nell\'ordine corretto. Alcuni nodi sono fuorvianti.',
+    pool:['Fido','Cane','Vertebrato','Mammifero','Animale','Essere','Rettile','Insetto','Felino','Batrace'],
+    correct:['Essere','Animale','Vertebrato','Mammifero','Cane','Fido']
+  },
+  {
+    id:'def1', type:'define',
+    label:'Definire',
+    title:'Definisci il concetto',
+    sub:'Per ciascun concetto, inserisci il genere prossimo (la classe più vicina a cui appartiene) e la differenza specifica (ciò che lo distingue dagli altri membri della classe).',
+    items:[
+      {concept:'Cardiologo', gp_ref:'medico / dottore', ds_ref:'si specializza nelle malattie del cuore'},
+      {concept:'Liceo classico', gp_ref:'scuola superiore / istituto scolastico', ds_ref:'prevede lo studio del latino e del greco'},
+      {concept:'Ateniese', gp_ref:'cittadino greco / essere umano', ds_ref:'nato o residente ad Atene'},
+      {concept:'Roma', gp_ref:'città / capitale', ds_ref:'è la capitale d\'Italia'}
+    ]
+  },
+  {
+    id:'def2', type:'recognize',
+    label:'Riconoscere',
+    title:'Riconosci il concetto',
+    sub:'Dati il genere prossimo e la differenza specifica, individua il concetto corrispondente. Alcuni quesiti richiedono una risposta scritta.',
+    items:[
+      {gp:'mammifero', ds:'vola', options:['Pipistrello','Aquila','Farfalla','Delfino'], correct:'Pipistrello'},
+      {gp:'scuola superiore', ds:'studia il greco', options:['Istituto tecnico','Liceo classico','Liceo scientifico','Istituto professionale'], correct:'Liceo classico'},
+      {gp:'abitante di una città', ds:'vive a Pescara', options:['Abruzzese','Pescarese','Teatino','Aquilano'], correct:'Pescarese'},
+      {gp:'filosofo greco', ds:'fondò l\'Accademia', options:['Socrate','Aristotele','Platone','Zenone'], correct:'Platone'},
+      {gp:'figura geometrica piana', ds:'ha tre lati', open:true, correct:'triangolo'},
+      {gp:'animale vertebrato', ds:'vive in acqua e respira tramite branchie', open:true, correct:'pesce'}
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+// STATO
+// ═══════════════════════════════════════════════
+let studentName = '';
+let currentEx = 0;
+let scores = {};
+let pairSel = {};
+let chainSel = [];
+let dragSrcEl = null;
+
+// ═══════════════════════════════════════════════
+// UTILITY
+// ═══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+const PROF_PIN = '1970';
+function checkProfPin() {
+  const val = document.getElementById('prof-pin-input').value.trim();
+  if (val === PROF_PIN) {
+    document.getElementById('prof-pin-input').value = '';
+    document.getElementById('pin-error').style.display = 'none';
+    loadDashboard();
+  } else {
+    document.getElementById('pin-error').style.display = 'block';
+    document.getElementById('prof-pin-input').value = '';
+    document.getElementById('prof-pin-input').focus();
+  }
+}
+function norm(s) { return (s || '').toLowerCase().trim().replace(/[.,;!?]/g,''); }
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function updateDots() {
+  const c = document.getElementById('progress-dots');
+  c.innerHTML = EXERCISES.map((_, i) =>
+    `<div class="dot ${i < currentEx ? 'done' : i === currentEx ? 'current' : ''}"></div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════
+// FLUSSO STUDENTE
+// ═══════════════════════════════════════════════
+function startStudent() { showScreen('screen-student-login'); }
+
+function confirmStudentName() {
+  const v = document.getElementById('student-name-input').value.trim();
+  if (!v) { alert('Inserisci il tuo nome per continuare.'); return; }
+  studentName = v;
+  currentEx = 0;
+  scores = {};
+  const pill = document.getElementById('student-pill');
+  pill.textContent = studentName;
+  pill.style.display = 'inline-block';
+  showScreen('screen-exercises');
+  updateDots();
+  renderExercise();
+}
+
+function restartStudent() {
+  document.getElementById('student-name-input').value = '';
+  document.getElementById('student-pill').style.display = 'none';
+  document.getElementById('progress-dots').innerHTML = '';
+  showScreen('screen-role');
+}
+
+function renderExercise() {
+  const ex = EXERCISES[currentEx];
+  updateDots();
+  const c = document.getElementById('ex-container');
+  if (ex.type === 'order') renderOrder(ex, c);
+  else if (ex.type === 'pairs') renderPairs(ex, c);
+  else if (ex.type === 'chain') renderChain(ex, c);
+  else if (ex.type === 'define') renderDefine(ex, c);
+  else if (ex.type === 'recognize') renderRecognize(ex, c);
+  c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function nextEx() {
+  currentEx++;
+  if (currentEx >= EXERCISES.length) { showDone(); return; }
+  renderExercise();
+}
+
+function showDone() {
+  showScreen('screen-done');
+  const vals = Object.values(scores);
+  const avg = vals.length > 0 ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length * 100) : 0;
+  document.getElementById('score-num').textContent = avg + '%';
+  const s = avg >= 80 ? 'Ottimo lavoro!' : avg >= 50 ? 'Buon lavoro, rivedete le parti più difficili.' : 'Ripassate il materiale e riprovate.';
+  document.getElementById('done-summary').textContent = s;
+  saveToDB();
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 1-4: ORDINAMENTO
+// ═══════════════════════════════════════════════
+function renderOrder(ex, c) {
+  let items = shuffle(ex.items);
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      <div class="drag-list" id="drag-list">
+        ${items.map((it, i) => `
+          <div class="drag-item" draggable="true" data-val="${it}">
+            <span class="order-rank">${i+1}</span>
+            <span class="drag-handle">⠿</span>
+            <span>${it}</span>
+          </div>`).join('')}
+      </div>
+      <div class="feedback" id="order-fb"></div>
+      <div class="ex-nav">
+        <button class="btn btn-sm btn-ghost" onclick="renderOrder(EXERCISES[currentEx], document.getElementById('ex-container'))">Rimescola</button>
+        <button class="btn btn-primary" id="verify-btn" onclick="checkOrder()">Verifica →</button>
+      </div>
+    </div>`;
+  setupDrag();
+}
+
+function setupDrag() {
+  const list = document.getElementById('drag-list');
+  list.addEventListener('dragstart', e => {
+    dragSrcEl = e.target.closest('.drag-item');
+    dragSrcEl.classList.add('dragging');
+  });
+  list.addEventListener('dragend', () => {
+    document.querySelectorAll('.drag-item').forEach(el => el.classList.remove('dragging', 'drag-over'));
+    updateRanks();
+  });
+  list.addEventListener('dragover', e => {
+    e.preventDefault();
+    const t = e.target.closest('.drag-item');
+    if (t && t !== dragSrcEl) {
+      document.querySelectorAll('.drag-item').forEach(el => el.classList.remove('drag-over'));
+      t.classList.add('drag-over');
+      const items = [...list.querySelectorAll('.drag-item')];
+      const fromI = items.indexOf(dragSrcEl);
+      const toI = items.indexOf(t);
+      if (fromI < toI) list.insertBefore(dragSrcEl, t.nextSibling);
+      else list.insertBefore(dragSrcEl, t);
+    }
+  });
+}
+
+function updateRanks() {
+  [...document.querySelectorAll('.drag-item .order-rank')].forEach((r, i) => r.textContent = i + 1);
+}
+
+function checkOrder() {
+  const ex = EXERCISES[currentEx];
+  const got = [...document.querySelectorAll('#drag-list .drag-item')].map(el => el.dataset.val);
+  const ok = got.every((v, i) => v === ex.correct[i]);
+  const fb = document.getElementById('order-fb');
+  fb.style.display = 'block';
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✓ Corretto! L\'ordine è: <strong>' + ex.correct.join(' → ') + '</strong>';
+  } else {
+    fb.className = 'feedback wrong';
+    fb.innerHTML = '✗ Non corretto. Ordine corretto: <strong>' + ex.correct.join(' → ') + '</strong>';
+  }
+  scores[ex.id] = ok ? 1 : 0;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 5: COPPIE GENERE/SPECIE
+// ═══════════════════════════════════════════════
+function renderPairs(ex, c) {
+  pairSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.pairs.map((p, i) => `
+        <div class="pair-row" id="pr-${i}">
+          <span class="pair-label">${p.a} · ${p.b}</span>
+          <div class="pair-choices">
+            <button class="choice-btn" id="pb-${i}-a" onclick="selPair(${i},'a')">Genere: ${p.a}</button>
+            <button class="choice-btn" id="pb-${i}-b" onclick="selPair(${i},'b')">Genere: ${p.b}</button>
+          </div>
+        </div>`).join('')}
+      <div class="feedback" id="pairs-fb"></div>
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkPairs()">Verifica →</button>
+      </div>
+    </div>`;
+}
+
+function selPair(i, which) {
+  pairSel[i] = which;
+  const ex = EXERCISES[currentEx];
+  document.getElementById('pb-'+i+'-a').classList.toggle('selected', which === 'a');
+  document.getElementById('pb-'+i+'-b').classList.toggle('selected', which === 'b');
+}
+
+function checkPairs() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  let fbLines = '';
+  ex.pairs.forEach((p, i) => {
+    const sel = pairSel[i];
+    const chosen = sel === 'a' ? p.a : sel === 'b' ? p.b : null;
+    const isOk = chosen === p.correct.genere;
+    if (isOk) ok++;
+    const icon = isOk ? '✓' : '✗';
+    const color = isOk ? 'var(--teal)' : 'var(--red)';
+    fbLines += `<div style="margin-bottom:4px;color:${color}">${icon} <strong>${p.a} / ${p.b}</strong>: Genere = ${p.correct.genere}, Specie = ${p.correct.specie}</div>`;
+    ['a','b'].forEach(k => {
+      const btn = document.getElementById('pb-'+i+'-k'.replace('k',k));
+      if (!btn) return;
+      btn.disabled = true;
+      const val = k === 'a' ? p.a : p.b;
+      if (val === p.correct.genere) btn.classList.add('correct');
+      else if (val === chosen && !isOk) btn.classList.add('wrong');
+    });
+  });
+  const fb = document.getElementById('pairs-fb');
+  fb.style.display = 'block';
+  fb.className = ok === ex.pairs.length ? 'feedback correct' : ok > ex.pairs.length / 2 ? 'feedback neutral' : 'feedback wrong';
+  fb.innerHTML = fbLines;
+  scores[ex.id] = ok / ex.pairs.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 6: CATENA CONCETTUALE
+// ═══════════════════════════════════════════════
+function renderChain(ex, c) {
+  chainSel = [];
+  const pool = shuffle(ex.pool);
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">Catena (${ex.correct.length} nodi):</div>
+      <div class="chain-slots" id="chain-slots">
+        ${ex.correct.map((_, i) => `
+          <span class="chain-slot" id="cs-${i}">?</span>
+          ${i < ex.correct.length - 1 ? '<span class="arrow-sep">→</span>' : ''}`).join('')}
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">Concetti disponibili:</div>
+      <div class="chain-pool" id="chain-pool">
+        ${pool.map(it => `<button class="pool-btn" id="pool-${it.replace(/\s/g,'_')}" onclick="addChainNode('${it}')">${it}</button>`).join('')}
+      </div>
+      <div class="feedback" id="chain-fb"></div>
+      <div class="ex-nav">
+        <button class="btn btn-sm btn-ghost" onclick="renderChain(EXERCISES[currentEx], document.getElementById('ex-container'))">Azzera</button>
+        <button class="btn btn-primary" id="verify-btn" onclick="checkChain()">Verifica →</button>
+      </div>
+    </div>`;
+}
+
+function addChainNode(val) {
+  const ex = EXERCISES[currentEx];
+  if (chainSel.includes(val) || chainSel.length >= ex.correct.length) return;
+  chainSel.push(val);
+  const slot = document.getElementById('cs-' + (chainSel.length - 1));
+  if (slot) { slot.textContent = val; slot.classList.add('filled'); }
+  const btn = document.getElementById('pool-' + val.replace(/\s/g,'_'));
+  if (btn) btn.classList.add('used');
+}
+
+function checkChain() {
+  const ex = EXERCISES[currentEx];
+  const ok = chainSel.length === ex.correct.length && chainSel.every((v, i) => v === ex.correct[i]);
+  const fb = document.getElementById('chain-fb');
+  fb.style.display = 'block';
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✓ Corretto! Catena: <strong>' + ex.correct.join(' → ') + '</strong>';
+  } else {
+    fb.className = 'feedback wrong';
+    fb.innerHTML = '✗ Non corretto. Catena corretta: <strong>' + ex.correct.join(' → ') + '</strong>';
+  }
+  scores[ex.id] = ok ? 1 : 0;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 7: DEFINIRE
+// ═══════════════════════════════════════════════
+function renderDefine(ex, c) {
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => `
+        <div class="define-item">
+          <div class="define-concept">${it.concept}</div>
+          <div class="define-fields">
+            <div class="define-field">
+              <label>Genere prossimo</label>
+              <input type="text" id="dgp-${i}" placeholder="es. animale"/>
+            </div>
+            <div class="define-field">
+              <label>Differenza specifica</label>
+              <input type="text" id="dds-${i}" placeholder="es. razionale"/>
+            </div>
+          </div>
+          <div class="feedback" id="def-fb-${i}"></div>
+        </div>`).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkDefine()">Verifica →</button>
+      </div>
+    </div>`;
+}
+
+function checkDefine() {
+  const ex = EXERCISES[currentEx];
+  let filled = 0;
+  ex.items.forEach((it, i) => {
+    const gp = document.getElementById('dgp-'+i).value.trim();
+    const ds = document.getElementById('dds-'+i).value.trim();
+    const hasBoth = gp.length > 1 && ds.length > 1;
+    if (hasBoth) filled++;
+    const fb = document.getElementById('def-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = 'feedback neutral';
+    fb.innerHTML = `Risposta di riferimento — Genere prossimo: <strong>${it.gp_ref}</strong> · Differenza specifica: <strong>${it.ds_ref}</strong>`;
+  });
+  scores[ex.id] = filled / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 8: RICONOSCERE
+// ═══════════════════════════════════════════════
+let recSel = {};
+function renderRecognize(ex, c) {
+  recSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
+            Genere prossimo: <strong style="color:var(--text)">${it.gp}</strong>
+            &nbsp;+&nbsp; Differenza specifica: <strong style="color:var(--text)">${it.ds}</strong>
+          </div>
+          ${it.open
+            ? `<input type="text" id="rec-${i}" placeholder="Scrivi il concetto..." style="max-width:280px"/>`
+            : `<div class="choices">${it.options.map(o =>
+                `<button class="choice-btn" id="rc-${i}-${o.replace(/[\s']/g,'_')}" onclick="selRec(${i},'${o.replace(/'/g,"\\'")}',this)">${o}</button>`
+              ).join('')}</div>`
+          }
+          <div class="feedback" id="rec-fb-${i}"></div>
+        </div>`).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkRecognize()">Verifica →</button>
+      </div>
+    </div>`;
+}
+
+function selRec(i, val, btn) {
+  const ex = EXERCISES[currentEx];
+  recSel[i] = val;
+  ex.items[i].options.forEach(o => {
+    const b = document.getElementById('rc-'+i+'-'+o.replace(/[\s']/g,'_'));
+    if (b) b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+}
+
+function checkRecognize() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    let answer, isOk;
+    if (it.open) {
+      answer = norm(document.getElementById('rec-'+i).value);
+      isOk = answer.includes(norm(it.correct)) || norm(it.correct).includes(answer);
+    } else {
+      answer = recSel[i] || '';
+      isOk = answer === it.correct;
+      it.options.forEach(o => {
+        const b = document.getElementById('rc-'+i+'-'+o.replace(/[\s']/g,'_'));
+        if (!b) return;
+        b.disabled = true;
+        if (o === it.correct) b.classList.add('correct');
+        else if (o === answer && !isOk) b.classList.add('wrong');
+        b.classList.remove('selected');
+      });
+    }
+    if (isOk) ok++;
+    const fb = document.getElementById('rec-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = isOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = isOk
+      ? `✓ Corretto! Il concetto è: <strong>${it.correct}</strong>`
+      : `✗ La risposta corretta era: <strong>${it.correct}</strong>`;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// FIREBASE — SALVATAGGIO E DASHBOARD
+// ═══════════════════════════════════════════════
+
+async function saveToDB() {
+  if (!window._dbReady) {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject('Firebase timeout'), 5000);
+      document.addEventListener('firebase-ready', () => { clearTimeout(timeout); resolve(); }, { once: true });
+    }).catch(e => { console.warn('saveToDB: ' + e); return null; });
+    if (!window._dbReady) return;
+  }
+  const key = fbKey(studentName);
+  const data = { name: studentName, scores, completed: currentEx, total: EXERCISES.length, ts: Date.now() };
+  try { await window._fbSet('studenti/' + key, data); } catch(e) { console.warn('Firebase write error', e); }
+}
+
+function fbKey(name) {
+  // Chiave sicura per Firebase (no punti, slash, etc.)
+  return name.replace(/[.#$/\[\]]/g, '_').replace(/\s+/g, '_');
+}
+
+// Ascoltatore in tempo reale per la dashboard
+let _dashUnsubscribe = null;
+
+function loadDashboard() {
+  showScreen('screen-dashboard');
+  document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">⏳ Caricamento dati...</p>';
+
+  if (!window._dbReady) {
+    document.addEventListener('firebase-ready', () => startDashListener(), { once: true });
+  } else {
+    startDashListener();
+  }
+}
+
+function startDashListener() {
+  // Rimuovi listener precedente se esiste
+  if (_dashUnsubscribe) { _dashUnsubscribe(); _dashUnsubscribe = null; }
+
+  // Ascolta in tempo reale — si aggiorna automaticamente quando arrivano nuovi dati
+  _dashUnsubscribe = window._fbListen('studenti', (data) => {
+    if (!data) { renderDash([]); return; }
+    const students = Object.values(data);
+    renderDash(students);
+  });
+}
+
+function renderDash(students) {
+  const total = students.length;
+  const completed = students.filter(s => s.completed >= s.total - 1).length;
+  const avgAll = total > 0 ? Math.round(students.reduce((acc, s) => {
+    const vals = Object.values(s.scores || {});
+    return acc + (vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0);
+  }, 0) / total * 100) : 0;
+
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Studenti</div></div>
+    <div class="stat-card"><div class="stat-num">${completed}</div><div class="stat-lbl">Completati</div></div>
+    <div class="stat-card"><div class="stat-num">${avgAll}%</div><div class="stat-lbl">Media classe</div></div>`;
+
+  if (!total) {
+    document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">Nessun dato ancora. In attesa che gli studenti si colleghino...</p>';
+    document.getElementById('dash-exercises').innerHTML = '';
+    return;
+  }
+
+  const exLabels = {
+    ext1:'Estensione 1', ext2:'Estensione 2',
+    comp1:'Comprensione 1', comp2:'Comprensione 2',
+    pair1:'Coppie genere/specie',
+    chain1:'Catena concettuale',
+    def1:'Definire il concetto',
+    def2:'Riconoscere il concetto'
+  };
+
+  // Ordina per cognome
+  students.sort((a,b) => a.name.localeCompare(b.name));
+
+  const rows = students.map(s => {
+    const vals = Object.values(s.scores || {});
+    const avg = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*100) : 0;
+    const prog = Math.round((s.completed||0) / (s.total||EXERCISES.length) * 100);
+    const badgeClass = avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : vals.length > 0 ? 'badge-low' : 'badge-none';
+    const ts = s.ts ? new Date(s.ts).toLocaleTimeString('it-IT', {hour:'2-digit',minute:'2-digit'}) : '—';
+    return `<tr>
+      <td style="font-weight:500">${s.name}</td>
+      <td>${s.completed||0} / ${s.total||EXERCISES.length}</td>
+      <td><div class="pbar-wrap"><div class="pbar-fill" style="width:${prog}%"></div></div></td>
+      <td><span class="badge ${badgeClass}">${vals.length > 0 ? avg+'%' : '—'}</span></td>
+      <td style="color:var(--text-faint);font-size:12px">${ts}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('dash-table').innerHTML = `
+    <table>
+      <thead><tr><th>Studente</th><th>Progresso</th><th>Completamento</th><th>Media</th><th>Ultimo aggiorn.</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  const exRows = EXERCISES.map(ex => {
+    const results = students.map(s => (s.scores||{})[ex.id]).filter(v => v !== undefined);
+    const avg = results.length ? Math.round(results.reduce((a,b)=>a+b,0)/results.length*100) : null;
+    const fill = avg ?? 0;
+    const badgeClass = avg === null ? 'badge-none' : avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : 'badge-low';
+    return `<div class="ex-bar-row">
+      <span class="ex-bar-name">${exLabels[ex.id]||ex.id}</span>
+      <div class="ex-bar-wrap"><div class="ex-bar-fill" style="width:${fill}%"></div></div>
+      <span class="badge ${badgeClass}" style="min-width:44px;text-align:center">${avg===null?'—':avg+'%'}</span>
+      <span style="font-size:11px;color:var(--text-faint)">(${results.length} risp.)</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('dash-exercises').innerHTML = exRows;
+}
+
+async function clearData() {
+  if (!confirm('Azzerare tutti i dati degli studenti da Firebase?')) return;
+  try {
+    await window._fbRemove('studenti');
+    renderDash([]);
+  } catch(e) { alert('Errore durante l\'eliminazione dei dati.'); }
+}
+</script>
+</body>
+</html>
