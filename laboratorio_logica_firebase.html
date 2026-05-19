@@ -1056,7 +1056,14 @@ function fbKey(name) {
 }
 
 async function saveToDB() {
-  if (!window._dbReady) return;
+  // Attende Firebase se non è ancora pronto (max 5 secondi)
+  if (!window._dbReady) {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject('Firebase timeout'), 5000);
+      document.addEventListener('firebase-ready', () => { clearTimeout(timeout); resolve(); }, { once: true });
+    }).catch(e => { console.warn('saveToDB: ' + e); return null; });
+    if (!window._dbReady) return;
+  }
   const key = fbKey(studentName);
   const data = {
     name: studentName,
