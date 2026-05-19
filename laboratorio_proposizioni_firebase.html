@@ -719,11 +719,6 @@ function updateDots() {
   ).join('');
 }
 
-function saveToDB() {
-  const data = { name: studentName, scores, completed: currentEx, total: EXERCISES.length, ts: Date.now() };
-  try { localStorage.setItem('lab_' + studentName, JSON.stringify(data)); } catch(e) {}
-}
-
 // ═══════════════════════════════════════════════
 // FLUSSO STUDENTE
 // ═══════════════════════════════════════════════
