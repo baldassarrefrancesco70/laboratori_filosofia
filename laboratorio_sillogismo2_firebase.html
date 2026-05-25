@@ -597,9 +597,9 @@ const EXERCISES = [
     items:[
       {
         sillogismo:{
-          mag:'Tutti gli uomini sono mortali. (A)',
-          min:'Tutti i filosofi sono uomini. (A)',
-          con:'Tutti i filosofi sono mortali. (A)'
+          mag:'Tutti gli uomini sono mortali.',
+          min:'Tutti i filosofi sono uomini.',
+          con:'Tutti i filosofi sono mortali.'
         },
         figura:'I',
         correct:'BARBARA',
@@ -608,9 +608,9 @@ const EXERCISES = [
       },
       {
         sillogismo:{
-          mag:'Nessun rettile è un mammifero. (E)',
-          min:'Tutti i serpenti sono rettili. (A)',
-          con:'Nessun serpente è un mammifero. (E)'
+          mag:'Nessun rettile è un mammifero.',
+          min:'Tutti i serpenti sono rettili.',
+          con:'Nessun serpente è un mammifero.'
         },
         figura:'I',
         correct:'CELARENT',
@@ -619,9 +619,9 @@ const EXERCISES = [
       },
       {
         sillogismo:{
-          mag:'Tutti i mammiferi sono vertebrati. (A)',
-          min:'Qualche animale è un mammifero. (I)',
-          con:'Qualche animale è un vertebrato. (I)'
+          mag:'Tutti i mammiferi sono vertebrati.',
+          min:'Qualche animale è un mammifero.',
+          con:'Qualche animale è un vertebrato.'
         },
         figura:'I',
         correct:'DARII',
@@ -630,9 +630,9 @@ const EXERCISES = [
       },
       {
         sillogismo:{
-          mag:'Nessun pesce respira aria. (E)',
-          min:'Qualche vertebrato è un pesce. (I)',
-          con:'Qualche vertebrato non respira aria. (O)'
+          mag:'Nessun pesce respira aria.',
+          min:'Qualche vertebrato è un pesce.',
+          con:'Qualche vertebrato non respira aria.'
         },
         figura:'I',
         correct:'FERIO',
@@ -641,9 +641,9 @@ const EXERCISES = [
       },
       {
         sillogismo:{
-          mag:'Tutti i quadrati sono rettangoli. (A)',
-          min:'Nessun rombo è un rettangolo. (E)',
-          con:'Nessun rombo è un quadrato. (E)'
+          mag:'Tutti i quadrati sono rettangoli.',
+          min:'Nessun rombo è un rettangolo.',
+          con:'Nessun rombo è un quadrato.'
         },
         figura:'II',
         correct:'CAMESTRES',
@@ -652,9 +652,9 @@ const EXERCISES = [
       },
       {
         sillogismo:{
-          mag:'Tutti i felini sono mammiferi. (A)',
-          min:'Qualche animale domestico non è un mammifero. (O)',
-          con:'Qualche animale domestico non è un felino. (O)'
+          mag:'Tutti i felini sono mammiferi.',
+          min:'Qualche animale domestico non è un mammifero.',
+          con:'Qualche animale domestico non è un felino.'
         },
         figura:'II',
         correct:'BAROCO',
@@ -866,75 +866,75 @@ function showDone() {
 // SVG DIAGRAMMI EULERO-VENN
 // ═══════════════════════════════════════════════
 function svgDiagram(type, labelA, labelM, labelB, w, h) {
-  w = w || 180; h = h || 140;
-  const orange = '#c4520a', teal = '#0f6e56', gold = '#8a6a1a', gray = '#a09890';
-  const fill = 'rgba(200,180,160,0.15)';
-  const stroke_w = 2;
+  w = w || 180; h = h || 145;
+  const orange = '#c4520a', teal = '#0f6e56', gold = '#8a6a1a';
+  const sw = 2.2;
+  const fA = 'rgba(196,82,10,0.10)', fM = 'rgba(15,110,86,0.10)', fB = 'rgba(138,106,26,0.12)';
 
   if (type === 'barbara') {
-    // B inside M inside A — three concentric circles
+    // B ⊂ M ⊂ A — concentric, different sizes: A=62, M=40, B=22
     return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="90" cy="70" r="62" fill="${fill}" stroke="${orange}" stroke-width="${stroke_w}"/>
-      <circle cx="90" cy="72" r="40" fill="${fill}" stroke="${teal}" stroke-width="${stroke_w}"/>
-      <circle cx="90" cy="74" r="20" fill="${fill}" stroke="${gold}" stroke-width="${stroke_w}"/>
-      <text x="90" y="18" text-anchor="middle" font-size="11" fill="${orange}" font-family="sans-serif">${labelA||'A'}</text>
-      <text x="90" y="48" text-anchor="middle" font-size="11" fill="${teal}" font-family="sans-serif">${labelM||'M'}</text>
-      <text x="90" y="76" text-anchor="middle" font-size="10" fill="${gold}" font-family="sans-serif">${labelB||'B'}</text>
+      <circle cx="88" cy="75" r="62" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="88" cy="77" r="40" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="88" cy="79" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="88" y="16" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="88" y="50" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="88" y="81" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
     </svg>`;
   }
   if (type === 'celarent') {
-    // A and M disjoint; B inside M
+    // A (r=40) and M (r=48) completely disjoint; B (r=22) inside M
     return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="42" cy="70" r="36" fill="${fill}" stroke="${orange}" stroke-width="${stroke_w}"/>
-      <circle cx="118" cy="70" r="40" fill="${fill}" stroke="${teal}" stroke-width="${stroke_w}"/>
-      <circle cx="118" cy="70" r="20" fill="${fill}" stroke="${gold}" stroke-width="${stroke_w}"/>
-      <text x="42" y="28" text-anchor="middle" font-size="11" fill="${orange}" font-family="sans-serif">${labelA||'A'}</text>
-      <text x="118" y="26" text-anchor="middle" font-size="11" fill="${teal}" font-family="sans-serif">${labelM||'M'}</text>
-      <text x="118" y="73" text-anchor="middle" font-size="10" fill="${gold}" font-family="sans-serif">${labelB||'B'}</text>
+      <circle cx="38" cy="73" r="32" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="122" cy="70" r="46" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="122" cy="72" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="38" y="32" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="122" y="20" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="122" y="74" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
     </svg>`;
   }
   if (type === 'darii') {
-    // M inside A; B partially overlaps M
+    // M (r=36) inside A (r=62); B (r=32) partially overlaps M — B larger than M to show partial overlap clearly
     return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="80" cy="68" r="60" fill="${fill}" stroke="${orange}" stroke-width="${stroke_w}"/>
-      <circle cx="80" cy="72" r="34" fill="${fill}" stroke="${teal}" stroke-width="${stroke_w}"/>
-      <circle cx="118" cy="72" r="34" fill="${fill}" stroke="${gold}" stroke-width="${stroke_w}"/>
-      <text x="30" y="30" text-anchor="middle" font-size="11" fill="${orange}" font-family="sans-serif">${labelA||'A'}</text>
-      <text x="68" y="72" text-anchor="middle" font-size="11" fill="${teal}" font-family="sans-serif">${labelM||'M'}</text>
-      <text x="130" y="55" text-anchor="middle" font-size="10" fill="${gold}" font-family="sans-serif">${labelB||'B'}</text>
+      <circle cx="72" cy="72" r="62" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="72" cy="76" r="34" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="116" cy="76" r="36" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="22" y="24" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="60" y="76" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="130" y="50" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
     </svg>`;
   }
   if (type === 'ferio') {
-    // A and M disjoint; B partially overlaps M
+    // A (r=30) and M (r=42) completely disjoint; B (r=36) partially overlaps M
     return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="38" cy="68" r="32" fill="${fill}" stroke="${orange}" stroke-width="${stroke_w}"/>
-      <circle cx="100" cy="68" r="36" fill="${fill}" stroke="${teal}" stroke-width="${stroke_w}"/>
-      <circle cx="136" cy="68" r="34" fill="${fill}" stroke="${gold}" stroke-width="${stroke_w}"/>
-      <text x="38" y="28" text-anchor="middle" font-size="11" fill="${orange}" font-family="sans-serif">${labelA||'A'}</text>
-      <text x="95" y="30" text-anchor="middle" font-size="11" fill="${teal}" font-family="sans-serif">${labelM||'M'}</text>
-      <text x="148" y="30" text-anchor="middle" font-size="10" fill="${gold}" font-family="sans-serif">${labelB||'B'}</text>
+      <circle cx="30" cy="72" r="26" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="100" cy="72" r="42" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="146" cy="72" r="36" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="30" y="36" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="88" y="28" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="158" y="30" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
     </svg>`;
   }
   if (type === 'ferio_wrong') {
-    // B inside M, M inside A — wrong for ferio
+    // Wrong: A overlaps M; B inside M — clearly different from correct ferio
     return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="90" cy="70" r="62" fill="${fill}" stroke="${orange}" stroke-width="${stroke_w}"/>
-      <circle cx="90" cy="70" r="38" fill="${fill}" stroke="${teal}" stroke-width="${stroke_w}"/>
-      <circle cx="90" cy="82" r="18" fill="${fill}" stroke="${gold}" stroke-width="${stroke_w}"/>
-      <text x="90" y="14" text-anchor="middle" font-size="11" fill="${orange}" font-family="sans-serif">${labelA||'A'}</text>
-      <text x="90" y="44" text-anchor="middle" font-size="11" fill="${teal}" font-family="sans-serif">${labelM||'M'}</text>
-      <text x="90" y="84" text-anchor="middle" font-size="10" fill="${gold}" font-family="sans-serif">${labelB||'B'}</text>
+      <circle cx="56" cy="72" r="42" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="104" cy="72" r="42" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="110" cy="76" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="30" y="24" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="118" y="22" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="110" y="78" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
     </svg>`;
   }
   if (type === 'cesare') {
-    // II figura: A disjoint M; B inside M
+    // II figura: A (r=34) disjoint from M (r=46); B (r=20) inside M
     return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="44" cy="70" r="36" fill="${fill}" stroke="${orange}" stroke-width="${stroke_w}"/>
-      <circle cx="120" cy="65" r="42" fill="${fill}" stroke="${teal}" stroke-width="${stroke_w}"/>
-      <circle cx="120" cy="68" r="20" fill="${fill}" stroke="${gold}" stroke-width="${stroke_w}"/>
-      <text x="44" y="26" text-anchor="middle" font-size="11" fill="${orange}" font-family="sans-serif">${labelA||'A'}</text>
-      <text x="120" y="22" text-anchor="middle" font-size="11" fill="${teal}" font-family="sans-serif">${labelM||'M'}</text>
-      <text x="120" y="70" text-anchor="middle" font-size="10" fill="${gold}" font-family="sans-serif">${labelB||'B'}</text>
+      <circle cx="36" cy="73" r="30" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="122" cy="70" r="46" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="122" cy="72" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="36" y="34" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="122" y="20" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="122" y="74" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
     </svg>`;
   }
   return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
@@ -1268,17 +1268,17 @@ function initCanvas(it) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const pos = interSel[interIdx];
-  const r = 52;
+  // Different radii: A largest (major term/predicate), M medium, B smallest (minor term/subject)
+  const radii = {A: 58, M: 44, B: 28};
   const colors = {A:'#c4520a', M:'#0f6e56', B:'#8a6a1a'};
 
   function draw() {
     const W = canvas.width, H = canvas.height;
     ctx.clearRect(0, 0, W, H);
     ['A','M','B'].forEach(k => {
+      const r = radii[k];
       ctx.beginPath();
       ctx.arc(pos[k].x, pos[k].y, r, 0, Math.PI*2);
-      ctx.fillStyle = colors[k].replace(')', ',0.12)').replace('rgb','rgba').replace('#','') + ';';
-      // simpler fill
       ctx.globalAlpha = 0.15;
       ctx.fillStyle = colors[k];
       ctx.fill();
@@ -1299,7 +1299,7 @@ function initCanvas(it) {
   function getCircleAt(x, y) {
     for (const k of ['A','M','B']) {
       const dx = x - pos[k].x, dy = y - pos[k].y;
-      if (Math.sqrt(dx*dx+dy*dy) < r) return k;
+      if (Math.sqrt(dx*dx+dy*dy) < radii[k]) return k;
     }
     return null;
   }
@@ -1322,8 +1322,9 @@ function initCanvas(it) {
     e.preventDefault();
     if (!dragState) return;
     const {x,y} = getXY(e);
-    pos[dragState.k].x = Math.max(r, Math.min(canvas.width-r, x - dragState.ox));
-    pos[dragState.k].y = Math.max(r, Math.min(canvas.height-r, y - dragState.oy));
+    const rk = radii[dragState.k];
+    pos[dragState.k].x = Math.max(rk, Math.min(canvas.width-rk, x - dragState.ox));
+    pos[dragState.k].y = Math.max(rk, Math.min(canvas.height-rk, y - dragState.oy));
     draw();
   }
   function onUp() { dragState = null; }
@@ -1350,23 +1351,26 @@ function checkInterattivo() {
   const ex = EXERCISES[currentEx];
   const it = ex.items[interIdx];
   const pos = interSel[interIdx];
-  const r = 52;
+  // Use actual radii for threshold calculations
+  const rA = 58, rM = 44, rB = 28;
   const tipo = it.tipo;
   let isOk = false;
 
   const dAM = dist(pos.A, pos.M);
   const dBM = dist(pos.B, pos.M);
-  const dAB = dist(pos.A, pos.B);
 
   if (tipo === 'barbara') {
-    // B inside M (dBM < r*0.7) AND M inside A (dAM < r*0.7)
-    isOk = dBM < r * 0.75 && dAM < r * 0.75;
+    // B inside M: center distance < rM - rB = 16
+    // M inside A: center distance < rA - rM = 14
+    isOk = dBM < (rM - rB + 20) && dAM < (rA - rM + 20);
   } else if (tipo === 'celarent') {
-    // A and M disjoint (dAM > r*1.9) AND B inside M (dBM < r*0.75)
-    isOk = dAM > r * 1.85 && dBM < r * 0.75;
+    // A and M disjoint: center distance > rA + rM = 102
+    // B inside M: center distance < rM - rB = 16
+    isOk = dAM > (rA + rM - 20) && dBM < (rM - rB + 22);
   } else if (tipo === 'darii') {
-    // M inside A (dAM < r*0.75) AND B intersects M (r*0.4 < dBM < r*1.7)
-    isOk = dAM < r * 0.75 && dBM > r * 0.35 && dBM < r * 1.65;
+    // M inside A: center distance < rA - rM = 14
+    // B intersects M: rM - rB < dBM < rM + rB  →  16 < dBM < 72
+    isOk = dAM < (rA - rM + 22) && dBM > 12 && dBM < (rM + rB - 8);
   }
 
   const fb = document.getElementById('inter-fb');
