@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Laboratorio — Induzione, deduzione e sillogismo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script type="module">
+// ═══════════════════════════════════════════════
+// FIREBASE CONFIG
+// ═══════════════════════════════════════════════
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",
+  authDomain: "laboratorio-vico.firebaseapp.com",
+  databaseURL: "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "laboratorio-vico",
+  storageBucket: "laboratorio-vico.firebasestorage.app",
+  messagingSenderId: "551766473976",
+  appId: "1:551766473976:web:190c0907ce2987e2d78f0d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Esponi le funzioni Firebase al contesto globale
+window._fbSet = (path, data) => set(ref(db, path), data);
+window._fbGet = (path) => get(ref(db, path));
+window._fbRemove = (path) => remove(ref(db, path));
+window._fbListen = (path, cb) => onValue(ref(db, path), snap => cb(snap.val()));
+window._dbReady = true;
+
+// Notifica che Firebase è pronto
+document.dispatchEvent(new Event('firebase-ready'));
+</script>
+<style>
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --border: #e8e2d8;
+  --border-strong: #c8bfb0;
+  --text: #1a1612;
+  --text-muted: #6b6258;
+  --text-faint: #a09890;
+  --orange: #c4520a;
+  --orange-light: #fdf0e8;
+  --orange-mid: #f5d4be;
+  --teal: #0f6e56;
+  --teal-light: #e8f5f0;
+  --red: #a32d2d;
+  --red-light: #fdf0f0;
+  --gold: #8a6a1a;
+  --gold-light: #fdf7e8;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  color: var(--orange);
+  letter-spacing: 0.02em;
+}
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.student-pill {
+  font-size: 12px;
+  background: var(--orange-light);
+  color: var(--orange);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-weight: 500;
+  display: none;
+}
+.progress-dots { display: flex; gap: 5px; }
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: background 0.2s;
+}
+.dot.done { background: var(--teal); }
+.dot.current { background: var(--orange); }
+
+/* ── CONTENT WRAP ── */
+.wrap { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+/* ── ROLE SCREEN ── */
+.role-hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.role-hero h1 { font-size: 2rem; margin-bottom: 6px; }
+.role-hero p { color: var(--text-muted); margin-bottom: 2.5rem; }
+.role-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.role-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.5rem;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.role-card:hover { border-color: var(--orange); box-shadow: var(--shadow-md); }
+.role-card .role-icon { font-size: 2rem; margin-bottom: 12px; }
+.role-card h3 { font-size: 15px; color: var(--text); }
+.role-card p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px;
+  padding: 9px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { background: var(--bg); }
+.btn-primary {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+}
+.btn-primary:hover { background: #a84407; border-color: #a84407; }
+.btn-success {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+}
+.btn-success:hover { background: #0a5a44; }
+.btn-sm { font-size: 12px; padding: 6px 14px; }
+.btn-ghost { border-color: transparent; background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { color: var(--text); background: var(--bg); }
+.btn-danger { color: var(--red); border-color: var(--red); background: transparent; }
+.btn-danger:hover { background: var(--red-light); }
+
+/* ── LOGIN ── */
+.login-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 380px;
+  margin: 3rem auto;
+}
+.login-box h2 { margin-bottom: 6px; }
+.login-box p { color: var(--text-muted); font-size: 13px; margin-bottom: 1.5rem; }
+input[type=text] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: 'Source Sans 3', sans-serif;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input[type=text]:focus { border-color: var(--orange); }
+input[type=text]::placeholder { color: var(--text-faint); }
+
+/* ── EXERCISE CARD ── */
+.ex-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.ex-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.ex-title { font-size: 1.15rem; margin-bottom: 6px; }
+.ex-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+
+/* ── DRAG & DROP ── */
+.drag-list { display: flex; flex-direction: column; gap: 6px; }
+.drag-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: grab;
+  font-size: 14px;
+  user-select: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.drag-item:hover { border-color: var(--border-strong); }
+.drag-item.dragging { opacity: 0.4; cursor: grabbing; }
+.drag-item.drag-over { border-color: var(--orange); background: var(--orange-light); }
+.drag-handle { color: var(--text-faint); font-size: 16px; flex-shrink: 0; }
+.order-rank {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── ANSWER FEEDBACK ── */
+.feedback {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  display: none;
+}
+.feedback.correct { background: var(--teal-light); border: 1px solid #9fe1cb; color: var(--teal); }
+.feedback.wrong { background: var(--red-light); border: 1px solid #f0999b; color: var(--red); }
+.feedback.neutral { background: var(--gold-light); border: 1px solid #e8d08a; color: var(--gold); }
+.feedback strong { font-weight: 600; }
+
+/* ── CHOICE BUTTONS ── */
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice-btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.choice-btn:hover { background: var(--bg); border-color: var(--orange); }
+.choice-btn.selected { background: var(--orange-light); border-color: var(--orange); color: var(--orange); }
+.choice-btn.correct { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+.choice-btn.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+
+/* ── PAIRS ── */
+.pair-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.pair-row:last-of-type { border-bottom: none; }
+.pair-label { font-size: 14px; font-weight: 500; min-width: 140px; }
+.pair-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── CHAIN ── */
+.chain-slots {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 52px;
+  margin-bottom: 1rem;
+}
+.chain-slot {
+  min-width: 90px;
+  padding: 6px 12px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-faint);
+  background: var(--surface);
+}
+.chain-slot.filled {
+  border-style: solid;
+  border-color: var(--orange);
+  color: var(--orange);
+  background: var(--orange-light);
+}
+.arrow-sep { color: var(--text-faint); font-size: 14px; }
+.chain-pool { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+.pool-btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: pointer;
+  transition: 0.12s;
+  color: var(--text);
+}
+.pool-btn:hover { border-color: var(--orange); background: var(--orange-light); color: var(--orange); }
+.pool-btn.used { opacity: 0.35; cursor: default; pointer-events: none; }
+
+/* ── DEFINE ── */
+.define-item { margin-bottom: 1.25rem; }
+.define-concept {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--orange);
+}
+.define-fields { display: flex; gap: 10px; flex-wrap: wrap; }
+.define-field { flex: 1; min-width: 160px; }
+.define-field label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); display: block; margin-bottom: 5px; }
+
+/* ── NAV ── */
+.ex-nav { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem; }
+
+/* ── DONE ── */
+.done-screen {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+.done-icon { font-size: 3rem; margin-bottom: 1rem; }
+.done-screen h2 { font-size: 1.6rem; margin-bottom: 8px; }
+.done-screen p { color: var(--text-muted); margin-bottom: 2rem; }
+.score-circle {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  border: 2px solid var(--teal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+}
+.score-circle .num { font-size: 1.5rem; font-weight: 600; color: var(--teal); }
+.score-circle .lbl { font-size: 10px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── DASHBOARD ── */
+.dash-stats { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.stat-card {
+  flex: 1; min-width: 120px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  text-align: center;
+}
+.stat-num { font-size: 1.8rem; font-weight: 600; color: var(--text); }
+.stat-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.dash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.dash-card h3 { font-size: 14px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 1rem; color: var(--text-muted); text-transform: uppercase; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 6px 8px; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+td { padding: 9px 8px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.badge-ok { background: var(--teal-light); color: var(--teal); }
+.badge-mid { background: var(--gold-light); color: var(--gold); }
+.badge-low { background: var(--red-light); color: var(--red); }
+.badge-none { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+.pbar-wrap { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; width: 100px; }
+.pbar-fill { height: 100%; background: var(--teal); border-radius: 3px; transition: width 0.4s; }
+.ex-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.ex-bar-name { font-size: 13px; min-width: 180px; }
+.ex-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.ex-bar-fill { height: 100%; background: var(--orange); border-radius: 4px; transition: width 0.5s; }
+
+/* ── FOOTER ── */
+.footer { text-align: center; padding: 2rem; font-size: 11px; color: var(--text-faint); }
+
+/* ── PRINT / no-js fallback ── */
+@media print { .topbar, .ex-nav, .btn { display: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-title">Aristotele — il sillogismo</span>
+  <div class="topbar-right">
+    <span class="student-pill" id="student-pill"></span>
+    <div class="progress-dots" id="progress-dots"></div>
+  </div>
+</div>
+
+<!-- ══ ROLE ══ -->
+<div id="screen-role" class="screen active">
+  <div class="wrap">
+    <div class="role-hero">
+      <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-faint);margin-bottom:8px">Laboratorio sul sillogismo — 1</p>
+      <h1>Induzione, deduzione, struttura</h1>
+      <p>Seleziona il tuo ruolo per iniziare</p>
+      <div class="role-cards">
+        <div class="role-card" onclick="startStudent()">
+          <div class="role-icon">📖</div>
+          <h3>Studente</h3>
+          <p>Svolgi gli esercizi</p>
+        </div>
+        <div class="role-card" onclick="showScreen('screen-prof-login')">
+          <div class="role-icon">📊</div>
+          <h3>Professore</h3>
+          <p>Visualizza i risultati</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STUDENT LOGIN ══ -->
+<div id="screen-student-login" class="screen">
+  <div class="wrap">
+    <div class="login-box">
+      <h2>Il tuo nome</h2>
+      <p>Inserisci nome e cognome per salvare i tuoi risultati</p>
+      <input type="text" id="student-name-input" placeholder="Es. Mario Rossi" onkeydown="if(event.key==='Enter')confirmStudentName()"/>
+      <button class="btn btn-primary" onclick="confirmStudentName()" style="width:100%;justify-content:center">Inizia il laboratorio →</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role')" style="margin-top:8px">← Indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXERCISES ══ -->
+<div id="screen-exercises" class="screen">
+  <div class="wrap" id="ex-container"></div>
+</div>
+
+<!-- ══ DONE ══ -->
+<div id="screen-done" class="screen">
+  <div class="wrap">
+    <div class="done-screen">
+      <div class="done-icon">✓</div>
+      <h2>Laboratorio completato!</h2>
+      <p id="done-summary">Ottimo lavoro.</p>
+      <div class="score-circle" id="score-circle">
+        <span class="num" id="score-num">—</span>
+        <span class="lbl">punteggio</span>
+      </div>
+      <button class="btn btn-ghost" onclick="restartStudent()">Ricomincia</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROF LOGIN ══ -->
+<div id="screen-prof-login" class="screen">
+  <div class="wrap">
+    <div class="login-box">
+      <h2>Dashboard professore</h2>
+      <p>Inserisci il PIN per accedere ai risultati della classe.</p>
+      <input type="password" id="prof-pin-input" placeholder="PIN" maxlength="8"
+        onkeydown="if(event.key==='Enter')checkProfPin()"
+        style="letter-spacing:0.3em;font-size:1.2rem;text-align:center;margin-bottom:12px"/>
+      <div id="pin-error" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;text-align:center">
+        PIN non corretto.
+      </div>
+      <button class="btn btn-primary" onclick="checkProfPin()" style="width:100%;justify-content:center;margin-bottom:8px">Accedi →</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role');document.getElementById('prof-pin-input').value='';document.getElementById('pin-error').style.display='none'">← Indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="screen-dashboard" class="screen">
+  <div class="wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px">
+      <h2 style="font-size:1.4rem">Dashboard</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="font-size:11px;color:var(--teal);background:var(--teal-light);padding:4px 10px;border-radius:20px;font-weight:500">● In tempo reale</span>
+        <button class="btn btn-sm btn-danger" onclick="clearData()">Azzera dati classe</button>
+        <button class="btn btn-sm btn-ghost" onclick="showScreen('screen-role')">← Esci</button>
+      </div>
+    </div>
+    <div class="dash-stats" id="dash-stats"></div>
+    <div class="dash-card">
+      <h3>Risultati per studente</h3>
+      <div id="dash-table"></div>
+    </div>
+    <div class="dash-card">
+      <h3>Difficoltà per esercizio</h3>
+      <div id="dash-exercises"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Liceo Classico G.B. Vico — Chieti</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATI ESERCIZI
+// ═══════════════════════════════════════════════
+const EXERCISES = [
+  // ── 1. INDUTTIVO O DEDUTTIVO ──
+  {
+    id:'ind1', type:'indded',
+    label:'Induzione e deduzione',
+    title:'Induttivo o deduttivo?',
+    sub:'L\'induzione procede dal particolare all\'universale (osservo casi singoli e ricavo una legge generale). La deduzione procede dall\'universale al particolare (parto da una legge generale e concludo su un caso singolo). Classifica ciascun ragionamento.',
+    items:[
+      {
+        rag:'Ho osservato decine di corvi: erano tutti neri. Probabilmente tutti i corvi sono neri.',
+        correct:'induttivo',
+        spiegazione:'Si parte da casi particolari osservati per ricavare una legge generale.'
+      },
+      {
+        rag:'Tutti gli uomini sono mortali. Socrate è un uomo. Quindi Socrate è mortale.',
+        correct:'deduttivo',
+        spiegazione:'Si parte da una legge universale e si applica a un caso particolare.'
+      },
+      {
+        rag:'Ogni volta che ho lasciato cadere un oggetto, è caduto verso il basso. Dunque tutti i corpi cadono verso il basso.',
+        correct:'induttivo',
+        spiegazione:'L\'osservazione ripetuta di casi particolari porta a una generalizzazione.'
+      },
+      {
+        rag:'Tutti i mammiferi allattano i piccoli. Il delfino è un mammifero. Quindi il delfino allatta i piccoli.',
+        correct:'deduttivo',
+        spiegazione:'Dal principio universale si deduce la proprietà del caso singolo.'
+      },
+      {
+        rag:'Ho letto Platone, Aristotele, Cartesio, Kant: tutti i filosofi usano il ragionamento astratto. I filosofi ragionano in modo astratto.',
+        correct:'induttivo',
+        spiegazione:'Dall\'esame di più casi particolari si ricava una conclusione generale.'
+      },
+      {
+        rag:'Nessun pesce è un mammifero. Il tonno è un pesce. Quindi il tonno non è un mammifero.',
+        correct:'deduttivo',
+        spiegazione:'La conclusione segue necessariamente dalle premesse universali.'
+      },
+      {
+        rag:'Il ferro si dilata col calore. Il rame si dilata col calore. L\'alluminio si dilata col calore. Tutti i metalli si dilatano col calore.',
+        correct:'induttivo',
+        spiegazione:'Casi particolari portano a una generalizzazione su tutti i metalli.'
+      },
+      {
+        rag:'Ogni essere vivente è destinato a morire. La quercia è un essere vivente. Quindi la quercia è destinata a morire.',
+        correct:'deduttivo',
+        spiegazione:'Si applica la legge universale al caso singolo con conclusione necessaria.'
+      }
+    ]
+  },
+  // ── 2. IDENTIFICA LE PARTI ──
+  {
+    id:'parti1', type:'parti',
+    label:'Parti del sillogismo',
+    title:'Identifica premessa maggiore, minore e conclusione',
+    sub:'In ogni sillogismo le tre proposizioni hanno un ruolo preciso: la premessa maggiore contiene il termine più esteso, la premessa minore collega il termine medio al soggetto della conclusione, la conclusione è ciò che viene dimostrato.',
+    items:[
+      {
+        proposizioni:[
+          'Tutti gli uomini sono mortali.',
+          'Socrate è un uomo.',
+          'Socrate è mortale.'
+        ],
+        maggiore:'Tutti gli uomini sono mortali.',
+        minore:'Socrate è un uomo.',
+        conclusione:'Socrate è mortale.'
+      },
+      {
+        proposizioni:[
+          'I delfini allattano i piccoli.',
+          'Tutti i mammiferi allattano i piccoli.',
+          'I delfini sono mammiferi.'
+        ],
+        maggiore:'Tutti i mammiferi allattano i piccoli.',
+        minore:'I delfini sono mammiferi.',
+        conclusione:'I delfini allattano i piccoli.'
+      },
+      {
+        proposizioni:[
+          'Nessun rettile è un mammifero.',
+          'Il coccodrillo è un rettile.',
+          'Il coccodrillo non è un mammifero.'
+        ],
+        maggiore:'Nessun rettile è un mammifero.',
+        minore:'Il coccodrillo è un rettile.',
+        conclusione:'Il coccodrillo non è un mammifero.'
+      },
+      {
+        proposizioni:[
+          'Platone fu allievo di Socrate.',
+          'Tutti i filosofi ateniesi del IV sec. a.C. conobbero Socrate.',
+          'Platone era un filosofo ateniese del IV sec. a.C.'
+        ],
+        maggiore:'Tutti i filosofi ateniesi del IV sec. a.C. conobbero Socrate.',
+        minore:'Platone era un filosofo ateniese del IV sec. a.C.',
+        conclusione:'Platone fu allievo di Socrate.'
+      }
+    ]
+  },
+  // ── 3. IDENTIFICA I TERMINI ──
+  {
+    id:'term1', type:'termini',
+    label:'Termini del sillogismo',
+    title:'Identifica i termini: maggiore, minore, medio',
+    sub:'Ogni sillogismo ha tre termini: il termine medio (M) appare in entrambe le premesse ma non nella conclusione; il termine maggiore (A) è il predicato della conclusione; il termine minore (B) è il soggetto della conclusione.',
+    items:[
+      {
+        sillogismo:{
+          maggiore:'Tutti gli uomini sono mortali.',
+          minore:'Tutti i filosofi sono uomini.',
+          conclusione:'Tutti i filosofi sono mortali.'
+        },
+        termM:'uomini',
+        termA:'mortali',
+        termB:'filosofi',
+        options_M:['uomini','mortali','filosofi'],
+        options_A:['uomini','mortali','filosofi'],
+        options_B:['uomini','mortali','filosofi']
+      },
+      {
+        sillogismo:{
+          maggiore:'Nessun mammifero è un pesce.',
+          minore:'Tutti i delfini sono mammiferi.',
+          conclusione:'Nessun delfino è un pesce.'
+        },
+        termM:'mammiferi',
+        termA:'pesci',
+        termB:'delfini',
+        options_M:['mammiferi','pesci','delfini'],
+        options_A:['mammiferi','pesci','delfini'],
+        options_B:['mammiferi','pesci','delfini']
+      },
+      {
+        sillogismo:{
+          maggiore:'Tutti i poligoni regolari hanno lati uguali.',
+          minore:'Il quadrato è un poligono regolare.',
+          conclusione:'Il quadrato ha lati uguali.'
+        },
+        termM:'poligoni regolari',
+        termA:'lati uguali',
+        termB:'quadrato',
+        options_M:['poligoni regolari','lati uguali','quadrato'],
+        options_A:['poligoni regolari','lati uguali','quadrato'],
+        options_B:['poligoni regolari','lati uguali','quadrato']
+      }
+    ]
+  },
+  // ── 4. COMPLETA IL SILLOGISMO ──
+  {
+    id:'comp1', type:'completa',
+    label:'Completa il sillogismo',
+    title:'Completa il sillogismo',
+    sub:'In alcuni casi manca la conclusione, in altri manca una premessa. Scegli l\'opzione corretta tra quelle proposte.',
+    items:[
+      {
+        tipo:'conclusione',
+        maggiore:'Tutti i vertebrati hanno una colonna vertebrale.',
+        minore:'Il cane è un vertebrato.',
+        missing:'conclusione',
+        options:[
+          'Il cane ha una colonna vertebrale.',
+          'Tutti i cani sono vertebrati.',
+          'Qualche vertebrato è un cane.',
+          'Il cane non ha una colonna vertebrale.'
+        ],
+        correct:'Il cane ha una colonna vertebrale.'
+      },
+      {
+        tipo:'premessa maggiore',
+        missing:'maggiore',
+        minore:'Aristotele è un essere umano.',
+        conclusione:'Aristotele è mortale.',
+        options:[
+          'Qualche essere umano è mortale.',
+          'Tutti gli esseri umani sono mortali.',
+          'Nessun essere umano è immortale.',
+          'Aristotele fu un filosofo.'
+        ],
+        correct:'Tutti gli esseri umani sono mortali.'
+      },
+      {
+        tipo:'conclusione',
+        maggiore:'Nessun sofista cerca la verità.',
+        minore:'Gorgia è un sofista.',
+        missing:'conclusione',
+        options:[
+          'Gorgia cerca la verità.',
+          'Qualche sofista cerca la verità.',
+          'Gorgia non cerca la verità.',
+          'Nessun sofista è greco.'
+        ],
+        correct:'Gorgia non cerca la verità.'
+      },
+      {
+        tipo:'premessa minore',
+        maggiore:'Tutti i pianeti orbitano intorno a una stella.',
+        missing:'minore',
+        conclusione:'La Terra orbita intorno a una stella.',
+        options:[
+          'Il Sole è una stella.',
+          'La Terra è un pianeta.',
+          'Qualche pianeta orbita intorno al Sole.',
+          'La Terra non è una stella.'
+        ],
+        correct:'La Terra è un pianeta.'
+      },
+      {
+        tipo:'conclusione',
+        maggiore:'Tutti gli esseri viventi sono composti di cellule.',
+        minore:'La quercia è un essere vivente.',
+        missing:'conclusione',
+        options:[
+          'La quercia è composta di cellule.',
+          'Tutti gli alberi sono esseri viventi.',
+          'Qualche essere vivente è una quercia.',
+          'La quercia non ha cellule.'
+        ],
+        correct:'La quercia è composta di cellule.'
+      }
+    ]
+  },
+  // ── 5. VALIDO E/O VERO ──
+  {
+    id:'valver1', type:'valver',
+    label:'Validità e verità',
+    title:'Valido e/o vero?',
+    sub:'Un sillogismo è <strong>valido</strong> se la conclusione segue necessariamente dalle premesse (struttura corretta). È <strong>vero</strong> se le premesse sono vere. Un sillogismo può essere valido ma non vero, o non valido pur avendo premesse vere.',
+    items:[
+      {
+        maggiore:'Tutti gli uomini sono mortali.',
+        minore:'Socrate è un uomo.',
+        conclusione:'Socrate è mortale.',
+        valido:true,
+        vero:true,
+        spiegazione:'La struttura è corretta (valido) e le premesse sono vere (vero).'
+      },
+      {
+        maggiore:'Tutti i gatti volano.',
+        minore:'Silvestro è un gatto.',
+        conclusione:'Silvestro vola.',
+        valido:true,
+        vero:false,
+        spiegazione:'La struttura è corretta (valido), ma la premessa maggiore è falsa (non vero).'
+      },
+      {
+        maggiore:'Tutti i cani hanno i baffi.',
+        minore:'Mio nonno ha i baffi.',
+        conclusione:'Mio nonno è un cane.',
+        valido:false,
+        vero:false,
+        spiegazione:'La struttura è scorretta (non valido): avere i baffi non è una proprietà esclusiva dei cani. Anche le premesse sono false.'
+      },
+      {
+        maggiore:'Tutti i mammiferi sono vertebrati.',
+        minore:'Tutti i cani sono vertebrati.',
+        conclusione:'Tutti i cani sono mammiferi.',
+        valido:false,
+        vero:true,
+        spiegazione:'Le premesse sono vere e la conclusione è vera, ma la struttura è scorretta (non valido): il termine medio "vertebrati" non è distribuito correttamente.'
+      },
+      {
+        maggiore:'Nessun pesce respira aria.',
+        minore:'Il polpo è un pesce.',
+        conclusione:'Il polpo non respira aria.',
+        valido:true,
+        vero:false,
+        spiegazione:'La struttura è corretta (valido), ma la premessa minore è falsa: il polpo non è un pesce.'
+      }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+// STATO
+// ═══════════════════════════════════════════════
+let studentName = '';
+let currentEx = 0;
+let scores = {};
+let pairSel = {};
+let chainSel = [];
+let dragSrcEl = null;
+
+// ═══════════════════════════════════════════════
+// UTILITY
+// ═══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+const PROF_PIN = '1970';
+function checkProfPin() {
+  const val = document.getElementById('prof-pin-input').value.trim();
+  if (val === PROF_PIN) {
+    document.getElementById('prof-pin-input').value = '';
+    document.getElementById('pin-error').style.display = 'none';
+    loadDashboard();
+  } else {
+    document.getElementById('pin-error').style.display = 'block';
+    document.getElementById('prof-pin-input').value = '';
+    document.getElementById('prof-pin-input').focus();
+  }
+}
+function norm(s) { return (s || '').toLowerCase().trim().replace(/[.,;!?]/g,''); }
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function updateDots() {
+  const c = document.getElementById('progress-dots');
+  c.innerHTML = EXERCISES.map((_, i) =>
+    `<div class="dot ${i < currentEx ? 'done' : i === currentEx ? 'current' : ''}"></div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════
+// FLUSSO STUDENTE
+// ═══════════════════════════════════════════════
+function startStudent() { showScreen('screen-student-login'); }
+
+function confirmStudentName() {
+  const v = document.getElementById('student-name-input').value.trim();
+  if (!v) { alert('Inserisci il tuo nome per continuare.'); return; }
+  studentName = v;
+  currentEx = 0;
+  scores = {};
+  const pill = document.getElementById('student-pill');
+  pill.textContent = studentName;
+  pill.style.display = 'inline-block';
+  showScreen('screen-exercises');
+  updateDots();
+  renderExercise();
+}
+
+function restartStudent() {
+  document.getElementById('student-name-input').value = '';
+  document.getElementById('student-pill').style.display = 'none';
+  document.getElementById('progress-dots').innerHTML = '';
+  showScreen('screen-role');
+}
+
+function renderExercise() {
+  const ex = EXERCISES[currentEx];
+  updateDots();
+  const c = document.getElementById('ex-container');
+  if (ex.type === 'indded') renderIndDed(ex, c);
+  else if (ex.type === 'parti') renderParti(ex, c);
+  else if (ex.type === 'termini') renderTermini(ex, c);
+  else if (ex.type === 'completa') renderCompleta(ex, c);
+  else if (ex.type === 'valver') renderValVer(ex, c);
+  c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function nextEx() {
+  currentEx++;
+  if (currentEx >= EXERCISES.length) { showDone(); return; }
+  renderExercise();
+}
+
+function showDone() {
+  showScreen('screen-done');
+  const vals = Object.values(scores);
+  const avg = vals.length > 0 ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length * 100) : 0;
+  document.getElementById('score-num').textContent = avg + '%';
+  const s = avg >= 80 ? 'Ottimo lavoro!' : avg >= 50 ? 'Buon lavoro, rivedete le parti più difficili.' : 'Ripassate il materiale e riprovate.';
+  document.getElementById('done-summary').textContent = s;
+  saveToDB();
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 1: INDUTTIVO O DEDUTTIVO
+// ═══════════════════════════════════════════════
+let indSel = {};
+function renderIndDed(ex, c) {
+  indSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => `
+        <div style="padding:12px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="font-size:14px;font-style:italic;margin-bottom:8px;padding:10px 14px;background:var(--bg);border-radius:var(--radius);border-left:3px solid var(--border-strong)">"${it.rag}"</div>
+          <div class="choices">
+            <button class="choice-btn" id="id-${i}-ind" onclick="selInd(${i},'induttivo',this)">Induttivo</button>
+            <button class="choice-btn" id="id-${i}-ded" onclick="selInd(${i},'deduttivo',this)">Deduttivo</button>
+          </div>
+          <div class="feedback" id="id-fb-${i}" style="margin-top:8px"></div>
+        </div>`).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkIndDed()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selInd(i, val, btn) {
+  indSel[i] = val;
+  ['ind','ded'].forEach(k => document.getElementById('id-'+i+'-'+k).classList.remove('selected'));
+  btn.classList.add('selected');
+}
+function checkIndDed() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = indSel[i];
+    const isOk = sel === it.correct;
+    if (isOk) ok++;
+    ['ind','ded'].forEach(k => {
+      const b = document.getElementById('id-'+i+'-'+k);
+      b.disabled = true;
+      const val = k === 'ind' ? 'induttivo' : 'deduttivo';
+      if (val === it.correct) b.classList.add('correct');
+      else if (val === sel && !isOk) b.classList.add('wrong');
+      b.classList.remove('selected');
+    });
+    const fb = document.getElementById('id-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = isOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = (isOk ? '✓ Corretto: è un ragionamento <strong>' : '✗ È un ragionamento <strong>') +
+      it.correct + '</strong>. ' + it.spiegazione;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 2: PARTI DEL SILLOGISMO
+// ═══════════════════════════════════════════════
+let partiSel = {};
+function renderParti(ex, c) {
+  partiSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => {
+        const props = shuffle(it.proposizioni);
+        return `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Proposizioni (in ordine casuale):</div>
+          <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:12px">
+            ${props.map(p => `<div style="padding:6px 12px;background:var(--bg);border-radius:var(--radius);font-size:13px;font-style:italic">"${p}"</div>`).join('')}
+          </div>
+          ${['maggiore','minore','conclusione'].map(ruolo => `
+            <div style="margin-bottom:10px">
+              <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:5px">Premessa ${ruolo === 'conclusione' ? '' : ruolo} ${ruolo === 'conclusione' ? 'Conclusione' : ''}</div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                ${props.map(p => `
+                  <button class="choice-btn" id="pt-${i}-${ruolo}-${p.replace(/[\s'.,]/g,'_').substring(0,20)}"
+                    onclick="selParti(${i},'${ruolo}','${p.replace(/'/g,"\\'").replace(/"/g,'&quot;')}',this)"
+                    style="text-align:left;border-radius:6px;padding:7px 12px;font-size:13px">${p}</button>`).join('')}
+              </div>
+            </div>`).join('')}
+          <div class="feedback" id="pt-fb-${i}"></div>
+        </div>`;
+      }).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkParti()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selParti(i, ruolo, val, btn) {
+  if (!partiSel[i]) partiSel[i] = {};
+  partiSel[i][ruolo] = val;
+  const ex = EXERCISES[currentEx];
+  ex.items[i].proposizioni.forEach(p => {
+    const b = document.getElementById('pt-'+i+'-'+ruolo+'-'+p.replace(/[\s'.,]/g,'_').substring(0,20));
+    if (b) b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+}
+function checkParti() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = partiSel[i] || {};
+    const mOk = sel.maggiore === it.maggiore;
+    const miOk = sel.minore === it.minore;
+    const cOk = sel.conclusione === it.conclusione;
+    const allOk = mOk && miOk && cOk;
+    if (allOk) ok++;
+    ['maggiore','minore','conclusione'].forEach(ruolo => {
+      it.proposizioni.forEach(p => {
+        const b = document.getElementById('pt-'+i+'-'+ruolo+'-'+p.replace(/[\s'.,]/g,'_').substring(0,20));
+        if (!b) return;
+        b.disabled = true;
+        const correct = it[ruolo];
+        if (p === correct) b.classList.add('correct');
+        else if (p === sel[ruolo] && p !== correct) b.classList.add('wrong');
+        b.classList.remove('selected');
+      });
+    });
+    const fb = document.getElementById('pt-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = allOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = allOk
+      ? '✓ Corretto!'
+      : `✗ Risposta corretta:<br>
+         Premessa maggiore: <strong>${it.maggiore}</strong><br>
+         Premessa minore: <strong>${it.minore}</strong><br>
+         Conclusione: <strong>${it.conclusione}</strong>`;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 3: TERMINI
+// ═══════════════════════════════════════════════
+let termSel = {};
+function renderTermini(ex, c) {
+  termSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;padding:10px 12px;background:var(--bg);border-radius:var(--radius);font-size:13px">
+        <span style="color:var(--orange);font-weight:600">M</span> Termine medio (nelle premesse, non nella conclusione) &nbsp;·&nbsp;
+        <span style="color:var(--teal);font-weight:600">A</span> Termine maggiore (predicato della conclusione) &nbsp;·&nbsp;
+        <span style="color:var(--gold);font-weight:600">B</span> Termine minore (soggetto della conclusione)
+      </div>
+      ${ex.items.map((it, i) => `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="margin-bottom:12px;font-size:13px">
+            <div style="padding:5px 12px;margin-bottom:3px;background:var(--bg);border-radius:var(--radius)">Premessa maggiore: <em>${it.sillogismo.maggiore}</em></div>
+            <div style="padding:5px 12px;margin-bottom:3px;background:var(--bg);border-radius:var(--radius)">Premessa minore: <em>${it.sillogismo.minore}</em></div>
+            <div style="padding:5px 12px;background:var(--orange-light);border-radius:var(--radius)">Conclusione: <em>${it.sillogismo.conclusione}</em></div>
+          </div>
+          ${['M','A','B'].map(t => {
+            const label = t === 'M' ? 'Termine medio (M)' : t === 'A' ? 'Termine maggiore (A)' : 'Termine minore (B)';
+            const opts = t === 'M' ? it.options_M : t === 'A' ? it.options_A : it.options_B;
+            return `
+            <div style="margin-bottom:8px">
+              <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:4px">${label}</div>
+              <div class="choices">
+                ${opts.map(o => `
+                  <button class="choice-btn" id="tm-${i}-${t}-${o.replace(/[\s']/g,'_').substring(0,15)}"
+                    onclick="selTerm(${i},'${t}','${o.replace(/'/g,"\\'")}',this)">${o}</button>`).join('')}
+              </div>
+            </div>`;
+          }).join('')}
+          <div class="feedback" id="tm-fb-${i}"></div>
+        </div>`).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkTermini()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selTerm(i, t, val, btn) {
+  if (!termSel[i]) termSel[i] = {};
+  termSel[i][t] = val;
+  const it = EXERCISES[currentEx].items[i];
+  const opts = t === 'M' ? it.options_M : t === 'A' ? it.options_A : it.options_B;
+  opts.forEach(o => {
+    const b = document.getElementById('tm-'+i+'-'+t+'-'+o.replace(/[\s']/g,'_').substring(0,15));
+    if (b) b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+}
+function checkTermini() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = termSel[i] || {};
+    const mOk = sel.M === it.termM;
+    const aOk = sel.A === it.termA;
+    const bOk = sel.B === it.termB;
+    const allOk = mOk && aOk && bOk;
+    if (allOk) ok++;
+    ['M','A','B'].forEach(t => {
+      const correct = t === 'M' ? it.termM : t === 'A' ? it.termA : it.termB;
+      const opts = t === 'M' ? it.options_M : t === 'A' ? it.options_A : it.options_B;
+      opts.forEach(o => {
+        const b = document.getElementById('tm-'+i+'-'+t+'-'+o.replace(/[\s']/g,'_').substring(0,15));
+        if (!b) return;
+        b.disabled = true;
+        if (o === correct) b.classList.add('correct');
+        else if (o === sel[t] && o !== correct) b.classList.add('wrong');
+        b.classList.remove('selected');
+      });
+    });
+    const fb = document.getElementById('tm-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = allOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = allOk
+      ? '✓ Corretto!'
+      : `✗ Risposta corretta: Termine medio (M) = <strong>${it.termM}</strong> · Termine maggiore (A) = <strong>${it.termA}</strong> · Termine minore (B) = <strong>${it.termB}</strong>`;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 4: COMPLETA IL SILLOGISMO
+// ═══════════════════════════════════════════════
+let compSel = {};
+function renderCompleta(ex, c) {
+  compSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => {
+        const opts = shuffle(it.options);
+        return `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="font-size:13px;margin-bottom:10px">
+            ${it.missing !== 'maggiore'
+              ? `<div style="padding:6px 12px;background:var(--bg);border-radius:var(--radius);margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted);font-weight:600">PREMESSA MAGGIORE</span><br>${it.maggiore}</div>`
+              : `<div style="padding:6px 12px;background:var(--orange-light);border:1px dashed var(--orange);border-radius:var(--radius);margin-bottom:3px;color:var(--orange)"><span style="font-size:11px;font-weight:600">PREMESSA MAGGIORE</span> <em>— da trovare</em></div>`}
+            ${it.missing !== 'minore'
+              ? `<div style="padding:6px 12px;background:var(--bg);border-radius:var(--radius);margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted);font-weight:600">PREMESSA MINORE</span><br>${it.minore}</div>`
+              : `<div style="padding:6px 12px;background:var(--orange-light);border:1px dashed var(--orange);border-radius:var(--radius);margin-bottom:3px;color:var(--orange)"><span style="font-size:11px;font-weight:600">PREMESSA MINORE</span> <em>— da trovare</em></div>`}
+            ${it.missing !== 'conclusione'
+              ? `<div style="padding:6px 12px;background:var(--teal-light);border-radius:var(--radius)"><span style="font-size:11px;color:var(--teal);font-weight:600">CONCLUSIONE</span><br>${it.conclusione}</div>`
+              : `<div style="padding:6px 12px;background:var(--orange-light);border:1px dashed var(--orange);border-radius:var(--radius);color:var(--orange)"><span style="font-size:11px;font-weight:600">CONCLUSIONE</span> <em>— da trovare</em></div>`}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            ${opts.map(o => `
+              <button class="choice-btn" id="cp-${i}-${o.replace(/[\s'.,]/g,'_').substring(0,25)}"
+                onclick="selComp(${i},'${o.replace(/'/g,"\\'").replace(/"/g,'&quot;')}',this)"
+                style="text-align:left;border-radius:6px;padding:8px 14px">${o}</button>`).join('')}
+          </div>
+          <div class="feedback" id="cp-fb-${i}" style="margin-top:8px"></div>
+        </div>`;
+      }).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkCompleta()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selComp(i, val, btn) {
+  compSel[i] = val;
+  const it = EXERCISES[currentEx].items[i];
+  it.options.forEach(o => {
+    const b = document.getElementById('cp-'+i+'-'+o.replace(/[\s'.,]/g,'_').substring(0,25));
+    if (b) b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+}
+function checkCompleta() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = compSel[i];
+    const isOk = sel === it.correct;
+    if (isOk) ok++;
+    it.options.forEach(o => {
+      const b = document.getElementById('cp-'+i+'-'+o.replace(/[\s'.,]/g,'_').substring(0,25));
+      if (!b) return;
+      b.disabled = true;
+      if (o === it.correct) b.classList.add('correct');
+      else if (o === sel && !isOk) b.classList.add('wrong');
+      b.classList.remove('selected');
+    });
+    const fb = document.getElementById('cp-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = isOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = isOk
+      ? `✓ Corretto! La ${it.tipo} è: <strong>${it.correct}</strong>`
+      : `✗ La ${it.tipo} corretta è: <strong>${it.correct}</strong>`;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 5: VALIDO E/O VERO
+// ═══════════════════════════════════════════════
+let valverSel = {};
+function renderValVer(ex, c) {
+  valverSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="font-size:13px;margin-bottom:10px">
+            <div style="padding:5px 12px;background:var(--bg);border-radius:var(--radius);margin-bottom:3px">${it.maggiore}</div>
+            <div style="padding:5px 12px;background:var(--bg);border-radius:var(--radius);margin-bottom:3px">${it.minore}</div>
+            <div style="padding:5px 12px;background:var(--teal-light);border-radius:var(--radius)">∴ ${it.conclusione}</div>
+          </div>
+          <div style="display:flex;gap:24px;flex-wrap:wrap">
+            <div>
+              <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:5px">Struttura</div>
+              <div class="choices">
+                <button class="choice-btn" id="vv-${i}-vs" onclick="selValVer(${i},'valido',true,this)">Valido</button>
+                <button class="choice-btn" id="vv-${i}-vn" onclick="selValVer(${i},'valido',false,this)">Non valido</button>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:5px">Premesse</div>
+              <div class="choices">
+                <button class="choice-btn" id="vv-${i}-ts" onclick="selValVer(${i},'vero',true,this)">Vero</button>
+                <button class="choice-btn" id="vv-${i}-tn" onclick="selValVer(${i},'vero',false,this)">Non vero</button>
+              </div>
+            </div>
+          </div>
+          <div class="feedback" id="vv-fb-${i}" style="margin-top:10px"></div>
+        </div>`).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkValVer()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selValVer(i, dim, val, btn) {
+  if (!valverSel[i]) valverSel[i] = {};
+  valverSel[i][dim] = val;
+  const vIds = dim === 'valido' ? ['vs','vn'] : ['ts','tn'];
+  vIds.forEach(k => document.getElementById('vv-'+i+'-'+k).classList.remove('selected'));
+  btn.classList.add('selected');
+}
+function checkValVer() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = valverSel[i] || {};
+    const vOk = sel.valido === it.valido;
+    const tOk = sel.vero === it.vero;
+    const allOk = vOk && tOk;
+    if (allOk) ok++;
+    // Mark validity buttons
+    const vsBtn = document.getElementById('vv-'+i+'-vs');
+    const vnBtn = document.getElementById('vv-'+i+'-vn');
+    vsBtn.disabled = true; vnBtn.disabled = true;
+    if (it.valido) vsBtn.classList.add('correct'); else vnBtn.classList.add('correct');
+    if (!vOk) { if (sel.valido === true) vsBtn.classList.add('wrong'); else if (sel.valido === false) vnBtn.classList.add('wrong'); }
+    // Mark truth buttons
+    const tsBtn = document.getElementById('vv-'+i+'-ts');
+    const tnBtn = document.getElementById('vv-'+i+'-tn');
+    tsBtn.disabled = true; tnBtn.disabled = true;
+    if (it.vero) tsBtn.classList.add('correct'); else tnBtn.classList.add('correct');
+    if (!tOk) { if (sel.vero === true) tsBtn.classList.add('wrong'); else if (sel.vero === false) tnBtn.classList.add('wrong'); }
+    [vsBtn,vnBtn,tsBtn,tnBtn].forEach(b => b.classList.remove('selected'));
+    const fb = document.getElementById('vv-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = allOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = (allOk ? '✓ Corretto! ' : '✗ ') +
+      `Il sillogismo è <strong>${it.valido ? 'valido' : 'non valido'}</strong> e <strong>${it.vero ? 'vero' : 'non vero'}</strong>. ${it.spiegazione}`;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// FIREBASE — SALVATAGGIO E DASHBOARD
+// ═══════════════════════════════════════════════
+
+async function saveToDB() {
+  if (!window._dbReady) {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject('Firebase timeout'), 5000);
+      document.addEventListener('firebase-ready', () => { clearTimeout(timeout); resolve(); }, { once: true });
+    }).catch(e => { console.warn('saveToDB: ' + e); return null; });
+    if (!window._dbReady) return;
+  }
+  const key = fbKey(studentName);
+  const data = { name: studentName, scores, completed: currentEx, total: EXERCISES.length, ts: Date.now() };
+  try { await window._fbSet('studenti_sillogismo1/' + key, data); } catch(e) { console.warn('Firebase write error', e); }
+}
+
+function fbKey(name) {
+  // Chiave sicura per Firebase (no punti, slash, etc.)
+  return name.replace(/[.#$/\[\]]/g, '_').replace(/\s+/g, '_');
+}
+
+// Ascoltatore in tempo reale per la dashboard
+let _dashUnsubscribe = null;
+
+function loadDashboard() {
+  showScreen('screen-dashboard');
+  document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">⏳ Caricamento dati...</p>';
+
+  if (!window._dbReady) {
+    document.addEventListener('firebase-ready', () => startDashListener(), { once: true });
+  } else {
+    startDashListener();
+  }
+}
+
+function startDashListener() {
+  // Rimuovi listener precedente se esiste
+  if (_dashUnsubscribe) { _dashUnsubscribe(); _dashUnsubscribe = null; }
+
+  // Ascolta in tempo reale — si aggiorna automaticamente quando arrivano nuovi dati
+  _dashUnsubscribe = window._fbListen('studenti_sillogismo1', (data) => {
+    if (!data) { renderDash([]); return; }
+    const students = Object.values(data);
+    renderDash(students);
+  });
+}
+
+function renderDash(students) {
+  const total = students.length;
+  const completed = students.filter(s => s.completed >= s.total - 1).length;
+  const avgAll = total > 0 ? Math.round(students.reduce((acc, s) => {
+    const vals = Object.values(s.scores || {});
+    return acc + (vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0);
+  }, 0) / total * 100) : 0;
+
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Studenti</div></div>
+    <div class="stat-card"><div class="stat-num">${completed}</div><div class="stat-lbl">Completati</div></div>
+    <div class="stat-card"><div class="stat-num">${avgAll}%</div><div class="stat-lbl">Media classe</div></div>`;
+
+  if (!total) {
+    document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">Nessun dato ancora. In attesa che gli studenti si colleghino...</p>';
+    document.getElementById('dash-exercises').innerHTML = '';
+    return;
+  }
+
+  const exLabels = {
+    ind1:'Induttivo o deduttivo',
+    parti1:'Parti del sillogismo',
+    term1:'Termini del sillogismo',
+    comp1:'Completa il sillogismo',
+    valver1:'Valido e/o vero'
+  };
+
+  // Ordina per cognome
+  students.sort((a,b) => a.name.localeCompare(b.name));
+
+  const rows = students.map(s => {
+    const vals = Object.values(s.scores || {});
+    const avg = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*100) : 0;
+    const prog = Math.round((s.completed||0) / (s.total||EXERCISES.length) * 100);
+    const badgeClass = avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : vals.length > 0 ? 'badge-low' : 'badge-none';
+    const ts = s.ts ? new Date(s.ts).toLocaleTimeString('it-IT', {hour:'2-digit',minute:'2-digit'}) : '—';
+    return `<tr>
+      <td style="font-weight:500">${s.name}</td>
+      <td>${s.completed||0} / ${s.total||EXERCISES.length}</td>
+      <td><div class="pbar-wrap"><div class="pbar-fill" style="width:${prog}%"></div></div></td>
+      <td><span class="badge ${badgeClass}">${vals.length > 0 ? avg+'%' : '—'}</span></td>
+      <td style="color:var(--text-faint);font-size:12px">${ts}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('dash-table').innerHTML = `
+    <table>
+      <thead><tr><th>Studente</th><th>Progresso</th><th>Completamento</th><th>Media</th><th>Ultimo aggiorn.</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  const exRows = EXERCISES.map(ex => {
+    const results = students.map(s => (s.scores||{})[ex.id]).filter(v => v !== undefined);
+    const avg = results.length ? Math.round(results.reduce((a,b)=>a+b,0)/results.length*100) : null;
+    const fill = avg ?? 0;
+    const badgeClass = avg === null ? 'badge-none' : avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : 'badge-low';
+    return `<div class="ex-bar-row">
+      <span class="ex-bar-name">${exLabels[ex.id]||ex.id}</span>
+      <div class="ex-bar-wrap"><div class="ex-bar-fill" style="width:${fill}%"></div></div>
+      <span class="badge ${badgeClass}" style="min-width:44px;text-align:center">${avg===null?'—':avg+'%'}</span>
+      <span style="font-size:11px;color:var(--text-faint)">(${results.length} risp.)</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('dash-exercises').innerHTML = exRows;
+}
+
+async function clearData() {
+  if (!confirm('Azzerare tutti i dati degli studenti da Firebase?')) return;
+  try {
+    await window._fbRemove('studenti_sillogismo1');
+    renderDash([]);
+  } catch(e) { alert('Errore durante l\'eliminazione dei dati.'); }
+}
+</script>
+</body>
+</html>
