@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Laboratorio — Diagrammi di Eulero-Venn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script type="module">
+// ═══════════════════════════════════════════════
+// FIREBASE CONFIG
+// ═══════════════════════════════════════════════
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",
+  authDomain: "laboratorio-vico.firebaseapp.com",
+  databaseURL: "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "laboratorio-vico",
+  storageBucket: "laboratorio-vico.firebasestorage.app",
+  messagingSenderId: "551766473976",
+  appId: "1:551766473976:web:190c0907ce2987e2d78f0d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Esponi le funzioni Firebase al contesto globale
+window._fbSet = (path, data) => set(ref(db, path), data);
+window._fbGet = (path) => get(ref(db, path));
+window._fbRemove = (path) => remove(ref(db, path));
+window._fbListen = (path, cb) => onValue(ref(db, path), snap => cb(snap.val()));
+window._dbReady = true;
+
+// Notifica che Firebase è pronto
+document.dispatchEvent(new Event('firebase-ready'));
+</script>
+<style>
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --border: #e8e2d8;
+  --border-strong: #c8bfb0;
+  --text: #1a1612;
+  --text-muted: #6b6258;
+  --text-faint: #a09890;
+  --orange: #c4520a;
+  --orange-light: #fdf0e8;
+  --orange-mid: #f5d4be;
+  --teal: #0f6e56;
+  --teal-light: #e8f5f0;
+  --red: #a32d2d;
+  --red-light: #fdf0f0;
+  --gold: #8a6a1a;
+  --gold-light: #fdf7e8;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  color: var(--orange);
+  letter-spacing: 0.02em;
+}
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.student-pill {
+  font-size: 12px;
+  background: var(--orange-light);
+  color: var(--orange);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-weight: 500;
+  display: none;
+}
+.progress-dots { display: flex; gap: 5px; }
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: background 0.2s;
+}
+.dot.done { background: var(--teal); }
+.dot.current { background: var(--orange); }
+
+/* ── CONTENT WRAP ── */
+.wrap { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+/* ── ROLE SCREEN ── */
+.role-hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.role-hero h1 { font-size: 2rem; margin-bottom: 6px; }
+.role-hero p { color: var(--text-muted); margin-bottom: 2.5rem; }
+.role-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.role-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.5rem;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.role-card:hover { border-color: var(--orange); box-shadow: var(--shadow-md); }
+.role-card .role-icon { font-size: 2rem; margin-bottom: 12px; }
+.role-card h3 { font-size: 15px; color: var(--text); }
+.role-card p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px;
+  padding: 9px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { background: var(--bg); }
+.btn-primary {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+}
+.btn-primary:hover { background: #a84407; border-color: #a84407; }
+.btn-success {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+}
+.btn-success:hover { background: #0a5a44; }
+.btn-sm { font-size: 12px; padding: 6px 14px; }
+.btn-ghost { border-color: transparent; background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { color: var(--text); background: var(--bg); }
+.btn-danger { color: var(--red); border-color: var(--red); background: transparent; }
+.btn-danger:hover { background: var(--red-light); }
+
+/* ── LOGIN ── */
+.login-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 380px;
+  margin: 3rem auto;
+}
+.login-box h2 { margin-bottom: 6px; }
+.login-box p { color: var(--text-muted); font-size: 13px; margin-bottom: 1.5rem; }
+input[type=text] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: 'Source Sans 3', sans-serif;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input[type=text]:focus { border-color: var(--orange); }
+input[type=text]::placeholder { color: var(--text-faint); }
+
+/* ── EXERCISE CARD ── */
+.ex-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.ex-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.ex-title { font-size: 1.15rem; margin-bottom: 6px; }
+.ex-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+
+/* ── DRAG & DROP ── */
+.drag-list { display: flex; flex-direction: column; gap: 6px; }
+.drag-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: grab;
+  font-size: 14px;
+  user-select: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.drag-item:hover { border-color: var(--border-strong); }
+.drag-item.dragging { opacity: 0.4; cursor: grabbing; }
+.drag-item.drag-over { border-color: var(--orange); background: var(--orange-light); }
+.drag-handle { color: var(--text-faint); font-size: 16px; flex-shrink: 0; }
+.order-rank {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── ANSWER FEEDBACK ── */
+.feedback {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  display: none;
+}
+.feedback.correct { background: var(--teal-light); border: 1px solid #9fe1cb; color: var(--teal); }
+.feedback.wrong { background: var(--red-light); border: 1px solid #f0999b; color: var(--red); }
+.feedback.neutral { background: var(--gold-light); border: 1px solid #e8d08a; color: var(--gold); }
+.feedback strong { font-weight: 600; }
+
+/* ── CHOICE BUTTONS ── */
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice-btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.choice-btn:hover { background: var(--bg); border-color: var(--orange); }
+.choice-btn.selected { background: var(--orange-light); border-color: var(--orange); color: var(--orange); }
+.choice-btn.correct { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+.choice-btn.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+
+/* ── PAIRS ── */
+.pair-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.pair-row:last-of-type { border-bottom: none; }
+.pair-label { font-size: 14px; font-weight: 500; min-width: 140px; }
+.pair-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── CHAIN ── */
+.chain-slots {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 52px;
+  margin-bottom: 1rem;
+}
+.chain-slot {
+  min-width: 90px;
+  padding: 6px 12px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-faint);
+  background: var(--surface);
+}
+.chain-slot.filled {
+  border-style: solid;
+  border-color: var(--orange);
+  color: var(--orange);
+  background: var(--orange-light);
+}
+.arrow-sep { color: var(--text-faint); font-size: 14px; }
+.chain-pool { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+.pool-btn {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: pointer;
+  transition: 0.12s;
+  color: var(--text);
+}
+.pool-btn:hover { border-color: var(--orange); background: var(--orange-light); color: var(--orange); }
+.pool-btn.used { opacity: 0.35; cursor: default; pointer-events: none; }
+
+/* ── DEFINE ── */
+.define-item { margin-bottom: 1.25rem; }
+.define-concept {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--orange);
+}
+.define-fields { display: flex; gap: 10px; flex-wrap: wrap; }
+.define-field { flex: 1; min-width: 160px; }
+.define-field label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); display: block; margin-bottom: 5px; }
+
+/* ── NAV ── */
+.ex-nav { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem; }
+
+/* ── DONE ── */
+.done-screen {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+.done-icon { font-size: 3rem; margin-bottom: 1rem; }
+.done-screen h2 { font-size: 1.6rem; margin-bottom: 8px; }
+.done-screen p { color: var(--text-muted); margin-bottom: 2rem; }
+.score-circle {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  border: 2px solid var(--teal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+}
+.score-circle .num { font-size: 1.5rem; font-weight: 600; color: var(--teal); }
+.score-circle .lbl { font-size: 10px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── DASHBOARD ── */
+.dash-stats { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.stat-card {
+  flex: 1; min-width: 120px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  text-align: center;
+}
+.stat-num { font-size: 1.8rem; font-weight: 600; color: var(--text); }
+.stat-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.dash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.dash-card h3 { font-size: 14px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 1rem; color: var(--text-muted); text-transform: uppercase; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 6px 8px; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+td { padding: 9px 8px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.badge-ok { background: var(--teal-light); color: var(--teal); }
+.badge-mid { background: var(--gold-light); color: var(--gold); }
+.badge-low { background: var(--red-light); color: var(--red); }
+.badge-none { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+.pbar-wrap { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; width: 100px; }
+.pbar-fill { height: 100%; background: var(--teal); border-radius: 3px; transition: width 0.4s; }
+.ex-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.ex-bar-name { font-size: 13px; min-width: 180px; }
+.ex-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.ex-bar-fill { height: 100%; background: var(--orange); border-radius: 4px; transition: width 0.5s; }
+
+/* ── FOOTER ── */
+.footer { text-align: center; padding: 2rem; font-size: 11px; color: var(--text-faint); }
+
+/* ── PRINT / no-js fallback ── */
+@media print { .topbar, .ex-nav, .btn { display: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-title">Aristotele — diagrammi di Eulero-Venn</span>
+  <div class="topbar-right">
+    <span class="student-pill" id="student-pill"></span>
+    <div class="progress-dots" id="progress-dots"></div>
+  </div>
+</div>
+
+<!-- ══ ROLE ══ -->
+<div id="screen-role" class="screen active">
+  <div class="wrap">
+    <div class="role-hero">
+      <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-faint);margin-bottom:8px">Laboratorio sul sillogismo — 3</p>
+      <h1>Diagrammi di Eulero-Venn</h1>
+      <p>Seleziona il tuo ruolo per iniziare</p>
+      <div class="role-cards">
+        <div class="role-card" onclick="startStudent()">
+          <div class="role-icon">📖</div>
+          <h3>Studente</h3>
+          <p>Svolgi gli esercizi</p>
+        </div>
+        <div class="role-card" onclick="showScreen('screen-prof-login')">
+          <div class="role-icon">📊</div>
+          <h3>Professore</h3>
+          <p>Visualizza i risultati</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STUDENT LOGIN ══ -->
+<div id="screen-student-login" class="screen">
+  <div class="wrap">
+    <div class="login-box">
+      <h2>Il tuo nome</h2>
+      <p>Inserisci nome e cognome per salvare i tuoi risultati</p>
+      <input type="text" id="student-name-input" placeholder="Es. Mario Rossi" onkeydown="if(event.key==='Enter')confirmStudentName()"/>
+      <button class="btn btn-primary" onclick="confirmStudentName()" style="width:100%;justify-content:center">Inizia il laboratorio →</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role')" style="margin-top:8px">← Indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXERCISES ══ -->
+<div id="screen-exercises" class="screen">
+  <div class="wrap" id="ex-container"></div>
+</div>
+
+<!-- ══ DONE ══ -->
+<div id="screen-done" class="screen">
+  <div class="wrap">
+    <div class="done-screen">
+      <div class="done-icon">✓</div>
+      <h2>Laboratorio completato!</h2>
+      <p id="done-summary">Ottimo lavoro.</p>
+      <div class="score-circle" id="score-circle">
+        <span class="num" id="score-num">—</span>
+        <span class="lbl">punteggio</span>
+      </div>
+      <button class="btn btn-ghost" onclick="restartStudent()">Ricomincia</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROF LOGIN ══ -->
+<div id="screen-prof-login" class="screen">
+  <div class="wrap">
+    <div class="login-box">
+      <h2>Dashboard professore</h2>
+      <p>Inserisci il PIN per accedere ai risultati della classe.</p>
+      <input type="password" id="prof-pin-input" placeholder="PIN" maxlength="8"
+        onkeydown="if(event.key==='Enter')checkProfPin()"
+        style="letter-spacing:0.3em;font-size:1.2rem;text-align:center;margin-bottom:12px"/>
+      <div id="pin-error" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;text-align:center">
+        PIN non corretto.
+      </div>
+      <button class="btn btn-primary" onclick="checkProfPin()" style="width:100%;justify-content:center;margin-bottom:8px">Accedi →</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role');document.getElementById('prof-pin-input').value='';document.getElementById('pin-error').style.display='none'">← Indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="screen-dashboard" class="screen">
+  <div class="wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px">
+      <h2 style="font-size:1.4rem">Dashboard</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="font-size:11px;color:var(--teal);background:var(--teal-light);padding:4px 10px;border-radius:20px;font-weight:500">● In tempo reale</span>
+        <button class="btn btn-sm btn-danger" onclick="clearData()">Azzera dati classe</button>
+        <button class="btn btn-sm btn-ghost" onclick="showScreen('screen-role')">← Esci</button>
+      </div>
+    </div>
+    <div class="dash-stats" id="dash-stats"></div>
+    <div class="dash-card">
+      <h3>Risultati per studente</h3>
+      <div id="dash-table"></div>
+    </div>
+    <div class="dash-card">
+      <h3>Difficoltà per esercizio</h3>
+      <div id="dash-exercises"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Liceo Classico G.B. Vico — Chieti</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATI ESERCIZI
+// ═══════════════════════════════════════════════
+const EXERCISES = [
+  // ── 1. SCEGLI IL DIAGRAMMA — solo lettere ──
+  {
+    id:'diag_lett', type:'diagramma',
+    label:'Diagrammi — lettere',
+    title:'Scegli il diagramma corretto (A, E, I, O)',
+    sub:'Per ciascun sillogismo espresso con lettere, scegli il diagramma di Eulero-Venn che lo rappresenta correttamente.',
+    items:[
+      {
+        sillogismo:'Tutti gli A sono M. Tutti i B sono M. ∴ Tutti i B sono A.',
+        figura:'II figura (AAA)',
+        correct:'barbara',
+        desc_correct:'Tutti gli A sono M e tutti i B sono M: B e A sono entrambi contenuti in M. Attenzione: questo sillogismo è in realtà NON VALIDO (il termine medio non è distribuito), ma il diagramma mostra perché non funziona.',
+        options:['barbara','celarent','darii','cesare']
+      },
+      {
+        sillogismo:'Nessun M è A. Tutti i B sono M. ∴ Nessun B è A.',
+        figura:'I figura — CELARENT (EAE)',
+        correct:'celarent',
+        desc_correct:'A e M completamente disgiunti. B contenuto in M, quindi separato da A.',
+        options:['barbara','celarent','darii','ferio']
+      },
+      {
+        sillogismo:'Tutti gli M sono A. Qualche B è M. ∴ Qualche B è A.',
+        figura:'I figura — DARII (AII)',
+        correct:'darii',
+        desc_correct:'M contenuto in A. B interseca M: la parte di B che è anche M ricade dentro A.',
+        options:['barbara','celarent','darii','ferio']
+      },
+      {
+        sillogismo:'Nessun M è A. Qualche B è M. ∴ Qualche B non è A.',
+        figura:'I figura — FERIO (EIO)',
+        correct:'ferio',
+        desc_correct:'A e M completamente disgiunti. B interseca M: la parte di B che è in M è fuori da A.',
+        options:['celarent','darii','ferio','cesare']
+      },
+      {
+        sillogismo:'Tutti gli M sono A. Tutti gli M sono B. ∴ Qualche B è A.',
+        figura:'III figura — DARAPTI (AAI)',
+        correct:'darii',
+        desc_correct:'M contenuto sia in A che in B: M è nell\'intersezione di A e B, quindi A e B si sovrappongono almeno nella zona di M.',
+        options:['barbara','celarent','darii','ferio']
+      },
+      {
+        sillogismo:'Nessun A è M. Tutti i B sono M. ∴ Nessun B è A.',
+        figura:'II figura — CESARE (EAE)',
+        correct:'cesare',
+        desc_correct:'A e M completamente disgiunti (II figura: M è predicato in entrambe le premesse). B contenuto in M.',
+        options:['celarent','darii','ferio','cesare']
+      }
+    ]
+  },
+  // ── 2. SCEGLI IL DIAGRAMMA — con concetti ──
+  {
+    id:'diag_conc', type:'diagramma',
+    label:'Diagrammi — concetti',
+    title:'Scegli il diagramma corretto (con concetti)',
+    sub:'Per ciascun sillogismo espresso con termini concreti, scegli il diagramma di Eulero-Venn che lo rappresenta. A = termine maggiore, M = termine medio, B = termine minore.',
+    items:[
+      {
+        sillogismo:'Tutti i mammiferi sono vertebrati. Tutti i cani sono mammiferi. ∴ Tutti i cani sono vertebrati.',
+        figura:'I figura — BARBARA',
+        termini:'A = vertebrati, M = mammiferi, B = cani',
+        correct:'barbara',
+        desc_correct:'Cani (B) ⊂ Mammiferi (M) ⊂ Vertebrati (A): tre insiemi concentrici.',
+        options:['barbara','celarent','darii','ferio']
+      },
+      {
+        sillogismo:'Nessun rettile è un mammifero. Tutti i serpenti sono rettili. ∴ Nessun serpente è un mammifero.',
+        figura:'I figura — CELARENT',
+        termini:'A = mammiferi, M = rettili, B = serpenti',
+        correct:'celarent',
+        desc_correct:'Mammiferi (A) e Rettili (M) completamente disgiunti. Serpenti (B) contenuto in Rettili (M).',
+        options:['barbara','celarent','darii','ferio']
+      },
+      {
+        sillogismo:'Tutti i felini sono mammiferi. Qualche animale domestico è un felino. ∴ Qualche animale domestico è un mammifero.',
+        figura:'I figura — DARII',
+        termini:'A = mammiferi, M = felini, B = animali domestici',
+        correct:'darii',
+        desc_correct:'Felini (M) contenuto in Mammiferi (A). Animali domestici (B) interseca Felini (M).',
+        options:['barbara','celarent','darii','ferio']
+      },
+      {
+        sillogismo:'Nessun pesce respira aria. Qualche vertebrato è un pesce. ∴ Qualche vertebrato non respira aria.',
+        figura:'I figura — FERIO',
+        termini:'A = esseri che respirano aria, M = pesci, B = vertebrati',
+        correct:'ferio',
+        desc_correct:'Chi respira aria (A) e Pesci (M) completamente disgiunti. Vertebrati (B) interseca Pesci (M): la parte dei vertebrati che sono pesci non respira aria.',
+        options:['celarent','darii','ferio','cesare']
+      },
+      {
+        sillogismo:'Tutti i quadrati sono rettangoli. Nessun rombo è un rettangolo. ∴ Nessun rombo è un quadrato.',
+        figura:'II figura — CAMESTRES',
+        termini:'A = quadrati, M = rettangoli, B = rombi',
+        correct:'cesare',
+        desc_correct:'Rettangoli (M) è predicato in entrambe le premesse (II figura). Quadrati (A) contenuto in Rettangoli (M). Rombi (B) completamente disgiunti da Rettangoli (M), quindi anche da Quadrati (A).',
+        options:['barbara','celarent','darii','cesare']
+      },
+      {
+        sillogismo:'Nessun sofista è un filosofo. Qualche oratore è un sofista. ∴ Qualche oratore non è un filosofo.',
+        figura:'II figura — FESTINO',
+        termini:'A = filosofi, M = sofisti, B = oratori',
+        correct:'ferio',
+        desc_correct:'Filosofi (A) e Sofisti (M) completamente disgiunti. Oratori (B) interseca Sofisti (M): la parte degli oratori che sono sofisti è fuori dai filosofi.',
+        options:['celarent','darii','ferio','cesare']
+      }
+    ]
+  },
+  // ── 3. DIAGRAMMA → SILLOGISMO ──
+  {
+    id:'diag_inv', type:'inverso',
+    label:'Diagramma → Sillogismo',
+    title:'Dal diagramma al sillogismo',
+    sub:'Osserva il diagramma e scegli il sillogismo che lo rappresenta correttamente.',
+    items:[
+      {
+        tipo_svg:'barbara',
+        labelA:'A', labelM:'M', labelB:'B',
+        options:[
+          'Tutti gli M sono A. Tutti i B sono M. ∴ Tutti i B sono A.',
+          'Nessun M è A. Tutti i B sono M. ∴ Nessun B è A.',
+          'Tutti gli M sono A. Qualche B è M. ∴ Qualche B è A.',
+          'Tutti gli A sono M. Tutti i B sono M. ∴ Tutti i B sono A.'
+        ],
+        correct:'Tutti gli M sono A. Tutti i B sono M. ∴ Tutti i B sono A.'
+      },
+      {
+        tipo_svg:'celarent',
+        labelA:'Filosofi', labelM:'Sofisti', labelB:'Gorgia',
+        options:[
+          'Tutti i sofisti sono filosofi. Gorgia è un sofista. ∴ Gorgia è un filosofo.',
+          'Nessun sofista è un filosofo. Gorgia è un sofista. ∴ Gorgia non è un filosofo.',
+          'Qualche sofista è un filosofo. Gorgia è un sofista. ∴ Gorgia è un filosofo.',
+          'Nessun filosofo è un sofista. Gorgia è un filosofo. ∴ Gorgia non è un sofista.'
+        ],
+        correct:'Nessun sofista è un filosofo. Gorgia è un sofista. ∴ Gorgia non è un filosofo.'
+      },
+      {
+        tipo_svg:'darii',
+        labelA:'Vertebrati', labelM:'Mammiferi', labelB:'Animali marini',
+        options:[
+          'Tutti i mammiferi sono vertebrati. Nessun animale marino è un mammifero. ∴ Nessun animale marino è un vertebrato.',
+          'Tutti i mammiferi sono vertebrati. Qualche animale marino è un mammifero. ∴ Qualche animale marino è un vertebrato.',
+          'Tutti i vertebrati sono mammiferi. Qualche animale marino è un vertebrato. ∴ Qualche animale marino è un mammifero.',
+          'Tutti i mammiferi sono vertebrati. Tutti gli animali marini sono mammiferi. ∴ Tutti gli animali marini sono vertebrati.'
+        ],
+        correct:'Tutti i mammiferi sono vertebrati. Qualche animale marino è un mammifero. ∴ Qualche animale marino è un vertebrato.'
+      },
+      {
+        tipo_svg:'ferio',
+        labelA:'A', labelM:'M', labelB:'B',
+        options:[
+          'Tutti gli M sono A. Qualche B è M. ∴ Qualche B è A.',
+          'Nessun A è M. Tutti i B sono M. ∴ Nessun B è A.',
+          'Nessun M è A. Qualche B è M. ∴ Qualche B non è A.',
+          'Qualche M è A. Qualche B è M. ∴ Qualche B è A.'
+        ],
+        correct:'Nessun M è A. Qualche B è M. ∴ Qualche B non è A.'
+      },
+      {
+        tipo_svg:'barbara',
+        labelA:'Esseri viventi', labelM:'Animali', labelB:'Vertebrati',
+        options:[
+          'Tutti gli animali sono esseri viventi. Tutti i vertebrati sono animali. ∴ Tutti i vertebrati sono esseri viventi.',
+          'Tutti gli esseri viventi sono animali. Tutti i vertebrati sono esseri viventi. ∴ Tutti i vertebrati sono animali.',
+          'Tutti gli animali sono vertebrati. Tutti i vertebrati sono esseri viventi. ∴ Tutti gli animali sono esseri viventi.',
+          'Qualche essere vivente è un animale. Tutti i vertebrati sono animali. ∴ Qualche vertebrato è un essere vivente.'
+        ],
+        correct:'Tutti gli animali sono esseri viventi. Tutti i vertebrati sono animali. ∴ Tutti i vertebrati sono esseri viventi.'
+      }
+    ]
+  },
+  // ── 4. VALIDO O NON VALIDO con diagramma ──
+  {
+    id:'diag_valid', type:'valido_diag',
+    label:'Validità con diagramma',
+    title:'Il diagramma mostra un sillogismo valido?',
+    sub:'Per ciascuna combinazione di sillogismo e diagramma, stabilisci se il sillogismo è valido o non valido. Il diagramma ti aiuta a vedere se la conclusione segue necessariamente dalle premesse.',
+    items:[
+      {
+        tipo_svg:'barbara',
+        labelA:'Mortali', labelM:'Uomini', labelB:'Filosofi',
+        sillogismo:{mag:'Tutti gli uomini sono mortali.', min:'Tutti i filosofi sono uomini.', con:'Tutti i filosofi sono mortali.'},
+        correct:true,
+        spiegazione:'Valido. Il diagramma mostra Filosofi (B) ⊂ Uomini (M) ⊂ Mortali (A): la conclusione segue necessariamente.'
+      },
+      {
+        tipo_svg:'darii',
+        labelA:'Mammiferi', labelM:'Vertebrati', labelB:'Uccelli',
+        sillogismo:{mag:'Tutti i vertebrati sono mammiferi.', min:'Qualche uccello è un vertebrato.', con:'Qualche uccello è un mammifero.'},
+        correct:false,
+        spiegazione:'Non valido. La premessa maggiore è falsa (non tutti i vertebrati sono mammiferi), ma anche strutturalmente: il diagramma mostra che la conclusione non segue necessariamente dalla sola struttura.'
+      },
+      {
+        tipo_svg:'celarent',
+        labelA:'Pesci', labelM:'Mammiferi', labelB:'Balene',
+        sillogismo:{mag:'Nessun mammifero è un pesce.', min:'Tutte le balene sono mammiferi.', con:'Nessuna balena è un pesce.'},
+        correct:true,
+        spiegazione:'Valido. Pesci (A) e Mammiferi (M) completamente disgiunti. Balene (B) ⊂ Mammiferi (M): le balene sono necessariamente fuori dai pesci.'
+      },
+      {
+        tipo_svg:'ferio',
+        labelA:'Filosofi', labelM:'Greci', labelB:'Matematici',
+        sillogismo:{mag:'Nessun greco è un filosofo.', min:'Qualche matematico è un greco.', con:'Qualche matematico non è un filosofo.'},
+        correct:false,
+        spiegazione:'Non valido perché la premessa maggiore è falsa (molti greci erano filosofi). La struttura FERIO è formalmente valida, ma il sillogismo non è vero.'
+      },
+      {
+        tipo_svg:'cesare',
+        labelA:'Rettili', labelM:'Mammiferi', labelB:'Serpenti',
+        sillogismo:{mag:'Nessun rettile è un mammifero.', min:'Tutti i serpenti sono rettili.', con:'Nessun serpente è un mammifero.'},
+        correct:true,
+        spiegazione:'Valido. Rettili (A) e Mammiferi (M) completamente disgiunti. Serpenti (B) ⊂ Rettili (A): i serpenti sono necessariamente fuori dai mammiferi.'
+      }
+    ]
+  },
+  // ── 5. DIAGRAMMA INTERATTIVO ──
+  {
+    id:'inter2', type:'interattivo',
+    label:'Diagramma interattivo',
+    title:'Disegna il diagramma di Eulero-Venn',
+    sub:'Trascina i cerchi (A = grande, M = medio, B = piccolo) per rappresentare correttamente la relazione tra i termini del sillogismo.',
+    items:[
+      {
+        sillogismo:{mag:'Tutti i rettili sono animali a sangue freddo.', min:'Tutti i serpenti sono rettili.', con:'Tutti i serpenti sono animali a sangue freddo.'},
+        termini:{A:'Animali a sangue freddo', M:'Rettili', B:'Serpenti'},
+        tipo:'barbara',
+        istruzione:'B deve essere contenuto in M, e M deve essere contenuto in A (tre cerchi concentrici, dal più grande al più piccolo).'
+      },
+      {
+        sillogismo:{mag:'Nessun insetto è un vertebrato.', min:'Qualche animale volante è un insetto.', con:'Qualche animale volante non è un vertebrato.'},
+        termini:{A:'Vertebrati', M:'Insetti', B:'Animali volanti'},
+        tipo:'ferio',
+        istruzione:'A e M devono essere completamente separati. B deve sovrapporsi parzialmente a M (intersezione parziale).'
+      },
+      {
+        sillogismo:{mag:'Tutti i quadrati sono poligoni regolari.', min:'Qualche figura geometrica è un quadrato.', con:'Qualche figura geometrica è un poligono regolare.'},
+        termini:{A:'Poligoni regolari', M:'Quadrati', B:'Figure geometriche'},
+        tipo:'darii',
+        istruzione:'M deve essere contenuto in A. B deve sovrapporsi parzialmente a M (B è più grande di M, con una zona di intersezione).'
+      },
+      {
+        sillogismo:{mag:'Nessun mammifero è un pesce.', min:'Tutti i delfini sono mammiferi.', con:'Nessun delfino è un pesce.'},
+        termini:{A:'Pesci', M:'Mammiferi', B:'Delfini'},
+        tipo:'celarent',
+        istruzione:'A e M devono essere completamente separati. B deve essere contenuto in M.'
+      }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+// STATO
+// ═══════════════════════════════════════════════
+let studentName = '';
+let currentEx = 0;
+let scores = {};
+let pairSel = {};
+let chainSel = [];
+let dragSrcEl = null;
+
+// ═══════════════════════════════════════════════
+// UTILITY
+// ═══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+const PROF_PIN = '1970';
+function checkProfPin() {
+  const val = document.getElementById('prof-pin-input').value.trim();
+  if (val === PROF_PIN) {
+    document.getElementById('prof-pin-input').value = '';
+    document.getElementById('pin-error').style.display = 'none';
+    loadDashboard();
+  } else {
+    document.getElementById('pin-error').style.display = 'block';
+    document.getElementById('prof-pin-input').value = '';
+    document.getElementById('prof-pin-input').focus();
+  }
+}
+function norm(s) { return (s || '').toLowerCase().trim().replace(/[.,;!?]/g,''); }
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function updateDots() {
+  const c = document.getElementById('progress-dots');
+  c.innerHTML = EXERCISES.map((_, i) =>
+    `<div class="dot ${i < currentEx ? 'done' : i === currentEx ? 'current' : ''}"></div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════
+// FLUSSO STUDENTE
+// ═══════════════════════════════════════════════
+function startStudent() { showScreen('screen-student-login'); }
+
+function confirmStudentName() {
+  const v = document.getElementById('student-name-input').value.trim();
+  if (!v) { alert('Inserisci il tuo nome per continuare.'); return; }
+  studentName = v;
+  currentEx = 0;
+  scores = {};
+  const pill = document.getElementById('student-pill');
+  pill.textContent = studentName;
+  pill.style.display = 'inline-block';
+  showScreen('screen-exercises');
+  updateDots();
+  renderExercise();
+}
+
+function restartStudent() {
+  document.getElementById('student-name-input').value = '';
+  document.getElementById('student-pill').style.display = 'none';
+  document.getElementById('progress-dots').innerHTML = '';
+  showScreen('screen-role');
+}
+
+function renderExercise() {
+  const ex = EXERCISES[currentEx];
+  updateDots();
+  const c = document.getElementById('ex-container');
+  if (ex.type === 'diagramma') renderDiagramma(ex, c);
+  else if (ex.type === 'inverso') renderInverso(ex, c);
+  else if (ex.type === 'valido_diag') renderValidoDiag(ex, c);
+  else if (ex.type === 'interattivo') renderInterattivo(ex, c);
+  c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function nextEx() {
+  currentEx++;
+  if (currentEx >= EXERCISES.length) { showDone(); return; }
+  renderExercise();
+}
+
+function showDone() {
+  showScreen('screen-done');
+  const vals = Object.values(scores);
+  const avg = vals.length > 0 ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length * 100) : 0;
+  document.getElementById('score-num').textContent = avg + '%';
+  const s = avg >= 80 ? 'Ottimo lavoro!' : avg >= 50 ? 'Buon lavoro, rivedete le parti più difficili.' : 'Ripassate il materiale e riprovate.';
+  document.getElementById('done-summary').textContent = s;
+  saveToDB();
+}
+
+// ═══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════
+// SVG DIAGRAMMI EULERO-VENN
+// ═══════════════════════════════════════════════
+function svgDiagram(type, labelA, labelM, labelB, w, h) {
+  w = w || 180; h = h || 145;
+  const orange = '#c4520a', teal = '#0f6e56', gold = '#8a6a1a';
+  const sw = 2.2;
+  const fA = 'rgba(196,82,10,0.10)', fM = 'rgba(15,110,86,0.10)', fB = 'rgba(138,106,26,0.12)';
+
+  if (type === 'barbara') {
+    // B ⊂ M ⊂ A — concentric, different sizes: A=62, M=40, B=22
+    return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="88" cy="75" r="62" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="88" cy="77" r="40" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="88" cy="79" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="88" y="16" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="88" y="50" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="88" y="81" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
+    </svg>`;
+  }
+  if (type === 'celarent') {
+    // A (r=40) and M (r=48) completely disjoint; B (r=22) inside M
+    return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="38" cy="73" r="32" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="122" cy="70" r="46" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="122" cy="72" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="38" y="32" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="122" y="20" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="122" y="74" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
+    </svg>`;
+  }
+  if (type === 'darii') {
+    // M (r=36) inside A (r=62); B (r=32) partially overlaps M — B larger than M to show partial overlap clearly
+    return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="72" cy="72" r="62" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="72" cy="76" r="34" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="116" cy="76" r="36" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="22" y="24" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="60" y="76" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="130" y="50" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
+    </svg>`;
+  }
+  if (type === 'ferio') {
+    // A (r=30) and M (r=42) completely disjoint; B (r=36) partially overlaps M
+    return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="72" r="26" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="100" cy="72" r="42" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="146" cy="72" r="36" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="30" y="36" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="88" y="28" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="158" y="30" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
+    </svg>`;
+  }
+  if (type === 'ferio_wrong') {
+    // Wrong: A overlaps M; B inside M — clearly different from correct ferio
+    return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="56" cy="72" r="42" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="104" cy="72" r="42" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="110" cy="76" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="30" y="24" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="118" y="22" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="110" y="78" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
+    </svg>`;
+  }
+  if (type === 'cesare') {
+    // II figura: A (r=34) disjoint from M (r=46); B (r=20) inside M
+    return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="36" cy="73" r="30" fill="${fA}" stroke="${orange}" stroke-width="${sw}"/>
+      <circle cx="122" cy="70" r="46" fill="${fM}" stroke="${teal}" stroke-width="${sw}"/>
+      <circle cx="122" cy="72" r="20" fill="${fB}" stroke="${gold}" stroke-width="${sw}"/>
+      <text x="36" y="34" text-anchor="middle" font-size="12" fill="${orange}" font-weight="600" font-family="sans-serif">${labelA||'A'}</text>
+      <text x="122" y="20" text-anchor="middle" font-size="12" fill="${teal}" font-weight="600" font-family="sans-serif">${labelM||'M'}</text>
+      <text x="122" y="74" text-anchor="middle" font-size="11" fill="${gold}" font-weight="600" font-family="sans-serif">${labelB||'B'}</text>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+    <text x="90" y="70" text-anchor="middle" font-size="13" fill="#999">—</text></svg>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 1 & 2: DIAGRAMMA (scelta) — riusato anche per concetti
+// ═══════════════════════════════════════════════
+let diagSel = {};
+function renderDiagramma(ex, c) {
+  diagSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="margin-bottom:8px;padding:8px 14px;background:var(--bg);border-radius:var(--radius);font-size:13px;font-style:italic">
+            ${it.sillogismo}
+            ${it.termini ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px;font-style:normal">${it.termini}</div>` : ''}
+            <div style="font-size:11px;color:var(--orange);margin-top:2px;font-style:normal">${it.figura}</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+            ${it.options.map((dtype, j) => `
+              <div id="dg-${i}-${j}" onclick="selDiag(${i},${j},this)"
+                style="cursor:pointer;border:2px solid var(--border);border-radius:var(--radius-lg);padding:8px;text-align:center;transition:border-color 0.15s;background:var(--surface)">
+                ${svgDiagram(dtype,'A','M','B',160,130)}
+                <div style="font-size:10px;color:var(--text-muted);margin-top:4px">${String.fromCharCode(65+j)}</div>
+              </div>`).join('')}
+          </div>
+          <div class="feedback" id="dg-fb-${i}" style="margin-top:10px"></div>
+        </div>`).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkDiagramma()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selDiag(i, j, el) {
+  diagSel[i] = j;
+  const ex = EXERCISES[currentEx];
+  ex.items[i].options.forEach((_, k) => {
+    const d = document.getElementById('dg-'+i+'-'+k);
+    if (d) { d.style.borderColor = 'var(--border)'; d.style.background = 'var(--surface)'; }
+  });
+  el.style.borderColor = 'var(--orange)';
+  el.style.background = 'var(--orange-light)';
+}
+function checkDiagramma() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = diagSel[i];
+    const correctIdx = it.options.indexOf(it.correct);
+    const isOk = sel === correctIdx;
+    if (isOk) ok++;
+    it.options.forEach((dtype, j) => {
+      const d = document.getElementById('dg-'+i+'-'+j);
+      if (!d) return;
+      d.style.pointerEvents = 'none';
+      if (j === correctIdx) { d.style.borderColor = 'var(--teal)'; d.style.background = 'var(--teal-light)'; }
+      else if (j === sel && !isOk) { d.style.borderColor = 'var(--red)'; d.style.background = 'var(--red-light)'; }
+    });
+    const fb = document.getElementById('dg-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = isOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = (isOk ? '✓ Corretto! ' : '✗ Non corretto. ') + it.desc_correct;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 3: DAL DIAGRAMMA AL SILLOGISMO
+// ═══════════════════════════════════════════════
+let invSel = {};
+function renderInverso(ex, c) {
+  invSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => {
+        const opts = shuffle(it.options);
+        return `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="display:flex;justify-content:center;margin-bottom:12px">
+            ${svgDiagram(it.tipo_svg, it.labelA, it.labelM, it.labelB, 200, 155)}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            ${opts.map(o => `
+              <div id="inv-${i}-${o.replace(/[\s'.,∴]/g,'_').substring(0,25)}"
+                onclick="selInv(${i},'${o.replace(/'/g,"\\'").replace(/"/g,'&quot;')}',this)"
+                style="cursor:pointer;border:1px solid var(--border);border-radius:var(--radius);padding:9px 14px;font-size:13px;transition:0.15s;background:var(--surface)">${o}</div>`).join('')}
+          </div>
+          <div class="feedback" id="inv-fb-${i}" style="margin-top:8px"></div>
+        </div>`;
+      }).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkInverso()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selInv(i, val, el) {
+  invSel[i] = val;
+  const it = EXERCISES[currentEx].items[i];
+  it.options.forEach(o => {
+    const d = document.getElementById('inv-'+i+'-'+o.replace(/[\s'.,∴]/g,'_').substring(0,25));
+    if (d) { d.style.borderColor = 'var(--border)'; d.style.background = 'var(--surface)'; }
+  });
+  el.style.borderColor = 'var(--orange)';
+  el.style.background = 'var(--orange-light)';
+}
+function checkInverso() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = invSel[i];
+    const isOk = sel === it.correct;
+    if (isOk) ok++;
+    it.options.forEach(o => {
+      const d = document.getElementById('inv-'+i+'-'+o.replace(/[\s'.,∴]/g,'_').substring(0,25));
+      if (!d) return;
+      d.style.pointerEvents = 'none';
+      if (o === it.correct) { d.style.borderColor = 'var(--teal)'; d.style.background = 'var(--teal-light)'; }
+      else if (o === sel && !isOk) { d.style.borderColor = 'var(--red)'; d.style.background = 'var(--red-light)'; }
+    });
+    const fb = document.getElementById('inv-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = isOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = isOk
+      ? `✓ Corretto!`
+      : `✗ Il sillogismo corretto era: <strong>${it.correct}</strong>`;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// ESERCIZIO 4: VALIDO O NON VALIDO CON DIAGRAMMA
+// ═══════════════════════════════════════════════
+let validDiagSel = {};
+function renderValidoDiag(ex, c) {
+  validDiagSel = {};
+  c.innerHTML = `
+    <div class="ex-card">
+      <div class="ex-label">${ex.label} — Esercizio ${currentEx + 1} di ${EXERCISES.length}</div>
+      <h2 class="ex-title">${ex.title}</h2>
+      <p class="ex-sub">${ex.sub}</p>
+      ${ex.items.map((it, i) => `
+        <div style="padding:14px 0;border-bottom:1px solid var(--border);${i===ex.items.length-1?'border-bottom:none':''}">
+          <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px">
+            <div style="flex-shrink:0">
+              ${svgDiagram(it.tipo_svg, it.labelA, it.labelM, it.labelB, 170, 140)}
+            </div>
+            <div style="flex:1;min-width:180px;font-size:13px">
+              <div style="padding:5px 12px;background:var(--bg);border-radius:var(--radius);margin-bottom:3px">${it.sillogismo.mag}</div>
+              <div style="padding:5px 12px;background:var(--bg);border-radius:var(--radius);margin-bottom:3px">${it.sillogismo.min}</div>
+              <div style="padding:5px 12px;background:var(--teal-light);border-radius:var(--radius)">∴ ${it.sillogismo.con}</div>
+            </div>
+          </div>
+          <div class="choices">
+            <button class="choice-btn" id="vd-${i}-si" onclick="selValidDiag(${i},true,this)">✓ Valido</button>
+            <button class="choice-btn" id="vd-${i}-no" onclick="selValidDiag(${i},false,this)">✗ Non valido</button>
+          </div>
+          <div class="feedback" id="vd-fb-${i}" style="margin-top:8px"></div>
+        </div>`).join('')}
+      <div class="ex-nav">
+        <button class="btn btn-primary" id="verify-btn" onclick="checkValidoDiag()">Verifica →</button>
+      </div>
+    </div>`;
+}
+function selValidDiag(i, val, btn) {
+  validDiagSel[i] = val;
+  document.getElementById('vd-'+i+'-si').classList.toggle('selected', val === true);
+  document.getElementById('vd-'+i+'-no').classList.toggle('selected', val === false);
+}
+function checkValidoDiag() {
+  const ex = EXERCISES[currentEx];
+  let ok = 0;
+  ex.items.forEach((it, i) => {
+    const sel = validDiagSel[i];
+    const isOk = sel === it.correct;
+    if (isOk) ok++;
+    const siBtn = document.getElementById('vd-'+i+'-si');
+    const noBtn = document.getElementById('vd-'+i+'-no');
+    siBtn.disabled = true; noBtn.disabled = true;
+    if (it.correct === true) siBtn.classList.add('correct'); else noBtn.classList.add('correct');
+    if (!isOk) {
+      if (sel === true) siBtn.classList.add('wrong');
+      if (sel === false) noBtn.classList.add('wrong');
+    }
+    [siBtn, noBtn].forEach(b => b.classList.remove('selected'));
+    const fb = document.getElementById('vd-fb-'+i);
+    fb.style.display = 'block';
+    fb.className = isOk ? 'feedback correct' : 'feedback wrong';
+    fb.innerHTML = (isOk ? '✓ Corretto! ' : '✗ ') + it.spiegazione;
+  });
+  scores[ex.id] = ok / ex.items.length;
+  saveToDB();
+  document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
+}
+
+// ═══════════════════════════════════════════════
+// FIREBASE — SALVATAGGIO E DASHBOARD
+// ═══════════════════════════════════════════════
+
+async function saveToDB() {
+  if (!window._dbReady) {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject('Firebase timeout'), 5000);
+      document.addEventListener('firebase-ready', () => { clearTimeout(timeout); resolve(); }, { once: true });
+    }).catch(e => { console.warn('saveToDB: ' + e); return null; });
+    if (!window._dbReady) return;
+  }
+  const key = fbKey(studentName);
+  const data = { name: studentName, scores, completed: currentEx, total: EXERCISES.length, ts: Date.now() };
+  try { await window._fbSet('studenti_sillogismo3/' + key, data); } catch(e) { console.warn('Firebase write error', e); }
+}
+
+function fbKey(name) {
+  // Chiave sicura per Firebase (no punti, slash, etc.)
+  return name.replace(/[.#$/\[\]]/g, '_').replace(/\s+/g, '_');
+}
+
+// Ascoltatore in tempo reale per la dashboard
+let _dashUnsubscribe = null;
+
+function loadDashboard() {
+  showScreen('screen-dashboard');
+  document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">⏳ Caricamento dati...</p>';
+
+  if (!window._dbReady) {
+    document.addEventListener('firebase-ready', () => startDashListener(), { once: true });
+  } else {
+    startDashListener();
+  }
+}
+
+function startDashListener() {
+  // Rimuovi listener precedente se esiste
+  if (_dashUnsubscribe) { _dashUnsubscribe(); _dashUnsubscribe = null; }
+
+  // Ascolta in tempo reale — si aggiorna automaticamente quando arrivano nuovi dati
+  _dashUnsubscribe = window._fbListen('studenti_sillogismo3', (data) => {
+    if (!data) { renderDash([]); return; }
+    const students = Object.values(data);
+    renderDash(students);
+  });
+}
+
+function renderDash(students) {
+  const total = students.length;
+  const completed = students.filter(s => s.completed >= s.total - 1).length;
+  const avgAll = total > 0 ? Math.round(students.reduce((acc, s) => {
+    const vals = Object.values(s.scores || {});
+    return acc + (vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0);
+  }, 0) / total * 100) : 0;
+
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Studenti</div></div>
+    <div class="stat-card"><div class="stat-num">${completed}</div><div class="stat-lbl">Completati</div></div>
+    <div class="stat-card"><div class="stat-num">${avgAll}%</div><div class="stat-lbl">Media classe</div></div>`;
+
+  if (!total) {
+    document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">Nessun dato ancora. In attesa che gli studenti si colleghino...</p>';
+    document.getElementById('dash-exercises').innerHTML = '';
+    return;
+  }
+
+  const exLabels = {
+    diag_lett:'Diagrammi — lettere',
+    diag_conc:'Diagrammi — concetti',
+    diag_inv:'Diagramma → sillogismo',
+    diag_valid:'Validità con diagramma',
+    inter2:'Diagramma interattivo'
+  };
+
+  // Ordina per cognome
+  students.sort((a,b) => a.name.localeCompare(b.name));
+
+  const rows = students.map(s => {
+    const vals = Object.values(s.scores || {});
+    const avg = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*100) : 0;
+    const prog = Math.round((s.completed||0) / (s.total||EXERCISES.length) * 100);
+    const badgeClass = avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : vals.length > 0 ? 'badge-low' : 'badge-none';
+    const ts = s.ts ? new Date(s.ts).toLocaleTimeString('it-IT', {hour:'2-digit',minute:'2-digit'}) : '—';
+    return `<tr>
+      <td style="font-weight:500">${s.name}</td>
+      <td>${s.completed||0} / ${s.total||EXERCISES.length}</td>
+      <td><div class="pbar-wrap"><div class="pbar-fill" style="width:${prog}%"></div></div></td>
+      <td><span class="badge ${badgeClass}">${vals.length > 0 ? avg+'%' : '—'}</span></td>
+      <td style="color:var(--text-faint);font-size:12px">${ts}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('dash-table').innerHTML = `
+    <table>
+      <thead><tr><th>Studente</th><th>Progresso</th><th>Completamento</th><th>Media</th><th>Ultimo aggiorn.</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  const exRows = EXERCISES.map(ex => {
+    const results = students.map(s => (s.scores||{})[ex.id]).filter(v => v !== undefined);
+    const avg = results.length ? Math.round(results.reduce((a,b)=>a+b,0)/results.length*100) : null;
+    const fill = avg ?? 0;
+    const badgeClass = avg === null ? 'badge-none' : avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : 'badge-low';
+    return `<div class="ex-bar-row">
+      <span class="ex-bar-name">${exLabels[ex.id]||ex.id}</span>
+      <div class="ex-bar-wrap"><div class="ex-bar-fill" style="width:${fill}%"></div></div>
+      <span class="badge ${badgeClass}" style="min-width:44px;text-align:center">${avg===null?'—':avg+'%'}</span>
+      <span style="font-size:11px;color:var(--text-faint)">(${results.length} risp.)</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('dash-exercises').innerHTML = exRows;
+}
+
+async function clearData() {
+  if (!confirm('Azzerare tutti i dati degli studenti da Firebase?')) return;
+  try {
+    await window._fbRemove('studenti_sillogismo3');
+    renderDash([]);
+  } catch(e) { alert('Errore durante l\'eliminazione dei dati.'); }
+}
+</script>
+</body>
+</html>
