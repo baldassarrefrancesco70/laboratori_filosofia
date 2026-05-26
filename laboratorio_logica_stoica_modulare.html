@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio — La Logica Stoica · Percorso modulare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14202a;
+    --bg-deep: #0e1820;
+    --panel: #1c2c38;
+    --panel-light: #243643;
+    --border: #314654;
+    --border-soft: #2a3c48;
+    --text: #e8e2d4;
+    --text-dim: #a9b4bc;
+    --text-faint: #74828c;
+    --orange: #d98a4b;
+    --orange-soft: #e3a877;
+    --teal: #4ca0a0;
+    --teal-soft: #7bc0c0;
+    --gold: #d4af52;
+    --gold-soft: #e6c97e;
+    --green: #5fae6b;
+    --red: #c8584f;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 18% 0%, rgba(76,160,160,0.10) 0%, transparent 55%),
+      radial-gradient(ellipse at 88% 12%, rgba(217,138,75,0.10) 0%, transparent 55%);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 32px 18px 80px;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  /* ---------- Header ---------- */
+  header { text-align: center; margin-bottom: 30px; }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal-soft);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(30px, 6vw, 46px);
+    line-height: 1.12;
+    color: var(--text);
+  }
+
+  h1 .accent { color: var(--orange-soft); font-style: italic; }
+
+  .lede {
+    margin: 14px auto 0;
+    max-width: 640px;
+    color: var(--text-dim);
+    font-size: 16px;
+  }
+
+  /* ---------- Identity gate ---------- */
+  .gate {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+    margin-bottom: 26px;
+  }
+
+  .gate h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .gate p { color: var(--text-dim); font-size: 14px; margin-bottom: 16px; }
+
+  .field-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  input[type="text"] {
+    flex: 1;
+    min-width: 180px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(76,160,160,0.16);
+  }
+
+  button {
+    font-family: var(--sans);
+    cursor: pointer;
+    border: none;
+    transition: transform .08s ease, filter .15s ease, background .15s ease;
+  }
+  button:active { transform: translateY(1px); }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #1a120a;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 22px;
+    border-radius: 9px;
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--teal-soft);
+    border: 1px solid var(--border);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 9px;
+  }
+  .btn-ghost:hover { background: var(--panel-light); }
+
+  /* ---------- Module rail ---------- */
+  .module-rail {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .module-chip {
+    flex: 1;
+    min-width: 130px;
+    background: var(--panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 9px;
+    padding: 9px 12px;
+    font-size: 12px;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color .25s ease, color .25s ease;
+  }
+  .module-chip .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background .25s ease;
+  }
+  .module-chip.active {
+    border-color: var(--orange);
+    color: var(--orange-soft);
+  }
+  .module-chip.active .dot { background: var(--orange); }
+  .module-chip.done {
+    border-color: var(--teal);
+    color: var(--teal-soft);
+  }
+  .module-chip.done .dot { background: var(--teal); }
+
+  /* ---------- Progress ---------- */
+  .progress-bar {
+    display: flex;
+    gap: 6px;
+    margin: 0 0 24px;
+  }
+  .progress-bar .seg {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--border-soft);
+    transition: background .3s ease;
+  }
+  .progress-bar .seg.done { background: var(--teal); }
+  .progress-bar .seg.active { background: var(--orange); }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 26px;
+    margin-bottom: 22px;
+  }
+
+  .card.theory { border-left: 3px solid var(--teal); }
+  .card.exercise { border-left: 3px solid var(--orange); }
+
+  .card-tag {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .card.theory .card-tag { color: var(--teal-soft); }
+  .card.exercise .card-tag { color: var(--orange-soft); }
+
+  .card h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .module-banner {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold-soft);
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+
+  .card p { margin-bottom: 12px; color: var(--text-dim); }
+  .card p:last-child { margin-bottom: 0; }
+  .card strong { color: var(--text); font-weight: 600; }
+  .card em { color: var(--gold-soft); }
+
+  .greek { font-style: italic; color: var(--gold-soft); }
+
+  .schema-list {
+    list-style: none;
+    margin: 14px 0;
+    display: grid;
+    gap: 10px;
+  }
+  .schema-list li {
+    background: var(--bg-deep);
+    border: 1px solid var(--border-soft);
+    border-radius: 9px;
+    padding: 12px 16px;
+    font-size: 14.5px;
+  }
+  .schema-list .name { color: var(--orange-soft); font-weight: 600; }
+  .schema-list .formula {
+    font-family: 'Source Sans 3', monospace;
+    color: var(--teal-soft);
+    background: rgba(76,160,160,0.10);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .next-up {
+    margin-top: 16px;
+    background: var(--bg-deep);
+    border: 1px dashed var(--border);
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 13.5px;
+    color: var(--text-faint);
+  }
+  .next-up strong { color: var(--orange-soft); }
+
+  /* ---------- Exercise prompt ---------- */
+  .prompt {
+    background: var(--bg-deep);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    font-size: 15.5px;
+  }
+  .prompt .quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text);
+  }
+
+  .question { font-weight: 600; color: var(--text); margin-bottom: 14px; }
+
+  /* ---------- Options (multiple choice) ---------- */
+  .options { display: grid; gap: 10px; }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text);
+    transition: border-color .12s ease, background .12s ease;
+    text-align: left;
+    width: 100%;
+  }
+  .opt:hover { border-color: var(--teal); background: var(--panel-light); }
+  .opt .marker {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 700;
+    color: var(--text-faint);
+    margin-top: 1px;
+  }
+  .opt.selected { border-color: var(--orange); background: rgba(217,138,75,0.10); }
+  .opt.selected .marker { border-color: var(--orange); color: var(--orange); }
+  .opt.correct { border-color: var(--green); background: rgba(95,174,107,0.13); }
+  .opt.correct .marker { border-color: var(--green); background: var(--green); color: #11210f; }
+  .opt.wrong { border-color: var(--red); background: rgba(200,88,79,0.13); }
+  .opt.wrong .marker { border-color: var(--red); background: var(--red); color: #2a0f0d; }
+  .opt.locked { cursor: default; }
+  .opt.locked:hover { background: var(--bg-deep); }
+  .opt.locked.selected:hover { background: rgba(217,138,75,0.10); }
+  .opt.correct.locked:hover { background: rgba(95,174,107,0.13); }
+  .opt.wrong.locked:hover { background: rgba(200,88,79,0.13); }
+
+  /* ---------- multi-select hint ---------- */
+  .ms-hint {
+    font-size: 13px;
+    color: var(--text-faint);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .opt .marker.box { border-radius: 5px; }
+
+  /* ---------- Pair selection ---------- */
+  .pairs { display: grid; gap: 10px; }
+  .pair-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .pair-opt {
+    flex: 1;
+    min-width: 140px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14.5px;
+    color: var(--text);
+    cursor: pointer;
+    text-align: center;
+  }
+  .pair-opt:hover { border-color: var(--teal); }
+  .pair-opt.selected { border-color: var(--orange); background: rgba(217,138,75,0.10); color: var(--orange-soft); }
+  .pair-opt.correct { border-color: var(--green); background: rgba(95,174,107,0.13); }
+  .pair-opt.wrong { border-color: var(--red); background: rgba(200,88,79,0.13); }
+  .pair-label {
+    font-size: 13px;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+
+  /* ---------- Drag & drop ---------- */
+  .dnd-zone { display: grid; gap: 10px; }
+  .dnd-item {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    cursor: grab;
+    font-size: 15px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .dnd-item:active { cursor: grabbing; }
+  .dnd-item.dragging { opacity: .4; }
+  .dnd-item.over { border-color: var(--orange); }
+  .dnd-handle { color: var(--text-faint); font-size: 18px; line-height: 1; }
+  .dnd-num {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: var(--panel-light);
+    color: var(--teal-soft);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Truth table ---------- */
+  table.truth {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  table.truth th, table.truth td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: center;
+  }
+  table.truth th {
+    background: var(--panel-light);
+    color: var(--teal-soft);
+    font-weight: 600;
+  }
+  table.truth td.given { color: var(--text-dim); }
+  .tv-toggle {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 7px;
+    padding: 6px 14px;
+    font-weight: 700;
+    font-size: 14px;
+    min-width: 48px;
+  }
+  .tv-toggle:hover { border-color: var(--teal); }
+  .tv-toggle.set-v { color: var(--green); border-color: var(--green); }
+  .tv-toggle.set-f { color: var(--red); border-color: var(--red); }
+
+  /* ---------- Open text ---------- */
+  textarea {
+    width: 100%;
+    min-height: 90px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    padding: 13px 15px;
+    resize: vertical;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(76,160,160,0.16);
+  }
+
+  /* ---------- Feedback ---------- */
+  .feedback {
+    margin-top: 16px;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: rgba(95,174,107,0.12); border: 1px solid rgba(95,174,107,0.4); }
+  .feedback.no { background: rgba(200,88,79,0.12); border: 1px solid rgba(200,88,79,0.4); }
+  .feedback.neutral { background: rgba(76,160,160,0.10); border: 1px solid rgba(76,160,160,0.34); }
+  .feedback .fb-head { font-weight: 700; margin-bottom: 4px; }
+  .feedback.ok .fb-head { color: var(--green); }
+  .feedback.no .fb-head { color: var(--red); }
+  .feedback.neutral .fb-head { color: var(--teal-soft); }
+  .feedback .ref { color: var(--text-dim); }
+  .feedback .ref strong { color: var(--gold-soft); }
+
+  /* ---------- Card actions ---------- */
+  .card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .step-label { font-size: 13px; color: var(--text-faint); }
+
+  /* ---------- Final ---------- */
+  .final {
+    text-align: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 26px;
+  }
+  .final h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .score-big {
+    font-family: var(--serif);
+    font-size: 56px;
+    color: var(--orange-soft);
+    margin: 14px 0 4px;
+  }
+  .score-sub { color: var(--text-dim); margin-bottom: 20px; }
+  .module-recap {
+    display: grid;
+    gap: 8px;
+    max-width: 420px;
+    margin: 0 auto 8px;
+    text-align: left;
+  }
+  .module-recap .mr-row {
+    display: flex;
+    justify-content: space-between;
+    background: var(--bg-deep);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 9px 13px;
+    font-size: 14px;
+  }
+  .module-recap .mr-row .mr-name { color: var(--text-dim); }
+  .module-recap .mr-row .mr-score { color: var(--teal-soft); font-weight: 600; }
+  .save-state { font-size: 13px; color: var(--text-faint); margin-top: 14px; }
+
+  /* ---------- Dashboard ---------- */
+  .dash-link {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 13px;
+  }
+  .dash-link a { color: var(--text-faint); text-decoration: underline; cursor: pointer; }
+  .dash-link a:hover { color: var(--teal-soft); }
+
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,14,18,0.82);
+    z-index: 50;
+    padding: 28px 16px;
+    overflow-y: auto;
+  }
+  .modal-backdrop.show { display: block; }
+  .modal {
+    max-width: 760px;
+    margin: 20px auto;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .modal h2 { font-family: var(--serif); font-size: 22px; margin-bottom: 16px; }
+  .modal-close {
+    float: right;
+    background: var(--panel-light);
+    color: var(--text-dim);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  table.dash {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  table.dash th, table.dash td {
+    border-bottom: 1px solid var(--border-soft);
+    padding: 9px 10px;
+    text-align: left;
+  }
+  table.dash th { color: var(--teal-soft); font-weight: 600; }
+  table.dash td.num { text-align: center; font-weight: 600; }
+
+  .hidden { display: none !important; }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 12px;
+    color: var(--text-faint);
+    font-style: italic;
+    font-family: var(--serif);
+  }
+
+  @media (max-width: 560px) {
+    .card { padding: 20px; }
+    h1 { font-size: 30px; }
+    .module-chip { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Laboratorio di Filosofia · Liceo Classico "G.B. Vico"</div>
+    <h1>La Logica <span class="accent">Stoica</span></h1>
+    <p class="lede">Percorso modulare: ogni concetto viene prima spiegato e poi messo subito alla prova. Quattro moduli, dalla teoria del significato ai paradossi.</p>
+  </header>
+
+  <!-- ============ IDENTITY GATE ============ -->
+  <div class="gate" id="gate">
+    <h2>Prima di iniziare</h2>
+    <p>Inserisci nome e cognome: i tuoi risultati verranno raccolti per la revisione in classe.</p>
+    <div class="field-row">
+      <input type="text" id="nameInput" placeholder="Nome e cognome" autocomplete="name">
+      <button class="btn-primary" id="startBtn" disabled>Inizia il laboratorio</button>
+    </div>
+  </div>
+
+  <!-- ============ LAB BODY ============ -->
+  <div id="labBody" class="hidden">
+    <div class="module-rail" id="moduleRail"></div>
+    <div class="progress-bar" id="progressBar"></div>
+    <div id="stepContainer"></div>
+  </div>
+
+  <div class="dash-link">
+    <a id="dashOpen">Area docente</a>
+  </div>
+
+  <p class="footer-note">«Se le premesse di partenza sono vere, la conclusione sarà infallibilmente vera.»</p>
+</div>
+
+<!-- ============ DASHBOARD MODAL ============ -->
+<div class="modal-backdrop" id="dashModal">
+  <div class="modal">
+    <button class="modal-close" id="dashClose">Chiudi</button>
+    <div id="dashGate">
+      <h2>Area docente</h2>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">Inserisci il PIN per visualizzare i risultati della classe.</p>
+      <div class="field-row">
+        <input type="text" id="pinInput" placeholder="PIN" inputmode="numeric">
+        <button class="btn-primary" id="pinBtn">Entra</button>
+      </div>
+      <p id="pinErr" style="color:var(--red);font-size:13px;margin-top:10px;display:none;">PIN errato.</p>
+    </div>
+    <div id="dashContent" class="hidden">
+      <h2>Risultati · La Logica Stoica (modulare)</h2>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:8px;" id="dashCount"></p>
+      <div style="overflow-x:auto;">
+        <table class="dash" id="dashTable"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FIREBASE ============ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",
+  authDomain: "laboratorio-vico.firebaseapp.com",
+  databaseURL: "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "laboratorio-vico",
+  storageBucket: "laboratorio-vico.firebasestorage.app",
+  messagingSenderId: "551766473976",
+  appId: "1:551766473976:web:190c0907ce2987e2d78f0d"
+};
+
+const DB_PATH = "studenti_stoici2";
+
+let db = null;
+let fbReady = false;
+try {
+  const app = initializeApp(firebaseConfig);
+  db = getDatabase(app);
+  fbReady = true;
+} catch (e) {
+  console.error("Firebase init error:", e);
+}
+
+window.__fb = {
+  ready: () => fbReady,
+  save: async (name, payload) => {
+    if (!fbReady) throw new Error("Firebase non inizializzato");
+    const key = name.trim().replace(/[.#$\[\]\/]/g, "_").replace(/\s+/g, "_");
+    await set(ref(db, `${DB_PATH}/${key}`), payload);
+  },
+  loadAll: async () => {
+    if (!fbReady) throw new Error("Firebase non inizializzato");
+    const snap = await get(child(ref(db), DB_PATH));
+    return snap.exists() ? snap.val() : {};
+  }
+};
+window.dispatchEvent(new Event("fb-ready-check"));
+</script>
+
+<!-- ============ APP LOGIC ============ -->
+<script>
+(function () {
+  "use strict";
+
+  const PIN = "1970";
+
+  /* ---------------------------------------------------------------
+     MODULES — each module: a theory step followed by its exercises.
+     The "module" field groups steps so the rail can track progress.
+  --------------------------------------------------------------- */
+  const MODULES = [
+    { id: "m1", name: "Significato" },
+    { id: "m2", name: "Connettivi" },
+    { id: "m3", name: "Indimostrabili" },
+    { id: "m4", name: "Fallacie e paradossi" }
+  ];
+
+  /* ---------------------------------------------------------------
+     STEPS — ordered. Theory and exercises interleaved by module.
+  --------------------------------------------------------------- */
+  const STEPS = [
+
+    /* ============ MODULO 1 — SIGNIFICATO ============ */
+    {
+      module: "m1",
+      type: "theory",
+      tag: "Modulo 1 · Teoria",
+      title: "La logica come scienza dei discorsi",
+      html: `
+        <p>I Romani chiamarono <strong>stoica</strong> la logica elaborata da <strong>Zenone di Cizio</strong> e sviluppata soprattutto da <strong>Crisippo</strong>. Per gli Stoici la logica è la <em>scienza dei discorsi</em>: si divide in retorica (i discorsi continui) e dialettica (i discorsi divisi, fatti di domanda e risposta).</p>
+        <p>Al cuore della dialettica c'è una <strong>teoria del significato</strong> che distingue tre piani:</p>
+        <ul class="schema-list">
+          <li><span class="name">Significante</span> — la parola, nella sua forma sonora o grafica.</li>
+          <li><span class="name">Significato</span> — la rappresentazione mentale evocata dalla parola.</li>
+          <li><span class="name">Oggetto</span> — la cosa reale a cui la parola si riferisce.</li>
+        </ul>
+        <p>Pronuncio la parola «cane»: il <em>significante</em> è il suono; il <em>significato</em> è l'immagine di cane che si forma nella mente; l'<em>oggetto</em> è l'animale concreto che abbaia nel cortile.</p>
+        <div class="next-up">Ora la prova: <strong>2 esercizi</strong> sulla teoria del significato.</div>
+      `
+    },
+    {
+      module: "m1",
+      type: "mc",
+      tag: "Modulo 1 · Esercizio 1",
+      title: "I tre piani del significato",
+      promptHtml: `<p>Indico a un amico un albero e dico la parola <strong>«quercia»</strong>. L'albero reale, in carne, foglie e radici, che entrambi guardiamo, corrisponde al piano detto:</p>`,
+      question: "Quel piano è:",
+      options: [
+        { t: "Il significante", correct: false },
+        { t: "Il significato", correct: false },
+        { t: "L'oggetto", correct: true },
+        { t: "Il connettivo", correct: false }
+      ],
+      explainOk: "Esatto. L'oggetto è la cosa reale a cui la parola rinvia: la quercia concreta.",
+      explainNo: "Il significante è la parola come suono; il significato è l'immagine mentale di quercia. La quercia reale che osservate è l'oggetto.",
+      ref: "Riferimento: <strong>Modulo 1</strong> — significante / significato / oggetto."
+    },
+    {
+      module: "m1",
+      type: "pairs",
+      tag: "Modulo 1 · Esercizio 2",
+      title: "Significante o significato?",
+      intro: "Per ciascuna situazione, scegli il piano della teoria del significato a cui si riferisce.",
+      rows: [
+        {
+          label: "Due persone parlano lingue diverse: una dice «cane», l'altra «dog», ma pensano alla stessa identica idea di animale.",
+          left: "Hanno lo stesso significante",
+          right: "Hanno lo stesso significato",
+          correct: "right"
+        },
+        {
+          label: "La parola scritta «riso» può indicare sia il cereale sia l'atto di ridere.",
+          left: "Un significante per due significati",
+          right: "Un significato per due significanti",
+          correct: "left"
+        }
+      ],
+      explainOk: "Corretto. Hai distinto bene il segno (significante) dal concetto (significato).",
+      explainNo: "Ricorda: il significante è la parola-segno; il significato è il concetto mentale. Lingue diverse usano significanti diversi per lo stesso significato; una stessa parola-segno può veicolare significati diversi.",
+      ref: "Riferimento: <strong>Modulo 1</strong> — la distinzione fra segno e concetto."
+    },
+
+    /* ============ MODULO 2 — CONNETTIVI ============ */
+    {
+      module: "m2",
+      type: "theory",
+      tag: "Modulo 2 · Teoria",
+      title: "Proposizioni e connettivi",
+      html: `
+        <p>A differenza della logica aristotelica — che analizza i <em>termini</em> interni alla proposizione (soggetto e predicato) — la logica stoica è una <strong>logica proposizionale</strong>: ragiona su proposizioni intere.</p>
+        <p>L'unità di base è la <strong>proposizione semplice</strong> (in greco <span class="greek">ἀξίωμα</span>): un enunciato atomico che può essere soltanto vero o falso. Le proposizioni semplici si combinano in <strong>proposizioni composte</strong> tramite i <strong>connettivi</strong>, di cui la logica stoica studia le funzioni di verità:</p>
+        <ul class="schema-list">
+          <li><span class="name">Condizionale</span> — «se… allora…»: lega una condizione a una conseguenza.</li>
+          <li><span class="name">Congiuntiva</span> — «e… e…»: afferma insieme due proposizioni.</li>
+          <li><span class="name">Disgiuntiva</span> — «o… o…»: per gli Stoici in senso <em>esclusivo</em> — una sola alternativa è vera.</li>
+          <li><span class="name">Negazione</span> — «non…»: rovescia il valore di verità.</li>
+        </ul>
+        <p>La disgiuntiva esclusiva è il caso più delicato: «o è giorno o è notte» è vera solo se <em>esattamente una</em> delle due vale.</p>
+        <div class="next-up">Ora la prova: <strong>2 esercizi</strong> sui connettivi e le funzioni di verità.</div>
+      `
+    },
+    {
+      module: "m2",
+      type: "classify",
+      tag: "Modulo 2 · Esercizio 1",
+      title: "Riconosci il connettivo",
+      intro: "Per ciascuna proposizione composta, individua il connettivo logico che la struttura.",
+      categories: ["Condizionale", "Congiuntiva", "Disgiuntiva"],
+      items: [
+        { t: "«O Crisippo ha ragione o ha ragione Aristotele.»", cat: "Disgiuntiva" },
+        { t: "«Se il saggio è coerente, allora è felice.»", cat: "Condizionale" },
+        { t: "«Zenone insegnava sotto il portico e raccoglieva discepoli.»", cat: "Congiuntiva" },
+        { t: "«O dici il vero o dici il falso.»", cat: "Disgiuntiva" }
+      ],
+      explainOk: "Tutto corretto. Hai distinto il «se… allora…», l'«e… e…» e l'«o… o…».",
+      explainNo: "Rivedi: il condizionale lega condizione e conseguenza; la congiuntiva afferma insieme; la disgiuntiva pone alternative reciprocamente escludentisi.",
+      ref: "Riferimento: <strong>Modulo 2</strong> — i connettivi logici."
+    },
+    {
+      module: "m2",
+      type: "truth",
+      tag: "Modulo 2 · Esercizio 2",
+      title: "La tavola della congiunzione",
+      intro: "La proposizione <strong>congiuntiva</strong> «p e q» è vera solo quando <em>entrambe</em> le proposizioni sono vere; basta una falsa e l'intero composto è falso. Completa la colonna mancante (V/F).",
+      headers: ["p", "q", "p e q"],
+      rows: [
+        { given: ["V", "V"], answer: "V" },
+        { given: ["V", "F"], answer: "F" },
+        { given: ["F", "V"], answer: "F" },
+        { given: ["F", "F"], answer: "F" }
+      ],
+      explainOk: "Esatto. La congiunzione è vera in un solo caso: quando entrambe le proposizioni sono vere.",
+      explainNo: "Ricorda: «p e q» afferma insieme le due proposizioni. Se anche una sola è falsa, l'intera congiunzione è falsa.",
+      ref: "Riferimento: <strong>Modulo 2</strong> — la funzione di verità della congiuntiva."
+    },
+
+    /* ============ MODULO 3 — INDIMOSTRABILI ============ */
+    {
+      module: "m3",
+      type: "theory",
+      tag: "Modulo 3 · Teoria",
+      title: "I cinque indimostrabili di Crisippo",
+      html: `
+        <p>I <strong>ragionamenti anapodittici</strong> (in greco <span class="greek">ἀναπόδεικτοι</span>, "indimostrabili") sono schemi di inferenza tanto evidenti da non richiedere alcuna dimostrazione: sono gli <em>assiomi</em> del ragionamento deduttivo. Crisippo ne individua cinque.</p>
+        <ul class="schema-list">
+          <li><span class="name">1. Modus ponens</span> — Se p, allora q; <span class="formula">p</span>; dunque <span class="formula">q</span>.</li>
+          <li><span class="name">2. Modus tollens</span> — Se p, allora q; <span class="formula">non-q</span>; dunque <span class="formula">non-p</span>.</li>
+          <li><span class="name">3. Negazione della congiunzione</span> — Non (p e q); <span class="formula">p</span>; dunque <span class="formula">non-q</span>.</li>
+          <li><span class="name">4. Disgiunzione, affermazione di un membro</span> — p o q; <span class="formula">p</span>; dunque <span class="formula">non-q</span>.</li>
+          <li><span class="name">5. Disgiunzione, negazione di un membro</span> — p o q; <span class="formula">non-p</span>; dunque <span class="formula">q</span>.</li>
+        </ul>
+        <p>Questi schemi non dicono se il contenuto delle frasi sia vero <em>nel mondo</em>: garantiscono solo che la <strong>struttura</strong> del ragionamento sia formalmente corretta.</p>
+        <div class="next-up">Ora la prova: <strong>3 esercizi</strong> sull'applicazione degli indimostrabili.</div>
+      `
+    },
+    {
+      module: "m3",
+      type: "mc",
+      tag: "Modulo 3 · Esercizio 1",
+      title: "Identifica lo schema",
+      promptHtml: `<p class="quote">«Se l'anima è materiale, allora è mortale. Ma l'anima non è mortale. Dunque l'anima non è materiale.»</p>`,
+      question: "A quale dei cinque indimostrabili corrisponde questo ragionamento?",
+      options: [
+        { t: "Modus ponens", correct: false },
+        { t: "Modus tollens", correct: true },
+        { t: "Negazione della congiunzione", correct: false },
+        { t: "Disgiunzione, negazione di un membro", correct: false }
+      ],
+      explainOk: "Esatto. Si nega il conseguente («non è mortale») e se ne deduce la negazione dell'antecedente: è il modus tollens.",
+      explainNo: "Lo schema parte da un condizionale, nega il conseguente e deduce la negazione dell'antecedente: Se p allora q; non-q; dunque non-p. È il modus tollens.",
+      ref: "Riferimento: <strong>2. Modus tollens</strong> — Se p, allora q; non-q; dunque non-p."
+    },
+    {
+      module: "m3",
+      type: "mc",
+      tag: "Modulo 3 · Esercizio 2",
+      title: "Completa la conclusione",
+      promptHtml: `<p>Premesse:</p>
+        <p style="margin:6px 0 0;"><strong>1.</strong> O scegli la virtù o scegli il vizio.<br>
+        <strong>2.</strong> Scegli la virtù.</p>
+        <p style="margin-top:10px;color:var(--text-faint);font-size:13px;">Schema richiesto: disgiunzione, affermazione di un membro.</p>`,
+      question: "Quale conclusione segue necessariamente?",
+      options: [
+        { t: "Dunque scegli il vizio.", correct: false },
+        { t: "Dunque non scegli il vizio.", correct: true },
+        { t: "Dunque scegli la virtù.", correct: false },
+        { t: "Nessuna conclusione è possibile.", correct: false }
+      ],
+      explainOk: "Esatto. p o q; p; dunque non-q: affermato un membro della disgiunzione esclusiva, l'altro è necessariamente falso.",
+      explainNo: "Lo schema è: p o q; p; dunque non-q. Nella disgiunzione esclusiva, se un membro è vero, l'altro è per forza falso: dunque non scegli il vizio.",
+      ref: "Riferimento: <strong>4. Disgiunzione, affermazione di un membro</strong> — p o q; p; dunque non-q."
+    },
+    {
+      module: "m3",
+      type: "dnd",
+      tag: "Modulo 3 · Esercizio 3",
+      title: "Ricostruisci il modus ponens",
+      intro: "Trascina le righe nell'ordine corretto: due premesse e poi la conclusione, secondo lo schema del modus ponens.",
+      ordered: [
+        "Se c'è il sole, allora fa luce.",
+        "Ora, c'è il sole.",
+        "Dunque fa luce."
+      ],
+      explainOk: "Ordine corretto. Prima il condizionale (Se p allora q), poi l'affermazione dell'antecedente (p), infine la conclusione (q).",
+      explainNo: "Nel modus ponens la sequenza è: condizionale «Se p allora q» → affermazione «p» → conclusione «dunque q».",
+      ref: "Riferimento: <strong>1. Modus ponens</strong> — Se p, allora q; p; dunque q."
+    },
+
+    /* ============ MODULO 4 — FALLACIE E PARADOSSI ============ */
+    {
+      module: "m4",
+      type: "theory",
+      tag: "Modulo 4 · Teoria",
+      title: "Quando il ragionamento inganna",
+      html: `
+        <p>La validità formale è una cosa rigorosa: la conclusione deve seguire <em>necessariamente</em> dalle premesse. Esistono però ragionamenti che <strong>somigliano</strong> agli indimostrabili senza esserlo: sono le <strong>fallacie</strong>.</p>
+        <p>La più insidiosa è l'<strong>affermazione del conseguente</strong>: da «Se p allora q» e da «q» si pretende di concludere «p». Ma è invalida: «la strada è bagnata» non garantisce «ha piovuto», perché la strada può bagnarsi per altri motivi. La logica stoica esige <em>necessità assoluta</em>, non semplice plausibilità.</p>
+        <p>Accanto alle fallacie, gli Stoici studiarono i <strong>paradossi</strong> — come quello del <em>mentitore</em> — enunciati autoreferenziali che sfidano il principio per cui ogni proposizione è o vera o falsa.</p>
+        <div class="next-up">Ora la prova: <strong>2 esercizi</strong>, una fallacia da smascherare e un paradosso da analizzare.</div>
+      `
+    },
+    {
+      module: "m4",
+      type: "mc",
+      tag: "Modulo 4 · Esercizio 1",
+      title: "Smaschera la fallacia",
+      promptHtml: `<p class="quote">«Se uno studia, supera l'esame. Marco ha superato l'esame. Dunque Marco ha studiato.»</p>`,
+      question: "Perché questo ragionamento NON è un modus ponens valido?",
+      options: [
+        { t: "Perché afferma il conseguente: dal solo «ha superato l'esame» non si può risalire con necessità a «ha studiato».", correct: true },
+        { t: "Perché nega l'antecedente, e ciò è sempre vietato.", correct: false },
+        { t: "Perché usa una disgiunzione al posto del condizionale.", correct: false },
+        { t: "Perché la premessa condizionale è di fatto falsa.", correct: false }
+      ],
+      explainOk: "Esatto. È la fallacia dell'affermazione del conseguente: Marco potrebbe aver superato l'esame per fortuna, o conoscendo già l'argomento. Lo schema non garantisce necessità.",
+      explainNo: "Il modus ponens afferma l'antecedente (p) per dedurre il conseguente (q). Qui si afferma il conseguente (q, «ha superato») per risalire a p: è una fallacia, perché l'esito può avere altre cause.",
+      ref: "Riferimento: <strong>Modulo 4</strong> — la fallacia dell'affermazione del conseguente."
+    },
+    {
+      module: "m4",
+      type: "open",
+      tag: "Modulo 4 · Esercizio 2",
+      title: "Il paradosso del mentitore",
+      promptHtml: `<p class="quote">«Epimenide il cretese afferma che tutti i cretesi sono bugiardi.»</p>
+        <p>Gli Stoici si interrogarono a lungo su enunciati di questo tipo, che mettono in crisi il principio per cui ogni proposizione è semplicemente vera o falsa.</p>`,
+      question: "Spiega con parole tue perché questa affermazione genera un paradosso. (3-5 righe)",
+      placeholder: "Se l'affermazione di Epimenide fosse vera, allora…",
+      reference: "Se l'affermazione fosse vera, allora — essendo Epimenide cretese — egli starebbe mentendo, e dunque l'affermazione sarebbe falsa. Ma se fosse falsa, allora i cretesi non sarebbero tutti bugiardi: l'enunciato non riesce a stabilizzarsi né sul vero né sul falso. È un caso di autoriferimento che sfida il principio di bivalenza, secondo cui ogni proposizione deve essere o vera o falsa.",
+      ref: "Riferimento: <strong>Modulo 4</strong> — il paradosso del mentitore."
+    }
+
+  ];
+
+  /* ---------------------------------------------------------------
+     STATE
+  --------------------------------------------------------------- */
+  let studentName = "";
+  let current = 0;
+  const totalExercises = STEPS.filter(s => s.type !== "theory").length;
+  const results = {};
+  let fbReady = false;
+
+  /* ---------------------------------------------------------------
+     ELEMENTS
+  --------------------------------------------------------------- */
+  const gate = document.getElementById("gate");
+  const nameInput = document.getElementById("nameInput");
+  const startBtn = document.getElementById("startBtn");
+  const labBody = document.getElementById("labBody");
+  const moduleRail = document.getElementById("moduleRail");
+  const progressBar = document.getElementById("progressBar");
+  const stepContainer = document.getElementById("stepContainer");
+
+  /* ---------------------------------------------------------------
+     FIREBASE READINESS
+  --------------------------------------------------------------- */
+  function checkFb() {
+    if (window.__fb && window.__fb.ready()) fbReady = true;
+  }
+  window.addEventListener("fb-ready-check", checkFb);
+  checkFb();
+
+  /* ---------------------------------------------------------------
+     GATE
+  --------------------------------------------------------------- */
+  nameInput.addEventListener("input", () => {
+    startBtn.disabled = nameInput.value.trim().length < 3;
+  });
+  nameInput.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !startBtn.disabled) startBtn.click();
+  });
+  startBtn.addEventListener("click", () => {
+    studentName = nameInput.value.trim();
+    gate.classList.add("hidden");
+    labBody.classList.remove("hidden");
+    buildRail();
+    buildProgress();
+    renderStep(0);
+  });
+
+  /* ---------------------------------------------------------------
+     MODULE RAIL
+  --------------------------------------------------------------- */
+  function buildRail() {
+    moduleRail.innerHTML = "";
+    MODULES.forEach((m, i) => {
+      const chip = document.createElement("div");
+      chip.className = "module-chip";
+      chip.dataset.mod = m.id;
+      chip.innerHTML = `<span class="dot"></span><span>${i + 1}. ${m.name}</span>`;
+      moduleRail.appendChild(chip);
+    });
+  }
+  function updateRail() {
+    const curMod = STEPS[Math.min(current, STEPS.length - 1)]?.module;
+    // index of modules: a module is "done" if all its steps are before current
+    MODULES.forEach(m => {
+      const chip = moduleRail.querySelector(`[data-mod="${m.id}"]`);
+      const stepIdxs = STEPS.map((s, i) => s.module === m.id ? i : -1).filter(i => i >= 0);
+      const lastIdx = Math.max(...stepIdxs);
+      let cls = "module-chip";
+      if (current > lastIdx) cls += " done";
+      else if (m.id === curMod) cls += " active";
+      chip.className = cls;
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     PROGRESS BAR
+  --------------------------------------------------------------- */
+  function buildProgress() {
+    progressBar.innerHTML = "";
+    STEPS.forEach((_, i) => {
+      const seg = document.createElement("div");
+      seg.className = "seg";
+      seg.dataset.idx = i;
+      progressBar.appendChild(seg);
+    });
+  }
+  function updateProgress() {
+    [...progressBar.children].forEach((seg, i) => {
+      seg.className = "seg" + (i < current ? " done" : i === current ? " active" : "");
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     RENDER DISPATCH
+  --------------------------------------------------------------- */
+  function renderStep(idx) {
+    current = idx;
+    updateProgress();
+    updateRail();
+    stepContainer.innerHTML = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (idx >= STEPS.length) { renderFinal(); return; }
+
+    const step = STEPS[idx];
+    const card = document.createElement("div");
+    card.className = "card " + (step.type === "theory" ? "theory" : "exercise");
+
+    const modObj = MODULES.find(m => m.id === step.module);
+    const modBanner = `<div class="module-banner">Modulo ${MODULES.indexOf(modObj) + 1} · ${modObj.name}</div>`;
+
+    if (step.type === "theory") renderTheory(card, step, modBanner);
+    else if (step.type === "mc") renderMC(card, step, modBanner);
+    else if (step.type === "classify") renderClassify(card, step, modBanner);
+    else if (step.type === "pairs") renderPairs(card, step, modBanner);
+    else if (step.type === "dnd") renderDnd(card, step, modBanner);
+    else if (step.type === "truth") renderTruth(card, step, modBanner);
+    else if (step.type === "open") renderOpen(card, step, modBanner);
+
+    stepContainer.appendChild(card);
+  }
+
+  function exerciseNumber(idx) {
+    let n = 0;
+    for (let i = 0; i <= idx; i++) if (STEPS[i].type !== "theory") n++;
+    return n;
+  }
+
+  /* ---------- helper: navigation footer ---------- */
+  function navFooter(card, { label, primaryText, primaryFn, primaryDisabled }) {
+    const actions = document.createElement("div");
+    actions.className = "card-actions";
+
+    const lbl = document.createElement("span");
+    lbl.className = "step-label";
+    lbl.textContent = label;
+
+    const btn = document.createElement("button");
+    btn.className = "btn-primary";
+    btn.textContent = primaryText;
+    btn.disabled = !!primaryDisabled;
+    btn.addEventListener("click", () => primaryFn(btn));
+
+    actions.appendChild(lbl);
+    actions.appendChild(btn);
+    card.appendChild(actions);
+    return btn;
+  }
+
+  /* ---------------------------------------------------------------
+     THEORY
+  --------------------------------------------------------------- */
+  function renderTheory(card, step, modBanner) {
+    card.innerHTML = `
+      ${modBanner}
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      ${step.html}
+    `;
+    navFooter(card, {
+      label: `Sezione teorica`,
+      primaryText: "Inizia gli esercizi",
+      primaryFn: () => renderStep(current + 1)
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     MULTIPLE CHOICE (single)
+  --------------------------------------------------------------- */
+  function renderMC(card, step, modBanner) {
+    card.innerHTML = `
+      ${modBanner}
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.promptHtml}</div>
+      <p class="question">${step.question}</p>
+    `;
+    const opts = document.createElement("div");
+    opts.className = "options";
+    const letters = ["A", "B", "C", "D", "E"];
+    let selected = -1;
+    let locked = false;
+
+    step.options.forEach((o, i) => {
+      const b = document.createElement("button");
+      b.className = "opt";
+      b.innerHTML = `<span class="marker">${letters[i]}</span><span>${o.t}</span>`;
+      b.addEventListener("click", () => {
+        if (locked) return;
+        selected = i;
+        [...opts.children].forEach(c => c.classList.remove("selected"));
+        b.classList.add("selected");
+        confirmBtn.disabled = false;
+      });
+      opts.appendChild(b);
+    });
+    card.appendChild(opts);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Esercizio ${exerciseNumber(current)} di ${totalExercises}`,
+      primaryText: "Conferma",
+      primaryFn: handlePrimary,
+      primaryDisabled: true
+    });
+
+    function handlePrimary(btn) {
+      if (!locked) {
+        locked = true;
+        const isCorrect = step.options[selected].correct;
+        [...opts.children].forEach((c, i) => {
+          c.classList.add("locked");
+          if (step.options[i].correct) c.classList.add("correct");
+          else if (i === selected) c.classList.add("wrong");
+        });
+        fb.className = "feedback show " + (isCorrect ? "ok" : "no");
+        fb.innerHTML = `
+          <div class="fb-head">${isCorrect ? "Corretto" : "Non corretto"}</div>
+          <div>${isCorrect ? step.explainOk : step.explainNo}</div>
+          <div class="ref" style="margin-top:8px;">${step.ref}</div>
+        `;
+        results[current] = { correct: isCorrect, type: "mc" };
+        btn.textContent = nextLabel();
+      } else {
+        renderStep(current + 1);
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     PAIRS — for each row, pick left or right
+  --------------------------------------------------------------- */
+  function renderPairs(card, step, modBanner) {
+    card.innerHTML = `
+      ${modBanner}
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.intro}</div>
+    `;
+    let locked = false;
+    const picks = new Array(step.rows.length).fill(null);
+
+    const wrap = document.createElement("div");
+    wrap.className = "pairs";
+
+    step.rows.forEach((row, ri) => {
+      const block = document.createElement("div");
+      block.style.background = "var(--bg-deep)";
+      block.style.border = "1px solid var(--border-soft)";
+      block.style.borderRadius = "10px";
+      block.style.padding = "14px 16px";
+
+      const lbl = document.createElement("div");
+      lbl.style.fontFamily = "var(--serif)";
+      lbl.style.fontStyle = "italic";
+      lbl.style.marginBottom = "10px";
+      lbl.style.fontSize = "15px";
+      lbl.textContent = row.label;
+      block.appendChild(lbl);
+
+      const prow = document.createElement("div");
+      prow.className = "pair-row";
+
+      ["left", "right"].forEach(side => {
+        const po = document.createElement("button");
+        po.className = "pair-opt";
+        po.dataset.side = side;
+        po.textContent = side === "left" ? row.left : row.right;
+        po.addEventListener("click", () => {
+          if (locked) return;
+          picks[ri] = side;
+          [...prow.children].forEach(c => c.classList.remove("selected"));
+          po.classList.add("selected");
+          confirmBtn.disabled = picks.includes(null);
+        });
+        prow.appendChild(po);
+      });
+
+      block.appendChild(prow);
+      block._prow = prow;
+      wrap.appendChild(block);
+    });
+    card.appendChild(wrap);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Esercizio ${exerciseNumber(current)} di ${totalExercises}`,
+      primaryText: "Conferma",
+      primaryFn: handlePrimary,
+      primaryDisabled: true
+    });
+
+    function handlePrimary(btn) {
+      if (!locked) {
+        locked = true;
+        let allOk = true;
+        [...wrap.children].forEach((block, ri) => {
+          const right = step.rows[ri].correct;
+          const chosen = picks[ri];
+          if (chosen !== right) allOk = false;
+          [...block._prow.children].forEach(c => {
+            if (c.dataset.side === right) c.classList.add("correct");
+            else if (c.dataset.side === chosen) c.classList.add("wrong");
+          });
+        });
+        fb.className = "feedback show " + (allOk ? "ok" : "no");
+        fb.innerHTML = `
+          <div class="fb-head">${allOk ? "Tutto corretto" : "Qualche errore"}</div>
+          <div>${allOk ? step.explainOk : step.explainNo}</div>
+          <div class="ref" style="margin-top:8px;">${step.ref}</div>
+        `;
+        results[current] = { correct: allOk, type: "pairs" };
+        btn.textContent = nextLabel();
+      } else {
+        renderStep(current + 1);
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     CLASSIFY
+  --------------------------------------------------------------- */
+  function renderClassify(card, step, modBanner) {
+    card.innerHTML = `
+      ${modBanner}
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.intro}</div>
+    `;
+    const picks = new Array(step.items.length).fill(null);
+    let locked = false;
+
+    const list = document.createElement("div");
+    list.style.display = "grid";
+    list.style.gap = "14px";
+
+    step.items.forEach((item, i) => {
+      const block = document.createElement("div");
+      block.style.background = "var(--bg-deep)";
+      block.style.border = "1px solid var(--border-soft)";
+      block.style.borderRadius = "10px";
+      block.style.padding = "14px 16px";
+
+      const txt = document.createElement("div");
+      txt.style.fontFamily = "var(--serif)";
+      txt.style.fontStyle = "italic";
+      txt.style.marginBottom = "10px";
+      txt.style.fontSize = "15.5px";
+      txt.textContent = item.t;
+      block.appendChild(txt);
+
+      const catRow = document.createElement("div");
+      catRow.style.display = "flex";
+      catRow.style.gap = "8px";
+      catRow.style.flexWrap = "wrap";
+
+      step.categories.forEach(cat => {
+        const cb = document.createElement("button");
+        cb.className = "btn-ghost";
+        cb.textContent = cat;
+        cb.addEventListener("click", () => {
+          if (locked) return;
+          picks[i] = cat;
+          [...catRow.children].forEach(c => {
+            c.style.background = "transparent";
+            c.style.color = "var(--teal-soft)";
+            c.style.borderColor = "var(--border)";
+          });
+          cb.style.background = "rgba(217,138,75,0.16)";
+          cb.style.color = "var(--orange-soft)";
+          cb.style.borderColor = "var(--orange)";
+          confirmBtn.disabled = picks.includes(null);
+        });
+        catRow.appendChild(cb);
+      });
+
+      block.appendChild(catRow);
+      block._catRow = catRow;
+      list.appendChild(block);
+    });
+    card.appendChild(list);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Esercizio ${exerciseNumber(current)} di ${totalExercises}`,
+      primaryText: "Conferma",
+      primaryFn: handlePrimary,
+      primaryDisabled: true
+    });
+
+    function handlePrimary(btn) {
+      if (!locked) {
+        locked = true;
+        let allCorrect = true;
+        [...list.children].forEach((block, i) => {
+          const right = step.items[i].cat;
+          const chosen = picks[i];
+          if (chosen !== right) allCorrect = false;
+          [...block._catRow.children].forEach(c => {
+            if (c.textContent === right) {
+              c.style.background = "rgba(95,174,107,0.16)";
+              c.style.color = "var(--green)";
+              c.style.borderColor = "var(--green)";
+            } else if (c.textContent === chosen) {
+              c.style.background = "rgba(200,88,79,0.16)";
+              c.style.color = "var(--red)";
+              c.style.borderColor = "var(--red)";
+            }
+          });
+        });
+        fb.className = "feedback show " + (allCorrect ? "ok" : "no");
+        fb.innerHTML = `
+          <div class="fb-head">${allCorrect ? "Tutto corretto" : "Qualche errore"}</div>
+          <div>${allCorrect ? step.explainOk : step.explainNo}</div>
+          <div class="ref" style="margin-top:8px;">${step.ref}</div>
+        `;
+        results[current] = { correct: allCorrect, type: "classify" };
+        btn.textContent = nextLabel();
+      } else {
+        renderStep(current + 1);
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     DRAG & DROP
+  --------------------------------------------------------------- */
+  function renderDnd(card, step, modBanner) {
+    card.innerHTML = `
+      ${modBanner}
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.intro}</div>
+    `;
+    let locked = false;
+
+    let order = step.ordered.map((t, i) => ({ t, orig: i }));
+    do { order = shuffle(order); } while (order.every((o, i) => o.orig === i));
+
+    const zone = document.createElement("div");
+    zone.className = "dnd-zone";
+    let dragEl = null;
+
+    function renderItems() {
+      zone.innerHTML = "";
+      order.forEach((o, pos) => {
+        const it = document.createElement("div");
+        it.className = "dnd-item";
+        it.draggable = !locked;
+        it.dataset.pos = pos;
+        it.innerHTML = `<span class="dnd-num">${pos + 1}</span><span class="dnd-handle">⠿</span><span>${o.t}</span>`;
+
+        it.addEventListener("dragstart", () => {
+          if (locked) return;
+          dragEl = it;
+          it.classList.add("dragging");
+        });
+        it.addEventListener("dragend", () => {
+          it.classList.remove("dragging");
+          [...zone.children].forEach(c => c.classList.remove("over"));
+        });
+        it.addEventListener("dragover", e => {
+          e.preventDefault();
+          if (locked || it === dragEl) return;
+          it.classList.add("over");
+        });
+        it.addEventListener("dragleave", () => it.classList.remove("over"));
+        it.addEventListener("drop", e => {
+          e.preventDefault();
+          if (locked || !dragEl || it === dragEl) return;
+          const from = +dragEl.dataset.pos;
+          const to = +it.dataset.pos;
+          const moved = order.splice(from, 1)[0];
+          order.splice(to, 0, moved);
+          renderItems();
+        });
+        addTouchDnd(it);
+        zone.appendChild(it);
+      });
+    }
+
+    function addTouchDnd(it) {
+      it.addEventListener("touchstart", () => {
+        if (locked) return;
+        it.classList.add("dragging");
+      }, { passive: true });
+      it.addEventListener("touchmove", e => {
+        if (locked) return;
+        e.preventDefault();
+        const t = e.touches[0];
+        const target = document.elementFromPoint(t.clientX, t.clientY);
+        const tItem = target && target.closest(".dnd-item");
+        if (tItem && tItem !== it) {
+          const to = +tItem.dataset.pos;
+          const from = +it.dataset.pos;
+          const moved = order.splice(from, 1)[0];
+          order.splice(to, 0, moved);
+          renderItems();
+        }
+      }, { passive: false });
+      it.addEventListener("touchend", () => it.classList.remove("dragging"));
+    }
+
+    renderItems();
+    card.appendChild(zone);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Esercizio ${exerciseNumber(current)} di ${totalExercises}`,
+      primaryText: "Conferma",
+      primaryFn: handlePrimary
+    });
+
+    function handlePrimary(btn) {
+      if (!locked) {
+        locked = true;
+        const ok = order.every((o, i) => o.orig === i);
+        [...zone.children].forEach((c, i) => {
+          c.draggable = false;
+          c.classList.add("locked");
+          if (order[i].orig === i) {
+            c.style.borderColor = "var(--green)";
+            c.querySelector(".dnd-num").style.background = "rgba(95,174,107,0.2)";
+            c.querySelector(".dnd-num").style.color = "var(--green)";
+          } else {
+            c.style.borderColor = "var(--red)";
+            c.querySelector(".dnd-num").style.background = "rgba(200,88,79,0.2)";
+            c.querySelector(".dnd-num").style.color = "var(--red)";
+          }
+        });
+        fb.className = "feedback show " + (ok ? "ok" : "no");
+        let extra = "";
+        if (!ok) {
+          extra = `<div style="margin-top:8px;color:var(--text-dim);">Ordine corretto:<br>` +
+            step.ordered.map((t, i) => `${i + 1}. ${t}`).join("<br>") + `</div>`;
+        }
+        fb.innerHTML = `
+          <div class="fb-head">${ok ? "Ordine corretto" : "Ordine errato"}</div>
+          <div>${ok ? step.explainOk : step.explainNo}</div>
+          ${extra}
+          <div class="ref" style="margin-top:8px;">${step.ref}</div>
+        `;
+        results[current] = { correct: ok, type: "dnd" };
+        btn.textContent = nextLabel();
+      } else {
+        renderStep(current + 1);
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     TRUTH TABLE
+  --------------------------------------------------------------- */
+  function renderTruth(card, step, modBanner) {
+    card.innerHTML = `
+      ${modBanner}
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.intro}</div>
+    `;
+    let locked = false;
+    const answers = new Array(step.rows.length).fill(null);
+
+    const table = document.createElement("table");
+    table.className = "truth";
+    const thead = document.createElement("tr");
+    step.headers.forEach(h => {
+      const th = document.createElement("th");
+      th.textContent = h;
+      thead.appendChild(th);
+    });
+    table.appendChild(thead);
+
+    const toggles = [];
+    step.rows.forEach((row, ri) => {
+      const tr = document.createElement("tr");
+      row.given.forEach(g => {
+        const td = document.createElement("td");
+        td.className = "given";
+        td.textContent = g;
+        tr.appendChild(td);
+      });
+      const td = document.createElement("td");
+      const tg = document.createElement("button");
+      tg.className = "tv-toggle";
+      tg.textContent = "—";
+      tg.addEventListener("click", () => {
+        if (locked) return;
+        const cur = tg.textContent;
+        const next = cur === "—" ? "V" : cur === "V" ? "F" : "—";
+        tg.textContent = next;
+        tg.className = "tv-toggle" + (next === "V" ? " set-v" : next === "F" ? " set-f" : "");
+        answers[ri] = next === "—" ? null : next;
+        confirmBtn.disabled = answers.includes(null);
+      });
+      toggles.push(tg);
+      td.appendChild(tg);
+      tr.appendChild(td);
+      table.appendChild(tr);
+    });
+    card.appendChild(table);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Esercizio ${exerciseNumber(current)} di ${totalExercises}`,
+      primaryText: "Conferma",
+      primaryFn: handlePrimary,
+      primaryDisabled: true
+    });
+
+    function handlePrimary(btn) {
+      if (!locked) {
+        locked = true;
+        let allOk = true;
+        step.rows.forEach((row, ri) => {
+          const ok = answers[ri] === row.answer;
+          if (!ok) allOk = false;
+          toggles[ri].textContent = answers[ri];
+          toggles[ri].style.borderColor = ok ? "var(--green)" : "var(--red)";
+          toggles[ri].style.color = ok ? "var(--green)" : "var(--red)";
+          if (!ok) {
+            const hint = document.createElement("span");
+            hint.textContent = " (→ " + row.answer + ")";
+            hint.style.color = "var(--text-faint)";
+            hint.style.fontSize = "12px";
+            toggles[ri].parentElement.appendChild(hint);
+          }
+        });
+        fb.className = "feedback show " + (allOk ? "ok" : "no");
+        fb.innerHTML = `
+          <div class="fb-head">${allOk ? "Tavola corretta" : "Qualche valore errato"}</div>
+          <div>${allOk ? step.explainOk : step.explainNo}</div>
+          <div class="ref" style="margin-top:8px;">${step.ref}</div>
+        `;
+        results[current] = { correct: allOk, type: "truth" };
+        btn.textContent = nextLabel();
+      } else {
+        renderStep(current + 1);
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     OPEN TEXT
+  --------------------------------------------------------------- */
+  function renderOpen(card, step, modBanner) {
+    card.innerHTML = `
+      ${modBanner}
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.promptHtml}</div>
+      <p class="question">${step.question}</p>
+    `;
+    let locked = false;
+    const ta = document.createElement("textarea");
+    ta.placeholder = step.placeholder || "";
+    card.appendChild(ta);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Esercizio ${exerciseNumber(current)} di ${totalExercises}`,
+      primaryText: "Conferma",
+      primaryFn: handlePrimary,
+      primaryDisabled: true
+    });
+
+    ta.addEventListener("input", () => {
+      confirmBtn.disabled = ta.value.trim().length < 15;
+    });
+
+    function handlePrimary(btn) {
+      if (!locked) {
+        locked = true;
+        const answerText = ta.value.trim();
+        ta.disabled = true;
+        fb.className = "feedback show neutral";
+        fb.innerHTML = `
+          <div class="fb-head">Risposta registrata</div>
+          <div style="margin-bottom:8px;">La tua risposta sarà valutata dal docente. Confrontala con questa risposta di riferimento:</div>
+          <div class="ref" style="border-top:1px solid var(--border-soft);padding-top:8px;">${step.reference}</div>
+          <div class="ref" style="margin-top:8px;">${step.ref}</div>
+        `;
+        results[current] = { correct: null, type: "open", text: answerText };
+        btn.textContent = nextLabel();
+      } else {
+        renderStep(current + 1);
+      }
+    }
+  }
+
+  /* ---------- label for the "advance" button ---------- */
+  function nextLabel() {
+    if (current >= STEPS.length - 1) return "Concludi";
+    const nextStep = STEPS[current + 1];
+    if (nextStep && nextStep.type === "theory") return "Avanti al modulo successivo";
+    return "Avanti";
+  }
+
+  /* ---------------------------------------------------------------
+     FINAL
+  --------------------------------------------------------------- */
+  function renderFinal() {
+    progressBar.querySelectorAll(".seg").forEach(s => s.className = "seg done");
+    moduleRail.querySelectorAll(".module-chip").forEach(c => c.className = "module-chip done");
+
+    const graded = Object.entries(results).filter(([, r]) => r.correct !== null);
+    const scored = graded.filter(([, r]) => r.correct).length;
+    const gradedTotal = graded.length;
+    const openCount = Object.values(results).filter(r => r.type === "open").length;
+
+    // per-module recap
+    const recapRows = MODULES.map(m => {
+      const idxs = STEPS.map((s, i) => (s.module === m.id && s.type !== "theory") ? i : -1).filter(i => i >= 0);
+      const auto = idxs.filter(i => results[i] && results[i].correct !== null);
+      const right = auto.filter(i => results[i].correct).length;
+      const openInMod = idxs.filter(i => results[i] && results[i].type === "open").length;
+      let scoreText = auto.length ? `${right} / ${auto.length}` : "—";
+      if (openInMod) scoreText += ` (+${openInMod} aperto)`;
+      return `<div class="mr-row"><span class="mr-name">${m.name}</span><span class="mr-score">${scoreText}</span></div>`;
+    }).join("");
+
+    const finalCard = document.createElement("div");
+    finalCard.className = "final";
+    finalCard.innerHTML = `
+      <h2>Laboratorio completato</h2>
+      <p style="color:var(--text-dim);">${escapeHtml(studentName)}</p>
+      <div class="score-big">${scored} / ${gradedTotal}</div>
+      <p class="score-sub">esercizi a correzione automatica${openCount ? `<br><span style="font-size:13px;">+ ${openCount} risposta/e aperta/e da valutare in classe</span>` : ""}</p>
+      <div class="module-recap">${recapRows}</div>
+      <div class="save-state" id="saveState">Salvataggio dei risultati in corso…</div>
+    `;
+    stepContainer.appendChild(finalCard);
+    saveResults(scored, gradedTotal, openCount);
+  }
+
+  async function saveResults(scored, gradedTotal, openCount) {
+    const saveState = document.getElementById("saveState");
+
+    const detail = {};
+    STEPS.forEach((s, i) => {
+      if (s.type === "theory") return;
+      const r = results[i];
+      detail["es" + exerciseNumber(i)] = {
+        modulo: MODULES.find(m => m.id === s.module).name,
+        titolo: s.title,
+        tipo: s.type,
+        esito: r ? (r.correct === null ? "da_valutare" : (r.correct ? "corretto" : "errato")) : "non_svolto",
+        rispostaAperta: r && r.text ? r.text : null
+      };
+    });
+
+    const payload = {
+      nome: studentName,
+      laboratorio: "La Logica Stoica — percorso modulare",
+      dataISO: new Date().toISOString(),
+      punteggio: scored,
+      totaleCorretti: gradedTotal,
+      apertiDaValutare: openCount,
+      dettaglio: detail
+    };
+
+    let waited = 0;
+    while (!(window.__fb && window.__fb.ready()) && waited < 5000) {
+      await new Promise(r => setTimeout(r, 200));
+      waited += 200;
+    }
+
+    if (window.__fb && window.__fb.ready()) {
+      try {
+        await window.__fb.save(studentName, payload);
+        saveState.textContent = "✓ Risultati salvati. Puoi chiudere la pagina.";
+        saveState.style.color = "var(--green)";
+      } catch (e) {
+        console.error(e);
+        saveState.textContent = "⚠ Impossibile salvare online. Avvisa il docente.";
+        saveState.style.color = "var(--red)";
+      }
+    } else {
+      saveState.textContent = "⚠ Connessione al database non disponibile. Avvisa il docente.";
+      saveState.style.color = "var(--red)";
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     DASHBOARD
+  --------------------------------------------------------------- */
+  const dashModal = document.getElementById("dashModal");
+  const dashGate = document.getElementById("dashGate");
+  const dashContent = document.getElementById("dashContent");
+  const pinInput = document.getElementById("pinInput");
+  const pinBtn = document.getElementById("pinBtn");
+  const pinErr = document.getElementById("pinErr");
+
+  document.getElementById("dashOpen").addEventListener("click", () => {
+    dashModal.classList.add("show");
+    dashGate.classList.remove("hidden");
+    dashContent.classList.add("hidden");
+    pinInput.value = "";
+    pinErr.style.display = "none";
+  });
+  document.getElementById("dashClose").addEventListener("click", () => {
+    dashModal.classList.remove("show");
+  });
+  dashModal.addEventListener("click", e => {
+    if (e.target === dashModal) dashModal.classList.remove("show");
+  });
+  pinInput.addEventListener("keydown", e => { if (e.key === "Enter") pinBtn.click(); });
+
+  pinBtn.addEventListener("click", async () => {
+    if (pinInput.value.trim() !== PIN) {
+      pinErr.style.display = "block";
+      return;
+    }
+    dashGate.classList.add("hidden");
+    dashContent.classList.remove("hidden");
+    await loadDashboard();
+  });
+
+  async function loadDashboard() {
+    const table = document.getElementById("dashTable");
+    const count = document.getElementById("dashCount");
+    table.innerHTML = `<tr><td style="color:var(--text-faint);">Caricamento…</td></tr>`;
+
+    let waited = 0;
+    while (!(window.__fb && window.__fb.ready()) && waited < 5000) {
+      await new Promise(r => setTimeout(r, 200));
+      waited += 200;
+    }
+    if (!(window.__fb && window.__fb.ready())) {
+      table.innerHTML = `<tr><td style="color:var(--red);">Database non disponibile.</td></tr>`;
+      return;
+    }
+
+    try {
+      const data = await window.__fb.loadAll();
+      const rows = Object.values(data || {});
+      if (!rows.length) {
+        count.textContent = "Nessun risultato ancora registrato.";
+        table.innerHTML = "";
+        return;
+      }
+      rows.sort((a, b) => (a.nome || "").localeCompare(b.nome || ""));
+      count.textContent = `${rows.length} student${rows.length === 1 ? "e" : "i"} · ordinati per nome`;
+
+      let html = `<tr>
+        <th>Studente</th>
+        <th>Punteggio</th>
+        <th>Da valutare</th>
+        <th>Data</th>
+      </tr>`;
+      rows.forEach(r => {
+        const d = r.dataISO ? new Date(r.dataISO) : null;
+        const dateStr = d ? d.toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
+        html += `<tr>
+          <td>${escapeHtml(r.nome || "—")}</td>
+          <td class="num">${r.punteggio ?? "—"} / ${r.totaleCorretti ?? "—"}</td>
+          <td class="num">${r.apertiDaValutare ?? 0}</td>
+          <td>${dateStr}</td>
+        </tr>`;
+        if (r.dettaglio) {
+          const aperti = Object.values(r.dettaglio).filter(x => x.tipo === "open" && x.rispostaAperta);
+          aperti.forEach(x => {
+            html += `<tr><td colspan="4" style="background:var(--bg-deep);font-size:13px;color:var(--text-dim);">
+              <strong style="color:var(--gold-soft);">${escapeHtml(x.titolo)}:</strong> ${escapeHtml(x.rispostaAperta)}
+            </td></tr>`;
+          });
+        }
+      });
+      table.innerHTML = html;
+    } catch (e) {
+      console.error(e);
+      table.innerHTML = `<tr><td style="color:var(--red);">Errore nel caricamento dei dati.</td></tr>`;
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     UTILS
+  --------------------------------------------------------------- */
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+})();
+</script>
+</body>
+</html>
