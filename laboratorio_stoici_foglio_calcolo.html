@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio — Dalla Logica Stoica al Foglio di Calcolo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14202a;
+    --bg-deep: #0e1820;
+    --panel: #1c2c38;
+    --panel-light: #243643;
+    --border: #314654;
+    --border-soft: #2a3c48;
+    --text: #e8e2d4;
+    --text-dim: #a9b4bc;
+    --text-faint: #74828c;
+    --orange: #d98a4b;
+    --orange-soft: #e3a877;
+    --teal: #4ca0a0;
+    --teal-soft: #7bc0c0;
+    --gold: #d4af52;
+    --gold-soft: #e6c97e;
+    --green: #5fae6b;
+    --red: #c8584f;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Source Sans 3', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Source Sans 3', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 18% 0%, rgba(76,160,160,0.10) 0%, transparent 55%),
+      radial-gradient(ellipse at 88% 12%, rgba(217,138,75,0.10) 0%, transparent 55%);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 32px 18px 80px;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  /* ---------- Header ---------- */
+  header { text-align: center; margin-bottom: 30px; }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal-soft);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(28px, 5.4vw, 44px);
+    line-height: 1.14;
+    color: var(--text);
+  }
+
+  h1 .accent { color: var(--orange-soft); font-style: italic; }
+
+  .lede {
+    margin: 14px auto 0;
+    max-width: 660px;
+    color: var(--text-dim);
+    font-size: 16px;
+  }
+
+  /* ---------- Identity gate ---------- */
+  .gate {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+    margin-bottom: 26px;
+  }
+  .gate h2 { font-family: var(--serif); font-weight: 600; font-size: 20px; margin-bottom: 6px; }
+  .gate p { color: var(--text-dim); font-size: 14px; margin-bottom: 16px; }
+
+  .field-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  input[type="text"] {
+    flex: 1;
+    min-width: 180px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(76,160,160,0.16);
+  }
+
+  button {
+    font-family: var(--sans);
+    cursor: pointer;
+    border: none;
+    transition: transform .08s ease, filter .15s ease, background .15s ease;
+  }
+  button:active { transform: translateY(1px); }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #1a120a;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 22px;
+    border-radius: 9px;
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--teal-soft);
+    border: 1px solid var(--border);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 9px 16px;
+    border-radius: 9px;
+  }
+  .btn-ghost:hover { background: var(--panel-light); }
+
+  /* ---------- Progress ---------- */
+  .progress-bar { display: flex; gap: 6px; margin: 0 0 24px; }
+  .progress-bar .seg {
+    flex: 1; height: 5px; border-radius: 3px;
+    background: var(--border-soft);
+    transition: background .3s ease;
+  }
+  .progress-bar .seg.done { background: var(--teal); }
+  .progress-bar .seg.active { background: var(--orange); }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 26px;
+    margin-bottom: 22px;
+  }
+  .card.theory { border-left: 3px solid var(--teal); }
+  .card.exercise { border-left: 3px solid var(--orange); }
+  .card.build { border-left: 3px solid var(--gold); }
+
+  .card-tag {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .card.theory .card-tag { color: var(--teal-soft); }
+  .card.exercise .card-tag { color: var(--orange-soft); }
+  .card.build .card-tag { color: var(--gold-soft); }
+
+  .card h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .card p { margin-bottom: 12px; color: var(--text-dim); }
+  .card p:last-child { margin-bottom: 0; }
+  .card strong { color: var(--text); font-weight: 600; }
+  .card em { color: var(--gold-soft); }
+  .greek { font-style: italic; color: var(--gold-soft); }
+
+  code, .code {
+    font-family: var(--mono);
+    background: rgba(76,160,160,0.12);
+    color: var(--teal-soft);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+
+  /* ---------- Bridge table (stoic <-> code) ---------- */
+  table.bridge {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 14px 0;
+  }
+  table.bridge th, table.bridge td {
+    border: 1px solid var(--border-soft);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.bridge th { background: var(--panel-light); color: var(--teal-soft); font-weight: 600; }
+  table.bridge td .stoic { color: var(--gold-soft); }
+  table.bridge td .op { font-family: var(--mono); color: var(--orange-soft); font-weight: 600; }
+
+  .schema-list { list-style: none; margin: 14px 0; display: grid; gap: 10px; }
+  .schema-list li {
+    background: var(--bg-deep);
+    border: 1px solid var(--border-soft);
+    border-radius: 9px;
+    padding: 12px 16px;
+    font-size: 14.5px;
+  }
+  .schema-list .name { color: var(--orange-soft); font-weight: 600; }
+
+  .next-up {
+    margin-top: 16px;
+    background: var(--bg-deep);
+    border: 1px dashed var(--border);
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 13.5px;
+    color: var(--text-faint);
+  }
+  .next-up strong { color: var(--orange-soft); }
+
+  /* ---------- Exercise prompt ---------- */
+  .prompt {
+    background: var(--bg-deep);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    font-size: 15.5px;
+  }
+  .prompt .quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text);
+  }
+  .question { font-weight: 600; color: var(--text); margin-bottom: 14px; }
+
+  /* ---------- Options ---------- */
+  .options { display: grid; gap: 10px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text);
+    transition: border-color .12s ease, background .12s ease;
+    text-align: left;
+    width: 100%;
+  }
+  .opt:hover { border-color: var(--teal); background: var(--panel-light); }
+  .opt .marker {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 700;
+    color: var(--text-faint);
+    margin-top: 1px;
+  }
+  .opt.selected { border-color: var(--orange); background: rgba(217,138,75,0.10); }
+  .opt.selected .marker { border-color: var(--orange); color: var(--orange); }
+  .opt.correct { border-color: var(--green); background: rgba(95,174,107,0.13); }
+  .opt.correct .marker { border-color: var(--green); background: var(--green); color: #11210f; }
+  .opt.wrong { border-color: var(--red); background: rgba(200,88,79,0.13); }
+  .opt.wrong .marker { border-color: var(--red); background: var(--red); color: #2a0f0d; }
+  .opt.locked { cursor: default; }
+  .opt.locked:hover { background: var(--bg-deep); }
+  .opt.locked.selected:hover { background: rgba(217,138,75,0.10); }
+  .opt.correct.locked:hover { background: rgba(95,174,107,0.13); }
+  .opt.wrong.locked:hover { background: rgba(200,88,79,0.13); }
+  .opt code { font-size: 13.5px; }
+
+  /* ---------- Spreadsheet ---------- */
+  .sheet-wrap { overflow-x: auto; margin: 16px 0; }
+  table.sheet {
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    width: 100%;
+    min-width: 560px;
+  }
+  table.sheet th, table.sheet td {
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  table.sheet thead th {
+    background: var(--panel-light);
+    color: var(--teal-soft);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .5px;
+  }
+  table.sheet .col-head {
+    background: var(--bg-deep);
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+  table.sheet td.data { color: var(--text-dim); background: var(--panel); }
+  table.sheet td.bool-true { color: var(--green); font-weight: 600; background: rgba(95,174,107,0.08); }
+  table.sheet td.bool-false { color: var(--red); font-weight: 600; background: rgba(200,88,79,0.08); }
+  table.sheet td.result-cell { background: var(--bg-deep); }
+  table.sheet td.promo { color: var(--green); font-weight: 700; background: rgba(95,174,107,0.13); }
+  table.sheet td.fail { color: var(--red); font-weight: 700; background: rgba(200,88,79,0.13); }
+  table.sheet td.pending { color: var(--text-faint); }
+  .row-name { text-align: left !important; color: var(--text) !important; font-family: var(--sans); }
+
+  /* ---------- Formula builder ---------- */
+  .formula-bar {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 14px 0;
+  }
+  .formula-bar .fx-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .formula-display {
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 7px;
+    padding: 12px 14px;
+    min-height: 46px;
+    word-break: break-word;
+    line-height: 1.8;
+  }
+  .formula-display .tok {
+    border-radius: 5px;
+    padding: 2px 7px;
+    margin: 0 1px;
+    display: inline-block;
+  }
+  .tok.op { background: rgba(217,138,75,0.18); color: var(--orange-soft); font-weight: 600; }
+  .tok.cond { background: rgba(76,160,160,0.16); color: var(--teal-soft); }
+  .tok.paren { background: rgba(212,175,82,0.16); color: var(--gold-soft); }
+  .tok.placeholder { background: var(--bg-deep); color: var(--text-faint); border: 1px dashed var(--border); }
+
+  .palette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .palette-group {
+    width: 100%;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 6px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 12px;
+    color: var(--text);
+  }
+  .chip:hover { border-color: var(--teal); background: var(--panel-light); }
+  .chip.op { color: var(--orange-soft); }
+  .chip.cond { color: var(--teal-soft); }
+  .chip.paren { color: var(--gold-soft); }
+  .chip.ctrl { color: var(--text-dim); }
+  .chip:disabled { opacity: .35; cursor: not-allowed; }
+
+  .builder-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hint-box {
+    margin-top: 12px;
+    background: rgba(76,160,160,0.08);
+    border: 1px solid rgba(76,160,160,0.28);
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+  }
+  .hint-box strong { color: var(--teal-soft); }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 12.5px;
+    color: var(--text-faint);
+    margin: 10px 0 4px;
+  }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .legend .swatch { width: 12px; height: 12px; border-radius: 3px; }
+
+  /* ---------- Feedback ---------- */
+  .feedback {
+    margin-top: 16px;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: rgba(95,174,107,0.12); border: 1px solid rgba(95,174,107,0.4); }
+  .feedback.no { background: rgba(200,88,79,0.12); border: 1px solid rgba(200,88,79,0.4); }
+  .feedback.neutral { background: rgba(76,160,160,0.10); border: 1px solid rgba(76,160,160,0.34); }
+  .feedback .fb-head { font-weight: 700; margin-bottom: 4px; }
+  .feedback.ok .fb-head { color: var(--green); }
+  .feedback.no .fb-head { color: var(--red); }
+  .feedback.neutral .fb-head { color: var(--teal-soft); }
+  .feedback .ref { color: var(--text-dim); }
+  .feedback .ref strong { color: var(--gold-soft); }
+  .feedback code { font-size: 13px; }
+
+  /* ---------- Card actions ---------- */
+  .card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .card-actions .nav-left,
+  .card-actions .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .step-label { font-size: 13px; color: var(--text-faint); }
+  .btn-back {
+    background: transparent;
+    color: var(--text-faint);
+    border: 1px solid var(--border-soft);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 9px 15px;
+    border-radius: 9px;
+  }
+  .btn-back:hover { background: var(--panel-light); color: var(--text-dim); }
+
+  /* ---------- Final ---------- */
+  .final {
+    text-align: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 26px;
+  }
+  .final h2 { font-family: var(--serif); font-size: 28px; margin-bottom: 8px; }
+  .score-big {
+    font-family: var(--serif);
+    font-size: 56px;
+    color: var(--orange-soft);
+    margin: 14px 0 4px;
+  }
+  .score-sub { color: var(--text-dim); margin-bottom: 20px; }
+  .save-state { font-size: 13px; color: var(--text-faint); margin-top: 14px; }
+
+  /* ---------- Dashboard ---------- */
+  .dash-link { text-align: center; margin-top: 30px; font-size: 13px; }
+  .dash-link a { color: var(--text-faint); text-decoration: underline; cursor: pointer; }
+  .dash-link a:hover { color: var(--teal-soft); }
+
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,14,18,0.82);
+    z-index: 50;
+    padding: 28px 16px;
+    overflow-y: auto;
+  }
+  .modal-backdrop.show { display: block; }
+  .modal {
+    max-width: 820px;
+    margin: 20px auto;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .modal h2 { font-family: var(--serif); font-size: 22px; margin-bottom: 16px; }
+  .modal-close {
+    float: right;
+    background: var(--panel-light);
+    color: var(--text-dim);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  table.dash { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+  table.dash th, table.dash td {
+    border-bottom: 1px solid var(--border-soft);
+    padding: 9px 10px;
+    text-align: left;
+  }
+  table.dash th { color: var(--teal-soft); font-weight: 600; }
+  table.dash td.num { text-align: center; font-weight: 600; }
+  table.dash td .mono { font-family: var(--mono); font-size: 12.5px; color: var(--orange-soft); }
+
+  .hidden { display: none !important; }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 12px;
+    color: var(--text-faint);
+    font-style: italic;
+    font-family: var(--serif);
+  }
+
+  @media (max-width: 560px) {
+    .card { padding: 20px; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Laboratorio di Filosofia · Liceo Classico "G.B. Vico"</div>
+    <h1>Dalla Logica Stoica <span class="accent">al Foglio di Calcolo</span></h1>
+    <p class="lede">Gli operatori <code>AND</code>, <code>OR</code>, <code>NOT</code> e il costrutto <code>SE… ALLORA…</code> nascono dagli indimostrabili di Crisippo. In questo laboratorio costruirai, passo dopo passo, un foglio di calcolo che li mette al lavoro.</p>
+  </header>
+
+  <!-- ============ IDENTITY GATE ============ -->
+  <div class="gate" id="gate">
+    <h2>Prima di iniziare</h2>
+    <p>Inserisci nome e cognome: i tuoi risultati verranno raccolti per la revisione in classe.</p>
+    <div class="field-row">
+      <input type="text" id="nameInput" placeholder="Nome e cognome" autocomplete="name">
+      <button class="btn-primary" id="startBtn" disabled>Inizia il laboratorio</button>
+    </div>
+  </div>
+
+  <!-- ============ LAB BODY ============ -->
+  <div id="labBody" class="hidden">
+    <div class="progress-bar" id="progressBar"></div>
+    <div id="stepContainer"></div>
+  </div>
+
+  <div class="dash-link"><a id="dashOpen">Area docente</a></div>
+
+  <p class="footer-note">«Gli operatori logici AND, OR, NOT e i costrutti if/then si basano su antichissimi principi stoici.»</p>
+</div>
+
+<!-- ============ DASHBOARD MODAL ============ -->
+<div class="modal-backdrop" id="dashModal">
+  <div class="modal">
+    <button class="modal-close" id="dashClose">Chiudi</button>
+    <div id="dashGate">
+      <h2>Area docente</h2>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">Inserisci il PIN per visualizzare i risultati della classe.</p>
+      <div class="field-row">
+        <input type="text" id="pinInput" placeholder="PIN" inputmode="numeric">
+        <button class="btn-primary" id="pinBtn">Entra</button>
+      </div>
+      <p id="pinErr" style="color:var(--red);font-size:13px;margin-top:10px;display:none;">PIN errato.</p>
+    </div>
+    <div id="dashContent" class="hidden">
+      <h2>Risultati · Dalla Logica Stoica al Foglio di Calcolo</h2>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:8px;" id="dashCount"></p>
+      <div style="overflow-x:auto;"><table class="dash" id="dashTable"></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FIREBASE ============ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",
+  authDomain: "laboratorio-vico.firebaseapp.com",
+  databaseURL: "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "laboratorio-vico",
+  storageBucket: "laboratorio-vico.firebasestorage.app",
+  messagingSenderId: "551766473976",
+  appId: "1:551766473976:web:190c0907ce2987e2d78f0d"
+};
+
+const DB_PATH = "studenti_stoici_foglio";
+
+let db = null;
+let fbReady = false;
+try {
+  const app = initializeApp(firebaseConfig);
+  db = getDatabase(app);
+  fbReady = true;
+} catch (e) {
+  console.error("Firebase init error:", e);
+}
+
+window.__fb = {
+  ready: () => fbReady,
+  save: async (name, payload) => {
+    if (!fbReady) throw new Error("Firebase non inizializzato");
+    const key = name.trim().replace(/[.#$\[\]\/]/g, "_").replace(/\s+/g, "_");
+    await set(ref(db, `${DB_PATH}/${key}`), payload);
+  },
+  loadAll: async () => {
+    if (!fbReady) throw new Error("Firebase non inizializzato");
+    const snap = await get(child(ref(db), DB_PATH));
+    return snap.exists() ? snap.val() : {};
+  }
+};
+window.dispatchEvent(new Event("fb-ready-check"));
+</script>
+
+<!-- ============ APP LOGIC ============ -->
+<script>
+(function () {
+  "use strict";
+
+  const PIN = "1970";
+
+  /* ===============================================================
+     DATASET — gli "studenti" del registro su cui gira il foglio.
+     Ogni record ha i dati grezzi; le condizioni booleane vengono
+     CALCOLATE dal motore, non scritte a mano.
+  ================================================================ */
+  const REGISTRO = [
+    { nome: "Aurelio M.",   media: 7.4, insuff: 0, assenzePerc: 8,  condotta: 8, provvedimento: false },
+    { nome: "Bruna T.",     media: 5.9, insuff: 2, assenzePerc: 12, condotta: 9, provvedimento: false },
+    { nome: "Cleante R.",   media: 7.2, insuff: 0, assenzePerc: 34, condotta: 8, provvedimento: false },
+    { nome: "Diotima V.",   media: 5.4, insuff: 1, assenzePerc: 14, condotta: 8, provvedimento: false },
+    { nome: "Epitteto S.",  media: 4.8, insuff: 4, assenzePerc: 9,  condotta: 5, provvedimento: false },
+    { nome: "Fedra L.",     media: 7.9, insuff: 0, assenzePerc: 22, condotta: 7, provvedimento: true  }
+  ];
+
+  /* Condizioni atomiche disponibili: ciascuna è una "proposizione
+     semplice" (ἀξίωμα) vera o falsa per ogni studente.
+     PROVVEDIMENTO è formulata "al positivo del fatto negativo": è vera
+     quando lo studente HA ricevuto un provvedimento disciplinare.
+     Questo rende l'operatore NOT davvero necessario nella sfida finale. */
+  const CONDIZIONI = {
+    MEDIA_OK:     { label: "MEDIA_OK",     desc: "media \u2265 6",                  test: s => s.media >= 6 },
+    NO_INSUFF:    { label: "NO_INSUFF",    desc: "nessuna insufficienza",           test: s => s.insuff === 0 },
+    FREQUENZA_OK: { label: "FREQUENZA_OK", desc: "assenze \u2264 25%",              test: s => s.assenzePerc <= 25 },
+    CONDOTTA_OK:  { label: "CONDOTTA_OK",  desc: "condotta \u2265 6",               test: s => s.condotta >= 6 },
+    PROVVEDIMENTO:{ label: "PROVVEDIMENTO",desc: "ha un provvedimento disciplinare", test: s => s.provvedimento === true }
+  };
+
+  /* ---- motore della formula — parsing e valutazione SEPARATI ----
+     La formula è un array di token. Token validi:
+       { k:'cond', v:'MEDIA_OK' }
+       { k:'op',   v:'AND'|'OR' }
+       { k:'op',   v:'NOT' }      (prefisso)
+       { k:'paren',v:'('|')' }
+
+     IMPORTANTE: il parsing costruisce un albero sintattico (AST)
+     consumando SEMPRE tutti i token, indipendentemente dai valori
+     di verità. La valutazione avviene in un secondo momento sull'AST.
+     Tenere separate le due fasi evita che lo short-circuit di && / ||
+     impedisca il consumo dei token.
+
+     Nodi dell'AST:
+       { t:'cond', v:'MEDIA_OK' }
+       { t:'not',  c: <nodo> }
+       { t:'and',  l: <nodo>, r: <nodo> }
+       { t:'or',   l: <nodo>, r: <nodo> }
+  */
+  function parseFormula(tokens) {
+    let pos = 0;
+    const T = tokens;
+    const peek = () => T[pos];
+    const next = () => T[pos++];
+
+    // grammatica:
+    // expr   := term (OR term)*
+    // term   := factor (AND factor)*
+    // factor := NOT factor | '(' expr ')' | cond
+    function parseExpr() {
+      let node = parseTerm();
+      while (peek() && peek().k === "op" && peek().v === "OR") {
+        next();
+        const r = parseTerm();
+        node = { t: "or", l: node, r: r };
+      }
+      return node;
+    }
+    function parseTerm() {
+      let node = parseFactor();
+      while (peek() && peek().k === "op" && peek().v === "AND") {
+        next();
+        const r = parseFactor();
+        node = { t: "and", l: node, r: r };
+      }
+      return node;
+    }
+    function parseFactor() {
+      const tok = peek();
+      if (!tok) throw new Error("formula incompleta");
+      if (tok.k === "op" && tok.v === "NOT") {
+        next();
+        return { t: "not", c: parseFactor() };
+      }
+      if (tok.k === "paren" && tok.v === "(") {
+        next();
+        const inner = parseExpr();
+        const close = peek();
+        if (!close || close.k !== "paren" || close.v !== ")") {
+          throw new Error("parentesi non chiusa");
+        }
+        next();
+        return inner;
+      }
+      if (tok.k === "cond") {
+        next();
+        return { t: "cond", v: tok.v };
+      }
+      throw new Error("token inatteso");
+    }
+
+    const ast = parseExpr();
+    if (pos !== T.length) throw new Error("token in eccesso");
+    return ast;
+  }
+
+  /* valuta un AST già costruito sui dati di uno studente */
+  function evalAst(node, student) {
+    switch (node.t) {
+      case "cond": return CONDIZIONI[node.v].test(student);
+      case "not":  return !evalAst(node.c, student);
+      case "and":  return evalAst(node.l, student) && evalAst(node.r, student);
+      case "or":   return evalAst(node.l, student) || evalAst(node.r, student);
+      default: throw new Error("nodo sconosciuto");
+    }
+  }
+
+  /* comodità: parsa e valuta in un colpo solo */
+  function tokensToBool(tokens, student) {
+    return evalAst(parseFormula(tokens), student);
+  }
+
+  /* validità sintattica indipendente dai dati: prova solo a parsare */
+  function formulaIsValid(tokens) {
+    if (!tokens.length) return false;
+    try {
+      parseFormula(tokens);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /* rende una formula come stringa leggibile */
+  function formulaToString(tokens) {
+    return tokens.map(t => {
+      if (t.k === "cond") return CONDIZIONI[t.v].label;
+      return t.v;
+    }).join(" ");
+  }
+
+  /* confronta la colonna esito di due formule sull'intero registro.
+     Se una delle due non è sintatticamente valida, restituisce false. */
+  function sameVerdict(tokensA, tokensB) {
+    let astA, astB;
+    try { astA = parseFormula(tokensA); } catch (e) { return false; }
+    try { astB = parseFormula(tokensB); } catch (e) { return false; }
+    return REGISTRO.every(s => evalAst(astA, s) === evalAst(astB, s));
+  }
+
+  /* ===============================================================
+     STEPS
+     types: theory | mc | build
+     'build' = passo del foglio di calcolo semiguidato
+  ================================================================ */
+  const STEPS = [
+
+    /* ---- T1 ---- */
+    {
+      type: "theory",
+      tag: "Parte 1 · Il ponte storico",
+      title: "Da Crisippo agli operatori logici",
+      html: `
+        <p>La logica stoica, elaborata da <strong>Zenone</strong> e sistematizzata da <strong>Crisippo</strong>, è una <strong>logica proposizionale</strong>: non analizza i termini interni a una frase, ma collega <em>proposizioni intere</em> tramite connettivi.</p>
+        <p>Quei connettivi sono esattamente gli <strong>operatori logici</strong> che oggi un foglio di calcolo o un programma usano per prendere decisioni:</p>
+        <table class="bridge">
+          <tr><th>Logica stoica</th><th>Operatore informatico</th><th>Significato</th></tr>
+          <tr>
+            <td><span class="stoic">Connettivo congiuntivo</span><br>«p <em>e</em> q»</td>
+            <td><span class="op">AND</span></td>
+            <td>vero solo se <em>entrambe</em> le condizioni sono vere</td>
+          </tr>
+          <tr>
+            <td><span class="stoic">Connettivo disgiuntivo</span><br>«p <em>o</em> q»</td>
+            <td><span class="op">OR</span></td>
+            <td>vero se <em>almeno una</em> condizione è vera</td>
+          </tr>
+          <tr>
+            <td><span class="stoic">Negazione</span><br>«<em>non</em> p»</td>
+            <td><span class="op">NOT</span></td>
+            <td>rovescia il valore di verità</td>
+          </tr>
+          <tr>
+            <td><span class="stoic">Condizionale + modus ponens</span><br>«se p allora q»</td>
+            <td><span class="op">SE(… ; … ; …)</span></td>
+            <td>se la condizione è vera, restituisce un esito, altrimenti un altro</td>
+          </tr>
+        </table>
+        <p>Il <em>modus ponens</em> di Crisippo — «se p allora q; p; dunque q» — è il cuore di ogni costruzione <code>SE…ALLORA…</code> con cui un foglio di calcolo decide automaticamente.</p>
+        <div class="next-up">In questo laboratorio: <strong>3 domande</strong> di comprensione e <strong>4 passi guidati</strong> in cui costruirai il foglio di scrutinio.</div>
+      `
+    },
+
+    /* ---- E1 ---- */
+    {
+      type: "mc",
+      tag: "Parte 1 · Domanda 1",
+      title: "Quale operatore?",
+      promptHtml: `<p>Voglio che una cella sia vera <strong>solo quando valgono insieme</strong> due condizioni: «la media è sufficiente» <em>e</em> «non ci sono insufficienze».</p>`,
+      question: "Quale operatore logico — erede di quale connettivo stoico — devo usare?",
+      options: [
+        { t: "OR, erede del connettivo disgiuntivo", correct: false },
+        { t: "AND, erede del connettivo congiuntivo", correct: true },
+        { t: "NOT, erede della negazione", correct: false },
+        { t: "SE, erede del condizionale", correct: false }
+      ],
+      explainOk: "Esatto. «p e q» degli Stoici diventa l'AND informatico: vero solo se entrambe le proposizioni sono vere.",
+      explainNo: "«Solo quando valgono insieme» è la congiunzione stoica «p e q»: l'operatore è AND. L'OR (disgiuntivo) basterebbe una sola condizione vera.",
+      ref: "Riferimento: <strong>connettivo congiuntivo → AND</strong>."
+    },
+
+    /* ---- E2 ---- */
+    {
+      type: "mc",
+      tag: "Parte 1 · Domanda 2",
+      title: "Lo schema della cella SE",
+      promptHtml: `<p>Una cella contiene la formula:</p>
+        <p class="quote">SE( MEDIA_OK ; "Ammesso" ; "Non ammesso" )</p>
+        <p>e per un certo studente <code>MEDIA_OK</code> risulta vero.</p>`,
+      question: "Quale ragionamento stoico riproduce il comportamento di questa cella?",
+      options: [
+        { t: "Il modus ponens: posta la condizione «se p allora q» e verificato p, segue q («Ammesso»).", correct: true },
+        { t: "Il modus tollens: negato il conseguente, si nega l'antecedente.", correct: false },
+        { t: "La negazione della congiunzione.", correct: false },
+        { t: "Nessuno: una cella SE non ha rapporto con la logica stoica.", correct: false }
+      ],
+      explainOk: "Esatto. La cella SE è un condizionale: verificata la condizione (p vero), restituisce il primo esito (q). È il modus ponens reso automatico.",
+      explainNo: "La cella applica un condizionale «se p allora q» e, constatato che p è vero, produce q. È esattamente il modus ponens, il primo indimostrabile di Crisippo.",
+      ref: "Riferimento: <strong>1. Modus ponens</strong> → costrutto <code>SE(…)</code>."
+    },
+
+    /* ---- E3 ---- */
+    {
+      type: "mc",
+      tag: "Parte 1 · Domanda 3",
+      title: "Disgiunzione esclusiva e OR informatico",
+      promptHtml: `<p>Gli Stoici intendevano la disgiuntiva «o p o q» in senso <strong>esclusivo</strong>: esattamente una delle due è vera. L'operatore <code>OR</code> dei fogli di calcolo, invece, è <strong>inclusivo</strong>: è vero anche quando entrambe le condizioni sono vere.</p>`,
+      question: "Quale conseguenza ha questa differenza?",
+      options: [
+        { t: "Nessuna: i due operatori sono identici.", correct: false },
+        { t: "L'OR informatico e la disgiuntiva stoica divergono nel caso in cui entrambe le proposizioni sono vere.", correct: true },
+        { t: "L'OR informatico è vero solo quando entrambe le condizioni sono vere.", correct: false },
+        { t: "La disgiuntiva stoica è sempre falsa.", correct: false }
+      ],
+      explainOk: "Esatto. Quando p e q sono entrambe vere, l'OR inclusivo dà «vero», mentre la disgiuntiva esclusiva stoica darebbe «falso». È l'unico caso in cui divergono.",
+      explainNo: "Le due funzioni coincidono in tre casi su quattro; differiscono solo quando p e q sono entrambe vere: lì l'OR inclusivo dà «vero», l'aut…aut esclusivo dà «falso».",
+      ref: "Riferimento: <strong>disgiuntiva esclusiva</strong> vs <strong>OR inclusivo</strong>."
+    },
+
+    /* ---- BUILD intro ---- */
+    {
+      type: "theory",
+      tag: "Parte 2 · Il progetto",
+      title: "Il foglio di scrutinio",
+      html: `
+        <p>Ora costruirai un piccolo <strong>foglio di calcolo per lo scrutinio</strong>. La classe è già nel registro: per ogni studente conosci <em>media</em>, numero di <em>insufficienze</em>, <em>percentuale di assenze</em>, voto di <em>condotta</em> ed eventuali <em>provvedimenti disciplinari</em>.</p>
+        <p>Da questi dati il foglio ricava cinque <strong>condizioni atomiche</strong> — proposizioni semplici vere o false, gli <span class="greek">ἀξιώματα</span> degli Stoici:</p>
+        <ul class="schema-list">
+          <li><span class="name">MEDIA_OK</span> — la media è ≥ 6</li>
+          <li><span class="name">NO_INSUFF</span> — non ci sono insufficienze</li>
+          <li><span class="name">FREQUENZA_OK</span> — le assenze non superano il 25%</li>
+          <li><span class="name">CONDOTTA_OK</span> — la condotta è ≥ 6</li>
+          <li><span class="name">PROVVEDIMENTO</span> — lo studente <em>ha</em> ricevuto un provvedimento disciplinare</li>
+        </ul>
+        <p>Attenzione all'ultima: <code>PROVVEDIMENTO</code> è vera quando una cosa <em>negativa</em> è accaduta. Per usarla come requisito di ammissione servirà la negazione — <code>NOT PROVVEDIMENTO</code>, «non ha provvedimenti».</p>
+        <p>Il tuo compito, in quattro passi, sarà <strong>comporre queste proposizioni con gli operatori logici</strong> per ottenere la colonna finale: <em>ammesso</em> oppure <em>non ammesso</em>. Ogni passo ti mostra subito l'effetto della formula su tutta la classe.</p>
+        <div class="next-up">Procedura semiguidata: <strong>4 passi</strong>. I primi sono assistiti; l'ultimo è una sfida.</div>
+      `
+    },
+
+    /* ---- BUILD 1 ---- */
+    {
+      type: "build",
+      tag: "Parte 2 · Passo 1 di 4",
+      title: "La prima regola: una congiunzione",
+      intro: `<p>Cominciamo dal criterio minimo. Uno studente supera la prima verifica del foglio se <strong>la media è sufficiente E non ha insufficienze</strong>. Due proposizioni semplici legate dal connettivo congiuntivo.</p>`,
+      task: `Componi la formula: <code>MEDIA_OK</code> <code>AND</code> <code>NO_INSUFF</code>.`,
+      guided: true,
+      // soluzione di riferimento (una qualsiasi formula equivalente è accettata)
+      solution: [
+        { k: "cond", v: "MEDIA_OK" },
+        { k: "op", v: "AND" },
+        { k: "cond", v: "NO_INSUFF" }
+      ],
+      palette: ["MEDIA_OK", "NO_INSUFF", "FREQUENZA_OK", "CONDOTTA_OK", "AND", "OR", "NOT", "(", ")"],
+      hint: "Trascina (o tocca) prima <code>MEDIA_OK</code>, poi <code>AND</code>, poi <code>NO_INSUFF</code>. L'ordine conta: l'operatore va in mezzo.",
+      explainOk: "La congiunzione funziona: solo chi soddisfa entrambe le proposizioni semplici supera la regola. Hai costruito un AND, erede diretto del «p e q» stoico.",
+      explainNo: "La formula deve unire le due condizioni con AND in mezzo: <code>MEDIA_OK AND NO_INSUFF</code>.",
+      ref: "Riferimento: <strong>connettivo congiuntivo → AND</strong>."
+    },
+
+    /* ---- BUILD 2 ---- */
+    {
+      type: "build",
+      tag: "Parte 2 · Passo 2 di 4",
+      title: "Una seconda via: la disgiunzione",
+      intro: `<p>La regola precedente è troppo rigida: esclude chi ha una sola insufficienza ma per il resto è impeccabile. Aggiungiamo una <strong>via alternativa</strong>. Uno studente è ammissibile se vale la regola di prima <em>oppure</em> se ha comunque <code>FREQUENZA_OK</code> <strong>e</strong> <code>CONDOTTA_OK</code>.</p>`,
+      task: `Componi: <code>( MEDIA_OK AND NO_INSUFF ) OR ( FREQUENZA_OK AND CONDOTTA_OK )</code>. Le parentesi tengono insieme ciascuna delle due vie.`,
+      guided: true,
+      solution: [
+        { k: "paren", v: "(" },
+        { k: "cond", v: "MEDIA_OK" }, { k: "op", v: "AND" }, { k: "cond", v: "NO_INSUFF" },
+        { k: "paren", v: ")" },
+        { k: "op", v: "OR" },
+        { k: "paren", v: "(" },
+        { k: "cond", v: "FREQUENZA_OK" }, { k: "op", v: "AND" }, { k: "cond", v: "CONDOTTA_OK" },
+        { k: "paren", v: ")" }
+      ],
+      palette: ["MEDIA_OK", "NO_INSUFF", "FREQUENZA_OK", "CONDOTTA_OK", "AND", "OR", "NOT", "(", ")"],
+      hint: "Apri parentesi, costruisci la prima via con AND, chiudi. Poi <code>OR</code>. Poi apri di nuovo parentesi per la seconda via con AND, e chiudi.",
+      explainOk: "Hai unito due congiunzioni con una disgiunzione. L'OR offre una seconda strada: basta che una delle due vie sia vera. Le parentesi — come nella sintassi stoica — stabiliscono che cosa il connettivo lega.",
+      explainNo: "Servono due gruppi fra parentesi, ciascuno con un AND, uniti da OR: <code>( MEDIA_OK AND NO_INSUFF ) OR ( FREQUENZA_OK AND CONDOTTA_OK )</code>.",
+      ref: "Riferimento: <strong>connettivo disgiuntivo → OR</strong> e uso delle parentesi."
+    },
+
+    /* ---- BUILD 3 ---- */
+    {
+      type: "build",
+      tag: "Parte 2 · Passo 3 di 4",
+      title: "Una clausola di sbarramento",
+      intro: `<p>Manca una garanzia. Per quanto buoni siano gli altri indicatori, <strong>nessuno può essere ammesso se la frequenza non è in regola</strong>: troppe assenze sono uno sbarramento assoluto.</p>
+        <p>La regola completa: deve valere la condizione del passo 2 <em>e</em>, in più, deve valere <code>FREQUENZA_OK</code> come vincolo non negoziabile. Osserva la colonna «Esito»: c'è uno studente che al passo 2 era ammesso e che questo sbarramento farà cadere.</p>`,
+      task: `Aggiungi una clausola di sbarramento. Racchiudi fra parentesi tutta la formula del passo 2 e legala con <code>AND</code> a <code>FREQUENZA_OK</code>.`,
+      guided: true,
+      solution: [
+        { k: "paren", v: "(" },
+        { k: "paren", v: "(" },
+        { k: "cond", v: "MEDIA_OK" }, { k: "op", v: "AND" }, { k: "cond", v: "NO_INSUFF" },
+        { k: "paren", v: ")" },
+        { k: "op", v: "OR" },
+        { k: "paren", v: "(" },
+        { k: "cond", v: "FREQUENZA_OK" }, { k: "op", v: "AND" }, { k: "cond", v: "CONDOTTA_OK" },
+        { k: "paren", v: ")" },
+        { k: "paren", v: ")" },
+        { k: "op", v: "AND" },
+        { k: "cond", v: "FREQUENZA_OK" }
+      ],
+      palette: ["MEDIA_OK", "NO_INSUFF", "FREQUENZA_OK", "CONDOTTA_OK", "AND", "OR", "NOT", "(", ")"],
+      hint: "Racchiudi tutta la formula del passo 2 in una grande parentesi, poi aggiungi <code>AND FREQUENZA_OK</code>. Lo sbarramento è una congiunzione finale: se la frequenza è irregolare, l'intero AND crolla a «falso», qualunque sia il resto.",
+      explainOk: "Hai espresso un divieto. Lo sbarramento è una congiunzione che lega l'intera regola precedente a una condizione obbligatoria: se <code>FREQUENZA_OK</code> è falsa, nessun altro merito può salvare l'esito. È la forza vincolante del «p e q» — basta che un membro sia falso e l'intera congiunzione è falsa.",
+      explainNo: "Tutta la formula del passo 2 va fra parentesi, seguita da <code>AND FREQUENZA_OK</code>. La condizione obbligatoria, legata con AND, fa da sbarramento.",
+      ref: "Riferimento: <strong>la congiunzione come vincolo</strong> — basta un falso e tutto è falso."
+    },
+
+    /* ---- BUILD 4 — sfida ---- */
+    {
+      type: "build",
+      tag: "Parte 2 · Passo 4 di 4 · Sfida",
+      title: "Sfida: la regola del consiglio di classe",
+      intro: `<p>Ultimo passo, <strong>senza formula suggerita</strong>: tocca a te tradurre una norma in operatori logici. Il consiglio di classe ha deliberato il seguente criterio di ammissione:</p>
+        <p class="quote">«È ammesso chi ha la media sufficiente e nessuna insufficienza, oppure chi ha una buona condotta; in ogni caso nessuno è ammesso se la frequenza non è regolare. Inoltre, è escluso d'ufficio chi ha ricevuto un provvedimento disciplinare.»</p>
+        <p>Il deliberato contiene <strong>quattro requisiti</strong>. Distinguili con attenzione, perché ognuno corrisponde a un operatore diverso:</p>
+        <ul class="schema-list">
+          <li>una <strong>via del merito</strong> — due condizioni che devono valere <em>insieme</em>;</li>
+          <li>una <strong>via alternativa</strong> — un'altra condizione che, da sola, apre comunque l'ammissione;</li>
+          <li>uno <strong>sbarramento di frequenza</strong> — un requisito che deve valere <em>in ogni caso</em>, qualunque sia la via;</li>
+          <li>una <strong>esclusione disciplinare</strong> — un fatto che, se presente, <em>impedisce</em> l'ammissione.</li>
+        </ul>
+        <p>Attenzione all'ultimo requisito: la condizione <code>PROVVEDIMENTO</code> è vera quando il provvedimento <em>c'è stato</em>. Il deliberato però chiede l'opposto — l'assenza di provvedimenti. Dovrai perciò ricavare tu, con l'operatore adatto, la condizione che ti serve.</p>
+        <p>Hai a disposizione tutte e cinque le condizioni, i tre operatori e le parentesi. <strong>Esistono più formule corrette</strong>: il foglio accetta qualunque formula la cui colonna «Esito» coincida con il deliberato sull'intera classe. Usa il foglio come banco di prova — modifica la formula e osserva subito chi viene ammesso e chi no.</p>`,
+      task: `Traduci il deliberato del consiglio in una formula logica. Combina le cinque condizioni con <code>AND</code>, <code>OR</code>, <code>NOT</code> e le parentesi finché la colonna «Esito» non rispecchia esattamente la norma.`,
+      guided: false,
+      // formula di riferimento:
+      // ( ((MEDIA_OK AND NO_INSUFF) OR (FREQUENZA_OK AND CONDOTTA_OK)) AND FREQUENZA_OK ) AND NOT PROVVEDIMENTO
+      solution: [
+        { k: "paren", v: "(" },
+        { k: "paren", v: "(" },
+        { k: "paren", v: "(" },
+        { k: "cond", v: "MEDIA_OK" }, { k: "op", v: "AND" }, { k: "cond", v: "NO_INSUFF" },
+        { k: "paren", v: ")" },
+        { k: "op", v: "OR" },
+        { k: "paren", v: "(" },
+        { k: "cond", v: "FREQUENZA_OK" }, { k: "op", v: "AND" }, { k: "cond", v: "CONDOTTA_OK" },
+        { k: "paren", v: ")" },
+        { k: "paren", v: ")" },
+        { k: "op", v: "AND" },
+        { k: "cond", v: "FREQUENZA_OK" },
+        { k: "paren", v: ")" },
+        { k: "op", v: "AND" },
+        { k: "op", v: "NOT" },
+        { k: "cond", v: "PROVVEDIMENTO" }
+      ],
+      matchByVerdict: true,
+      palette: ["MEDIA_OK", "NO_INSUFF", "FREQUENZA_OK", "CONDOTTA_OK", "PROVVEDIMENTO", "AND", "OR", "NOT", "(", ")"],
+      hint: "Ragiona per gruppi, non token per token. Quale operatore lega due condizioni che devono valere <em>insieme</em>? Quale operatore unisce due <em>vie alternative</em>? E un requisito valido «in ogni caso» va legato al resto con un operatore che fa cadere tutto se non è soddisfatto: quale? Le parentesi servono a tenere separati i gruppi, così ogni operatore agisce solo dove vuoi tu.",
+      hint2: "Osserva la colonna «Esito» nel foglio e confrontala con il deliberato, studente per studente. Se qualcuno che dovrebbe essere escluso risulta «ammesso», è il segno che manca uno sbarramento — un <code>AND</code> con la condizione obbligatoria. Per l'esclusione disciplinare ricorda: <code>PROVVEDIMENTO</code> è vera quando il provvedimento esiste, quindi il requisito «non averne» si ottiene anteponendo <code>NOT</code>. Non ti serve scrivere la formula tutta in una volta: costruiscine una parte, verifica nel foglio, poi aggiungi la successiva.",
+      explainOk: "Formula corretta. La tua colonna «Esito» coincide con il deliberato del consiglio su tutti gli studenti del registro. Hai usato tutti gli operatori della logica proposizionale: la congiunzione (AND) per i vincoli, la disgiunzione (OR) per le vie alternative, la negazione (NOT) per trasformare un fatto negativo in un requisito. È, in piccolo, esattamente ciò che fa un programma quando applica una norma a dei dati.",
+      explainNo: "La colonna «Esito» non rispecchia ancora il deliberato per tutti gli studenti. Riprendi i quattro requisiti uno alla volta — via del merito, via alternativa, sbarramento di frequenza, esclusione disciplinare — e verifica nel foglio l'effetto di ciascuno prima di aggiungere il successivo. Controlla in particolare gli studenti il cui «Esito» non corrisponde a ciò che la norma prevede per loro.",
+      ref: "Riferimento: <strong>traduzione di una norma in operatori logici</strong> — AND, OR, NOT e parentesi."
+    }
+
+  ];
+
+  /* ===============================================================
+     STATE
+  ================================================================ */
+  let studentName = "";
+  let current = 0;
+  const totalGraded = STEPS.filter(s => s.type === "mc" || s.type === "build").length;
+  const results = {};
+  let fbReady = false;
+
+  const gate = document.getElementById("gate");
+  const nameInput = document.getElementById("nameInput");
+  const startBtn = document.getElementById("startBtn");
+  const labBody = document.getElementById("labBody");
+  const progressBar = document.getElementById("progressBar");
+  const stepContainer = document.getElementById("stepContainer");
+
+  function checkFb() { if (window.__fb && window.__fb.ready()) fbReady = true; }
+  window.addEventListener("fb-ready-check", checkFb);
+  checkFb();
+
+  /* ---- gate ---- */
+  nameInput.addEventListener("input", () => {
+    startBtn.disabled = nameInput.value.trim().length < 3;
+  });
+  nameInput.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !startBtn.disabled) startBtn.click();
+  });
+  startBtn.addEventListener("click", () => {
+    studentName = nameInput.value.trim();
+    gate.classList.add("hidden");
+    labBody.classList.remove("hidden");
+    buildProgress();
+    renderStep(0);
+  });
+
+  /* ---- progress ---- */
+  function buildProgress() {
+    progressBar.innerHTML = "";
+    STEPS.forEach((_, i) => {
+      const seg = document.createElement("div");
+      seg.className = "seg";
+      progressBar.appendChild(seg);
+    });
+  }
+  function updateProgress() {
+    [...progressBar.children].forEach((seg, i) => {
+      seg.className = "seg" + (i < current ? " done" : i === current ? " active" : "");
+    });
+  }
+
+  /* ---- dispatch ---- */
+  function renderStep(idx) {
+    current = idx;
+    updateProgress();
+    stepContainer.innerHTML = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (idx >= STEPS.length) { renderFinal(); return; }
+
+    const step = STEPS[idx];
+    const card = document.createElement("div");
+    let cls = "card ";
+    if (step.type === "theory") cls += "theory";
+    else if (step.type === "build") cls += "build";
+    else cls += "exercise";
+    card.className = cls;
+
+    if (step.type === "theory") renderTheory(card, step);
+    else if (step.type === "mc") renderMC(card, step);
+    else if (step.type === "build") renderBuild(card, step);
+
+    stepContainer.appendChild(card);
+  }
+
+  function gradedNumber(idx) {
+    let n = 0;
+    for (let i = 0; i <= idx; i++) {
+      if (STEPS[i].type === "mc" || STEPS[i].type === "build") n++;
+    }
+    return n;
+  }
+
+  function navFooter(card, { label, primaryText, primaryFn, primaryDisabled }) {
+    const actions = document.createElement("div");
+    actions.className = "card-actions";
+
+    /* gruppo sinistro: indietro + etichetta */
+    const left = document.createElement("div");
+    left.className = "nav-left";
+
+    if (current > 0) {
+      const backBtn = document.createElement("button");
+      backBtn.className = "btn-back";
+      backBtn.textContent = "← Indietro";
+      backBtn.addEventListener("click", () => renderStep(current - 1));
+      left.appendChild(backBtn);
+    }
+
+    const lbl = document.createElement("span");
+    lbl.className = "step-label";
+    lbl.textContent = label;
+    left.appendChild(lbl);
+
+    /* gruppo destro: pulsanti di azione */
+    const right = document.createElement("div");
+    right.className = "nav-right";
+
+    const btn = document.createElement("button");
+    btn.className = "btn-primary";
+    btn.textContent = primaryText;
+    btn.disabled = !!primaryDisabled;
+    btn.addEventListener("click", () => primaryFn(btn));
+    right.appendChild(btn);
+
+    actions.appendChild(left);
+    actions.appendChild(right);
+    card.appendChild(actions);
+    return btn;
+  }
+
+  /* ===============================================================
+     THEORY
+  ================================================================ */
+  function renderTheory(card, step) {
+    card.innerHTML = `
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      ${step.html}
+    `;
+    navFooter(card, {
+      label: "Sezione introduttiva",
+      primaryText: "Avanti",
+      primaryFn: () => renderStep(current + 1)
+    });
+  }
+
+  /* ===============================================================
+     MULTIPLE CHOICE
+  ================================================================ */
+  function renderMC(card, step) {
+    card.innerHTML = `
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.promptHtml}</div>
+      <p class="question">${step.question}</p>
+    `;
+    const opts = document.createElement("div");
+    opts.className = "options";
+    const letters = ["A", "B", "C", "D", "E"];
+    const prev = results[current];
+    let selected = (prev && typeof prev.choice === "number") ? prev.choice : -1;
+    let locked = false;
+
+    step.options.forEach((o, i) => {
+      const b = document.createElement("button");
+      b.className = "opt";
+      b.innerHTML = `<span class="marker">${letters[i]}</span><span>${o.t}</span>`;
+      b.addEventListener("click", () => {
+        if (locked) return;
+        selected = i;
+        [...opts.children].forEach(c => c.classList.remove("selected"));
+        b.classList.add("selected");
+        confirmBtn.disabled = false;
+      });
+      opts.appendChild(b);
+    });
+    card.appendChild(opts);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Voce ${gradedNumber(current)} di ${totalGraded}`,
+      primaryText: "Conferma",
+      primaryFn: handlePrimary,
+      primaryDisabled: true
+    });
+
+    function lockAndShow(isCorrect) {
+      locked = true;
+      [...opts.children].forEach((c, i) => {
+        c.classList.add("locked");
+        if (step.options[i].correct) c.classList.add("correct");
+        else if (i === selected) c.classList.add("wrong");
+      });
+      fb.className = "feedback show " + (isCorrect ? "ok" : "no");
+      fb.innerHTML = `
+        <div class="fb-head">${isCorrect ? "Corretto" : "Non corretto"}</div>
+        <div>${isCorrect ? step.explainOk : step.explainNo}</div>
+        <div class="ref" style="margin-top:8px;">${step.ref}</div>
+      `;
+      confirmBtn.textContent = current === STEPS.length - 1 ? "Concludi" : "Avanti";
+      confirmBtn.disabled = false;
+    }
+
+    function handlePrimary(btn) {
+      if (!locked) {
+        const isCorrect = step.options[selected].correct;
+        results[current] = { correct: isCorrect, type: "mc", choice: selected };
+        lockAndShow(isCorrect);
+      } else {
+        renderStep(current + 1);
+      }
+    }
+
+    /* se la domanda era già stata risolta, la rimostro bloccata */
+    if (prev && typeof prev.choice === "number") {
+      [...opts.children][prev.choice].classList.add("selected");
+      lockAndShow(prev.correct);
+    }
+  }
+
+  /* ===============================================================
+     BUILD — formula builder + live spreadsheet
+  ================================================================ */
+  function renderBuild(card, step) {
+    card.innerHTML = `
+      <div class="card-tag">${step.tag}</div>
+      <h3>${step.title}</h3>
+      <div class="prompt">${step.intro}</div>
+      <p class="question">${step.task}</p>
+    `;
+
+    /* se il passo è già stato svolto, ripristino i token salvati,
+       così tornando indietro lo studente ritrova la sua formula */
+    const prev = results[current];
+    let formula = (prev && Array.isArray(prev.tokens)) ? prev.tokens.slice() : [];
+    let locked = false;
+    let attempts = (prev && prev.attempts) ? prev.attempts : 0;
+
+    /* ---- formula bar ---- */
+    const fbar = document.createElement("div");
+    fbar.className = "formula-bar";
+    fbar.innerHTML = `<div class="fx-label">ƒx — formula della colonna «Esito»</div>`;
+    const display = document.createElement("div");
+    display.className = "formula-display";
+    fbar.appendChild(display);
+
+    /* ---- palette ---- */
+    const palette = document.createElement("div");
+    palette.className = "palette";
+
+    const condKeys = step.palette.filter(p => CONDIZIONI[p]);
+    const opKeys = step.palette.filter(p => ["AND", "OR", "NOT"].includes(p));
+    const parenKeys = step.palette.filter(p => p === "(" || p === ")");
+
+    function addGroupLabel(text) {
+      const g = document.createElement("div");
+      g.className = "palette-group";
+      g.textContent = text;
+      palette.appendChild(g);
+    }
+
+    function makeChip(value, kind) {
+      const c = document.createElement("button");
+      c.className = "chip " + kind;
+      if (kind === "cond") {
+        c.textContent = CONDIZIONI[value].label;
+        c.title = CONDIZIONI[value].desc;
+      } else {
+        c.textContent = value;
+      }
+      c.addEventListener("click", () => {
+        if (locked) return;
+        formula.push({ k: kind, v: value });
+        renderFormula();
+        recalc();
+      });
+      return c;
+    }
+
+    addGroupLabel("Condizioni (proposizioni semplici)");
+    condKeys.forEach(k => palette.appendChild(makeChip(k, "cond")));
+    addGroupLabel("Operatori logici");
+    opKeys.forEach(k => palette.appendChild(makeChip(k, "op")));
+    addGroupLabel("Parentesi");
+    parenKeys.forEach(k => palette.appendChild(makeChip(k, "paren")));
+
+    fbar.appendChild(palette);
+
+    /* ---- builder actions ---- */
+    const bActions = document.createElement("div");
+    bActions.className = "builder-actions";
+    const undoBtn = document.createElement("button");
+    undoBtn.className = "btn-ghost";
+    undoBtn.textContent = "↶ Annulla ultimo";
+    undoBtn.addEventListener("click", () => {
+      if (locked || !formula.length) return;
+      formula.pop();
+      renderFormula();
+      recalc();
+    });
+    const clearBtn = document.createElement("button");
+    clearBtn.className = "btn-ghost";
+    clearBtn.textContent = "✕ Svuota";
+    clearBtn.addEventListener("click", () => {
+      if (locked) return;
+      formula = [];
+      renderFormula();
+      recalc();
+    });
+    bActions.appendChild(undoBtn);
+    bActions.appendChild(clearBtn);
+    fbar.appendChild(bActions);
+
+    card.appendChild(fbar);
+
+    /* ---- hint box: vuoto all'inizio, popolato dopo un errore ----
+       Nei passi guidati il suggerimento è mostrato fin da subito;
+       nella sfida (guided:false) compare solo dopo il primo errore. */
+    const hintBox = document.createElement("div");
+    hintBox.className = "hint-box hidden";
+    card.appendChild(hintBox);
+
+    function showHint(level) {
+      // level 1 = hint, level 2+ = hint2 se disponibile, altrimenti hint
+      let text;
+      if (level >= 2 && step.hint2) text = step.hint2;
+      else text = step.hint || "";
+      if (!text) return;
+      hintBox.innerHTML = `<strong>Suggerimento.</strong> ${text}`;
+      hintBox.classList.remove("hidden");
+    }
+
+    if (step.guided && step.hint) {
+      showHint(1);
+    }
+
+    /* ---- live spreadsheet ---- */
+    const legend = document.createElement("div");
+    legend.className = "legend";
+    legend.innerHTML = `
+      <span><span class="swatch" style="background:rgba(95,174,107,0.5)"></span>condizione vera</span>
+      <span><span class="swatch" style="background:rgba(200,88,79,0.5)"></span>condizione falsa</span>
+      <span><span class="swatch" style="background:rgba(212,175,82,0.5)"></span>esito calcolato dalla tua formula</span>
+    `;
+    card.appendChild(legend);
+
+    const sheetWrap = document.createElement("div");
+    sheetWrap.className = "sheet-wrap";
+    const sheet = document.createElement("table");
+    sheet.className = "sheet";
+    sheetWrap.appendChild(sheet);
+    card.appendChild(sheetWrap);
+
+    /* ---- feedback ---- */
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    card.appendChild(fb);
+
+    const confirmBtn = navFooter(card, {
+      label: `Voce ${gradedNumber(current)} di ${totalGraded}`,
+      primaryText: "Verifica la formula",
+      primaryFn: handlePrimary,
+      primaryDisabled: true
+    });
+
+    /* ---- render the formula bar ---- */
+    function renderFormula() {
+      display.innerHTML = "";
+      if (!formula.length) {
+        const ph = document.createElement("span");
+        ph.className = "tok placeholder";
+        ph.textContent = "componi qui la formula…";
+        display.appendChild(ph);
+      } else {
+        formula.forEach(t => {
+          const span = document.createElement("span");
+          span.className = "tok " + t.k;
+          span.textContent = t.k === "cond" ? CONDIZIONI[t.v].label : t.v;
+          display.appendChild(span);
+        });
+      }
+      confirmBtn.disabled = !formulaIsValid(formula);
+    }
+
+    /* ---- render / recalc the spreadsheet ---- */
+    function recalc() {
+      const valid = formulaIsValid(formula);
+      // header
+      let html = "<thead><tr>";
+      html += `<th class="col-head">Studente</th>`;
+      condKeys.forEach(k => { html += `<th>${CONDIZIONI[k].label}</th>`; });
+      html += `<th>Esito (ƒx)</th></tr></thead><tbody>`;
+
+      REGISTRO.forEach(stu => {
+        html += `<tr><td class="row-name">${stu.nome}</td>`;
+        condKeys.forEach(k => {
+          const v = CONDIZIONI[k].test(stu);
+          html += `<td class="${v ? "bool-true" : "bool-false"}">${v ? "VERO" : "FALSO"}</td>`;
+        });
+        if (!valid) {
+          html += `<td class="result-cell pending">—</td>`;
+        } else {
+          let verdict;
+          try { verdict = tokensToBool(formula, stu); }
+          catch (e) { verdict = null; }
+          if (verdict === null) html += `<td class="result-cell pending">—</td>`;
+          else html += `<td class="${verdict ? "promo" : "fail"}">${verdict ? "AMMESSO" : "NON AMMESSO"}</td>`;
+        }
+        html += `</tr>`;
+      });
+      html += `</tbody>`;
+      sheet.innerHTML = html;
+    }
+
+    renderFormula();
+    recalc();
+
+    /* ---- secondo pulsante: "prosegui comunque", nascosto all'inizio ---- */
+    const skipBtn = document.createElement("button");
+    skipBtn.className = "btn-ghost";
+    skipBtn.textContent = "Prosegui comunque →";
+    skipBtn.style.display = "none";
+    skipBtn.addEventListener("click", () => {
+      if (locked) return;
+      // registra il passo come non riuscito e avanza
+      locked = true;
+      results[current] = {
+        correct: false,
+        type: "build",
+        attempts: attempts,
+        skipped: true,
+        tokens: formula.slice(),
+        formula: formula.length ? formulaToString(formula) : "(nessuna formula)"
+      };
+      renderStep(current + 1);
+    });
+    // lo inserisco nel gruppo destro della barra, prima del pulsante "Verifica"
+    confirmBtn.parentElement.insertBefore(skipBtn, confirmBtn);
+
+    /* ---- verify ---- */
+    function handlePrimary(btn) {
+      if (locked) { renderStep(current + 1); return; }
+      if (!formulaIsValid(formula)) return;
+      attempts++;
+
+      const isCorrect = sameVerdict(formula, step.solution);
+
+      if (isCorrect) {
+        locked = true;
+        palette.querySelectorAll(".chip").forEach(c => c.disabled = true);
+        undoBtn.disabled = true;
+        clearBtn.disabled = true;
+        skipBtn.style.display = "none";
+        fb.className = "feedback show ok";
+        fb.innerHTML = `
+          <div class="fb-head">Formula corretta</div>
+          <div>${step.explainOk}</div>
+          <div class="ref" style="margin-top:8px;">La tua formula: <code>${formulaToString(formula)}</code></div>
+          <div class="ref" style="margin-top:6px;">${step.ref}</div>
+        `;
+        results[current] = { correct: true, type: "build", attempts: attempts, tokens: formula.slice(), formula: formulaToString(formula) };
+        btn.textContent = current === STEPS.length - 1 ? "Concludi" : "Avanti";
+      } else {
+        // tentativo errato: mostra un suggerimento e abilita "prosegui comunque"
+        showHint(attempts);
+        skipBtn.style.display = "";
+        btn.textContent = "Verifica di nuovo";
+        // registro il tentativo (non riuscito) così, tornando indietro,
+        // la formula e i tentativi vengono ripristinati
+        results[current] = {
+          correct: false,
+          type: "build",
+          attempts: attempts,
+          skipped: true,
+          tokens: formula.slice(),
+          formula: formula.length ? formulaToString(formula) : "(nessuna formula)"
+        };
+        fb.className = "feedback show no";
+        fb.innerHTML = `
+          <div class="fb-head">Non ancora corretta — tentativo ${attempts}</div>
+          <div>Confronta la colonna «Esito» con il criterio richiesto: individua quali studenti risultano sbagliati e correggi la formula. Puoi annullare gli ultimi token o svuotare tutto.</div>
+          <div class="ref" style="margin-top:8px;">Trovi un suggerimento qui sopra. Puoi riprovare quante volte vuoi, oppure proseguire al passo successivo con «Prosegui comunque».</div>
+        `;
+      }
+    }
+
+    /* ---- se il passo era già stato completato, ripristino lo stato ----
+       Passo già corretto: lo rimostro bloccato, con il feedback positivo.
+       Passo skippato (proseguito sbagliando): resta modificabile, così
+       tornando indietro lo studente può riprovare a correggerlo. */
+    if (prev && prev.correct) {
+      locked = true;
+      palette.querySelectorAll(".chip").forEach(c => c.disabled = true);
+      undoBtn.disabled = true;
+      clearBtn.disabled = true;
+      skipBtn.style.display = "none";
+      fb.className = "feedback show ok";
+      fb.innerHTML = `
+        <div class="fb-head">Formula corretta</div>
+        <div>${step.explainOk}</div>
+        <div class="ref" style="margin-top:8px;">La tua formula: <code>${formulaToString(formula)}</code></div>
+        <div class="ref" style="margin-top:6px;">${step.ref}</div>
+      `;
+      confirmBtn.textContent = current === STEPS.length - 1 ? "Concludi" : "Avanti";
+      confirmBtn.disabled = false;
+    } else if (prev && prev.skipped) {
+      // mostro di nuovo il suggerimento e la possibilità di proseguire
+      showHint(Math.max(attempts, 1));
+      skipBtn.style.display = "";
+      fb.className = "feedback show no";
+      fb.innerHTML = `
+        <div class="fb-head">Passo non ancora completato</div>
+        <div>Eri proseguito senza una formula corretta. Puoi riprovare adesso — la tua formula precedente è qui sopra — oppure proseguire di nuovo.</div>
+      `;
+    }
+  }
+
+  /* ===============================================================
+     FINAL
+  ================================================================ */
+  function renderFinal() {
+    progressBar.querySelectorAll(".seg").forEach(s => s.className = "seg done");
+
+    const entries = Object.entries(results);
+    const scored = entries.filter(([, r]) => r.correct).length;
+
+    const finalCard = document.createElement("div");
+    finalCard.className = "final";
+    finalCard.innerHTML = `
+      <h2>Laboratorio completato</h2>
+      <p style="color:var(--text-dim);">${escapeHtml(studentName)}</p>
+      <div class="score-big">${scored} / ${totalGraded}</div>
+      <p class="score-sub">voci superate · 3 domande di comprensione + 4 passi di costruzione del foglio</p>
+      <div class="save-state" id="saveState">Salvataggio dei risultati in corso…</div>
+    `;
+    stepContainer.appendChild(finalCard);
+    saveResults(scored);
+  }
+
+  async function saveResults(scored) {
+    const saveState = document.getElementById("saveState");
+
+    const detail = {};
+    STEPS.forEach((s, i) => {
+      if (s.type === "theory") return;
+      const r = results[i];
+      detail["voce" + gradedNumber(i)] = {
+        titolo: s.title,
+        tipo: s.type,
+        esito: r ? (r.correct ? "corretto" : "errato") : "non_svolto",
+        tentativi: r && r.attempts ? r.attempts : (r ? 1 : 0),
+        formula: r && r.formula ? r.formula : null
+      };
+    });
+
+    const payload = {
+      nome: studentName,
+      laboratorio: "Dalla Logica Stoica al Foglio di Calcolo",
+      dataISO: new Date().toISOString(),
+      punteggio: scored,
+      totale: totalGraded,
+      dettaglio: detail
+    };
+
+    let waited = 0;
+    while (!(window.__fb && window.__fb.ready()) && waited < 5000) {
+      await new Promise(r => setTimeout(r, 200));
+      waited += 200;
+    }
+
+    if (window.__fb && window.__fb.ready()) {
+      try {
+        await window.__fb.save(studentName, payload);
+        saveState.textContent = "✓ Risultati salvati. Puoi chiudere la pagina.";
+        saveState.style.color = "var(--green)";
+      } catch (e) {
+        console.error(e);
+        saveState.textContent = "⚠ Impossibile salvare online. Avvisa il docente.";
+        saveState.style.color = "var(--red)";
+      }
+    } else {
+      saveState.textContent = "⚠ Connessione al database non disponibile. Avvisa il docente.";
+      saveState.style.color = "var(--red)";
+    }
+  }
+
+  /* ===============================================================
+     DASHBOARD
+  ================================================================ */
+  const dashModal = document.getElementById("dashModal");
+  const dashGate = document.getElementById("dashGate");
+  const dashContent = document.getElementById("dashContent");
+  const pinInput = document.getElementById("pinInput");
+  const pinBtn = document.getElementById("pinBtn");
+  const pinErr = document.getElementById("pinErr");
+
+  document.getElementById("dashOpen").addEventListener("click", () => {
+    dashModal.classList.add("show");
+    dashGate.classList.remove("hidden");
+    dashContent.classList.add("hidden");
+    pinInput.value = "";
+    pinErr.style.display = "none";
+  });
+  document.getElementById("dashClose").addEventListener("click", () => {
+    dashModal.classList.remove("show");
+  });
+  dashModal.addEventListener("click", e => {
+    if (e.target === dashModal) dashModal.classList.remove("show");
+  });
+  pinInput.addEventListener("keydown", e => { if (e.key === "Enter") pinBtn.click(); });
+
+  pinBtn.addEventListener("click", async () => {
+    if (pinInput.value.trim() !== PIN) {
+      pinErr.style.display = "block";
+      return;
+    }
+    dashGate.classList.add("hidden");
+    dashContent.classList.remove("hidden");
+    await loadDashboard();
+  });
+
+  async function loadDashboard() {
+    const table = document.getElementById("dashTable");
+    const count = document.getElementById("dashCount");
+    table.innerHTML = `<tr><td style="color:var(--text-faint);">Caricamento…</td></tr>`;
+
+    let waited = 0;
+    while (!(window.__fb && window.__fb.ready()) && waited < 5000) {
+      await new Promise(r => setTimeout(r, 200));
+      waited += 200;
+    }
+    if (!(window.__fb && window.__fb.ready())) {
+      table.innerHTML = `<tr><td style="color:var(--red);">Database non disponibile.</td></tr>`;
+      return;
+    }
+
+    try {
+      const data = await window.__fb.loadAll();
+      const rows = Object.values(data || {});
+      if (!rows.length) {
+        count.textContent = "Nessun risultato ancora registrato.";
+        table.innerHTML = "";
+        return;
+      }
+      rows.sort((a, b) => (a.nome || "").localeCompare(b.nome || ""));
+      count.textContent = `${rows.length} student${rows.length === 1 ? "e" : "i"} · ordinati per nome`;
+
+      let html = `<tr>
+        <th>Studente</th>
+        <th>Punteggio</th>
+        <th>Formula finale (sfida)</th>
+        <th>Data</th>
+      </tr>`;
+      rows.forEach(r => {
+        const d = r.dataISO ? new Date(r.dataISO) : null;
+        const dateStr = d ? d.toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
+        let challengeFormula = "—";
+        if (r.dettaglio) {
+          const last = Object.values(r.dettaglio).filter(x => x.tipo === "build").pop();
+          if (last && last.formula) challengeFormula = last.formula;
+        }
+        html += `<tr>
+          <td>${escapeHtml(r.nome || "—")}</td>
+          <td class="num">${r.punteggio ?? "—"} / ${r.totale ?? "—"}</td>
+          <td><span class="mono">${escapeHtml(challengeFormula)}</span></td>
+          <td>${dateStr}</td>
+        </tr>`;
+      });
+      table.innerHTML = html;
+    } catch (e) {
+      console.error(e);
+      table.innerHTML = `<tr><td style="color:var(--red);">Errore nel caricamento dei dati.</td></tr>`;
+    }
+  }
+
+  /* ---- utils ---- */
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+})();
+</script>
+</body>
+</html>
