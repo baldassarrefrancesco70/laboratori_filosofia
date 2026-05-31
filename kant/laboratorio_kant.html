@@ -1,1 +1,889 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio — In dialogo con Kant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#14202a;--bg-deep:#0e1820;--panel:#1c2c38;--panel-light:#243643;
+  --border:#314654;--border-soft:#2a3c48;
+  --text:#e8e2d4;--text-dim:#a9b4bc;--text-faint:#74828c;
+  --orange:#d98a4b;--orange-soft:#e3a877;
+  --teal:#4ca0a0;--teal-soft:#7bc0c0;
+  --gold:#d4af52;--gold-soft:#e6c97e;
+  --green:#5fae6b;--red:#c8584f;
+  --blue:#5b8fc4;--blue-soft:#84aed8;
+  --purple:#8b6fc4;--purple-soft:#b09ee0;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Source Sans 3',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 15% 0%,rgba(91,143,196,.10) 0%,transparent 55%),radial-gradient(ellipse at 88% 12%,rgba(212,175,82,.09) 0%,transparent 55%);color:var(--text);font-family:var(--sans);line-height:1.65;min-height:100vh;padding:32px 18px 80px;}
+.wrap{max-width:860px;margin:0 auto;}
+header{text-align:center;margin-bottom:32px;}
+.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--teal-soft);margin-bottom:10px;}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(26px,5vw,42px);line-height:1.14;color:var(--text);}
+h1 .accent{color:var(--gold-soft);font-style:italic;}
+.lede{margin:14px auto 0;max-width:640px;color:var(--text-dim);font-size:16px;}
+.gate{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:26px;}
+.gate h2{font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:6px;}
+.gate p{color:var(--text-dim);font-size:14px;margin-bottom:16px;}
+.field-row{display:flex;gap:12px;flex-wrap:wrap;}
+input[type="text"],input[type="password"]{flex:1;min-width:180px;background:var(--bg-deep);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:var(--sans);font-size:15px;padding:12px 14px;}
+input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(76,160,160,.16);}
+button{font-family:var(--sans);cursor:pointer;border:none;transition:transform .08s,filter .15s,background .15s;}
+button:active{transform:translateY(1px);}
+.btn-primary{background:var(--orange);color:#1a120a;font-weight:600;font-size:15px;padding:12px 22px;border-radius:9px;}
+.btn-primary:hover{filter:brightness(1.08);}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;filter:none;}
+.btn-ghost{background:transparent;color:var(--teal-soft);border:1px solid var(--border);font-weight:500;font-size:14px;padding:9px 16px;border-radius:9px;}
+.btn-ghost:hover{background:var(--panel-light);}
+.btn-ghost:disabled{opacity:.4;cursor:not-allowed;}
+.progress-wrap{margin-bottom:8px;}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);margin-bottom:6px;}
+.progress-bar{display:flex;gap:5px;margin-bottom:24px;}
+.progress-bar .seg{flex:1;height:5px;border-radius:3px;background:var(--border-soft);transition:background .3s;}
+.progress-bar .seg.done{background:var(--teal);}
+.progress-bar .seg.active{background:var(--orange);}
+.section-splash{background:var(--panel);border:1px solid var(--border-soft);border-radius:16px;padding:44px 36px;text-align:center;margin-bottom:4px;position:relative;overflow:hidden;}
+.section-splash::before{content:'';position:absolute;inset:0;opacity:.07;pointer-events:none;}
+.splash-s0::before{background:radial-gradient(ellipse at 50% 0%,var(--purple),transparent 70%);}
+.splash-s1::before{background:radial-gradient(ellipse at 50% 0%,var(--blue),transparent 70%);}
+.splash-s2::before{background:radial-gradient(ellipse at 50% 0%,var(--gold),transparent 70%);}
+.splash-s3::before{background:radial-gradient(ellipse at 50% 0%,var(--teal),transparent 70%);}
+.splash-s4::before{background:radial-gradient(ellipse at 50% 0%,var(--green),transparent 70%);}
+.splash-num{font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:600;margin-bottom:14px;}
+.splash-s0 .splash-num{color:var(--purple-soft);}
+.splash-s1 .splash-num{color:var(--blue-soft);}
+.splash-s2 .splash-num{color:var(--gold-soft);}
+.splash-s3 .splash-num{color:var(--teal-soft);}
+.splash-s4 .splash-num{color:#8dd095;}
+.splash-title{font-family:var(--serif);font-size:clamp(22px,4vw,32px);font-weight:700;margin-bottom:14px;color:var(--text);}
+.splash-desc{color:var(--text-dim);font-size:15px;max-width:560px;margin:0 auto 28px;}
+.splash-meta{font-size:13px;color:var(--text-faint);margin-bottom:24px;}
+.splash-meta span{display:inline-block;margin:0 8px;}
+.splash-notice{font-size:13px;color:var(--orange-soft);background:rgba(217,138,75,.10);border:1px solid rgba(217,138,75,.25);border-radius:9px;padding:10px 16px;max-width:480px;margin:0 auto 20px;}
+.section-pill{display:inline-block;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:16px;font-weight:600;}
+.pill-0{background:rgba(139,111,196,.18);color:var(--purple-soft);}
+.pill-1{background:rgba(91,143,196,.18);color:var(--blue-soft);}
+.pill-2{background:rgba(212,175,82,.18);color:var(--gold-soft);}
+.pill-3{background:rgba(76,160,160,.18);color:var(--teal-soft);}
+.pill-4{background:rgba(95,174,107,.18);color:#8dd095;}
+.card{background:var(--panel);border:1px solid var(--border-soft);border-radius:14px;padding:26px 28px;margin-bottom:4px;}
+.card.s0{border-left:3px solid var(--purple);}
+.card.s1{border-left:3px solid var(--blue);}
+.card.s2{border-left:3px solid var(--gold);}
+.card.s3{border-left:3px solid var(--teal);}
+.card.s4{border-left:3px solid var(--green);}
+.kant-voice{background:var(--bg-deep);border:1px solid var(--border-soft);border-left:3px solid var(--gold);border-radius:10px;padding:14px 18px;margin-bottom:20px;}
+.kant-voice .speaker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);margin-bottom:6px;font-weight:600;}
+.kant-voice p{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--text);line-height:1.6;}
+.kant-voice p .em{color:var(--gold-soft);font-style:normal;font-weight:600;}
+.scenario{background:rgba(91,143,196,.07);border:1px solid rgba(91,143,196,.25);border-radius:10px;padding:14px 18px;margin-bottom:18px;}
+.scenario .sc-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-soft);margin-bottom:6px;font-weight:600;}
+.scenario p{font-size:15px;color:var(--text);}
+.question{font-weight:600;color:var(--text);margin-bottom:14px;font-size:15.5px;}
+.options{display:grid;gap:9px;}
+.opt{display:flex;align-items:flex-start;gap:12px;background:var(--bg-deep);border:1px solid var(--border);border-radius:10px;padding:13px 16px;cursor:pointer;font-size:15px;color:var(--text);transition:border-color .12s,background .12s;text-align:left;width:100%;}
+.opt:hover{border-color:var(--teal);background:var(--panel-light);}
+.opt .marker{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--text-faint);margin-top:1px;}
+.opt.selected{border-color:var(--orange);background:rgba(217,138,75,.10);}
+.opt.selected .marker{border-color:var(--orange);color:var(--orange);}
+.opt.correct{border-color:var(--green);background:rgba(95,174,107,.13);}
+.opt.correct .marker{border-color:var(--green);background:var(--green);color:#11210f;}
+.opt.wrong{border-color:var(--red);background:rgba(200,88,79,.13);}
+.opt.wrong .marker{border-color:var(--red);background:var(--red);color:#2a0f0d;}
+.opt.locked{cursor:default;}
+.opt.locked:hover{background:var(--bg-deep);}
+.opt.correct.locked:hover{background:rgba(95,174,107,.13);}
+.opt.wrong.locked:hover{background:rgba(200,88,79,.13);}
+.feedback{border-radius:10px;padding:0;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s,margin .3s;font-size:14.5px;}
+.feedback.show{padding:14px 18px;max-height:500px;margin-top:14px;}
+.feedback.ok{background:rgba(95,174,107,.13);border:1px solid rgba(95,174,107,.35);}
+.feedback.no{background:rgba(200,88,79,.11);border:1px solid rgba(200,88,79,.30);}
+.feedback .fb-head{font-weight:700;margin-bottom:6px;}
+.feedback.ok .fb-head{color:var(--green);}
+.feedback.no .fb-head{color:var(--red);}
+.feedback p{color:var(--text-dim);margin-top:4px;}
+.feedback .kant-reply{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);font-family:var(--serif);font-style:italic;color:var(--gold-soft);font-size:14px;}
+textarea{width:100%;min-height:130px;background:var(--bg-deep);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--sans);font-size:15px;padding:14px 16px;resize:vertical;line-height:1.65;}
+textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(76,160,160,.16);}
+.char-count{font-size:12px;color:var(--text-faint);margin-top:5px;text-align:right;}
+.essay-block{margin-bottom:18px;}
+.essay-label{font-size:13px;font-weight:600;color:var(--text-dim);margin-bottom:8px;}
+.essay-prompt-text{font-size:15px;color:var(--text);margin-bottom:10px;padding:12px 16px;background:rgba(95,174,107,.07);border:1px solid rgba(95,174,107,.20);border-radius:9px;}
+.nav-footer{display:flex;align-items:center;justify-content:space-between;margin-top:22px;padding-top:18px;border-top:1px solid var(--border-soft);gap:12px;flex-wrap:wrap;}
+.nav-footer .nav-label{font-size:13px;color:var(--text-faint);}
+.nav-footer .nav-right{display:flex;gap:10px;align-items:center;}
+.final{text-align:center;padding:40px 20px;background:var(--panel);border:1px solid var(--border-soft);border-radius:14px;}
+.final h2{font-family:var(--serif);font-size:28px;margin-bottom:8px;}
+.score-big{font-family:var(--serif);font-size:56px;font-weight:700;color:var(--orange-soft);line-height:1.1;margin:18px 0 6px;}
+.score-sub{font-size:14px;color:var(--text-faint);margin-bottom:22px;}
+.score-bar-wrap{max-width:320px;margin:0 auto 28px;}
+.score-bar-track{height:8px;background:var(--border-soft);border-radius:4px;overflow:hidden;}
+.score-bar-fill{height:100%;border-radius:4px;background:var(--orange);transition:width .6s;}
+.save-state{font-size:14px;color:var(--text-faint);padding:10px 16px;border-radius:8px;display:inline-block;border:1px solid var(--border-soft);margin-top:10px;}
+.breakdown{text-align:left;max-width:500px;margin:0 auto 28px;}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-soft);font-size:14px;}
+.breakdown-row:last-child{border-bottom:none;}
+.breakdown-row .br-label{color:var(--text-dim);}
+.breakdown-row .br-score{font-weight:600;}
+.br-ok{color:var(--green);}.br-no{color:var(--red);}
+.dash-link{text-align:center;margin-top:36px;}
+.dash-link a{color:var(--text-faint);font-size:13px;cursor:pointer;text-decoration:none;}
+.dash-link a:hover{color:var(--teal-soft);}
+.footer-note{text-align:center;color:var(--text-faint);font-size:13px;margin-top:14px;font-style:italic;}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;place-items:center;z-index:100;padding:20px;}
+.modal-backdrop.show{display:grid;}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:900px;max-height:90vh;overflow-y:auto;position:relative;}
+.modal h2{font-family:var(--serif);font-size:22px;margin-bottom:14px;}
+.modal-close{position:absolute;top:14px;right:16px;background:transparent;border:1px solid var(--border);color:var(--text-faint);border-radius:7px;padding:5px 12px;font-size:13px;cursor:pointer;}
+.modal-close:hover{background:var(--panel-light);color:var(--text);}
+table.dash{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;}
+table.dash th,table.dash td{border:1px solid var(--border-soft);padding:8px 10px;text-align:left;vertical-align:top;}
+table.dash th{background:var(--panel-light);color:var(--teal-soft);font-weight:600;}
+table.dash td.num{text-align:center;font-weight:600;}
+table.dash td.essay{max-width:200px;font-size:12px;color:var(--text-dim);white-space:pre-wrap;word-break:break-word;}
+.hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Laboratorio di Filosofia · Liceo Classico "G.B. Vico"</div>
+    <h1>In dialogo con <span class="accent">Kant</span></h1>
+    <p class="lede">Quattro sezioni, quattordici domande, tre riflessioni scritte. Un percorso attraverso le tre Critiche.</p>
+  </header>
+  <div class="gate" id="gate">
+    <h2>Prima di iniziare</h2>
+    <p>Inserisci nome e cognome: i tuoi risultati verranno raccolti per la revisione in classe.</p>
+    <div class="field-row">
+      <input type="text" id="nameInput" placeholder="Nome e cognome" autocomplete="name">
+      <button class="btn-primary" id="startBtn" disabled>Inizia il laboratorio</button>
+    </div>
+  </div>
+  <div id="labBody" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="progLabel">Domanda 1</span><span id="progPct">0%</span></div>
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div id="stepContainer"></div>
+  </div>
+  <div class="dash-link"><a id="dashOpen">Area docente</a></div>
+  <p class="footer-note">«Due cose riempiono l'animo di ammirazione e venerazione: il cielo stellato sopra di me, e la legge morale in me.» — I. Kant</p>
+</div>
 
+<div class="modal-backdrop" id="dashModal">
+  <div class="modal">
+    <button class="modal-close" id="dashClose">Chiudi</button>
+    <div id="dashGate">
+      <h2>Area docente</h2>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">Inserisci il PIN per visualizzare i risultati della classe.</p>
+      <div class="field-row">
+        <input type="password" id="pinInput" placeholder="PIN" inputmode="numeric">
+        <button class="btn-primary" id="pinBtn">Entra</button>
+      </div>
+      <p id="pinErr" style="color:var(--red);font-size:13px;margin-top:10px;display:none;">PIN errato.</p>
+    </div>
+    <div id="dashContent" class="hidden">
+      <h2>Risultati · In dialogo con Kant</h2>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:8px;" id="dashCount"></p>
+      <div style="overflow-x:auto;"><table class="dash" id="dashTable"></table></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getDatabase,ref,set,get,child}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const C={apiKey:"AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",authDomain:"laboratorio-vico.firebaseapp.com",databaseURL:"https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",projectId:"laboratorio-vico",storageBucket:"laboratorio-vico.firebasestorage.app",messagingSenderId:"551766473976",appId:"1:551766473976:web:190c0907ce2987e2d78f0d"};
+const P="studenti_kant1";let db=null,ok=false;
+try{const a=initializeApp(C);db=getDatabase(a);ok=true;}catch(e){console.error(e);}
+window.__fb={ready:()=>ok,save:async(n,d)=>{if(!ok)throw 0;const k=n.trim().replace(/[.#$\[\]\/]/g,"_").replace(/\s+/g,"_");await set(ref(db,`${P}/${k}`),d);},loadAll:async()=>{if(!ok)throw 0;const s=await get(child(ref(db),P));return s.exists()?s.val():{};}}; 
+window.dispatchEvent(new Event("fb-ready-check"));
+</script>
+
+<script>
+(function(){
+"use strict";
+const PIN="1970";
+
+/* Indice dell'ultimo step MC: serve per bloccare il tasto Indietro oltre quel punto */
+/* Verrà calcolato dopo la definizione di STEPS */
+
+const STEPS=[
+
+/* ── SPLASH 0 ──────────────────────────────────────────── */
+{type:"splash",section:0,num:"Introduzione",title:"Il criticismo kantiano",
+ desc:"Prima di entrare nel vivo delle tre Critiche, alcune domande di orientamento: il contesto storico-filosofico, la struttura dell'opera e le domande fondamentali.",
+ meta:"4 domande · ~5 minuti",btnLabel:"Inizia",noBack:false},
+
+/* ── SEZIONE 0 ──────────────────────────────────────────── */
+{type:"mc",section:0,sectionLabel:"Introduzione — Il criticismo",pillClass:"pill-0",
+ kantVoice:"Sono Immanuel Kant. Prima di entrare nelle mie opere, voglio capire se avete già gli strumenti per seguirmi. La filosofia che ho elaborato si chiama <span class='em'>criticismo</span>: non accetta nulla senza prima verificarne la legittimità razionale.",
+ question:"Kant definisce la propria epoca come «epoca della critica». Cosa intende con questo termine?",
+ options:[
+  "Un'epoca in cui la ragione, consapevole dei risultati raggiunti dalla scienza moderna, si applica con fiducia alla conoscenza di qualsiasi oggetto, estendendo il proprio dominio senza incontrare ostacoli.",
+  "Un'epoca in cui la ragione esamina se stessa per stabilire cosa può e cosa non può conoscere con certezza, prima di pronunciarsi su qualsiasi oggetto.",
+  "Un'epoca di crisi politica e sociale che obbliga i filosofi a rivedere le fondamenta della tradizione, adottando un approccio negativo e demolitore nei confronti dei sistemi precedenti.",
+  "Un'epoca in cui la critica letteraria e artistica raggiunge la propria maturità, portando a rivedere i canoni estetici ereditati dal Rinascimento e dal Barocco."
+ ],
+ correct:1,
+ feedbackOk:"Esatto. Per Kant «critica» significa esame rigoroso delle facoltà razionali: la ragione deve valutare i propri poteri e i propri limiti prima di pronunciarsi su qualsiasi oggetto.",
+ feedbackNo:"Non è questo. «Critica» in Kant ha un significato tecnico preciso: è l'auto-esame della ragione, che verifica dall'interno le proprie possibilità e i propri confini.",
+ kantReply:"«La nostra epoca è l'epoca propria della critica, alla quale ogni cosa deve sottostare.» Non si tratta di distruzione, ma di fondazione rigorosa."},
+
+{type:"mc",section:0,sectionLabel:"Introduzione — Il criticismo",pillClass:"pill-0",
+ question:"Kant individua tre domande fondamentali a cui la filosofia deve rispondere. Quale delle seguenti le elenca correttamente?",
+ options:[
+  "Cosa posso sapere? Come devo agire? Cosa posso sperare?",
+  "Cosa è il bene? Cosa è il bello? Cosa è il vero?",
+  "Esiste Dio? L'anima è immortale? Il mondo ha avuto un inizio nel tempo? — perché solo queste domande riguardano ciò che trascende l'esperienza.",
+  "Cosa esiste? Come posso conoscerlo? A cosa serve la conoscenza per la vita pratica dell'uomo nella società?"
+ ],
+ correct:0,
+ feedbackOk:"Esatto. Le tre domande corrispondono alle tre Critiche: la prima alla Critica della ragion pura (conoscenza), la seconda alla Critica della ragion pratica (morale), la terza alla speranza — che apre al campo della religione e della finalità.",
+ feedbackNo:"Non è questa la formulazione kantiana. Le opzioni B, C e D mescolano domande kantiane con altre tradizioni o le riformulano in modo non corrispondente al testo.",
+ kantReply:"Tre domande, tre Critiche. Conoscenza, azione morale, speranza. Tutto il mio sistema filosofico ruota attorno a questi tre assi."},
+
+{type:"mc",section:0,sectionLabel:"Introduzione — Il criticismo",pillClass:"pill-0",
+ question:"Qual è la posizione di Kant rispetto a razionalismo ed empirismo?",
+ options:[
+  "Accetta il razionalismo leibniziano nella sua interezza, convinto che la ragione possa conoscere la realtà indipendentemente dall'esperienza, purché il metodo sia sufficientemente rigoroso.",
+  "Accetta l'empirismo di Hume e rinuncia a qualsiasi conoscenza a priori, concludendo che tutta la nostra conoscenza si riduce a abitudini associative senza necessità o universalità.",
+  "Riconosce che la conoscenza ha origine nell'esperienza, ma che la mente vi porta strutture a priori — spazio, tempo, categorie — che la rendono universale e necessaria.",
+  "Rifiuta sia il razionalismo che l'empirismo, proponendo una filosofia basata sul sentimento morale e sull'intuizione interiore, anticipando così le posizioni del Romanticismo tedesco."
+ ],
+ correct:2,
+ feedbackOk:"Corretto. È la sintesi kantiana: Hume lo «svegliò dal sonno dogmatico» mostrando i limiti dell'empirismo, ma Kant non accettò lo scetticismo. La sua risposta fu mostrare che la mente porta all'esperienza strutture a priori che la rendono universale.",
+ feedbackNo:"Kant non si schiera né con i razionalisti né con gli empiristi. Trova una via di mezzo: l'esperienza è necessaria ma non sufficiente, perché la mente vi porta contributi propri.",
+ kantReply:"Hume mi destò dal sonno dogmatico. Ma non potevo accettare il suo scetticismo. La conoscenza scientifica esiste ed è universale: il mio compito era spiegare come fosse possibile."},
+
+{type:"mc",section:0,sectionLabel:"Introduzione — Il criticismo",pillClass:"pill-0",
+ question:"Associa correttamente ciascuna delle tre Critiche alla domanda e all'ambito che le compete:",
+ options:[
+  "Critica della ragion pura → «Cosa posso sapere?» / Critica della ragion pratica → «Come devo agire?» / Critica del Giudizio → facoltà del sentimento e finalità.",
+  "Critica della ragion pura → «Come devo agire?» / Critica della ragion pratica → «Cosa posso sapere?» / Critica del Giudizio → «Cosa posso sperare?» — perché la morale precede logicamente la conoscenza.",
+  "Critica della ragion pura → conoscenza scientifica e metafisica / Critica della ragion pratica → estetica e teoria del gusto / Critica del Giudizio → morale e postulati pratici.",
+  "Critica della ragion pura → «Cosa posso sperare?» / Critica della ragion pratica → «Cosa posso sapere?» / Critica del Giudizio → «Come devo agire?» — perché la speranza è la domanda più urgente per l'uomo."
+ ],
+ correct:0,
+ feedbackOk:"Perfetto. La struttura tripartita è fondamentale: la prima Critica risponde al problema gnoseologico, la seconda a quello etico, la terza al sentimento e alla finalità della natura.",
+ feedbackNo:"L'abbinamento non è corretto. Le opzioni B, C e D invertono o mescolano gli ambiti. Ricorda: ragion pura = conoscenza, ragion pratica = morale, Giudizio = sentimento estetico e finalità.",
+ kantReply:"Le tre Critiche non sono tre libri separati: sono tre facce della stessa impresa. Conoscere, agire, sentire — tre modalità dell'essere razionale."},
+
+/* ── SPLASH 1 ──────────────────────────────────────────── */
+{type:"splash",section:1,num:"Sezione I",title:"Il processo alla metafisica",
+ desc:"Kant siede come pubblico ministero. La metafisica tradizionale ha preteso di conoscere anima, mondo e Dio senza i permessi della ragione. Voi siete i giudici.",
+ meta:"7 domande · ~10 minuti",btnLabel:"Entra in aula",noBack:false},
+
+/* ── SEZIONE 1 ──────────────────────────────────────────── */
+{type:"mc",section:1,sectionLabel:"Sezione I — Il processo alla metafisica",pillClass:"pill-1",
+ kantVoice:"In che cosa consiste la mia rivoluzione? Copernico non ha spostato il Sole: ha spostato il punto di vista. Anch'io non ho spostato gli oggetti del mondo: ho spostato il soggetto al centro della conoscenza.",
+ question:"In che cosa consiste la «rivoluzione copernicana» di Kant in filosofia?",
+ options:[
+  "Nel ribaltamento per cui non è la conoscenza a doversi regolare sugli oggetti, ma sono gli oggetti a doversi regolare sulla struttura conoscitiva del soggetto.",
+  "Nella scoperta che, analogamente a Copernico, i filosofi precedenti avevano costruito sistemi grandiosi ma privi di fondamento empirico, e che occorre tornare ai fatti osservabili come unica base sicura del sapere.",
+  "Nella dimostrazione, condotta con metodo matematico, che la ragione umana è infinita e può conoscere qualsiasi realtà senza limiti, purché adotti una procedura rigorosa simile a quella della geometria euclidea.",
+  "Nel riconoscimento che ogni conoscenza dipende interamente dall'esperienza sensibile, e che la mente è una tabula rasa su cui il mondo esterno imprime le proprie tracce attraverso i sensi."
+ ],
+ correct:0,
+ feedbackOk:"Corretto. Il punto centrale è il ribaltamento: tradizionalmente si pensava che la mente si adattasse agli oggetti; Kant mostra che sono gli oggetti a conformarsi alle strutture a priori con cui la mente li organizza.",
+ feedbackNo:"Attenzione: la B è empirismo ingenuo; la C è razionalismo dogmatico; la D è la posizione di Locke — tutte posizioni che Kant supera.",
+ kantReply:"Non è più la conoscenza che ruota intorno agli oggetti: sono gli oggetti che ruotano attorno al modo di conoscere del soggetto. Questo cambia tutto."},
+
+{type:"mc",section:1,sectionLabel:"Sezione I — Il processo alla metafisica",pillClass:"pill-1",
+ question:"Classifica il seguente giudizio: <em>«Tutti i corpi sono estesi»</em>.",
+ options:[
+  "Analitico a priori: il predicato «esteso» è già contenuto nel concetto stesso di «corpo», quindi non aggiunge nulla di nuovo e non richiede l'esperienza.",
+  "Sintetico a posteriori: l'affermazione che i corpi occupino spazio è una generalizzazione empirica ricavata dall'osservazione ripetuta di oggetti fisici nel mondo, e come tale dipende dall'esperienza.",
+  "Sintetico a priori: aggiunge al concetto di corpo la proprietà dell'estensione nello spazio, che non si ricaverebbe per sola analisi concettuale ma ha comunque validità necessaria e universale.",
+  "Analitico a posteriori: sebbene sembri ovvio, richiede comunque una conferma empirica perché si tratta di un enunciato sulla realtà fisica e non solo sul significato delle parole."
+ ],
+ correct:0,
+ feedbackOk:"Esatto. È il classico esempio kantiano di giudizio analitico: l'estensione è già implicita nel concetto di corpo. Non c'è bisogno dell'esperienza né si amplia la conoscenza.",
+ feedbackNo:"L'errore più comune è scambiarlo per sintetico perché sembra descrivere qualcosa di fisico. Ma Kant guarda alla relazione logica tra soggetto e predicato: il predicato è già contenuto nel soggetto.",
+ kantReply:"«Tutti i corpi sono estesi» è analitico: anatomizzando il concetto di corpo vi trovo già l'estensione. Nessuna esperienza mi serve — né apprendo nulla di nuovo."},
+
+{type:"mc",section:1,sectionLabel:"Sezione I — Il processo alla metafisica",pillClass:"pill-1",
+ question:"Quale dei seguenti è un esempio di <strong>giudizio sintetico a priori</strong>?",
+ options:[
+  "«Lo scapolo è celibe» — perché il predicato è già contenuto nel soggetto per definizione e basta analizzare il concetto per ricavarlo.",
+  "«Questa pietra è calda» — perché dipende dall'esperienza diretta e produce una conoscenza certa di quel singolo oggetto, anche se non universalizzabile.",
+  "«La retta è la distanza più breve tra due punti» — perché amplia il concetto di retta con una proprietà non ricavabile per sola analisi, eppure vale necessariamente e universalmente.",
+  "«Napoleone morì a Sant'Elena» — perché è un fatto accertato con certezza assoluta dalle fonti storiche, indipendentemente da chi lo osservi o in quale momento."
+ ],
+ correct:2,
+ feedbackOk:"Perfetto. La geometria euclidea è per Kant il campo privilegiato dei giudizi sintetici a priori: aggiungono informazione nuova (sintetici) con necessità e universalità indipendenti dall'esperienza (a priori).",
+ feedbackNo:"La A è analitico (il predicato è nell'identità del soggetto); la B è sintetico a posteriori (dipende dall'esperienza); la D è sintetico a posteriori (fatto storico).",
+ kantReply:"La domanda centrale della Critica è proprio questa: come sono possibili giudizi sintetici a priori? La matematica e la fisica li producono ogni giorno. Il mio compito è spiegare su quali basi."},
+
+{type:"mc",section:1,sectionLabel:"Sezione I — Il processo alla metafisica",pillClass:"pill-1",
+ kantVoice:"L'<span class='em'>estetica trascendentale</span> studia le forme a priori della sensibilità. Prima ancora che l'intelletto intervenga, la nostra sensibilità organizza il materiale grezzo dell'esperienza attraverso due forme pure.",
+ question:"Quali sono le due forme a priori della sensibilità secondo Kant, e a quale disciplina matematica ciascuna corrisponde?",
+ options:[
+  "Spazio e tempo → rispettivamente alla geometria e all'aritmetica.",
+  "Causa ed effetto → alla fisica teorica e alla meccanica classica, in quanto strutturano l'ordine causale degli eventi nel mondo naturale.",
+  "Sostanza e accidente → rispettivamente alla chimica e alla biologia, in quanto permettono di classificare gli enti naturali in base alla loro stabilità e alle loro proprietà variabili.",
+  "Io penso e sensazione → rispettivamente alla logica trascendentale e alla psicologia empirica, perché l'io penso unifica le rappresentazioni e la sensazione fornisce il materiale grezzo."
+ ],
+ correct:0,
+ feedbackOk:"Esatto. Spazio e tempo non sono proprietà delle cose in sé, ma forme con cui la nostra sensibilità organizza le intuizioni. Lo spazio è la forma del senso esterno (geometria); il tempo è la forma del senso interno (aritmetica).",
+ feedbackNo:"Causa/effetto e sostanza/accidente sono categorie dell'intelletto, non forme della sensibilità. L'io penso è l'appercezione trascendentale. Solo spazio e tempo sono le due forme pure dell'intuizione sensibile.",
+ kantReply:"Spazio e tempo non sono realtà esterne o concetti astratti: sono le lenti attraverso cui la nostra sensibilità riceve il mondo. Ecco perché geometria e aritmetica hanno validità universale."},
+
+{type:"mc",section:1,sectionLabel:"Sezione I — Il processo alla metafisica",pillClass:"pill-1",
+ kantVoice:"Dopo la sensibilità interviene l'intelletto con le sue categorie. Ma attenzione: sensibilità e intelletto sono due facoltà distinte. Né l'una né l'altra, da sola, produce conoscenza.",
+ question:"Cosa intende Kant con l'affermazione: «I pensieri senza contenuto sono vuoti, le intuizioni senza concetti sono cieche»?",
+ options:[
+  "Che la conoscenza richiede la cooperazione di sensibilità e intelletto: le intuizioni sensibili forniscono il materiale, le categorie lo organizzano, e senza l'una o le altre non c'è conoscenza reale.",
+  "Che la filosofia speculativa, quando si avventura oltre i dati dell'esperienza, produce sistemi grandiosi ma privi di contenuto, mentre l'empirismo puro, pur fedele ai fatti, non riesce a fornire principi universali e rimane prigioniero delle impressioni immediate.",
+  "Che i concetti puri dell'intelletto sono superiori alle intuizioni, perché senza i concetti le intuizioni restano caotiche e incomprensibili, mentre i concetti possono in linea di principio funzionare autonomamente.",
+  "Che l'esperienza sensibile è fondamentalmente cieca perché non raggiunge mai la vera realtà delle cose, mentre i concetti puri dell'intelletto sono vuoti perché non trovano applicazione nel mondo fenomenico."
+ ],
+ correct:0,
+ feedbackOk:"Esatto. Né la sensibilità da sola (impressioni caotiche) né l'intelletto da solo (costruzioni astratte) bastano. La conoscenza nasce dalla loro cooperazione necessaria.",
+ feedbackNo:"Nessuna delle altre opzioni coglie il punto: non si tratta di gerarchia tra facoltà né di limiti della filosofia. È la struttura cooperativa della conoscenza umana.",
+ kantReply:"«I pensieri senza contenuto sono vuoti, le intuizioni senza concetti sono cieche.» Sensibilità e intelletto devono lavorare insieme: l'una riceve, l'altro organizza."},
+
+{type:"mc",section:1,sectionLabel:"Sezione I — Il processo alla metafisica",pillClass:"pill-1",
+ kantVoice:"Arriviamo al verdetto del processo. La metafisica tradizionale ha tentato di conoscere anima, mondo intero e Dio. Ho chiamato queste idee <span class='em'>trascendentali</span>: la ragione le produce necessariamente, ma può davvero conoscerne gli oggetti?",
+ question:"Nella <em>Dialettica trascendentale</em>, qual è il destino delle tre idee della ragione (Anima, Mondo, Dio)?",
+ options:[
+  "Vengono dimostrate scientificamente valide attraverso ragionamenti rigorosi: la ragione, se correttamente utilizzata, ha pieno accesso ad anima, mondo e Dio tramite le categorie dell'intelletto.",
+  "Hanno solo funzione regolativa — orientano la ricerca verso la totalità senza darci vera conoscenza — e la ragione cade in contraddizioni (paralogismi e antinomie) quando pretende di conoscerle direttamente.",
+  "Vengono completamente eliminate come errori irrecuperabili: la filosofia critica impone di ignorarle, in quanto producono solo sofismi e confusione senza alcun residuo di utilità teorica o pratica.",
+  "Possono essere conosciute attraverso l'esperienza mistica e la rivelazione religiosa, che Kant — contrariamente all'immagine razionalista che se ne dà — considera superiori alla ragione discorsiva in campo metafisico."
+ ],
+ correct:1,
+ feedbackOk:"Esatto. Le idee trascendentali guidano la ragione verso la sistematicità (funzione regolativa), ma quando pretende di farne oggetti di conoscenza cade in paralogismi, antinomie e nel vicolo cieco della teologia razionale.",
+ feedbackNo:"Kant non le elimina né le promuove a oggetti di conoscenza. Le idee di Anima, Mondo e Dio resteranno legittime nella ragion pratica come postulati morali.",
+ kantReply:"La metafisica come scienza della natura è impossibile. Le idee della ragione hanno valore regolativo, non conoscitivo. Ma nella ragion pratica troveranno una legittimità nuova."},
+
+/* ── SPLASH 2 ──────────────────────────────────────────── */
+{type:"splash",section:2,num:"Sezione II",title:"Come devo agire?",
+ desc:"Lasciamo il tribunale della conoscenza. Kant si fa guida morale. Massime, imperativi, scenari concreti: metti alla prova la tua comprensione dell'etica kantiana.",
+ meta:"6 domande · ~8 minuti",btnLabel:"Entra nella sezione",noBack:false},
+
+/* ── SEZIONE 2 ──────────────────────────────────────────── */
+{type:"mc",section:2,sectionLabel:"Sezione II — Come devo agire?",pillClass:"pill-2",
+ kantVoice:"Eccoci alla seconda grande domanda: <span class='em'>Come devo agire?</span> La ragion pratica non ha i limiti della ragion pura: qui la ragione legifera direttamente sulla volontà, senza bisogno dell'esperienza.",
+ question:"Qual è il fondamento dell'etica di Kant? Prima di rispondere, rifletti: cosa rende un'azione autenticamente morale?",
+ options:[
+  "La produzione di conseguenze positive e misurabili per la società: un'azione è morale se, tenuto conto di tutti gli effetti prevedibili, aumenta il benessere complessivo del maggior numero di persone coinvolte.",
+  "L'azione compiuta per puro rispetto della legge morale razionale, indipendentemente dalle conseguenze e dalle inclinazioni personali.",
+  "Il rispetto di norme morali tramandate dalla tradizione religiosa e culturale della propria comunità, che esprimono la saggezza collettiva accumulata nel corso delle generazioni.",
+  "Il raggiungimento di un equilibrio stabile tra felicità personale e doveri sociali, in modo che l'individuo possa fiorire come essere razionale all'interno della comunità a cui appartiene."
+ ],
+ correct:1,
+ feedbackOk:"Esatto. L'etica kantiana è deontologica e formale: non conta il risultato dell'azione né l'inclinazione del soggetto, ma solo l'intenzione di agire per dovere.",
+ feedbackNo:"La A descrive l'utilitarismo (Bentham, Mill), che Kant rifiuta. La C è etica eteronoma. La D richiama l'eudemonismo antico, incompatibile con il formalismo kantiano.",
+ kantReply:"Non è ciò che fai che conta moralmente, ma il perché lo fai. Un'azione per inclinazione, interesse o paura delle conseguenze non ha valore morale, anche se produce risultati eccellenti."},
+
+{type:"mc",section:2,sectionLabel:"Sezione II — Come devo agire?",pillClass:"pill-2",
+ question:"Qual è la differenza tra una <strong>massima</strong> e un <strong>imperativo</strong> nell'etica kantiana?",
+ options:[
+  "La massima è una legge universale dettata dalla ragione pura pratica e valida per tutti gli esseri razionali senza eccezioni; l'imperativo è invece una regola soggettiva che vale solo per chi la sceglie liberamente e può modificarla.",
+  "La massima è un principio soggettivo di azione che guida la volontà individuale; l'imperativo è una prescrizione oggettiva della ragione valida per tutti gli esseri razionali.",
+  "Non c'è differenza sostanziale: massima e imperativo sono due termini intercambiabili che Kant usa in modo equivalente nelle diverse sezioni della Critica della ragion pratica.",
+  "La massima riguarda esclusivamente le azioni morali in senso stretto; l'imperativo riguarda invece le azioni tecniche e pratiche della vita quotidiana, come le regole di abilità e i consigli di prudenza."
+ ],
+ correct:1,
+ feedbackOk:"Corretto. La massima è il principio soggettivo su cui ciascuno regola la propria condotta; l'imperativo è la prescrizione oggettiva che la ragione impone a tutti gli esseri razionali.",
+ feedbackNo:"Non è così. La A inverte la definizione. Le massime variano da individuo a individuo; gli imperativi valgono universalmente.",
+ kantReply:"Ogni uomo agisce secondo massime. Ma non ogni massima è morale: lo è solo quella che la ragione può elevare a legge universale. Questo è il test dell'imperativo categorico."},
+
+{type:"mc",section:2,sectionLabel:"Sezione II — Come devo agire?",pillClass:"pill-2",
+ question:"Riconosci il tipo di imperativo. <em>«Se vuoi diventare medico, devi studiare medicina per anni.»</em>",
+ options:[
+  "Imperativo ipotetico: prescrive un mezzo necessario in vista di un fine contingente, che non tutti si pongono.",
+  "Imperativo categorico: anche se la frase usa la forma condizionale, esprime un dovere universale che vale per chiunque voglia agire in modo razionale, indipendentemente dagli scopi particolari.",
+  "Massima soggettiva di prudenza: è una regola personale dettata dall'interesse individuale, priva di qualsiasi pretesa di valore universale o normativo.",
+  "Imperativo ipotetico di abilità superiore, che Kant considera il modello a cui si avvicina di più l'imperativo categorico, perché indica una connessione necessaria tra mezzo e fine verificabile empiricamente."
+ ],
+ correct:0,
+ feedbackOk:"Esatto. È un imperativo ipotetico: condizionato al fine. Chi non vuole diventare medico non è obbligato a studiare medicina. L'imperativo categorico vale incondizionatamente per tutti.",
+ feedbackNo:"La B confonde la struttura condizionale con l'ipoteticità: l'imperativo categorico può anche avere forma condizionale apparente. La D è falsa: Kant non considera gli imperativi ipotetici modelli dell'imperativo categorico.",
+ kantReply:"Gli imperativi ipotetici regolano la tecnica e la prudenza. Solo l'imperativo categorico — incondizionato, universale — esprime la legge morale."},
+
+{type:"mc",section:2,sectionLabel:"Sezione II — Come devo agire?",pillClass:"pill-2",
+ scenario:{label:"Scenario — Marco",
+  text:"La nonna di Marco è gravemente malata e chiede a Marco se migliorerà presto. I medici hanno detto a Marco in privato che non c'è speranza. Marco, per non far soffrire la nonna, le dice che starà meglio. Mente deliberatamente, con l'unica intenzione di risparmiarle dolore."},
+ question:"Secondo la prima formulazione dell'imperativo categorico, il comportamento di Marco è moralmente giustificabile?",
+ options:[
+  "Sì: l'intenzione di Marco è buona e compassionevole. L'imperativo categorico, correttamente inteso, ammette eccezioni quando il fine è quello di proteggere una persona cara da una sofferenza inutile e crudele.",
+  "Sì: gli imperativi ipotetici permettono di mentire quando il fine perseguito — evitare la sofferenza altrui — è sufficientemente nobile da giustificare la deroga alla norma generale della veridicità.",
+  "No: Kant sostiene che mentire non è mai moralmente lecito, perché la massima «mentirò quando mi sembra utile» non può essere universalizzata senza contraddizione, e distrugge l'istituzione stessa della comunicazione veritiera.",
+  "No, ma solo perché Marco non ha consultato un filosofo o un sacerdote prima di prendere la decisione, e quindi non ha agito con piena consapevolezza razionale."
+ ],
+ correct:2,
+ feedbackOk:"Esatto. È il «caso del bugiardo pietoso» che Kant discute esplicitamente. La massima «mentirò quando serve a proteggere qualcuno» non regge il test di universalizzabilità: se tutti mentissero per buone ragioni, la fiducia nel linguaggio collasserebbe.",
+ feedbackNo:"La A e la B confondono intenzione compassionevole con dovere razionale. La D è semplicemente fuori dal quadro kantiano.",
+ kantReply:"È un caso difficile, lo so. Ma la mia risposta rimane: anche la menzogna pietosa viola il dovere di veridicità. La legge morale non ammette eccezioni basate sulle conseguenze previste."},
+
+{type:"mc",section:2,sectionLabel:"Sezione II — Come devo agire?",pillClass:"pill-2",
+ scenario:{label:"Scenario — Sofia",
+  text:"Sofia è una studentessa brillante. Partecipa attivamente alle discussioni in classe, aiuta i compagni in difficoltà, rispetta sempre le scadenze. Lo fa però perché sa che il professore la valuta anche per questi comportamenti e vuole ottenere il massimo dei voti. Se non ci fosse nessuna valutazione in gioco, probabilmente non si comporterebbe così."},
+ question:"Come valuta Kant le azioni di Sofia?",
+ options:[
+  "Hanno pieno valore morale: Kant giudica le azioni dall'esterno, e le azioni di Sofia sono oggettivamente buone, utili alla comunità scolastica e conformi a qualsiasi criterio ragionevole di comportamento corretto.",
+  "Hanno valore morale parziale: Kant ammette che le conseguenze positive e la conformità oggettiva al dovere possano bilanciare, almeno in parte, la motivazione impura, soprattutto quando l'abitudine all'azione buona può nel tempo trasformarsi in vera virtù.",
+  "Non hanno valore morale: Sofia agisce in conformità al dovere, ma non per dovere — il motivo è il tornaconto, non il rispetto della legge morale.",
+  "Non hanno valore morale perché Sofia non ha mai riflettuto consapevolmente sulla propria condotta: solo chi delibera esplicitamente in termini di imperativo categorico prima di agire può dirsi autenticamente morale."
+ ],
+ correct:2,
+ feedbackOk:"Esatto. Kant distingue tra azioni «conformi al dovere» (pflichtmäßig) e azioni «per dovere» (aus Pflicht). Le azioni di Sofia sono conformi al dovere ma mancano del valore morale kantiano: il motivo è il tornaconto.",
+ feedbackNo:"La A e la B ignorano la distinzione fondamentale tra conformità e motivazione. La D introduce un requisito di deliberazione esplicita che Kant non richiede in questi termini.",
+ kantReply:"Sofia fa le cose giuste, ma per le ragioni sbagliate. Solo chi agisce per puro rispetto della legge morale compie un'azione autenticamente morale."},
+
+{type:"mc",section:2,sectionLabel:"Sezione II — Come devo agire?",pillClass:"pill-2",
+ question:"I tre <strong>postulati della ragion pratica</strong> sono libertà, immortalità dell'anima ed esistenza di Dio. Qual è il loro statuto filosofico per Kant?",
+ options:[
+  "Sono verità dimostrate scientificamente dalla ragion pratica attraverso argomenti a priori, e come tali superiori alle dimostrazioni della ragion pura, che su questi temi si era arrestata all'agnosticismo.",
+  "Sono articoli di fede religiosa che Kant, pur razionalista, accetta dalla tradizione cristiana perché riconosce che la filosofia da sola non è in grado di rispondere alle domande ultime sull'esistenza umana.",
+  "Sono ipotesi provvisorie e psicologicamente utili che Kant propone come strumenti orientativi per la vita morale, ma che potrebbero essere abbandonate senza che l'edificio dell'etica ne risenta significativamente.",
+  "Sono presupposti necessari dell'azione morale: non si possono dimostrare teoricamente, ma la coerenza dell'imperativo categorico li richiede come condizioni di senso."
+ ],
+ correct:3,
+ feedbackOk:"Esatto. I postulati non ampliano la conoscenza teoretica, ma sono richiesti dalla ragion pratica: la libertà rende possibile il dovere, l'immortalità permette il progresso morale infinito, Dio garantisce la coincidenza finale di virtù e felicità.",
+ feedbackNo:"La A esagera il loro statuto. La B li ricava dalla fede, che Kant non fa. La C li rende facoltativi, mentre per Kant sono necessari.",
+ kantReply:"Libertà, immortalità, Dio: la ragion pura non può conoscerli. Ma la ragion pratica ne ha bisogno come condizioni. Non sono dogmi, non sono ipotesi: sono postulati."},
+
+/* ── SPLASH 3 ──────────────────────────────────────────── */
+{type:"splash",section:3,num:"Sezione III",title:"Intervista sul Bello",
+ desc:"Ora siete voi a fare le domande. Kant risponde sul bello, sul sublime, sul gusto e sulla distinzione tra bellezza libera e bellezza aderente.",
+ meta:"4 domande · ~6 minuti",btnLabel:"Inizia l'intervista",noBack:false},
+
+/* ── SEZIONE 3 ──────────────────────────────────────────── */
+{type:"mc",section:3,sectionLabel:"Sezione III — Intervista sul Bello",pillClass:"pill-3",
+ kantVoice:"Benvenuti alla terza parte. Siete voi a fare le domande. Parleremo di bello, sublime, gusto — la mia terza indagine. Attenzione: qui la <span class='em'>rivoluzione copernicana</span> si applica anche all'estetica.",
+ question:"«Professor Kant, qual è la differenza tra trovare qualcosa <em>piacevole</em> e trovarlo <em>bello</em>?»",
+ options:[
+  "Il piacevole dipende dai sensi ed è soggettivo senza pretese universali; il bello invece è un giudizio disinteressato che — pur fondandosi sul sentimento del soggetto — pretende un accordo universale che non si può dimostrare ma si attende da chiunque.",
+  "Non c'è differenza sostanziale: entrambi si basano su reazioni soggettive individuali che variano da persona a persona, e nessuno dei due può legittimamente avanzare pretese di accordo universale senza cadere in un dogmatismo estetico.",
+  "Il bello si basa su regole oggettive codificabili in trattati di arte e architettura, trasmissibili attraverso l'educazione; il piacevole è invece puramente soggettivo e arbitrario, privo di qualsiasi principio razionale.",
+  "Il piacevole è superiore al bello perché è immediato, diretto e universale nella sua semplicità; il bello richiede invece una formazione culturale specifica e può variare enormemente da civiltà a civiltà."
+ ],
+ correct:0,
+ feedbackOk:"Perfetto. Il piacevole varia da persona a persona senza pretese; il bello pretende un accordo universale soggettivo, pur non potendo dimostrarlo logicamente.",
+ feedbackNo:"La B cancella la distinzione. La C trasforma il bello in qualcosa di oggettivo-concettuale, che Kant nega. La D inverte la gerarchia e introduce argomenti che non appartengono alla Critica del Giudizio.",
+ kantReply:"Il bello piace «senza interesse» e «universalmente senza concetto». Non è sensazione personale, non è regola logica: è un giudizio in cui il soggetto riconosce qualcosa che, sente, tutti dovrebbero condividere."},
+
+{type:"mc",section:3,sectionLabel:"Sezione III — Intervista sul Bello",pillClass:"pill-3",
+ question:"«Professore, lei distingue tra <em>bellezza libera</em> e <em>bellezza aderente</em>. Può spiegare la differenza?»",
+ options:[
+  "La bellezza libera è quella che si attribuisce a oggetti il cui scopo è irrilevante per il giudizio: un fiore, un disegno arabesco, la musica senza testo. La bellezza aderente presuppone un concetto dello scopo dell'oggetto e lo valuta anche in base alla perfezione con cui lo realizza.",
+  "La bellezza libera è quella dell'arte classica, svincolata da funzioni pratiche; la bellezza aderente è invece quella dell'arte moderna e applicata, che subordina l'estetica alla funzionalità e al mercato.",
+  "La bellezza libera è il tipo di bellezza più elevato, riservato al genio artistico che crea senza regole; la bellezza aderente è quella dell'artigianato, che segue modelli prestabiliti e non raggiunge mai la vera autonomia estetica.",
+  "La bellezza libera riguarda esclusivamente la natura, perché essa non è prodotta da un agente intenzionale; la bellezza aderente riguarda esclusivamente l'arte, che è sempre frutto di un'intenzione e di una tecnica."
+ ],
+ correct:0,
+ feedbackOk:"Esatto. La bellezza libera (pulchritudo vaga) è indipendente da qualsiasi concetto dello scopo dell'oggetto. La bellezza aderente (pulchritudo adhaerens) presuppone un concetto — es. «questo è un buon cavallo» — e valuta quanto l'oggetto corrisponde al suo tipo.",
+ feedbackNo:"Le opzioni B, C e D introducono distinzioni storiche, gerarchie tra arte e artigianato, o opposizioni natura/arte che non corrispondono alla distinzione kantiana, la quale si basa esclusivamente sul ruolo del concetto dello scopo nel giudizio.",
+ kantReply:"Un fiore bello è bello liberamente: non so a cosa serva e non mi importa. Un cavallo bello è bello in modo aderente: lo valuto anche in base al concetto di ciò che un buon cavallo deve essere."},
+
+{type:"mc",section:3,sectionLabel:"Sezione III — Intervista sul Bello",pillClass:"pill-3",
+ question:"«E il <em>sublime</em>, professore? In che cosa differisce dal bello?»",
+ options:[
+  "Il sublime nasce di fronte a qualcosa di smisurato o spaventoso che inizialmente opprime, ma poi rivela la superiorità della nostra ragione e della nostra dimensione morale sulla natura fisica.",
+  "Il sublime è semplicemente un bello più intenso, profondo e duraturo: la stessa esperienza estetica in versione amplificata, che nasce quando la perfezione formale di un oggetto supera una certa soglia di eccellenza.",
+  "Il sublime riguarda esclusivamente le opere d'arte del genio — in particolare la musica e la poesia — perché solo queste forme espressive riescono a rappresentare l'infinito senza ridurlo a immagini sensibili.",
+  "Il sublime è un'esperienza puramente intellettuale, del tutto priva di componenti emotive o corporee, che nasce dalla contemplazione delle verità matematiche e delle leggi razionali della natura."
+ ],
+ correct:0,
+ feedbackOk:"Esatto. Il sublime implica un momento di resistenza — quasi di paura — che si rovescia in esaltazione: la nostra ragione trascende la grandezza fisica (sublime matematico) o la potenza devastante (sublime dinamico) della natura.",
+ feedbackNo:"La B confonde intensità con struttura: il sublime ha una dinamica completamente diversa dal bello. Le C e D sono false: il sublime non riguarda solo l'arte né è puramente intellettuale.",
+ kantReply:"«La sublimità non sta in nessuna cosa della natura, ma solo nell'animo nostro.» Di fronte all'oceano in tempesta il mio corpo è minuscolo — ma la mia ragione lo trascende. Questo rovesciamento è il sublime."},
+
+{type:"mc",section:3,sectionLabel:"Sezione III — Intervista sul Bello",pillClass:"pill-3",
+ scenario:{label:"Caso da valutare",
+  text:"Luca guarda un tramonto sul Gran Sasso e dice: «È bellissimo — non riesco a immaginare che qualcuno possa non trovarlo bello.» Il suo amico Paolo assaggia un nuovo gusto di gelato e dice: «Questo è il migliore che abbia mai mangiato.» La loro amica Chiara aggiunge: «Io il pistacchio non lo sopporto — ma capisco che tu lo trovi buono.»"},
+ question:"Secondo Kant, quale giudizio è un <em>giudizio estetico puro</em> sul bello e quale un <em>giudizio sul piacevole</em>?",
+ options:[
+  "Il giudizio di Luca è estetico puro: è disinteressato e pretende accordo universale. I giudizi di Paolo e Chiara sono sul piacevole: dipendono dal gusto sensoriale soggettivo senza pretese universali.",
+  "Tutti e tre i giudizi sono estetici puri: ognuno esprime una risposta personale e immediata a qualcosa di percepito, che riflette la propria sensibilità e che Kant considererebbe egualmente valida come forma di esperienza estetica.",
+  "Il giudizio di Paolo è il più autentico dei tre perché è diretto, immediato e non mediato dalla riflessione; quello di Luca è troppo riflettuto e intellettualizzato per essere un vero giudizio di gusto secondo Kant.",
+  "Nessuno dei tre giudizi è pienamente kantiano: per formulare un autentico giudizio estetico puro sarebbe necessaria una formazione filosofica specifica che permetta di distinguere consapevolmente il piacevole dal bello."
+ ],
+ correct:0,
+ feedbackOk:"Perfetto. Luca formula un giudizio di gusto puro: è disinteressato e si aspetta accordo universale. Paolo e Chiara discutono di gusto sensoriale: la preferenza varia — e Chiara lo esplicita.",
+ feedbackNo:"La B equipara tutti i giudizi. La C privilegia l'immediatezza, che non è il criterio kantiano. La D introduce un requisito di formazione filosofica che Kant non pone.",
+ kantReply:"Luca ha colto qualcosa nella forma del tramonto che va oltre il piacere sensoriale. La differenza non è nella forza dell'emozione, ma nella struttura del giudizio."},
+
+/* ── SPLASH 4 ──────────────────────────────────────────── */
+{type:"splash",section:4,num:"Sezione IV",title:"La tua risposta a Kant",
+ desc:"Tre domande aperte, una per ciascuna Critica. Puoi rispondere a una, due o tutte e tre. Non cerchiamo la risposta giusta: cerchiamo il tuo pensiero.",
+ meta:"Scrittura libera · ~7 minuti",btnLabel:"Inizia la riflessione",noBack:true},
+
+/* ── SEZIONE 4 ──────────────────────────────────────────── */
+{type:"essay",section:4,sectionLabel:"Sezione IV — La tua risposta a Kant",pillClass:"pill-4",
+ prompts:[
+  {id:"A",crit:"Critica della ragion pura",
+   text:"Kant sostiene che conosciamo sempre e solo i fenomeni — la realtà filtrata dalle nostre forme a priori — e mai le cose così come sono in sé. Pensa a un momento della tua vita in cui hai capito che la tua percezione di una situazione era distorta o incompleta. In che misura questa esperienza ti aiuta a capire la distinzione kantiana tra fenomeno e noumeno?"},
+  {id:"B",crit:"Critica della ragion pratica",
+   text:"Kant dice che un'azione ha valore morale solo se compiuta per puro dovere, indipendentemente dalle conseguenze. Pensi a una situazione — reale o immaginata — in cui seguire rigidamente questa regola ti sembrerebbe difficile o ingiusto. Come risponderesti a Kant?"},
+  {id:"C",crit:"Critica del Giudizio",
+   text:"Kant distingue tra trovare qualcosa «piacevole» e trovarlo «bello»: il bello pretende un accordo universale che il piacevole non richiede. Porta un esempio dalla tua esperienza di qualcosa che hai trovato bello in senso kantiano — qualcosa di cui hai pensato «chiunque dovrebbe trovarlo bello» — e prova a spiegare perché."}
+ ]}
+];
+
+/* Calcola l'indice dell'ultimo step MC prima della sezione essay */
+const LAST_MC_IDX = (()=>{
+  let last=-1;
+  STEPS.forEach((s,i)=>{ if(s.type==="mc") last=i; });
+  return last;
+})();
+
+const TOTAL_MC=STEPS.filter(s=>s.type==="mc").length;
+
+/* ================================================================
+   STATE
+================================================================ */
+let studentName="";
+let current=0;
+let results={};
+let essayTexts={A:"",B:"",C:""};
+
+/* ================================================================
+   BOOT
+================================================================ */
+const nameInput=document.getElementById("nameInput");
+const startBtn=document.getElementById("startBtn");
+const gate=document.getElementById("gate");
+const labBody=document.getElementById("labBody");
+const stepContainer=document.getElementById("stepContainer");
+const progressBar=document.getElementById("progressBar");
+const progLabel=document.getElementById("progLabel");
+const progPct=document.getElementById("progPct");
+
+nameInput.addEventListener("input",()=>{startBtn.disabled=nameInput.value.trim().length<2;});
+nameInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&!startBtn.disabled)startBtn.click();});
+startBtn.addEventListener("click",()=>{
+  studentName=nameInput.value.trim();
+  gate.classList.add("hidden");
+  labBody.classList.remove("hidden");
+  buildProgressBar();
+  renderStep(0);
+});
+
+/* ================================================================
+   PROGRESS
+================================================================ */
+function buildProgressBar(){
+  progressBar.innerHTML="";
+  STEPS.forEach((s,i)=>{
+    if(s.type==="splash")return;
+    const seg=document.createElement("div");
+    seg.className="seg";seg.id="seg"+i;
+    progressBar.appendChild(seg);
+  });
+}
+
+function updateProgress(idx){
+  const mcDone=STEPS.slice(0,idx).filter((s,i)=>s.type==="mc"&&results[i]!==undefined).length;
+  const pct=Math.round(mcDone/TOTAL_MC*100);
+  progPct.textContent=pct+"%";
+  const mcBefore=STEPS.slice(0,idx+1).filter(s=>s.type==="mc").length;
+  if(STEPS[idx].type==="mc") progLabel.textContent="Domanda "+mcBefore+" di "+TOTAL_MC;
+  else if(STEPS[idx].type==="essay") progLabel.textContent="Riflessione finale";
+  else progLabel.textContent=STEPS[idx].num||"";
+  STEPS.forEach((s,i)=>{
+    if(s.type==="splash")return;
+    const seg=document.getElementById("seg"+i);
+    if(!seg)return;
+    if(i<idx) seg.className="seg done";
+    else if(i===idx) seg.className="seg active";
+    else seg.className="seg";
+  });
+}
+
+/* ================================================================
+   BACK GUARD
+   Dopo lo splash della sezione IV (noBack:true) non si può tornare
+================================================================ */
+function canGoBack(idx){
+  /* cerca indietro a partire da idx-1: se c'è uno splash con noBack:true, blocca */
+  for(let i=idx-1;i>=0;i--){
+    if(STEPS[i].type==="splash" && STEPS[i].noBack) return false;
+  }
+  return true;
+}
+
+/* ================================================================
+   RENDER STEP
+================================================================ */
+function renderStep(idx){
+  if(idx>=STEPS.length){renderFinal();return;}
+  current=idx;
+  updateProgress(idx);
+  stepContainer.innerHTML="";
+  const step=STEPS[idx];
+  if(step.type==="splash") renderSplash(idx,step);
+  else if(step.type==="mc") renderMC(idx,step);
+  else if(step.type==="essay") renderEssay(idx,step);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ================================================================
+   SPLASH
+================================================================ */
+function renderSplash(idx,step){
+  const div=document.createElement("div");
+  div.className="section-splash splash-s"+step.section;
+  div.innerHTML=`
+    <div class="splash-num">${escapeHtml(step.num)}</div>
+    <div class="splash-title">${escapeHtml(step.title)}</div>
+    <div class="splash-desc">${escapeHtml(step.desc)}</div>
+    <div class="splash-meta"><span>${escapeHtml(step.meta)}</span></div>
+    ${step.noBack?`<div class="splash-notice">⚠ Attenzione: una volta iniziata questa sezione non sarà più possibile tornare alle domande precedenti.</div>`:""}
+  `;
+  const btnRow=document.createElement("div");
+  btnRow.style.cssText="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;";
+  if(idx>0 && !step.noBack){
+    const back=document.createElement("button");
+    back.className="btn-ghost";back.textContent="← Indietro";
+    back.addEventListener("click",()=>renderStep(idx-1));
+    btnRow.appendChild(back);
+  }
+  const fwd=document.createElement("button");
+  fwd.className="btn-primary";fwd.textContent=step.btnLabel+" →";
+  fwd.addEventListener("click",()=>renderStep(idx+1));
+  btnRow.appendChild(fwd);
+  div.appendChild(btnRow);
+  stepContainer.appendChild(div);
+}
+
+/* ================================================================
+   MC
+================================================================ */
+function renderMC(idx,step){
+  const prev=results[idx];
+  const locked=prev!==undefined;
+  const card=document.createElement("div");
+  card.className="card s"+step.section;
+
+  const pill=document.createElement("div");
+  pill.className="section-pill "+step.pillClass;
+  pill.textContent=step.sectionLabel;
+  card.appendChild(pill);
+
+  if(step.kantVoice){
+    const kv=document.createElement("div");kv.className="kant-voice";
+    kv.innerHTML=`<div class="speaker">Kant dice</div><p>${step.kantVoice}</p>`;
+    card.appendChild(kv);
+  }
+  if(step.scenario){
+    const sc=document.createElement("div");sc.className="scenario";
+    sc.innerHTML=`<div class="sc-label">${escapeHtml(step.scenario.label)}</div><p>${escapeHtml(step.scenario.text)}</p>`;
+    card.appendChild(sc);
+  }
+
+  const qEl=document.createElement("div");qEl.className="question";qEl.innerHTML=step.question;
+  card.appendChild(qEl);
+
+  const optWrap=document.createElement("div");optWrap.className="options";
+  const LABELS=["A","B","C","D"];
+  step.options.forEach((txt,oi)=>{
+    const btn=document.createElement("button");
+    btn.className="opt"+(locked?" locked":"");
+    if(locked){
+      if(oi===step.correct) btn.classList.add("correct");
+      if(prev.chosen===oi&&oi!==step.correct) btn.classList.add("wrong");
+    }
+    btn.innerHTML=`<span class="marker">${LABELS[oi]}</span><span>${escapeHtml(txt)}</span>`;
+    if(!locked) btn.addEventListener("click",()=>handleChoice(idx,step,oi,optWrap,fb,nextBtn));
+    optWrap.appendChild(btn);
+  });
+  card.appendChild(optWrap);
+
+  const fb=document.createElement("div");fb.className="feedback";
+  if(locked&&prev){
+    fb.className="feedback show "+(prev.correct?"ok":"no");
+    fb.innerHTML=`<div class="fb-head">${prev.correct?"Risposta corretta":"Risposta errata"}</div><p>${prev.correct?step.feedbackOk:step.feedbackNo}</p>`;
+    if(step.kantReply) fb.innerHTML+=`<div class="kant-reply">Kant: «${step.kantReply}»</div>`;
+  }
+  card.appendChild(fb);
+
+  const nav=document.createElement("div");nav.className="nav-footer";
+  const mcIdx=STEPS.slice(0,idx+1).filter(s=>s.type==="mc").length;
+  const nl=document.createElement("div");nl.className="nav-label";nl.textContent="Domanda "+mcIdx+" di "+TOTAL_MC;
+  nav.appendChild(nl);
+  const nr=document.createElement("div");nr.className="nav-right";
+
+  if(idx>0 && canGoBack(idx)){
+    const back=document.createElement("button");back.className="btn-ghost";back.textContent="← Indietro";
+    back.addEventListener("click",()=>renderStep(idx-1));
+    nr.appendChild(back);
+  }
+
+  const nextBtn=document.createElement("button");
+  nextBtn.className="btn-primary";
+  nextBtn.textContent=idx===STEPS.length-1?"Concludi":"Avanti →";
+  nextBtn.disabled=!locked;
+  nextBtn.addEventListener("click",()=>renderStep(idx+1));
+  nr.appendChild(nextBtn);nav.appendChild(nr);card.appendChild(nav);
+  stepContainer.appendChild(card);
+}
+
+function handleChoice(idx,step,chosen,optWrap,fb,nextBtn){
+  const correct=chosen===step.correct;
+  results[idx]={correct,chosen,type:"mc"};
+  const opts=Array.from(optWrap.querySelectorAll(".opt"));
+  opts.forEach((o,oi)=>{
+    const clone=o.cloneNode(true);
+    clone.classList.add("locked");
+    if(oi===step.correct) clone.classList.add("correct");
+    if(oi===chosen&&!correct) clone.classList.add("wrong");
+    o.parentNode.replaceChild(clone,o);
+  });
+  fb.className="feedback show "+(correct?"ok":"no");
+  fb.innerHTML=`<div class="fb-head">${correct?"Risposta corretta":"Risposta errata"}</div><p>${correct?step.feedbackOk:step.feedbackNo}</p>`;
+  if(step.kantReply) fb.innerHTML+=`<div class="kant-reply">Kant: «${step.kantReply}»</div>`;
+  nextBtn.disabled=false;
+  updateProgress(idx);
+}
+
+/* ================================================================
+   ESSAY
+================================================================ */
+function renderEssay(idx,step){
+  const card=document.createElement("div");card.className="card s4";
+  const pill=document.createElement("div");pill.className="section-pill pill-4";pill.textContent=step.sectionLabel;card.appendChild(pill);
+  const kv=document.createElement("div");kv.className="kant-voice";
+  kv.innerHTML=`<div class="speaker">Kant dice</div><p>Avete risposto alle mie domande. Ora <span class='em'>formulate la vostra risposta</span>. Trovate qui tre domande — una per ciascuna Critica. Potete rispondere a una sola, a due, o a tutte e tre. Non cerco la risposta giusta: cerco il vostro pensiero.</p>`;
+  card.appendChild(kv);
+
+  step.prompts.forEach(pr=>{
+    const block=document.createElement("div");block.className="essay-block";
+    const lbl=document.createElement("div");lbl.className="essay-label";lbl.textContent="Domanda "+pr.id+" — "+pr.crit;block.appendChild(lbl);
+    const ptxt=document.createElement("div");ptxt.className="essay-prompt-text";ptxt.textContent=pr.text;block.appendChild(ptxt);
+    const ta=document.createElement("textarea");
+    ta.placeholder="Scrivi qui la tua riflessione (facoltativo)…";ta.value=essayTexts[pr.id]||"";
+    const cc=document.createElement("div");cc.className="char-count";cc.textContent=(essayTexts[pr.id]||"").length+" caratteri";
+    ta.addEventListener("input",()=>{essayTexts[pr.id]=ta.value;cc.textContent=ta.value.length+" caratteri";updateSubmitBtn();});
+    block.appendChild(ta);block.appendChild(cc);card.appendChild(block);
+  });
+
+  const nav=document.createElement("div");nav.className="nav-footer";
+  const nl=document.createElement("div");nl.className="nav-label";nl.textContent="Riflessione finale";nav.appendChild(nl);
+  const nr=document.createElement("div");nr.className="nav-right";
+  const submitBtn=document.createElement("button");submitBtn.className="btn-primary";
+  submitBtn.textContent="Consegna e concludi →";
+  function updateSubmitBtn(){submitBtn.disabled=!Object.values(essayTexts).some(v=>v.trim().length>10);}
+  updateSubmitBtn();
+  submitBtn.addEventListener("click",()=>{results[idx]={type:"essay",texts:Object.assign({},essayTexts)};renderFinal();});
+  nr.appendChild(submitBtn);nav.appendChild(nr);card.appendChild(nav);
+  stepContainer.appendChild(card);
+}
+
+/* ================================================================
+   FINAL
+================================================================ */
+function renderFinal(){
+  progressBar.querySelectorAll(".seg").forEach(s=>s.className="seg done");
+  progLabel.textContent="Completato";progPct.textContent="100%";
+  const scored=STEPS.filter((s,i)=>s.type==="mc"&&results[i]&&results[i].correct).length;
+  const secData=[
+    {sec:0,label:"Criticismo — Introduzione"},
+    {sec:1,label:"Il processo alla metafisica"},
+    {sec:2,label:"Come devo agire?"},
+    {sec:3,label:"Intervista sul Bello"}
+  ].map(d=>{
+    const idxs=STEPS.map((s,i)=>({s,i})).filter(x=>x.s.section===d.sec&&x.s.type==="mc").map(x=>x.i);
+    return{...d,ok:idxs.filter(i=>results[i]&&results[i].correct).length,tot:idxs.length};
+  });
+  const essayResult=results[STEPS.length-1];
+  const essayCount=essayResult?Object.values(essayResult.texts||{}).filter(v=>v.trim().length>10).length:0;
+  const final=document.createElement("div");final.className="final";
+  final.innerHTML=`
+    <h2>Laboratorio completato</h2>
+    <p style="color:var(--text-dim);margin-bottom:4px;">${escapeHtml(studentName)}</p>
+    <div class="score-big">${scored} / ${TOTAL_MC}</div>
+    <p class="score-sub">risposte corrette su ${TOTAL_MC} domande</p>
+    <div class="score-bar-wrap"><div class="score-bar-track"><div class="score-bar-fill" id="scoreBarFill" style="width:0%"></div></div></div>
+    <div class="breakdown">
+      ${secData.map(s=>{const cls=s.ok>=Math.ceil(s.tot/2)?"br-ok":"br-no";return`<div class="breakdown-row"><span class="br-label">${escapeHtml(s.label)}</span><span class="br-score ${cls}">${s.ok} / ${s.tot}</span></div>`;}).join("")}
+      <div class="breakdown-row"><span class="br-label">Riflessione scritta</span><span class="br-score" style="color:var(--teal-soft);">${essayCount>0?essayCount+" risposta"+(essayCount>1?"e":"")+" consegnata"+(essayCount>1?"e":""):"non consegnata"}</span></div>
+    </div>
+    <div class="save-state" id="saveState">Salvataggio dei risultati in corso…</div>
+  `;
+  stepContainer.innerHTML="";stepContainer.appendChild(final);
+  setTimeout(()=>{const f=document.getElementById("scoreBarFill");if(f)f.style.width=Math.round(scored/TOTAL_MC*100)+"%";},100);
+  saveResults(scored,essayResult);
+}
+
+/* ================================================================
+   SAVE
+================================================================ */
+async function saveResults(scored,essayResult){
+  const saveState=document.getElementById("saveState");
+  const detail={};
+  STEPS.forEach((s,i)=>{if(s.type==="mc"&&results[i]){detail["d"+(i+1)]={sezione:s.section,domanda:s.question.replace(/<[^>]+>/g,"").substring(0,60),esito:results[i].correct?"corretto":"errato"};}});
+  const payload={nome:studentName,laboratorio:"In dialogo con Kant",dataISO:new Date().toISOString(),punteggio:scored,totale:TOTAL_MC,
+    riflessione_A:essayResult?(essayResult.texts.A||null):null,
+    riflessione_B:essayResult?(essayResult.texts.B||null):null,
+    riflessione_C:essayResult?(essayResult.texts.C||null):null,
+    dettaglio:detail};
+  let waited=0;
+  while(!(window.__fb&&window.__fb.ready())&&waited<5000){await new Promise(r=>setTimeout(r,200));waited+=200;}
+  if(window.__fb&&window.__fb.ready()){
+    try{await window.__fb.save(studentName,payload);saveState.textContent="✓ Risultati salvati. Puoi chiudere la pagina.";saveState.style.color="var(--green)";}
+    catch(e){console.error(e);saveState.textContent="⚠ Impossibile salvare online. Avvisa il docente.";saveState.style.color="var(--red)";}
+  } else {
+    saveState.textContent="⚠ Connessione al database non disponibile. Avvisa il docente.";saveState.style.color="var(--red)";
+  }
+}
+
+/* ================================================================
+   DASHBOARD
+================================================================ */
+const dashModal=document.getElementById("dashModal");
+const dashGate=document.getElementById("dashGate");
+const dashContent=document.getElementById("dashContent");
+const pinInput=document.getElementById("pinInput");
+const pinBtn=document.getElementById("pinBtn");
+const pinErr=document.getElementById("pinErr");
+
+document.getElementById("dashOpen").addEventListener("click",()=>{dashModal.classList.add("show");dashGate.classList.remove("hidden");dashContent.classList.add("hidden");pinInput.value="";pinErr.style.display="none";});
+document.getElementById("dashClose").addEventListener("click",()=>dashModal.classList.remove("show"));
+dashModal.addEventListener("click",e=>{if(e.target===dashModal)dashModal.classList.remove("show");});
+pinInput.addEventListener("keydown",e=>{if(e.key==="Enter")pinBtn.click();});
+pinBtn.addEventListener("click",async()=>{
+  if(pinInput.value.trim()!==PIN){pinErr.style.display="block";return;}
+  dashGate.classList.add("hidden");dashContent.classList.remove("hidden");
+  await loadDashboard();
+});
+
+async function loadDashboard(){
+  const table=document.getElementById("dashTable");
+  const count=document.getElementById("dashCount");
+  table.innerHTML=`<tr><td style="color:var(--text-faint);">Caricamento…</td></tr>`;
+  let waited=0;
+  while(!(window.__fb&&window.__fb.ready())&&waited<5000){await new Promise(r=>setTimeout(r,200));waited+=200;}
+  if(!(window.__fb&&window.__fb.ready())){table.innerHTML=`<tr><td style="color:var(--red);">Database non disponibile.</td></tr>`;return;}
+  try{
+    const data=await window.__fb.loadAll();
+    const rows=Object.values(data||{});
+    if(!rows.length){count.textContent="Nessun risultato ancora registrato.";table.innerHTML="";return;}
+    rows.sort((a,b)=>(a.nome||"").localeCompare(b.nome||""));
+    count.textContent=`${rows.length} student${rows.length===1?"e":"i"} · ordinati per nome`;
+    let html=`<tr><th>Studente</th><th>Punteggio</th><th>Ris. A — Conoscenza</th><th>Ris. B — Morale</th><th>Ris. C — Bello</th><th>Data</th></tr>`;
+    rows.forEach(r=>{
+      const d=r.dataISO?new Date(r.dataISO):null;
+      const ds=d?d.toLocaleString("it-IT",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—";
+      html+=`<tr><td>${escapeHtml(r.nome||"—")}</td><td class="num">${r.punteggio??"—"} / ${r.totale??""}</td><td class="essay">${escapeHtml(r.riflessione_A||"—")}</td><td class="essay">${escapeHtml(r.riflessione_B||"—")}</td><td class="essay">${escapeHtml(r.riflessione_C||"—")}</td><td>${ds}</td></tr>`;
+    });
+    table.innerHTML=html;
+  }catch(e){console.error(e);table.innerHTML=`<tr><td style="color:var(--red);">Errore nel caricamento.</td></tr>`;}
+}
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+})();
+</script>
+</body>
+</html>
