@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il foglio che ragiona — Laboratorio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#14202a; --bg2:#1c2d3a; --bg3:#243547; --card:#1e2f3e; --border:#2e4255;
+  --orange:#d98a4b; --teal:#4ca0a0; --gold:#d4af52; --green:#5fae6b; --red:#c8584f;
+  --yellow:#c8a83a; --text:#e8dfc8; --muted:#8fa8b8;
+  --mono:'JetBrains Mono',monospace; --serif:'Playfair Display',serif; --sans:'Source Sans 3',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
+
+#gate{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 30% 40%,#1e3a52 0%,var(--bg) 70%);}
+.gate-box{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:48px 40px;max-width:440px;width:100%;text-align:center;}
+.gate-box h1{font-family:var(--serif);font-size:1.9rem;color:var(--gold);margin-bottom:6px;}
+.gate-sub{color:var(--muted);font-size:.88rem;margin-bottom:8px;line-height:1.5;}
+.gate-istr{background:var(--bg3);border-radius:8px;padding:14px 16px;font-size:.85rem;
+  color:#b0c4cc;line-height:1.6;margin:16px 0 24px;text-align:left;}
+.gate-box input{width:100%;padding:12px 16px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:var(--sans);font-size:1rem;
+  margin-bottom:10px;outline:none;transition:border-color .2s;}
+.gate-box input:focus{border-color:var(--teal);}
+.btn-start{width:100%;padding:13px;background:var(--teal);border:none;border-radius:8px;
+  color:#fff;font-family:var(--sans);font-size:1rem;font-weight:600;cursor:pointer;}
+.btn-start:hover{background:#3d8f8f;}
+.gate-err{color:var(--red);font-size:.85rem;margin-top:8px;}
+.dash-link{margin-top:20px;font-size:.8rem;color:var(--muted);cursor:pointer;text-decoration:underline;}
+
+#pbwrap{position:fixed;top:0;left:0;right:0;height:4px;background:var(--bg3);z-index:100;display:none;}
+#pbfill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .4s;}
+#stepctr{position:fixed;top:8px;right:16px;font-size:.75rem;color:var(--muted);
+  z-index:101;font-family:var(--mono);display:none;}
+
+#lab{display:none;padding:60px 20px 60px;}
+.lab-inner{max-width:780px;margin:0 auto;}
+.step{display:none;animation:fadeIn .25s ease;}
+.step.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-hdr{padding:24px 0 10px;}
+.sec-tag{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--teal);margin-bottom:6px;}
+.sec-hdr h2{font-family:var(--serif);font-size:1.5rem;color:var(--gold);}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:26px 28px 22px;margin-bottom:18px;}
+.card .slabel{font-size:.78rem;color:var(--muted);font-family:var(--mono);margin-bottom:10px;}
+.card h2{font-family:var(--serif);color:var(--orange);font-size:1.2rem;margin-bottom:14px;}
+.card p{font-size:.95rem;line-height:1.7;margin-bottom:12px;}
+
+.theory{background:var(--bg3);border-left:3px solid var(--teal);
+  border-radius:0 10px 10px 0;padding:16px 20px;margin:14px 0;}
+.theory h4{font-family:var(--serif);color:var(--teal);margin-bottom:8px;font-size:1rem;}
+.theory p,.theory li{font-size:.92rem;line-height:1.7;color:#ccd8e0;}
+.theory ul{padding-left:16px;margin-top:6px;}
+
+.dblock{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.dblock:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.dtesto{font-size:.95rem;line-height:1.65;margin-bottom:10px;}
+.dtesto strong{color:var(--gold);}
+
+.options{display:flex;flex-direction:column;gap:8px;}
+.opt{padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+  cursor:pointer;text-align:left;font-family:var(--sans);font-size:.92rem;
+  color:var(--text);transition:all .15s;line-height:1.4;}
+.opt:hover:not(:disabled){border-color:var(--teal);color:var(--teal);}
+.opt.correct{background:rgba(95,174,107,.15);border-color:var(--green);color:var(--green);}
+.opt.wrong{background:rgba(200,88,79,.13);border-color:var(--red);color:var(--red);}
+.opt:disabled{cursor:default;}
+
+.fb{border-radius:8px;padding:10px 14px;margin-top:10px;font-size:.9rem;
+  line-height:1.55;display:none;}
+.fb.vis{display:block;}
+.fb.ok{background:rgba(95,174,107,.1);border:1px solid rgba(95,174,107,.28);color:#80ce8a;}
+.fb.err{background:rgba(200,88,79,.1);border:1px solid rgba(200,88,79,.28);color:#e07870;}
+.fb.info{background:rgba(76,160,160,.09);border:1px solid rgba(76,160,160,.28);color:#7ababa;}
+.fb.warn{background:rgba(212,175,82,.08);border:1px solid rgba(212,175,82,.28);color:#c8a030;}
+
+/* griglia modi */
+.modi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:16px 0;
+  border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.modi-grid .gh{background:var(--bg3);padding:8px 6px;text-align:center;
+  font-family:var(--mono);font-size:.78rem;color:var(--muted);border-bottom:1px solid var(--border);}
+.modi-grid .gh.fig{color:var(--teal);}
+.modi-cell{padding:7px 4px;text-align:center;cursor:pointer;font-family:var(--mono);
+  font-size:.82rem;color:var(--text);border-bottom:1px solid var(--border);
+  border-right:1px solid var(--border);transition:all .15s;background:var(--bg2);
+  user-select:none;}
+.modi-cell:hover{background:var(--bg3);}
+.modi-cell.sel{background:rgba(76,160,160,.18);color:var(--teal);border-color:var(--teal);}
+.modi-cell.corretto{background:rgba(95,174,107,.18);color:var(--green);}
+.modi-cell.falso{background:rgba(200,88,79,.18);color:var(--red);}
+.modi-cell.mancato{background:rgba(212,175,82,.18);color:var(--yellow);}
+.modi-cell.fig-label{background:var(--bg3);color:var(--teal);cursor:default;font-weight:600;}
+
+/* tabella risposta corretta */
+.tabella-corretta{display:none;margin-top:16px;}
+.tabella-corretta.vis{display:block;}
+.tab-corretta{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.82rem;}
+.tab-corretta th{background:var(--bg3);color:var(--muted);padding:8px 12px;
+  text-align:left;border-bottom:1px solid var(--border);}
+.tab-corretta td{padding:7px 12px;border-bottom:1px solid var(--border);}
+.tab-corretta tr:hover td{background:var(--bg3);}
+.fig-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78rem;}
+.fig-I{background:rgba(76,160,160,.2);color:var(--teal);}
+.fig-II{background:rgba(217,138,75,.2);color:var(--orange);}
+.fig-III{background:rgba(212,175,82,.2);color:var(--gold);}
+.fig-IV{background:rgba(95,174,107,.2);color:var(--green);}
+
+/* sheets box */
+.sheets-box{background:rgba(95,174,107,.06);border:1px solid rgba(95,174,107,.25);
+  border-radius:10px;padding:16px 20px;margin:18px 0;}
+.sheets-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.sheets-hdr h4{font-family:var(--serif);color:var(--green);font-size:1rem;}
+.sheets-box p,.sheets-box li{font-size:.9rem;line-height:1.7;color:#a8d4b0;}
+.sheets-box ol,.sheets-box ul{padding-left:18px;margin-top:6px;}
+.cell{font-family:var(--mono);font-size:.83rem;background:var(--bg2);
+  padding:2px 7px;border-radius:4px;color:var(--gold);}
+.formula{font-family:var(--mono);font-size:.82rem;background:var(--bg2);
+  padding:8px 12px;border-radius:6px;color:var(--gold);margin:8px 0;
+  display:block;overflow-x:auto;white-space:pre;}
+
+/* mini foglio */
+.foglio-wrap{margin:16px 0;overflow-x:auto;}
+.foglio{border-collapse:collapse;font-family:var(--mono);font-size:.8rem;min-width:100%;}
+.foglio th{background:var(--bg3);color:var(--muted);padding:6px 10px;
+  border:1px solid var(--border);text-align:center;font-size:.73rem;font-weight:400;}
+.foglio td{padding:5px 8px;border:1px solid var(--border);text-align:center;
+  color:var(--text);min-width:70px;}
+.foglio td.hcol{background:var(--bg3);color:var(--muted);font-size:.72rem;}
+.foglio td.inp{background:rgba(76,160,160,.08);}
+.foglio td.out{background:rgba(212,175,82,.06);color:var(--gold);}
+.foglio td.valid{background:rgba(95,174,107,.12);color:var(--green);font-weight:600;}
+.foglio td.invalid{background:rgba(200,88,79,.12);color:var(--red);font-weight:600;}
+select.cs{background:var(--bg2);border:1px solid var(--teal);border-radius:4px;
+  color:var(--teal);font-family:var(--mono);font-size:.8rem;padding:2px 4px;
+  outline:none;cursor:pointer;}
+
+.nav-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;align-items:center;}
+.btn-back{padding:10px 18px;background:transparent;border:1px solid var(--border);
+  border-radius:8px;cursor:pointer;font-family:var(--sans);font-size:.9rem;
+  color:var(--muted);transition:all .15s;}
+.btn-back:hover{border-color:var(--muted);color:var(--text);}
+.btn-check{padding:10px 20px;background:var(--teal);border:none;border-radius:8px;
+  cursor:pointer;font-family:var(--sans);font-size:.9rem;color:#fff;font-weight:600;}
+.btn-check:disabled{background:var(--bg3);color:var(--muted);cursor:default;}
+.btn-next{padding:10px 20px;background:var(--orange);border:none;border-radius:8px;
+  cursor:pointer;font-family:var(--sans);font-size:.9rem;color:#fff;
+  font-weight:600;display:none;}
+.btn-next:hover{background:#c07840;}
+.btn-reveal{padding:8px 16px;background:transparent;border:1px solid var(--gold);
+  border-radius:8px;cursor:pointer;font-family:var(--sans);font-size:.88rem;
+  color:var(--gold);transition:all .15s;display:none;}
+.btn-reveal:hover{background:rgba(212,175,82,.1);}
+.att-badge{font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-left:auto;}
+
+#completamento{display:none;min-height:60vh;align-items:center;
+  justify-content:center;padding:60px 20px;}
+.comp-box{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:48px 40px;max-width:500px;width:100%;text-align:center;}
+.comp-box h2{font-family:var(--serif);color:var(--gold);font-size:1.8rem;margin-bottom:12px;}
+.comp-icon{font-size:3rem;margin-bottom:20px;}
+
+#dashboard{display:none;padding:40px 20px;min-height:100vh;}
+.dash-inner{max-width:900px;margin:0 auto;}
+.dash-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:.87rem;}
+.dash-table th{background:var(--bg3);color:var(--muted);font-family:var(--mono);
+  font-size:.77rem;text-transform:uppercase;padding:9px 12px;text-align:left;}
+.dash-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.dash-table tr:hover td{background:var(--bg3);}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-family:var(--mono);font-size:.79rem;}
+.pill.high{background:rgba(95,174,107,.2);color:var(--green);}
+.pill.mid{background:rgba(212,175,82,.2);color:var(--gold);}
+.pill.low{background:rgba(200,88,79,.2);color:var(--red);}
+.dash-btn{padding:9px 16px;background:var(--teal);border:none;border-radius:8px;
+  color:#fff;font-family:var(--sans);font-size:.87rem;cursor:pointer;margin-right:8px;margin-bottom:8px;}
+.dash-btn.sec{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.dash-btn.sec:hover{border-color:var(--muted);color:var(--text);}
+
+#pin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:200;align-items:center;justify-content:center;}
+#pin-overlay.vis{display:flex;}
+.pin-box{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:36px 32px;max-width:300px;width:100%;text-align:center;}
+.pin-box h3{font-family:var(--serif);color:var(--gold);margin-bottom:16px;}
+.pin-box input{width:100%;padding:12px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:var(--mono);font-size:1.2rem;
+  text-align:center;outline:none;letter-spacing:.3em;}
+.pin-box button{width:100%;margin-top:10px;padding:11px;background:var(--teal);
+  border:none;border-radius:8px;color:#fff;font-family:var(--sans);font-size:.95rem;cursor:pointer;}
+.pin-err{color:var(--red);font-size:.82rem;margin-top:8px;}
+.pin-cancel{margin-top:14px;font-size:.8rem;color:var(--muted);cursor:pointer;text-decoration:underline;}
+
+@media(max-width:580px){.card{padding:18px 16px;}.modi-grid{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-box">
+    <h1>Il foglio che ragiona</h1>
+    <p class="gate-sub">Costruire un validatore di sillogismi · Liceo G.B. Vico · Chieti</p>
+    <div class="gate-istr">Lavorerai in parallelo: questo laboratorio ti guida passo per passo, Google Sheets è dove costruisci. Apri Sheets adesso, poi inizia.</div>
+    <input type="text" id="in-nome" placeholder="Nome" autocomplete="given-name">
+    <input type="text" id="in-cognome" placeholder="Cognome" autocomplete="family-name">
+    <button class="btn-start" onclick="avvia()">Inizia</button>
+    <p id="gate-err" class="gate-err"></p>
+    <p class="dash-link" onclick="apreDash()">Accesso docente →</p>
+  </div>
+</div>
+
+<div id="pbwrap"><div id="pbfill" style="width:0%"></div></div>
+<div id="stepctr"></div>
+
+<div id="lab">
+<div class="lab-inner">
+
+<!-- ═══ INTRODUZIONE ═══ -->
+<div class="step active" id="step-0">
+  <div class="sec-hdr"><div class="sec-tag">Introduzione</div><h2>Il foglio che ragiona</h2></div>
+  <div class="card">
+    <h2>Di cosa si tratta e come procedere</h2>
+    <p>In questo laboratorio costruirai un <strong>validatore di sillogismi aristotelici</strong> funzionante in Google Sheets. Non si tratta di copiare formule: ogni passaggio è preceduto da domande che ti chiedono di ragionare sulla struttura logica prima di tradurla in foglio di calcolo.</p>
+
+    <div class="theory">
+      <h4>Cosa costruirai</h4>
+      <p>Al termine del laboratorio avrai un file Google Sheets composto da due fogli:</p>
+      <ul>
+        <li><strong>Foglio 1 — Riferimenti</strong>: una raccolta di tabelle che riassumono la teoria del sillogismo aristotelico — la classificazione AEIO delle proposizioni, le quattro figure, tutti i 19 modi validi. Questo foglio è sia un ripasso sia la base di dati che il validatore consulterà.</li>
+        <li><strong>Foglio 2 — Validatore</strong>: il foglio di calcolo vero e proprio. Inserisci i dati di un sillogismo (posizione del termine medio e tipo delle proposizioni) e il foglio restituisce automaticamente la figura, il modo e il verdetto VALIDO / INVALIDO.</li>
+      </ul>
+    </div>
+
+    <div class="theory" style="border-left-color:var(--orange)">
+      <h4 style="color:var(--orange)">Di cosa hai bisogno</h4>
+      <ul>
+        <li><strong>Un account Google</strong> — puoi usare l'account scolastico se ce l'hai, oppure un account Gmail personale.</li>
+        <li><strong>Google Sheets aperto in una finestra separata</strong> — vai su <strong>sheets.google.com</strong>, accedi con il tuo account e crea un nuovo foglio vuoto prima di iniziare. Tieni le due finestre affiancate sullo schermo se possibile.</li>
+        <li><strong>Questo laboratorio</strong> — ti guiderà passo per passo, con istruzioni precise su cosa inserire e dove.</li>
+      </ul>
+    </div>
+
+    <div class="theory" style="border-left-color:var(--gold)">
+      <h4 style="color:var(--gold)">Come funziona Google Sheets — basi essenziali</h4>
+      <p>Se non hai mai usato un foglio di calcolo, leggi questo prima di procedere.</p>
+      <ul>
+        <li><strong>Celle e coordinate</strong>: ogni cella è identificata da una lettera (colonna) e un numero (riga). La cella <strong>A1</strong> è in alto a sinistra, <strong>B2</strong> è nella seconda colonna seconda riga, e così via.</li>
+        <li><strong>Inserire dati</strong>: clicca su una cella e inizia a digitare. Premi Invio per confermare e scendere alla riga successiva, Tab per spostarti a destra.</li>
+        <li><strong>Inserire una formula</strong>: le formule iniziano sempre con <strong>=</strong>. Se scrivi <strong>=A1&amp;B1</strong> il foglio unisce il contenuto delle due celle. Se scrivi testo senza = viene trattato come testo semplice.</li>
+        <li><strong>Rinominare un foglio</strong>: in basso vedi i tab "Foglio1", "Foglio2" ecc. Fai doppio clic su un tab per rinominarlo.</li>
+        <li><strong>Colorare celle</strong>: seleziona le celle, poi clicca sull'icona del secchiello nella barra degli strumenti in alto per scegliere il colore di sfondo.</li>
+        <li><strong>Intervalli denominati</strong>: puoi assegnare un nome a un gruppo di celle (es. "ModiValidi") per usarlo nelle formule. Lo trovi in Dati → Intervalli denominati.</li>
+      </ul>
+    </div>
+
+    <div class="theory" style="border-left-color:var(--teal)">
+      <h4>Come procedere</h4>
+      <ul>
+        <li>Ogni passo ha una parte teorica, uno o due esercizi di comprensione, e un riquadro verde con le istruzioni precise per Sheets.</li>
+        <li>Fai prima gli esercizi, poi segui le istruzioni sul foglio. Non saltare l'ordine: ogni parte del foglio dipende da quella precedente.</li>
+        <li>Se sbagli un esercizio, la risposta corretta viene evidenziata — leggila prima di andare avanti.</li>
+        <li>Il passo 3 è il più impegnativo: ti chiede di ricordare quali combinazioni figura+modo producono sillogismi validi. Non preoccuparti se non le ricordi tutte — dopo la verifica troverai la tabella completa.</li>
+      </ul>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-next" id="next-0" onclick="goNext()" style="display:inline-flex">Inizia → Passo 1</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PASSO 1: Tabella AEIO ═══ -->
+<div class="step" id="step-1">
+  <div class="sec-hdr"><div class="sec-tag">Foglio 1 · Passo 1 di 6</div><h2>La tabella AEIO</h2></div>
+  <div class="card">
+    <div class="slabel">Costruire il foglio di riferimento — sezione A</div>
+    <h2>Quantità, qualità e le quattro lettere</h2>
+    <div class="theory">
+      <h4>Le quattro proposizioni categoriche</h4>
+      <p>Ogni proposizione del sillogismo aristotelico si descrive con due proprietà: la <strong>quantità</strong> (universale o particolare) e la <strong>qualità</strong> (affermativa o negativa). La combinazione produce quattro tipi, identificati da una lettera:</p>
+      <ul>
+        <li><strong style="color:var(--gold)">A</strong> — universale affermativa: "Tutti gli S sono P"</li>
+        <li><strong style="color:var(--teal)">E</strong> — universale negativa: "Nessun S è P"</li>
+        <li><strong style="color:var(--orange)">I</strong> — particolare affermativa: "Alcuni S sono P"</li>
+        <li><strong style="color:var(--red)">O</strong> — particolare negativa: "Alcuni S non sono P"</li>
+      </ul>
+    </div>
+
+    <p>Hai appena letto la classificazione AEIO. Prima di costruire la tabella nel foglio, verifica di avere le quattro corrispondenze chiare — sono la base su cui si appoggiano tutte le formule che scriverai.</p>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>1.</strong> Una proposizione con quantificatore "alcuni" e qualità negativa ("Alcuni S non sono P") è di tipo:</p>
+      <div class="options" id="opt-1a">
+        <button class="opt" data-val="A" onclick="checkOpt('1a',this,'A','O')">A — universale affermativa</button>
+        <button class="opt" data-val="E" onclick="checkOpt('1a',this,'E','O')">E — universale negativa</button>
+        <button class="opt" data-val="I" onclick="checkOpt('1a',this,'I','O')">I — particolare affermativa</button>
+        <button class="opt" data-val="O" onclick="checkOpt('1a',this,'O','O')">O — particolare negativa</button>
+      </div>
+      <div class="fb" id="fb-1a"></div>
+    </div>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>2.</strong> Nel sistema aristotelico, quale lettera identifica la proposizione universale negativa?</p>
+      <div class="options" id="opt-1b">
+        <button class="opt" data-val="E" onclick="checkOpt('1b',this,'E','E')">E — universale negativa</button>
+        <button class="opt" data-val="A" onclick="checkOpt('1b',this,'A','E')">A — universale affermativa</button>
+        <button class="opt" data-val="O" onclick="checkOpt('1b',this,'O','E')">O — particolare negativa</button>
+        <button class="opt" data-val="I" onclick="checkOpt('1b',this,'I','E')">I — particolare affermativa</button>
+      </div>
+      <div class="fb" id="fb-1b"></div>
+    </div>
+
+    <div class="sheets-box">
+      <div class="sheets-hdr"><span>📋</span><h4>Cosa fare ora in Sheets</h4></div>
+      <ol>
+        <li>Crea un nuovo foglio Google Sheets. Rinomina il primo foglio <strong>"Riferimenti"</strong> (doppio clic sul tab in basso).</li>
+        <li>Nella cella <span class="cell">A1</span> scrivi il titolo: <strong>SEZIONE A — Tabella AEIO</strong></li>
+        <li>Dalla riga 2, costruisci questa tabella nelle colonne A–C:<br>
+          Riga 2: <span class="cell">Lettera</span> | <span class="cell">Quantità</span> | <span class="cell">Qualità</span><br>
+          Riga 3: <span class="cell">A</span> | <span class="cell">universale</span> | <span class="cell">affermativa</span><br>
+          Riga 4: <span class="cell">E</span> | <span class="cell">universale</span> | <span class="cell">negativa</span><br>
+          Riga 5: <span class="cell">I</span> | <span class="cell">particolare</span> | <span class="cell">affermativa</span><br>
+          Riga 6: <span class="cell">O</span> | <span class="cell">particolare</span> | <span class="cell">negativa</span>
+        </li>
+        <li>Colora le celle A2:C2 di grigio scuro (intestazioni) e A3:C6 di azzurro chiaro.</li>
+      </ol>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-check" id="check-1" onclick="checkPasso(1)" disabled>Verifica</button>
+      <button class="btn-next" id="next-1" onclick="goNext()">Passo 2 →</button>
+      <span class="att-badge" id="att-1"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PASSO 2: Le quattro figure ═══ -->
+<div class="step" id="step-2">
+  <div class="sec-hdr"><div class="sec-tag">Foglio 1 · Passo 2 di 6</div><h2>Le quattro figure</h2></div>
+  <div class="card">
+    <div class="slabel">Costruire il foglio di riferimento — sezione B</div>
+    <h2>La posizione del termine medio</h2>
+    <div class="theory">
+      <h4>Figura e posizione di M</h4>
+      <p>La figura di un sillogismo dipende dalla posizione del termine medio (M) nelle due premesse. M può essere soggetto (S) o predicato (P) in ciascuna premessa — le quattro combinazioni producono le quattro figure:</p>
+    </div>
+
+    <p>La figura è la proprietà strutturale più importante del sillogismo dopo il modo: determina dove si trova il termine medio nelle premesse. Il foglio di calcolo dovrà riconoscere la figura automaticamente a partire da due informazioni inserite dall'utente — la posizione di M nella premessa maggiore e nella minore. Prima di costruire quella formula, assicurati di avere le quattro figure chiare.</p>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>1.</strong> In quale figura il termine medio è <em>predicato</em> in entrambe le premesse?</p>
+      <div class="options" id="opt-2a">
+        <button class="opt" data-val="B" onclick="checkOpt('2a',this,'B','B')">Seconda figura</button>
+        <button class="opt" data-val="A" onclick="checkOpt('2a',this,'A','B')">Prima figura</button>
+        <button class="opt" data-val="C" onclick="checkOpt('2a',this,'C','B')">Terza figura</button>
+        <button class="opt" data-val="D" onclick="checkOpt('2a',this,'D','B')">Quarta figura</button>
+      </div>
+      <div class="fb" id="fb-2a"></div>
+    </div>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>2.</strong> Nella prima figura M è soggetto nella premessa maggiore e predicato nella minore. Come si trasforma questo nella quarta figura?</p>
+      <div class="options" id="opt-2b">
+        <button class="opt" data-val="C" onclick="checkOpt('2b',this,'C','C')">Si inverte: M è predicato nella maggiore e soggetto nella minore</button>
+        <button class="opt" data-val="A" onclick="checkOpt('2b',this,'A','C')">Resta uguale alla prima figura</button>
+        <button class="opt" data-val="B" onclick="checkOpt('2b',this,'B','C')">M è soggetto in entrambe le premesse</button>
+        <button class="opt" data-val="D" onclick="checkOpt('2b',this,'D','C')">M è predicato in entrambe le premesse</button>
+      </div>
+      <div class="fb" id="fb-2b"></div>
+    </div>
+
+    <div class="theory" style="margin-top:16px; border-left-color:var(--gold)">
+      <h4 style="color:var(--gold)">Riepilogo: le quattro figure</h4>
+      <p>Ecco lo schema completo da tenere a mente mentre costruisci il foglio:</p>
+      <table style="width:100%;border-collapse:collapse;margin-top:10px;font-family:var(--mono);font-size:.85rem">
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="padding:6px 10px;text-align:left;color:var(--teal)">Figura</th>
+          <th style="padding:6px 10px;text-align:left;color:var(--teal)">M in P. magg.</th>
+          <th style="padding:6px 10px;text-align:left;color:var(--teal)">M in P. min.</th>
+          <th style="padding:6px 10px;text-align:left;color:var(--teal)">Schema</th>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 10px"><span class="fig-badge fig-I">I</span></td>
+          <td style="padding:6px 10px;color:#ccd8e0">soggetto</td>
+          <td style="padding:6px 10px;color:#ccd8e0">predicato</td>
+          <td style="padding:6px 10px;color:var(--gold)">M–P / S–M → S–P</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 10px"><span class="fig-badge fig-II">II</span></td>
+          <td style="padding:6px 10px;color:#ccd8e0">predicato</td>
+          <td style="padding:6px 10px;color:#ccd8e0">predicato</td>
+          <td style="padding:6px 10px;color:var(--gold)">P–M / S–M → S–P</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 10px"><span class="fig-badge fig-III">III</span></td>
+          <td style="padding:6px 10px;color:#ccd8e0">soggetto</td>
+          <td style="padding:6px 10px;color:#ccd8e0">soggetto</td>
+          <td style="padding:6px 10px;color:var(--gold)">M–P / M–S → S–P</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 10px"><span class="fig-badge fig-IV">IV</span></td>
+          <td style="padding:6px 10px;color:#ccd8e0">predicato</td>
+          <td style="padding:6px 10px;color:#ccd8e0">soggetto</td>
+          <td style="padding:6px 10px;color:var(--gold)">P–M / M–S → S–P</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="sheets-box">
+      <div class="sheets-hdr"><span>📋</span><h4>Cosa fare ora in Sheets</h4></div>
+      <ol>
+        <li>Nella cella <span class="cell">E1</span> (lascia una colonna vuota di separazione) scrivi: <strong>SEZIONE B — Le quattro figure</strong></li>
+        <li>Dalla riga 2, costruisci questa tabella nelle colonne E–G:<br>
+          Riga 2: <span class="cell">Figura</span> | <span class="cell">M in P.magg.</span> | <span class="cell">M in P.min.</span><br>
+          Riga 3: <span class="cell">I</span> | <span class="cell">soggetto</span> | <span class="cell">predicato</span><br>
+          Riga 4: <span class="cell">II</span> | <span class="cell">predicato</span> | <span class="cell">predicato</span><br>
+          Riga 5: <span class="cell">III</span> | <span class="cell">soggetto</span> | <span class="cell">soggetto</span><br>
+          Riga 6: <span class="cell">IV</span> | <span class="cell">predicato</span> | <span class="cell">soggetto</span>
+        </li>
+        <li>Colora le intestazioni (riga 2) e le celle dati con colori diversi per figura: teal per I, arancione per II, oro per III, verde per IV.</li>
+      </ol>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goBack()">← Indietro</button>
+      <button class="btn-check" id="check-2" onclick="checkPasso(2)" disabled>Verifica</button>
+      <button class="btn-next" id="next-2" onclick="goNext()">Passo 3 →</button>
+      <span class="att-badge" id="att-2"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PASSO 3: Modi validi ═══ -->
+<div class="step" id="step-3">
+  <div class="sec-hdr"><div class="sec-tag">Foglio 1 · Passo 3 di 6</div><h2>I modi validi</h2></div>
+  <div class="card">
+    <div class="slabel">Costruire il foglio di riferimento — sezione C</div>
+    <h2>Quali combinazioni produce sillogismi validi?</h2>
+    <p>La griglia qui sotto mostra tutte le combinazioni figura × modo che potresti incontrare. Seleziona quelle che ritieni <strong>valide</strong> secondo Aristotele, poi verifica. Non preoccuparti se non le ricordi tutte — dopo la verifica troverai la tabella completa da copiare in Sheets.</p>
+
+    <div id="modi-grid-wrap"></div>
+    <div class="fb" id="fb-modi"></div>
+
+    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+      <button class="btn-check" id="check-modi" onclick="verificaModi()">Verifica selezione</button>
+      <button class="btn-reveal" id="btn-reveal" onclick="mostraTabella()">Mostra tabella completa →</button>
+    </div>
+
+    <div class="tabella-corretta" id="tabella-corretta">
+      <p style="font-size:.88rem;color:var(--muted);margin:12px 0 8px">Usa questa tabella per costruire la sezione C del foglio di riferimento:</p>
+      <div style="overflow-x:auto">
+        <table class="tab-corretta" id="tab-modi-validi"></table>
+      </div>
+    </div>
+
+    <div class="sheets-box" id="sheets-p3" style="display:none">
+      <div class="sheets-hdr"><span>📋</span><h4>Cosa fare ora in Sheets</h4></div>
+      <ol>
+        <li>Nel foglio <strong>"Riferimenti"</strong>, scegli una zona libera (ad es. a partire dalla cella <span class="cell">A9</span>) e scrivi il titolo: <strong>SEZIONE C — Modi validi per figura</strong></li>
+        <li>Riga 10: intestazioni <span class="cell">Figura</span> | <span class="cell">Modo</span></li>
+        <li>Dalla riga 11 in poi, inserisci tutti i 19 modi validi dalla tabella sopra, una riga per modo. La colonna Figura contiene I, II, III o IV; la colonna Modo contiene la combinazione di tre lettere (es. AAA).</li>
+        <li>Seleziona l'intervallo A10:B29 (intestazione + 19 righe) e assegnagli il nome <strong>ModiValidi</strong>: Dati → Intervalli denominati → Aggiungi un intervallo. Questo nome verrà usato dalla formula CONTA.SE nel foglio 2.</li>
+        <li>Importante: nella colonna Modo scrivi la combinazione come stringa unica senza spazi, es. <span class="cell">AAA</span>, <span class="cell">EAE</span>, <span class="cell">AII</span>.</li>
+      </ol>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goBack()">← Indietro</button>
+      <button class="btn-next" id="next-3" onclick="goNext()">Passo 4 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PASSO 4: Glossario formule ═══ -->
+<div class="step" id="step-4">
+  <div class="sec-hdr"><div class="sec-tag">Foglio 1 · Passo 4 di 6</div><h2>Le formule che useremo</h2></div>
+  <div class="card">
+    <div class="slabel">Costruire il foglio di riferimento — sezione D</div>
+    <h2>Capire gli strumenti prima di usarli</h2>
+
+    <div class="theory">
+      <h4>Quattro funzioni, una logica</h4>
+      <p><strong style="color:var(--gold)">SE(condizione; se_vero; se_falso)</strong> — valuta una condizione e restituisce un valore diverso a seconda che sia vera o falsa. Corrisponde al ragionamento condizionale: se P allora Q, altrimenti R.</p>
+      <p style="margin-top:8px"><strong style="color:var(--gold)">E(cond1; cond2; ...)</strong> — restituisce VERO solo se tutte le condizioni sono vere. È l'AND logico.</p>
+      <p style="margin-top:8px"><strong style="color:var(--gold)">O(cond1; cond2; ...)</strong> — restituisce VERO se almeno una condizione è vera. È l'OR logico.</p>
+      <p style="margin-top:8px"><strong style="color:var(--gold)">CONTA.SE(intervallo; criterio)</strong> — conta quante celle nell'intervallo soddisfano il criterio. Se il risultato è maggiore di 0, il valore cercato esiste nell'intervallo.</p>
+    </div>
+
+    <p>Hai costruito le tre tabelle di riferimento. Ora devi capire come il foglio 2 le userà — in particolare come la funzione <code style="color:var(--gold);font-family:var(--mono)">CONTA.SE</code> permette di cercare un valore in una tabella e trasformare il risultato in VALIDO / INVALIDO. Questi due esercizi ti preparano a scrivere la formula senza doverla capire "al volo".</p>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>1.</strong> La formula <code style="color:var(--gold);font-family:var(--mono)">CONTA.SE(ModiValidi; "I"&amp;"AAA")</code> restituisce 1 se il modo AAA in prima figura è valido, 0 altrimenti. Come si usa questo risultato per ottenere VALIDO/INVALIDO?</p>
+      <div class="options" id="opt-4a">
+        <button class="opt" data-val="A" onclick="checkOpt('4a',this,'A','A')">=SE(CONTA.SE(ModiValidi; figura&amp;modo)&gt;0; "VALIDO"; "INVALIDO")</button>
+        <button class="opt" data-val="B" onclick="checkOpt('4a',this,'B','A')">=SE(CONTA.SE(ModiValidi; figura&amp;modo)=1; modo; "INVALIDO")</button>
+        <button class="opt" data-val="C" onclick="checkOpt('4a',this,'C','A')">=CONTA.SE(ModiValidi; figura&amp;modo)&gt;0</button>
+        <button class="opt" data-val="D" onclick="checkOpt('4a',this,'D','A')">=SE(ModiValidi=figura&amp;modo; "VALIDO"; "INVALIDO")</button>
+      </div>
+      <div class="fb" id="fb-4a"></div>
+    </div>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>2.</strong> Perché nella formula di validità si usa <code style="color:var(--gold);font-family:var(--mono)">figura&amp;modo</code> (concatenazione) invece di cercare figura e modo in colonne separate?</p>
+      <div class="options" id="opt-4b">
+        <button class="opt" data-val="B" onclick="checkOpt('4b',this,'B','B')">Perché CONTA.SE cerca in un singolo intervallo un singolo valore: concatenando figura e modo si ottiene una chiave univoca (es. "IAAA") che può essere confrontata con una colonna di chiavi nella tabella dei modi validi</button>
+        <button class="opt" data-val="A" onclick="checkOpt('4b',this,'A','B')">Perché CONTA.SE non può lavorare con due colonne contemporaneamente in nessun caso</button>
+        <button class="opt" data-val="C" onclick="checkOpt('4b',this,'C','B')">Perché la figura e il modo sono sempre la stessa stringa</button>
+        <button class="opt" data-val="D" onclick="checkOpt('4b',this,'D','B')">Non c'è un motivo preciso, è solo una convenzione</button>
+      </div>
+      <div class="fb" id="fb-4b"></div>
+    </div>
+
+    <div class="sheets-box">
+      <div class="sheets-hdr"><span>📋</span><h4>Cosa fare ora in Sheets</h4></div>
+      <ol>
+        <li>Nel foglio <strong>"Riferimenti"</strong>, aggiungi una sezione D a partire dalla cella <span class="cell">A31</span>: titolo <strong>SEZIONE D — Glossario formule</strong></li>
+        <li>Costruisci una tabella con tre colonne: <span class="cell">Funzione</span> | <span class="cell">Sintassi</span> | <span class="cell">Uso nel validatore</span></li>
+        <li>Quattro righe: SE, E, O, CONTA.SE — con sintassi e una breve nota su come le userai.</li>
+        <li>Importante: modifica la tabella ModiValidi aggiungendo una colonna C con la chiave concatenata. Nella cella <span class="cell">C10</span> scrivi <span class="cell">Chiave</span>, poi in C11 inserisci: <span class="formula">=A11&amp;B11</span> e trascina fino a C29. Questa colonna è quella che CONTA.SE cercherà.</li>
+        <li>Aggiorna l'intervallo denominato ModiValidi per includere anche la colonna C: deve coprire A10:C29.</li>
+      </ol>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goBack()">← Indietro</button>
+      <button class="btn-check" id="check-4" onclick="checkPasso(4)" disabled>Verifica</button>
+      <button class="btn-next" id="next-4" onclick="goNext()">Passo 5 →</button>
+      <span class="att-badge" id="att-4"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PASSO 5: Foglio 2 — struttura e formule ═══ -->
+<div class="step" id="step-5">
+  <div class="sec-hdr"><div class="sec-tag">Foglio 2 · Passo 5 di 6</div><h2>Il validatore</h2></div>
+  <div class="card">
+    <div class="slabel">Costruire il foglio di calcolo — struttura e formule</div>
+    <h2>Dal sillogismo al risultato</h2>
+    <p>Ora costruisci il secondo foglio. Ogni riga rappresenta un sillogismo: l'utente inserisce i dati nelle colonne di input, il foglio calcola figura, modo e validità.</p>
+
+    <p>Il foglio 1 è completo. Ora costruisci il motore: il foglio Validatore riceve i dati di un sillogismo riga per riga e calcola in automatico figura, modo e validità. Le colonne di input (azzurre) sono quelle che l'utente compila; le colonne di output (dorate) contengono formule che non vanno mai modificate manualmente. Prima di scrivere le formule, guarda lo schema del foglio e rispondi alle domande sulla loro struttura.</p>
+
+    <div class="foglio-wrap">
+      <table class="foglio">
+        <thead>
+          <tr>
+            <th style="background:var(--bg2)"></th>
+            <th style="color:var(--teal)">A</th><th style="color:var(--teal)">B</th>
+            <th style="color:var(--teal)">C</th><th style="color:var(--teal)">D</th>
+            <th style="color:var(--teal)">E</th><th style="color:var(--teal)">F</th>
+            <th style="color:var(--teal)">G</th>
+            <th style="color:var(--gold)">H</th><th style="color:var(--gold)">I</th>
+            <th style="color:var(--gold)">J</th><th style="color:var(--gold)">K</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="hcol">1</td>
+            <td class="inp" style="font-size:.72rem">M in PM</td>
+            <td class="inp" style="font-size:.72rem">M in Pn</td>
+            <td class="inp" style="font-size:.72rem">Modo PM</td>
+            <td class="inp" style="font-size:.72rem">Modo Pn</td>
+            <td class="inp" style="font-size:.72rem">Modo C</td>
+            <td class="inp" style="font-size:.72rem">Descrizione</td>
+            <td class="inp" style="font-size:.72rem">Note</td>
+            <td class="out" style="font-size:.72rem">Figura</td>
+            <td class="out" style="font-size:.72rem">Modo</td>
+            <td class="out" style="font-size:.72rem">Chiave</td>
+            <td class="out" style="font-size:.72rem">VALIDO?</td>
+          </tr>
+          <tr>
+            <td class="hcol">2</td>
+            <td class="inp">sogg</td><td class="inp">pred</td>
+            <td class="inp">A</td><td class="inp">A</td><td class="inp">A</td>
+            <td class="inp" style="font-size:.72rem">Barbara</td>
+            <td class="inp"></td>
+            <td class="out">I</td>
+            <td class="out">AAA</td>
+            <td class="out">IAAA</td>
+            <td class="valid">VALIDO</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>1.</strong> La formula per calcolare la figura (colonna H) usa SE() annidati sulla posizione di M nelle due premesse. Quale delle seguenti è corretta?</p>
+      <div class="options" id="opt-5a">
+        <button class="opt" data-val="A" onclick="checkOpt('5a',this,'A','A')">=SE(E(A2="soggetto";B2="predicato");"I";SE(E(A2="predicato";B2="predicato");"II";SE(E(A2="soggetto";B2="soggetto");"III";"IV")))</button>
+        <button class="opt" data-val="B" onclick="checkOpt('5a',this,'B','A')">=SE(A2="soggetto";"I";SE(A2="predicato";"II";"III"))</button>
+        <button class="opt" data-val="C" onclick="checkOpt('5a',this,'C','A')">=SE(E(A2="soggetto";B2="soggetto");"I";SE(E(A2="predicato";B2="predicato");"II";"III"))</button>
+      </div>
+      <div class="fb" id="fb-5a"></div>
+    </div>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>2.</strong> La formula per il modo (colonna I) concatena semplicemente le tre lettere inserite nelle colonne C, D, E. Quale formula è corretta?</p>
+      <div class="options" id="opt-5b">
+        <button class="opt" data-val="B" onclick="checkOpt('5b',this,'B','B')">=C2&amp;D2&amp;E2</button>
+        <button class="opt" data-val="A" onclick="checkOpt('5b',this,'A','B')">=CONCATENA(C2;" ";D2;" ";E2)</button>
+        <button class="opt" data-val="C" onclick="checkOpt('5b',this,'C','B')">=C2&amp;" "&amp;D2&amp;" "&amp;E2</button>
+      </div>
+      <div class="fb" id="fb-5b"></div>
+    </div>
+
+    <div class="sheets-box">
+      <div class="sheets-hdr"><span>📋</span><h4>Cosa fare ora in Sheets</h4></div>
+      <ol>
+        <li>Crea un secondo foglio (clic su "+" in basso) e rinominalo <strong>"Validatore"</strong>.</li>
+        <li>Riga 1: inserisci le intestazioni come nello schema sopra: <span class="cell">M in PM</span>, <span class="cell">M in Pn</span>, <span class="cell">Modo PM</span>, <span class="cell">Modo Pn</span>, <span class="cell">Modo C</span>, <span class="cell">Descrizione</span>, <span class="cell">Note</span>, poi <span class="cell">Figura</span>, <span class="cell">Modo</span>, <span class="cell">Chiave</span>, <span class="cell">VALIDO?</span></li>
+        <li>Colora A1:G1 di azzurro (input) e H1:K1 di oro/giallo (output).</li>
+        <li>In <span class="cell">H2</span> inserisci la formula per la figura:<br>
+          <span class="formula">=SE(E(A2="soggetto";B2="predicato");"I";SE(E(A2="predicato";B2="predicato");"II";SE(E(A2="soggetto";B2="soggetto");"III";"IV")))</span>
+        </li>
+        <li>In <span class="cell">I2</span> inserisci la formula per il modo:<br>
+          <span class="formula">=C2&amp;D2&amp;E2</span>
+        </li>
+        <li>In <span class="cell">J2</span> inserisci la chiave concatenata:<br>
+          <span class="formula">=H2&amp;I2</span>
+        </li>
+        <li>Riga di prova: inserisci in A2 <span class="cell">soggetto</span>, B2 <span class="cell">predicato</span>, C2 <span class="cell">A</span>, D2 <span class="cell">A</span>, E2 <span class="cell">A</span>. H2 deve mostrare <strong>I</strong>, I2 <strong>AAA</strong>, J2 <strong>IAAA</strong>.</li>
+      </ol>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goBack()">← Indietro</button>
+      <button class="btn-check" id="check-5" onclick="checkPasso(5)" disabled>Verifica</button>
+      <button class="btn-next" id="next-5" onclick="goNext()">Passo 6 →</button>
+      <span class="att-badge" id="att-5"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PASSO 6: Validità e test ═══ -->
+<div class="step" id="step-6">
+  <div class="sec-hdr"><div class="sec-tag">Foglio 2 · Passo 6 di 6</div><h2>La validità e il test</h2></div>
+  <div class="card">
+    <div class="slabel">La formula finale e i limiti del foglio</div>
+    <h2>CONTA.SE, test con sillogismi reali, riflessione</h2>
+
+    <p>Le formule di figura e modo sono pronte. L'ultimo tassello è la validità: una sola formula che cerca la combinazione figura+modo nella tabella dei modi validi e restituisce VALIDO o INVALIDO. Poi testerai il foglio con sillogismi reali e raggionerai sui suoi limiti.</p>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>1.</strong> La formula di validità usa CONTA.SE per cercare la chiave figura+modo nella tabella del foglio Riferimenti. Quale formula è corretta per la cella K2?</p>
+      <div class="options" id="opt-6a">
+        <button class="opt" data-val="B" onclick="checkOpt('6a',this,'B','B')">=SE(CONTA.SE(Riferimenti!C11:C29;J2)&gt;0;"VALIDO";"INVALIDO")</button>
+        <button class="opt" data-val="A" onclick="checkOpt('6a',this,'A','B')">=SE(CONTA.SE(Riferimenti!A11:B29;J2)&gt;0;"VALIDO";"INVALIDO")</button>
+        <button class="opt" data-val="C" onclick="checkOpt('6a',this,'C','B')">=SE(CERCA.VERT(J2;Riferimenti!C11:C29;1;0)=J2;"VALIDO";"INVALIDO")</button>
+      </div>
+      <div class="fb" id="fb-6a"></div>
+    </div>
+
+    <div class="theory" style="margin-top:4px">
+      <h4>I quattro sillogismi di test</h4>
+      <p>Inserisci questi quattro sillogismi nelle righe 2–5 del foglio Validatore e annota il risultato:</p>
+      <ul>
+        <li><strong style="color:var(--green)">A</strong> — M in PM: soggetto | M in Pn: predicato | Modi: A, A, A → <em>Barbara, I figura</em></li>
+        <li><strong style="color:var(--teal)">B</strong> — M in PM: predicato | M in Pn: predicato | Modi: E, A, E → <em>Cesare, II figura</em></li>
+        <li><strong style="color:var(--red)">C</strong> — M in PM: soggetto | M in Pn: predicato | Modi: I, I, I → <em>III figura, invalido</em></li>
+        <li><strong style="color:var(--orange)">D</strong> — M in PM: predicato | M in Pn: soggetto | Modi: A, A, I → <em>Bramantip, IV figura</em></li>
+      </ul>
+    </div>
+
+    <div class="dblock" style="margin-top:16px">
+      <p class="dtesto"><strong>2.</strong> Il sillogismo C (III figura, modo III) produce nel foglio:</p>
+      <div class="options" id="opt-6b">
+        <button class="opt" data-val="B" onclick="checkOpt('6b',this,'B','B')">INVALIDO — corretto, III non è un modo valido in nessuna figura</button>
+        <button class="opt" data-val="A" onclick="checkOpt('6b',this,'A','B')">VALIDO — il foglio sbaglia perché III figura ha modi diversi</button>
+        <button class="opt" data-val="C" onclick="checkOpt('6b',this,'C','B')">ERRORE — la formula non trova la chiave</button>
+      </div>
+      <div class="fb" id="fb-6b"></div>
+    </div>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>3.</strong> Il foglio verifica la validità formale, ma non può verificare la verità delle premesse. Se inserisci un sillogismo formalmente valido con premesse false, cosa mostra?</p>
+      <div class="options" id="opt-6c">
+        <button class="opt" data-val="A" onclick="checkOpt('6c',this,'A','A')">VALIDO — perché la validità formale non dipende dalla verità delle premesse</button>
+        <button class="opt" data-val="B" onclick="checkOpt('6c',this,'B','A')">INVALIDO — perché le premesse false rendono il sillogismo scorretto</button>
+        <button class="opt" data-val="C" onclick="checkOpt('6c',this,'C','A')">ERRORE — il foglio non può calcolare la verità</button>
+      </div>
+      <div class="fb" id="fb-6c"></div>
+    </div>
+
+    <div class="dblock">
+      <p class="dtesto"><strong>4.</strong> Qual è il limite principale di questo foglio rispetto alla logica aristotelica completa?</p>
+      <div class="options" id="opt-6d">
+        <button class="opt" data-val="C" onclick="checkOpt('6d',this,'C','C')">Non verifica la verità delle premesse né l'identità reale dei termini — solo la struttura formale figura+modo</button>
+        <button class="opt" data-val="A" onclick="checkOpt('6d',this,'A','C')">Non può calcolare sillogismi con più di tre termini</button>
+        <button class="opt" data-val="B" onclick="checkOpt('6d',this,'B','C')">Non gestisce le quattro figure contemporaneamente</button>
+        <button class="opt" data-val="D" onclick="checkOpt('6d',this,'D','C')">Non può essere esteso ad altri tipi di logica</button>
+      </div>
+      <div class="fb" id="fb-6d"></div>
+    </div>
+
+    <div class="sheets-box">
+      <div class="sheets-hdr"><span>📋</span><h4>Cosa fare ora in Sheets — completamento</h4></div>
+      <ol>
+        <li>In <span class="cell">K2</span> inserisci la formula di validità:<br>
+          <span class="formula">=SE(CONTA.SE(Riferimenti!C11:C29;J2)&gt;0;"VALIDO";"INVALIDO")</span>
+        </li>
+        <li>Aggiungi la formattazione condizionale su K2: testo "VALIDO" → sfondo verde; testo "INVALIDO" → sfondo rosso.</li>
+        <li>Seleziona le celle H2:K2 e trascina verso il basso per estendere le formule alle righe successive.</li>
+        <li>Inserisci i quattro sillogismi di test dalla sezione teoria sopra e verifica che i risultati corrispondano a quelli attesi.</li>
+        <li>Salva il foglio — il validatore è completo.</li>
+      </ol>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goBack()">← Indietro</button>
+      <button class="btn-check" id="check-6" onclick="checkPasso(6)" disabled>Verifica</button>
+      <button class="btn-next" id="next-6" onclick="consegna()">Consegna →</button>
+      <span class="att-badge" id="att-6"></span>
+    </div>
+  </div>
+</div>
+
+</div></div>
+
+<!-- COMPLETAMENTO -->
+<div id="completamento">
+  <div class="comp-box">
+    <div class="comp-icon">✓</div>
+    <h2>Laboratorio completato</h2>
+    <p id="comp-nome" style="color:var(--gold);font-family:var(--serif);font-size:1.1rem;margin:10px 0 16px"></p>
+    <p>Hai costruito un validatore di sillogismi aristotelici in Google Sheets che copre tutte e quattro le figure e tutti i 19 modi validi della tradizione. Il docente ha ricevuto il resoconto.</p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="dash-inner">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
+      <h1 style="font-family:var(--serif);color:var(--gold);font-size:1.5rem">Dashboard docente</h1>
+      <button class="dash-btn sec" onclick="chiudiDash()">← Esci</button>
+      <button class="dash-btn" onclick="caricaDash()">↺ Aggiorna</button>
+      <button class="dash-btn sec" onclick="esportaCSV()">Esporta CSV</button>
+    </div>
+    <div id="dash-stats" style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px"></div>
+    <div id="dash-content"><p style="color:var(--muted)">Caricamento…</p></div>
+  </div>
+</div>
+
+<!-- PIN -->
+<div id="pin-overlay">
+  <div class="pin-box">
+    <h3>Accesso docente</h3>
+    <input type="password" id="pin-in" placeholder="PIN" onkeydown="if(event.key==='Enter')checkPin()">
+    <button onclick="checkPin()">Entra</button>
+    <p class="pin-err" id="pin-err"></p>
+    <p class="pin-cancel" onclick="chiudiPin()">Annulla</p>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getDatabase, ref, set, get } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+const cfg={apiKey:"AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",authDomain:"laboratorio-vico.firebaseapp.com",
+  databaseURL:"https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"laboratorio-vico",storageBucket:"laboratorio-vico.firebasestorage.app",
+  messagingSenderId:"551766473976",appId:"1:551766473976:web:190c0907ce2987e2d78f0d"};
+const app=initializeApp(cfg);const db=getDatabase(app);
+window._db=db;window._ref=ref;window._set=set;window._get=get;window._dbReady=true;
+</script>
+
+<script>
+// ══════════════════════════════════════════
+//  DATI
+// ══════════════════════════════════════════
+const MODI_VALIDI=[
+  {fig:'I', modo:'AAA'},{fig:'I', modo:'EAE'},{fig:'I', modo:'AII'},{fig:'I', modo:'EIO'},
+  {fig:'II',modo:'EAE'},{fig:'II',modo:'AEE'},{fig:'II',modo:'EIO'},{fig:'II',modo:'AOO'},
+  {fig:'III',modo:'AAI'},{fig:'III',modo:'IAI'},{fig:'III',modo:'AII'},
+  {fig:'III',modo:'EAO'},{fig:'III',modo:'OAO'},{fig:'III',modo:'EIO'},
+  {fig:'IV',modo:'AAI'},{fig:'IV',modo:'AEE'},{fig:'IV',modo:'IAI'},
+  {fig:'IV',modo:'EAO'},{fig:'IV',modo:'EIO'},
+];
+const CHIAVI_VALIDE=new Set(MODI_VALIDI.map(m=>m.fig+m.modo));
+
+// tutti i modi da mostrare nella griglia
+const TUTTI_MODI=['AAA','EAE','AII','EIO','AEE','AOO','AAI','IAI','EAO','OAO','III','IEI','OOO','AIA'];
+const FIGURE=['I','II','III','IV'];
+
+// ══════════════════════════════════════════
+//  STATO
+// ══════════════════════════════════════════
+const TOTAL=6;
+let cur=1,nomeS='',keyS='',dbReady=false;
+const risposte={};
+const att={};
+for(let i=1;i<=TOTAL;i++) att[i]=0;
+let modiSelezionati=new Set();
+let modiVerificati=false;
+
+function waitDB(cb){if(window._dbReady){dbReady=true;cb();}else{setTimeout(()=>waitDB(cb),200);}}
+
+// ══════════════════════════════════════════
+//  GATE
+// ══════════════════════════════════════════
+function avvia(){
+  const n=document.getElementById('in-nome').value.trim();
+  const c=document.getElementById('in-cognome').value.trim();
+  if(!n||!c){document.getElementById('gate-err').textContent='Inserisci nome e cognome.';return;}
+  nomeS=n+' '+c;
+  keyS=(c+'_'+n).toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+  document.getElementById('gate').style.display='none';
+  document.getElementById('lab').style.display='block';
+  document.getElementById('pbwrap').style.display='block';
+  document.getElementById('stepctr').style.display='block';
+  cur=0;
+  aggProg();
+  buildModiGrid();
+  buildTabellaModi();
+  waitDB(()=>{});
+}
+
+// ══════════════════════════════════════════
+//  NAVIGAZIONE
+// ══════════════════════════════════════════
+function goTo(n){
+  document.getElementById('step-'+cur).classList.remove('active');
+  cur=n;
+  if(n>TOTAL){consegna();return;}
+  document.getElementById('step-'+n).classList.add('active');
+  // la progress bar parte dal passo 1, lo step-0 è l'intro
+  if(n>0) aggProg();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goNext(){goTo(cur+1);}
+function goBack(){if(cur>0)goTo(cur-1);}
+function aggProg(){
+  document.getElementById('pbfill').style.width=((cur-1)/TOTAL*100)+'%';
+  document.getElementById('stepctr').textContent=cur+' / '+TOTAL;
+}
+
+// ══════════════════════════════════════════
+//  UTILITÀ
+// ══════════════════════════════════════════
+function fb(id,msg,tipo){
+  const el=document.getElementById('fb-'+id);
+  if(!el)return;
+  el.textContent=msg;el.className='fb '+tipo+' vis';
+}
+function sblocca(step){
+  document.getElementById('next-'+step).style.display='inline-flex';
+  const c=document.getElementById('check-'+step);if(c)c.style.display='none';
+}
+function salva(){
+  if(!dbReady||!keyS)return;
+  window._set(window._ref(window._db,'studenti_foglio_sillogismi/'+keyS),
+    {nome:nomeS,step:cur,ts:Date.now(),risposte}).catch(()=>{});
+}
+
+// ══════════════════════════════════════════
+//  SPIEGAZIONI
+// ══════════════════════════════════════════
+const SPIEG={
+  '1a_O':'Corretto. Quantità particolare + qualità negativa = O (particolare negativa).',
+  '1a_X':'Sbagliato. Quantità particolare + qualità negativa corrisponde alla lettera O (particolare negativa).',
+  '1b_E':'Corretto. E è la proposizione universale negativa: "Nessun S è P".',
+  '1b_X':'Sbagliato. La proposizione universale negativa è E: "Nessun S è P".',
+  '2a_B':'Corretto. Nella seconda figura M è predicato in entrambe le premesse.',
+  '2a_X':'Sbagliato. M predicato in entrambe le premesse è la seconda figura.',
+  '2b_C':'Corretto. Prima figura: M soggetto in PM e predicato in Pn. Quarta figura: esattamente l\'inverso.',
+  '2b_X':'Sbagliato. La quarta figura è l\'inversione della prima: M predicato in PM e soggetto in Pn.',
+  '4a_A':'Corretto. SE con CONTA.SE > 0 è il pattern corretto: se la chiave esiste nella tabella, è valido.',
+  '4a_X':'Sbagliato. La struttura corretta è SE(CONTA.SE(intervallo;criterio)>0;"VALIDO";"INVALIDO").',
+  '4b_B':'Corretto. CONTA.SE cerca un valore in un intervallo — concatenando figura e modo si ottiene una chiave unica confrontabile con una colonna di chiavi.',
+  '4b_X':'Sbagliato. Il vantaggio è tecnico: CONTA.SE lavora su un intervallo e un singolo criterio, quindi serve una chiave unica.',
+  '5a_A':'Corretto. La formula controlla entrambe le posizioni con E() e usa SE() annidati per le quattro figure.',
+  '5a_X':'Sbagliato. La formula deve controllare la combinazione di A e B con E() per identificare correttamente tutte e quattro le figure.',
+  '5b_B':'Corretto. La semplice concatenazione C2&D2&E2 produce la stringa del modo senza spazi.',
+  '5b_X':'Sbagliato. Il modo si ottiene concatenando le tre lettere senza spazi: =C2&D2&E2.',
+  '6a_B':'Corretto. CONTA.SE cerca la chiave nella colonna C del foglio Riferimenti (la colonna delle chiavi concatenate).',
+  '6a_X':'Sbagliato. La formula deve cercare nella colonna C (chiavi concatenate) del foglio Riferimenti.',
+  '6b_B':'Corretto. Il modo III non è valido in nessuna figura — la chiave "IIIII" non esiste nella tabella.',
+  '6b_X':'Sbagliato. III non è mai un modo valido: da due premesse particolari non si conclude nulla.',
+  '6c_A':'Corretto. Il foglio verifica solo la struttura formale. Validità formale e verità delle premesse sono indipendenti.',
+  '6c_X':'Sbagliato. Il foglio non ha accesso alla realtà esterna — mostra VALIDO perché la struttura è corretta, indipendentemente dalla verità delle premesse.',
+  '6d_C':'Corretto. Il foglio è un validatore formale puro: non sa nulla del contenuto dei termini né della verità delle premesse.',
+  '6d_X':'Sbagliato. Il limite principale è la separazione tra validità formale e verità delle premesse — il foglio non può verificare quest\'ultima.',
+};
+
+// ══════════════════════════════════════════
+//  CHECK OPZIONE
+// ══════════════════════════════════════════
+function checkOpt(domId,btn,scelta,corretta){
+  const el=document.getElementById('opt-'+domId);if(!el)return;
+  if([...el.querySelectorAll('.opt')].some(b=>b.classList.contains('correct')))return;
+  [...el.querySelectorAll('.opt')].forEach(b=>b.disabled=true);
+  const ok=scelta===corretta;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok){
+    // trova il bottone corretto tramite data-val
+    const cb=[...el.querySelectorAll('.opt')].find(b=>b.dataset.val===corretta);
+    if(cb)cb.classList.add('correct');
+  }
+  const k=ok?domId+'_'+corretta:domId+'_X';
+  fb(domId,SPIEG[k]||(ok?'Corretto.':'Sbagliato.'),ok?'ok':'err');
+  risposte['d_'+domId]={risposta:scelta,corretta:ok};
+  verificaPasso(cur);salva();
+}
+
+// ══════════════════════════════════════════
+//  VERIFICA PASSO
+// ══════════════════════════════════════════
+const passoIds={
+  1:['1a','1b'],
+  2:['2a','2b'],
+  4:['4a','4b'],
+  5:['5a','5b'],
+  6:['6a','6b','6c','6d'],
+};
+function verificaPasso(p){
+  const ids=passoIds[p];if(!ids)return;
+  if(ids.every(id=>risposte['d_'+id])){
+    const c=document.getElementById('check-'+p);if(c)c.disabled=false;
+  }
+}
+function checkPasso(p){
+  att[p]++;
+  const el=document.getElementById('att-'+p);if(el)el.textContent='tentativi: '+att[p];
+  sblocca(p);salva();
+}
+
+// ══════════════════════════════════════════
+//  GRIGLIA MODI VALIDI (passo 3)
+// ══════════════════════════════════════════
+function buildModiGrid(){
+  const wrap=document.getElementById('modi-grid-wrap');
+  if(!wrap||wrap.children.length>0)return;
+
+  // costruiamo una griglia figure × modi con i modi più rappresentativi
+  const modiGriglia=[
+    'AAA','EAE','AII','EIO',
+    'AEE','AOO','AAI','IAI',
+    'EAO','OAO','III','AIA',
+  ];
+
+  const grid=document.createElement('div');
+  grid.className='modi-grid';
+  grid.style.gridTemplateColumns='80px repeat('+modiGriglia.length+',1fr)';
+
+  // intestazione
+  const ghFig=document.createElement('div');
+  ghFig.className='gh fig';ghFig.textContent='Figura';grid.appendChild(ghFig);
+  modiGriglia.forEach(m=>{
+    const gh=document.createElement('div');gh.className='gh';gh.textContent=m;grid.appendChild(gh);
+  });
+
+  // righe per figura
+  FIGURE.forEach(fig=>{
+    const fl=document.createElement('div');
+    fl.className='modi-cell fig-label';fl.textContent=fig;grid.appendChild(fl);
+    modiGriglia.forEach(modo=>{
+      const cell=document.createElement('div');
+      cell.className='modi-cell';
+      cell.id='mc-'+fig+'-'+modo;
+      cell.textContent='·';
+      cell.onclick=()=>toggleModo(fig,modo,cell);
+      grid.appendChild(cell);
+    });
+  });
+
+  wrap.appendChild(grid);
+
+  // nota
+  const nota=document.createElement('p');
+  nota.style.cssText='font-size:.82rem;color:var(--muted);margin-top:8px';
+  nota.textContent='Clicca le celle per selezionare i modi che ritieni validi. Nota: la griglia mostra un sottoinsieme dei modi possibili — alcuni modi validi potrebbero non comparire.';
+  wrap.appendChild(nota);
+}
+
+function toggleModo(fig,modo,cell){
+  if(modiVerificati)return;
+  const k=fig+modo;
+  if(modiSelezionati.has(k)){modiSelezionati.delete(k);cell.classList.remove('sel');}
+  else{modiSelezionati.add(k);cell.classList.add('sel');}
+}
+
+function verificaModi(){
+  modiVerificati=true;
+  let corretti=0,falsi=0,mancati=0;
+
+  // colora le celle della griglia
+  const modiGriglia=['AAA','EAE','AII','EIO','AEE','AOO','AAI','IAI','EAO','OAO','III','AIA'];
+  FIGURE.forEach(fig=>{
+    modiGriglia.forEach(modo=>{
+      const k=fig+modo;
+      const cell=document.getElementById('mc-'+fig+'-'+modo);
+      if(!cell)return;
+      const isValido=CHIAVI_VALIDE.has(k);
+      const isSel=modiSelezionati.has(k);
+      cell.classList.remove('sel');
+      if(isValido&&isSel){cell.classList.add('corretto');corretti++;}
+      else if(!isValido&&isSel){cell.classList.add('falso');falsi++;}
+      else if(isValido&&!isSel){cell.classList.add('mancato');mancati++;}
+    });
+  });
+
+  // messaggio
+  const totValidiInGriglia=MODI_VALIDI.filter(m=>
+    ['AAA','EAE','AII','EIO','AEE','AOO','AAI','IAI','EAO','OAO','III','AIA'].includes(m.modo)
+  ).length;
+
+  let msg='';
+  if(falsi===0&&mancati===0){msg='Perfetto — tutti i modi validi identificati correttamente.';}
+  else{
+    msg=corretti+' corretti';
+    if(falsi>0)msg+=', '+falsi+' falsi positivi (in rosso)';
+    if(mancati>0)msg+=', '+mancati+' modi validi non selezionati (in giallo)';
+    msg+='. Consulta la tabella completa per costruire il foglio.';
+  }
+  fb('modi',msg,falsi===0&&mancati===0?'ok':'warn');
+
+  risposte['d_modi']={corretti,falsi,mancati};
+
+  // mostra bottone tabella e sblocca avanti
+  document.getElementById('btn-reveal').style.display='inline-flex';
+  document.getElementById('next-3').style.display='inline-flex';
+  salva();
+}
+
+function mostraTabella(){
+  document.getElementById('tabella-corretta').classList.add('vis');
+  document.getElementById('sheets-p3').style.display='block';
+  document.getElementById('btn-reveal').style.display='none';
+}
+
+function buildTabellaModi(){
+  const t=document.getElementById('tab-modi-validi');
+  if(!t||t.children.length>0)return;
+  const thead=document.createElement('thead');
+  thead.innerHTML='<tr><th>Figura</th><th>Modo</th><th>Chiave (Fig+Modo)</th></tr>';
+  t.appendChild(thead);
+  const tbody=document.createElement('tbody');
+  MODI_VALIDI.forEach(m=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><span class="fig-badge fig-${m.fig}">${m.fig}</span></td>
+      <td style="font-family:var(--mono);color:var(--gold)">${m.modo}</td>
+      <td style="font-family:var(--mono);color:var(--muted)">${m.fig}${m.modo}</td>`;
+    tbody.appendChild(tr);
+  });
+  t.appendChild(tbody);
+}
+
+// ══════════════════════════════════════════
+//  CONSEGNA
+// ══════════════════════════════════════════
+function consegna(){
+  document.getElementById('lab').style.display='none';
+  document.getElementById('pbfill').style.width='100%';
+  document.getElementById('stepctr').textContent='✓';
+  document.getElementById('completamento').style.display='flex';
+  document.getElementById('comp-nome').textContent=nomeS;
+  let ok=0,tot=0;
+  Object.values(risposte).forEach(r=>{if(r.corretta!==undefined){tot++;if(r.corretta)ok++;}});
+  if(dbReady&&keyS){
+    window._set(window._ref(window._db,'studenti_foglio_sillogismi/'+keyS),
+      {nome:nomeS,consegnato:true,ts:Date.now(),punteggio:ok,totale:tot,risposte}).catch(()=>{});
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════
+function apreDash(){document.getElementById('pin-overlay').classList.add('vis');setTimeout(()=>document.getElementById('pin-in').focus(),100);}
+function chiudiPin(){document.getElementById('pin-overlay').classList.remove('vis');document.getElementById('pin-in').value='';document.getElementById('pin-err').textContent='';}
+function checkPin(){
+  if(document.getElementById('pin-in').value==='1970'){
+    chiudiPin();
+    ['gate','lab','completamento'].forEach(id=>document.getElementById(id).style.display='none');
+    document.getElementById('dashboard').style.display='block';
+    waitDB(()=>caricaDash());
+  }else{document.getElementById('pin-err').textContent='PIN non corretto.';document.getElementById('pin-in').value='';}
+}
+function chiudiDash(){document.getElementById('dashboard').style.display='none';document.getElementById('gate').style.display='flex';}
+
+function caricaDash(){
+  if(!window._dbReady){setTimeout(caricaDash,300);return;}
+  const cont=document.getElementById('dash-content');
+  cont.innerHTML='<p style="color:var(--muted)">Caricamento…</p>';
+  window._get(window._ref(window._db,'studenti_foglio_sillogismi'))
+    .then(snap=>{
+      if(!snap.exists()){cont.innerHTML='<p style="color:var(--muted)">Nessun dato.</p>';return;}
+      const data=snap.val();
+      const studenti=Object.values(data);
+      const cons=studenti.filter(s=>s.consegnato).length;
+      const media=cons>0?Math.round(studenti.filter(s=>s.consegnato).reduce((a,s)=>a+(s.punteggio||0),0)/cons*10)/10:0;
+      document.getElementById('dash-stats').innerHTML=`
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+          <div style="font-size:.78rem;color:var(--muted);font-family:var(--mono)">STUDENTI</div>
+          <div style="font-size:1.8rem;color:var(--gold);font-family:var(--serif)">${studenti.length}</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+          <div style="font-size:.78rem;color:var(--muted);font-family:var(--mono)">CONSEGNATI</div>
+          <div style="font-size:1.8rem;color:var(--green);font-family:var(--serif)">${cons}</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+          <div style="font-size:.78rem;color:var(--muted);font-family:var(--mono)">MEDIA</div>
+          <div style="font-size:1.8rem;color:var(--teal);font-family:var(--serif)">${cons>0?media:'—'}</div>
+        </div>`;
+      let html=`<table class="dash-table"><thead><tr><th>Studente</th><th>Punteggio</th><th>Passo</th><th>Modi (corr/falsi/mancati)</th><th>Consegnato</th><th>Timestamp</th></tr></thead><tbody>`;
+      studenti.sort((a,b)=>(b.punteggio||0)-(a.punteggio||0)).forEach(s=>{
+        const pct=s.totale>0?(s.punteggio||0)/s.totale*100:0;
+        const cls=pct>=70?'high':pct>=45?'mid':'low';
+        const ts=s.ts?new Date(s.ts).toLocaleString('it-IT'):'—';
+        const md=s.risposte?.d_modi;
+        const modiStr=md?`${md.corretti}/${md.falsi}/${md.mancati}`:'—';
+        html+=`<tr>
+          <td>${s.nome||'—'}</td>
+          <td><span class="pill ${cls}">${s.punteggio||0}/${s.totale||'?'}</span></td>
+          <td>${s.step||'—'}</td>
+          <td style="font-family:var(--mono);font-size:.82rem">${modiStr}</td>
+          <td>${s.consegnato?'✓':'in corso'}</td>
+          <td style="font-size:.8rem;color:var(--muted)">${ts}</td>
+        </tr>`;
+      });
+      html+='</tbody></table>';
+      cont.innerHTML=html;
+    }).catch(e=>{cont.innerHTML=`<p style="color:var(--red)">Errore: ${e.message}</p>`;});
+}
+
+function esportaCSV(){
+  if(!window._dbReady)return;
+  window._get(window._ref(window._db,'studenti_foglio_sillogismi'))
+    .then(snap=>{
+      if(!snap.exists())return;
+      const rows=[['Nome','Punteggio','Totale','Consegnato','Timestamp','Modi corretti','Modi falsi','Modi mancati']];
+      Object.values(snap.val()).forEach(s=>{
+        const md=s.risposte?.d_modi||{};
+        rows.push([s.nome||'',s.punteggio||0,s.totale||0,s.consegnato?'sì':'no',
+          s.ts?new Date(s.ts).toLocaleString('it-IT'):'',md.corretti||0,md.falsi||0,md.mancati||0]);
+      });
+      const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+      const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+      a.download='foglio_sillogismi_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+    });
+}
+
+Object.assign(window,{avvia,goNext,goBack,goTo,checkOpt,checkPasso,verificaModi,mostraTabella,apreDash,chiudiPin,checkPin,chiudiDash,caricaDash,esportaCSV,consegna});
+document.getElementById('in-nome').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('in-cognome').focus();});
+document.getElementById('in-cognome').addEventListener('keydown',e=>{if(e.key==='Enter')avvia();});
+</script>
+</body>
+</html>
