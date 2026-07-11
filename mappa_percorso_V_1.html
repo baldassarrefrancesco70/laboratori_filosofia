@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filosofia V · Percorso 1 — Politica · Mappa</title>
+<style>
+  :root{
+    --minaccia:#8C3A34; --minaccia-bg:#F5E7E5; --minaccia-ink:#5E2621;
+    --diritto:#2F5468;  --diritto-bg:#E1EAF0;  --diritto-ink:#1E3A48;
+    --fonda:#3A6B4A;    --fonda-bg:#E3EFE6;    --fonda-ink:#244430;
+    --paper:#FBFAF7; --ink:#26221E; --muted:#6B6259; --line:#D8D2C7;
+    --amber:#C9A94E; --amber-bg:#F7EEDD;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:32px 24px 80px}
+  header.masthead{border-bottom:2px solid var(--ink); padding-bottom:16px; margin-bottom:8px}
+  .eyebrow{font-family:"Inter",system-ui,sans-serif; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted); font-weight:600}
+  h1{font-size:38px; margin:.15em 0 .1em; font-weight:700; letter-spacing:-.01em}
+  .q{font-style:italic; font-size:20px; color:#403A33; margin:0}
+  .legend{display:flex; flex-wrap:wrap; gap:14px 22px; margin:18px 0 6px;
+    font-family:"Inter",system-ui,sans-serif; font-size:13px}
+  .legend span{display:inline-flex; align-items:center; gap:8px; color:var(--muted)}
+  .chip{width:14px; height:14px; border-radius:3px; display:inline-block}
+  .chip.round{border-radius:50%}
+  .hint{font-family:"Inter",system-ui,sans-serif; font-size:13px; color:var(--muted);
+    margin:6px 0 26px}
+  .hint kbd{font-family:inherit; background:#efeae1; border:1px solid var(--line);
+    border-radius:4px; padding:1px 6px; font-size:12px}
+
+  /* movement bands */
+  .movement{margin:30px 0}
+  .movement-head{display:flex; align-items:baseline; gap:14px; margin-bottom:4px}
+  .movement-num{font-family:"Inter",system-ui,sans-serif; font-weight:700; font-size:13px;
+    letter-spacing:.12em; padding:3px 10px; border-radius:20px; color:#fff}
+  .movement-q{font-size:23px; font-weight:700; margin:0}
+  .movement.m1 .movement-num{background:var(--minaccia)}
+  .movement.m2 .movement-num{background:var(--diritto)}
+  .movement.m3 .movement-num{background:var(--fonda)}
+  .movement.m1 .movement-q{color:var(--minaccia-ink)}
+  .movement.m2 .movement-q{color:var(--diritto-ink)}
+  .movement.m3 .movement-q{color:var(--fonda-ink)}
+  .movement-sub{font-family:"Inter",system-ui,sans-serif; font-size:13px; color:var(--muted);
+    margin:0 0 16px}
+
+  /* node chain */
+  .chain{display:flex; align-items:stretch; flex-wrap:wrap; gap:0}
+  .node{position:relative; flex:1 1 0; min-width:230px; margin:6px 0}
+  .card{
+    border:1.5px solid; border-radius:12px; background:#fff; height:100%;
+    padding:14px 16px 12px; cursor:pointer; transition:box-shadow .16s, transform .16s;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .card:hover{box-shadow:0 6px 20px rgba(0,0,0,.10); transform:translateY(-2px)}
+  .card:focus-visible{outline:3px solid #000; outline-offset:2px}
+  .m1 .card{border-color:var(--minaccia)}
+  .m2 .card{border-color:var(--diritto)}
+  .m3 .card{border-color:var(--fonda)}
+  .node-shape{font-family:"Inter",system-ui,sans-serif; font-size:11px; font-weight:700;
+    letter-spacing:.08em; text-transform:uppercase; display:inline-flex; align-items:center; gap:7px}
+  .node-shape .glyph{width:16px; height:16px; display:inline-block; flex:none}
+  .m1 .node-shape{color:var(--minaccia)}
+  .m2 .node-shape{color:var(--diritto)}
+  .m3 .node-shape{color:var(--fonda)}
+  .node-name{font-size:22px; font-weight:700; line-height:1.15; margin:0}
+  .node-tesi{font-size:15px; color:#3a352f; margin:0}
+  .node-more{font-family:"Inter",system-ui,sans-serif; font-size:12px; color:var(--muted);
+    margin-top:auto; display:flex; align-items:center; gap:6px}
+
+  /* connector arrow between nodes */
+  .conn{flex:0 0 34px; display:flex; align-items:center; justify-content:center; align-self:center}
+  .conn svg{display:block}
+  @media(max-width:760px){
+    .chain{flex-direction:column}
+    .conn{width:100%; height:30px; flex-basis:30px; transform:rotate(90deg)}
+    .node{min-width:0}
+  }
+
+  /* inter-movement link */
+  .bridge{display:flex; align-items:center; gap:12px; margin:14px 2px 2px;
+    font-family:"Inter",system-ui,sans-serif; font-size:13.5px; color:var(--muted); font-style:normal}
+  .bridge .arc{color:var(--amber); font-weight:800; font-size:18px}
+
+  /* expandable detail */
+  .detail{grid-column:1/-1; margin:2px 0 0; border-radius:10px; padding:0 16px;
+    max-height:0; overflow:hidden; transition:max-height .28s ease, padding .28s ease; background:var(--amber-bg);
+    border:0 solid var(--amber)}
+  .detail.open{max-height:520px; padding:14px 16px; border-width:1px}
+  .detail h4{font-family:"Inter",system-ui,sans-serif; font-size:12px; letter-spacing:.08em;
+    text-transform:uppercase; color:#8A6D1F; margin:0 0 6px}
+  .detail ol{margin:0 0 10px; padding-left:20px}
+  .detail li{margin:3px 0; font-size:15px}
+  .detail .limite{font-style:italic; color:#5b4d24; font-size:14.5px; border-top:1px dashed var(--amber);
+    padding-top:8px; margin-top:4px}
+
+  footer{margin-top:44px; border-top:1px solid var(--line); padding-top:14px;
+    font-family:"Inter",system-ui,sans-serif; font-size:12.5px; color:var(--muted)}
+  @media print{
+    body{background:#fff}
+    .card{cursor:default}
+    .detail{max-height:none!important; padding:12px 16px!important; border-width:1px!important}
+    .node-more{display:none}
+    .hint{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">Filosofia · Quinto anno · Percorso 1</div>
+    <h1>Politica</h1>
+    <p class="q">Che cosa minaccia e che cosa fonda una società giusta e libera?</p>
+  </header>
+
+  <div class="legend">
+    <span><i class="chip" style="background:var(--minaccia)"></i> Che cosa minaccia</span>
+    <span><i class="chip" style="background:var(--diritto)"></i> Da dove viene il diritto</span>
+    <span><i class="chip" style="background:var(--fonda)"></i> Che cosa fonda</span>
+    <span><svg width="18" height="14"><line x1="1" y1="7" x2="17" y2="7" stroke="#403A33" stroke-width="2"/><polygon points="12,3 17,7 12,11" fill="#403A33"/></svg> risponde a / segue</span>
+    <span><i class="chip" style="background:var(--amber)"></i> il limite che apre lo snodo dopo</span>
+  </div>
+  <p class="hint">Tocca una scheda per aprire argomenti e limite. <span class="printnote">Ogni colore = un movimento del percorso; la posizione da sinistra a destra = l'ordine in cui gli autori si rispondono.</span></p>
+
+  <!-- MOVIMENTO 1 -->
+  <section class="movement m1">
+    <div class="movement-head">
+      <span class="movement-num">Movimento 1</span>
+      <h2 class="movement-q">Che cosa la minaccia</h2>
+    </div>
+    <p class="movement-sub">La giustizia proclamata è vera? E chi pretende di conoscere il senso della storia?</p>
+    <div class="chain" id="chain1"></div>
+  </section>
+
+  <div class="bridge"><span class="arc">↳</span> Se il diritto universale è una finzione, i diritti dell'uomo reggono? Si passa al fondamento del diritto.</div>
+
+  <!-- MOVIMENTO 2 -->
+  <section class="movement m2">
+    <div class="movement-head">
+      <span class="movement-num">Movimento 2</span>
+      <h2 class="movement-q">Da dove viene il diritto</h2>
+    </div>
+    <p class="movement-sub">Norma o autorità? E una norma può valere oltre lo Stato che la emette?</p>
+    <div class="chain" id="chain2"></div>
+  </section>
+
+  <div class="bridge"><span class="arc">↳</span> Se i diritti restano vuoti senza una comunità, di che cosa vanno riempiti? Si passa a ciò che fonda la giustizia.</div>
+
+  <!-- MOVIMENTO 3 -->
+  <section class="movement m3">
+    <div class="movement-head">
+      <span class="movement-num">Movimento 3</span>
+      <h2 class="movement-q">Che cosa la fonda</h2>
+    </div>
+    <p class="movement-sub">Che cosa rende giusta una distribuzione? E basta distribuire risorse?</p>
+    <div class="chain" id="chain3"></div>
+  </section>
+
+  <footer>
+    Documento di studio · la mappa segue l'itinerario del percorso. Le posizioni non formano una scala in cui l'ultimo ha ragione: rispondono alla stessa domanda con soluzioni incompatibili. Tenere aperto il conflitto è ciò che salva il valore di ciascuna.
+  </footer>
+</div>
+
+<script>
+// glyph shapes per movement (redundant coding: shape + color)
+const GLYPH = {
+  m1:'<svg class="glyph" viewBox="0 0 16 16"><polygon points="8,1 15,14 1,14" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>', // triangle = minaccia
+  m2:'<svg class="glyph" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>', // square = diritto
+  m3:'<svg class="glyph" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' // circle = fonda
+};
+const SHAPE_LABEL = {m1:'minaccia', m2:'fondamento', m3:'fondazione'};
+
+const DATA = {
+  chain1:[
+    { m:'m1', name:'Marx', tesi:'La giustizia formale è una maschera: il diritto è la volontà della classe dominante elevata a legge.',
+      arg:['Materialismo storico: la struttura economica determina la sovrastruttura (diritto, idee).',
+           'Ideologia: le idee dominanti sono le idee della classe dominante.',
+           'Democrazia borghese formale, non sostanziale: l\u2019uguaglianza giuridica copre la disuguaglianza reale.'],
+      limite:'Apre: che cosa rende giusta una disuguaglianza? \u2014 la domanda che Rawls riprenderà.' },
+    { m:'m1', name:'Popper', tesi:'Chi crede di conoscere il senso necessario della storia apre la via all\u2019oppressione.',
+      arg:['Critica dello storicismo (Platone, Hegel, Marx): la storia non ha leggi predicibili.',
+           'Società aperta vs chiusa: critica, errore e riforma contro la verità imposta.',
+           'Democrazia = poter cambiare governo senza violenza; riformismo gradualista.'],
+      limite:'Apre: se non c\u2019è una direzione della storia, con quali criteri si riforma?' }
+  ],
+  chain2:[
+    { m:'m2', name:'Kelsen & Schmitt', tesi:'Il diritto viene dalla norma (Kelsen) o dalla decisione dell\u2019autorità (Schmitt)?',
+      arg:['Kelsen: la norma è il fondamento; validità, non morale; democrazia come procedura.',
+           'Schmitt: il politico è la coppia amico\u2013nemico; sovrano è chi decide sull\u2019eccezione.',
+           'Diritto internazionale: sistema di norme sovraordinato (Kelsen) o finzione del potere (Schmitt)?'],
+      limite:'Apre: se il diritto universale è finzione, i diritti dell\u2019uomo sono vuoti?' },
+    { m:'m2', name:'Arendt', tesi:'I diritti dell\u2019uomo sono vuoti per chi ha perso una comunità politica che li garantisca.',
+      arg:['I diritti universali sono legati all\u2019uomo in quanto tale\u2026',
+           '\u2026ma chi è solo \u00abuomo\u00bb \u2014 l\u2019apolide, il rifugiato \u2014 non è protetto da nessuno.',
+           'Il \u00abdiritto ad avere diritti\u00bb: appartenere a una comunità viene prima di ogni diritto.'],
+      limite:'Apre: se i diritti vanno riempiti da una comunità, di che cosa vanno riempiti?' }
+  ],
+  chain3:[
+    { m:'m3', name:'Rawls & Nozick', tesi:'La giustizia è ciò che si sceglie dietro il velo di ignoranza (Rawls) \u2014 o la libertà lo vieta (Nozick)?',
+      arg:['Rawls: velo di ignoranza; due principi; le disuguaglianze giuste solo se aiutano i più svantaggiati.',
+           'Eguaglianza \u2260 equità: correggere i punti di partenza.',
+           'Nozick: l\u2019esempio di Chamberlain; giustizia \u00aba fotografia\u00bb contro la libertà; stato minimo.'],
+      limite:'Apre: entrambi cercano le istituzioni giuste in assoluto. E se la domanda fosse un\u2019altra?' },
+    { m:'m3', name:'Sen & Nussbaum', tesi:'Non basta distribuire risorse o diritti: conta ciò che le persone sono in grado di fare \u2014 le capacità.',
+      arg:['Sen: i beni primari non dicono ciò che le persone riescono a farne; libertà sostanziale.',
+           'Sen cambia la domanda: non le istituzioni perfette, ma il confronto tra situazioni reali.',
+           'Nussbaum: la lista delle capacità centrali (matrice aristotelica) dà contenuto ai diritti.'],
+      limite:'Non una scala: Sen non \u00abcorregge\u00bb Rawls, Nussbaum non \u00abcompleta\u00bb Sen. Il conflitto resta aperto.' }
+  ]
+};
+
+function arrowSVG(){
+  return '<div class="conn" aria-hidden="true"><svg width="30" height="20">'+
+    '<line x1="2" y1="10" x2="24" y2="10" stroke="#6B6259" stroke-width="2"/>'+
+    '<polygon points="20,4 28,10 20,16" fill="#6B6259"/></svg></div>';
+}
+
+function render(id){
+  const host=document.getElementById(id);
+  const nodes=DATA[id];
+  nodes.forEach((n,i)=>{
+    const node=document.createElement('div');
+    node.className='node '+n.m;
+    const argHTML=n.arg.map(a=>'<li>'+a+'</li>').join('');
+    node.innerHTML=
+      '<div class="card" role="button" tabindex="0" aria-expanded="false">'+
+        '<span class="node-shape">'+GLYPH[n.m]+SHAPE_LABEL[n.m]+'</span>'+
+        '<p class="node-name">'+n.name+'</p>'+
+        '<p class="node-tesi">'+n.tesi+'</p>'+
+        '<span class="node-more">▸ argomenti e limite</span>'+
+      '</div>'+
+      '<div class="detail"><h4>Argomenti</h4><ol>'+argHTML+'</ol>'+
+        '<div class="limite">'+n.limite+'</div></div>';
+    host.appendChild(node);
+    if(i<nodes.length-1){
+      const c=document.createElement('div');
+      c.innerHTML=arrowSVG();
+      host.appendChild(c.firstChild);
+    }
+  });
+}
+['chain1','chain2','chain3'].forEach(render);
+
+// toggle
+function toggle(card){
+  const detail=card.parentElement.querySelector('.detail');
+  const open=detail.classList.toggle('open');
+  card.setAttribute('aria-expanded', open?'true':'false');
+  const more=card.querySelector('.node-more');
+  more.textContent = open ? '▾ chiudi' : '▸ argomenti e limite';
+}
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('click',()=>toggle(card));
+  card.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(card); }
+  });
+});
+</script>
+</body>
+</html>
