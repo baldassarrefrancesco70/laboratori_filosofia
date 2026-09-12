@@ -77,7 +77,7 @@ th{background:var(--navy);color:#fff;}
         <div style="margin-top:10px;">
           <h3>I Milesi</h3><p>Talete: l&#39;acqua come principio (arché). Anassimandro: l&#39;apeiron, l&#39;indefinito. Anassimene: l&#39;aria.</p>
 <h3>Eraclito ed Parmenide</h3><p>Eraclito: tutto scorre (panta rhei), il logos è armonia dei contrari. Parmenide: l&#39;essere è, il non-essere non è; il divenire è illusione.</p>
-<h3>Verso Socrate</h3><p>I Sofisti: relativismo (&quot;l&#39;uomo è misura di tutte le cose&quot;). Socrate: definizioni universali con ironia e maieutica — &quot;so di non sapere&quot;.</p>
+<h3>Democrito</h3><p>Tutto è fatto di atomi indivisibili che si muovono nel vuoto. Il mutamento è reale e si spiega per via meccanica, per necessità, non per caso.</p>
         </div>
       </details>
     </div>
@@ -97,7 +97,7 @@ th{background:var(--navy);color:#fff;}
     <div class="progress"><div class="done"></div><div class="done"></div><div></div></div>
     <p class="pill">Fase 2 · in coppia (o in gruppo, sullo stesso dispositivo)</p>
     <h1>Ora in coppia</h1>
-    <p class="sub">Ricostruite insieme l&#39;opposizione più netta della lezione: Eraclito contro Parmenide.</p>
+    <p class="sub">Rispondete insieme a due domande.</p>
     <div class="card" id="f2-list"></div>
     <button class="btn" id="btn-invia" onclick="invia()">Invia</button>
   </div>
@@ -133,7 +133,7 @@ th{background:var(--navy);color:#fff;}
 <footer><button onclick="apriDashboard()">Area docente</button></footer>
 
 <script>
-const LAB = {"id":"quarta3_mitologos","serie":"Filosofia IV","numero":3,"totale":3,"titolo":"Dal mito al logos: nasce la domanda filosofica","sottotitolo":"Che cosa hanno in comune i primi filosofi, anche quando sono in totale disaccordo?","firebasePath":"studenti_palestra_quarta3_mitologos","recap":[{"h":"I Milesi","b":"Talete: l'acqua come principio (arché). Anassimandro: l'apeiron, l'indefinito. Anassimene: l'aria."},{"h":"Eraclito ed Parmenide","b":"Eraclito: tutto scorre (panta rhei), il logos è armonia dei contrari. Parmenide: l'essere è, il non-essere non è; il divenire è illusione."},{"h":"Verso Socrate","b":"I Sofisti: relativismo (\"l'uomo è misura di tutte le cose\"). Socrate: definizioni universali con ironia e maieutica — \"so di non sapere\"."}],"fase1":{"tipo":"classifica","titolo":"Di chi è questa tesi?","istruzioni":"Per ciascuna affermazione, scegli l'autore giusto.","opzioni":["Talete","Anassimandro","Anassimene","Eraclito","Parmenide","Socrate"],"domande":[{"testo":"L'acqua è il principio di tutte le cose.","corretta":"Talete"},{"testo":"Il principio di tutto non ha confini né qualità determinate: è l'indefinito.","corretta":"Anassimandro"},{"testo":"Tutto scorre, nulla resta uguale a sé nel tempo.","corretta":"Eraclito"},{"testo":"L'essere è, il non-essere non è, e non si può nemmeno pensare.","corretta":"Parmenide"},{"testo":"So di non sapere — ed è proprio da qui che comincia la vera ricerca.","corretta":"Socrate"}]},"fase2":{"titolo":"Ora in coppia","istruzioni":"Ricostruite insieme l'opposizione più netta della lezione: Eraclito contro Parmenide.","campi":[{"etichetta":"Secondo Eraclito..., mentre secondo Parmenide...","placeholder":"Scrivete qui la vostra frase-sintesi"}]}};
+const LAB = {"id":"quarta3_mitologos","serie":"Filosofia IV","numero":3,"totale":3,"titolo":"Dal mito al logos: nasce la domanda filosofica","sottotitolo":"Che cosa hanno in comune i primi filosofi, anche quando sono in totale disaccordo?","firebasePath":"studenti_palestra_quarta3_mitologos","recap":[{"h":"I Milesi","b":"Talete: l'acqua come principio (arché). Anassimandro: l'apeiron, l'indefinito. Anassimene: l'aria."},{"h":"Eraclito ed Parmenide","b":"Eraclito: tutto scorre (panta rhei), il logos è armonia dei contrari. Parmenide: l'essere è, il non-essere non è; il divenire è illusione."},{"h":"Democrito","b":"Tutto è fatto di atomi indivisibili che si muovono nel vuoto. Il mutamento è reale e si spiega per via meccanica, per necessità, non per caso."}],"fase1":{"tipo":"classifica","titolo":"Di chi è questa tesi?","istruzioni":"Per ciascuna affermazione, scegli l'autore giusto.","opzioni":["Talete","Anassimandro","Anassimene","Eraclito","Parmenide","Democrito"],"domande":[{"testo":"L'acqua è il principio di tutte le cose.","corretta":"Talete"},{"testo":"Il principio di tutto non ha confini né qualità determinate: è l'indefinito.","corretta":"Anassimandro"},{"testo":"Tutto scorre, nulla resta uguale a sé nel tempo.","corretta":"Eraclito"},{"testo":"L'essere è, il non-essere non è, e non si può nemmeno pensare.","corretta":"Parmenide"},{"testo":"Tutto ciò che esiste è fatto di atomi indivisibili che si muovono nel vuoto: nulla accade per caso, ma per necessità.","corretta":"Democrito"}]},"fase2":{"titolo":"Ora in coppia","istruzioni":"Rispondete insieme a due domande.","campi":[{"etichetta":"Che cosa hanno in comune Talete, Anassimandro, Anassimene, Eraclito e Democrito, pur partendo da principi diversi?","placeholder":"Scrivete qui"},{"etichetta":"Qual è la differenza fondamentale che separa tutti loro da Parmenide?","placeholder":"Scrivete qui"}]}};
 const FIREBASE_BASE = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
 const TEACHER_PIN = "1970";
 
