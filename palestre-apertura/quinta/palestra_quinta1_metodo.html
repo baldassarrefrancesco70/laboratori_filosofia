@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caratteri del metodo scientifico: induzione e deduzione — Filosofia V</title>
+<style>
+:root{
+  --navy:#2F5468; --navy-dark:#203C48; --slate:#5B7E92; --banner:#DCE6EC;
+  --card:#EEF3F6; --gold:#C9A24D; --text:#1A1A1A; --muted:#5A6B73;
+  --ok:#2E7D4F; --ok-bg:#E6F4EA; --bad:#B5451B; --bad-bg:#FBEBE3;
+}
+*{box-sizing:border-box;}
+body{font-family:Calibri,"Segoe UI",Arial,sans-serif;background:#F4F7F8;color:var(--text);margin:0;padding:0;}
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px 80px;}
+.eyebrow{color:var(--slate);font-weight:700;font-size:0.8rem;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 6px;}
+h1{color:var(--navy);font-size:1.7rem;margin:0 0 6px;}
+.sub{color:var(--muted);font-style:italic;font-size:1.05rem;margin:0 0 20px;}
+.card{background:#fff;border:1px solid #D7E1E5;border-radius:10px;padding:20px 22px;margin-bottom:18px;}
+.recap{background:var(--card);border-radius:10px;padding:16px 18px;margin-bottom:20px;}
+.recap h3{margin:14px 0 6px;color:var(--navy);font-size:1rem;}
+.recap h3:first-child{margin-top:0;}
+.recap p{margin:0 0 4px;font-size:0.95rem;}
+.recap summary{cursor:pointer;font-weight:700;color:var(--navy);padding:4px 0;}
+label{display:block;font-weight:700;color:var(--navy);margin:0 0 14px 4px;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;}
+input[type=text]{width:100%;padding:10px 12px;border:1px solid #C7D3D8;border-radius:8px;font-size:1rem;margin-bottom:16px;font-family:inherit;}
+textarea{width:100%;min-height:80px;padding:10px 12px;border:1px solid #C7D3D8;border-radius:8px;font-size:1rem;font-family:inherit;resize:vertical;}
+.btn{display:inline-block;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:12px 22px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn:hover{background:var(--navy-dark);}
+.btn:disabled{background:#A9B7BD;cursor:not-allowed;}
+.btn-gold{background:var(--gold);color:var(--navy-dark);}
+.btn-gold:hover{background:#B78F3D;}
+.q{margin-bottom:22px;}
+.q p.stem{font-size:1rem;margin:0 0 10px;}
+.opts{display:flex;flex-wrap:wrap;gap:8px;}
+.opt{border:2px solid #C7D3D8;background:#fff;border-radius:8px;padding:9px 14px;cursor:pointer;font-family:inherit;font-size:0.95rem;}
+.opt.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg);color:var(--bad);}
+.opt[disabled]{cursor:default;}
+.progress{display:flex;gap:6px;margin-bottom:22px;}
+.progress div{flex:1;height:5px;border-radius:3px;background:#DDE6E9;}
+.progress div.done{background:var(--navy);}
+.hidden{display:none!important;}
+.pill{display:inline-block;background:var(--banner);color:var(--navy);border-radius:20px;padding:3px 12px;font-size:0.78rem;font-weight:700;margin-bottom:14px;}
+footer{max-width:760px;margin:0 auto;padding:0 20px 30px;text-align:center;}
+footer button{background:none;border:none;color:var(--muted);font-size:0.78rem;cursor:pointer;text-decoration:underline;font-family:inherit;}
+table{width:100%;border-collapse:collapse;font-size:0.85rem;margin-top:14px;}
+th,td{border:1px solid #D7E1E5;padding:6px 8px;text-align:left;vertical-align:top;}
+th{background:var(--navy);color:#fff;}
+.dash-gate input{max-width:160px;display:inline-block;margin-right:8px;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div id="screen-gate">
+    <p class="eyebrow">Filosofia V · Palestra di apertura 1 di 5</p>
+    <h1>Caratteri del metodo scientifico: induzione e deduzione</h1>
+    <p class="sub">Come procede un ragionamento scientifico, e dove rischia di inciampare?</p>
+    <div class="card">
+      <label for="in-nome">Nome e cognome</label>
+      <input type="text" id="in-nome" placeholder="es. Maria Rossi">
+      <label for="in-classe">Classe</label>
+      <input type="text" id="in-classe" placeholder="es. 4D">
+      <p id="gate-err" class="hidden" style="color:#B5451B;font-size:0.9rem;">Compila entrambi i campi per iniziare.</p>
+      <button class="btn" onclick="startLab()">Inizia</button>
+    </div>
+  </div>
+
+  <div id="screen-recap" class="hidden">
+    <p class="eyebrow">Filosofia V · Palestra 1 di 5</p>
+    <h1>Caratteri del metodo scientifico: induzione e deduzione</h1>
+    <div class="recap">
+      <details open>
+        <summary>Per riattivare la memoria (salta se ricordi già tutto)</summary>
+        <div style="margin-top:10px;">
+          <h3>Il momento induttivo</h3><p>Si osservano molti casi particolari e se ne ricava una legge generale. Bacone: tavole di presenza, assenza, gradi.</p>
+<h3>Il momento deduttivo</h3><p>Da un&#39;ipotesi o un principio matematico si deducono conseguenze necessarie, poi verificate (&#39;necessarie dimostrazioni&#39;).</p>
+<h3>Il problema aperto</h3><p>Nessun numero finito di osservazioni garantisce la certezza logica della legge universale che se ne ricava: è un salto, non una deduzione.</p>
+        </div>
+      </details>
+    </div>
+    <button class="btn" onclick="goFase1()">Vai alla Fase 1</button>
+  </div>
+
+  <div id="screen-f1" class="hidden">
+    <div class="progress"><div class="done"></div><div></div><div></div></div>
+    <p class="pill">Fase 1 · individuale</p>
+    <h1>Induttiva o deduttiva?</h1>
+    <p class="sub">Per ciascuna mossa di ragionamento, scegli il tipo giusto.</p>
+    <div class="card" id="f1-list"></div>
+    <button class="btn" id="btn-f1-continua" disabled onclick="goFase2()">Continua alla Fase 2</button>
+  </div>
+
+  <div id="screen-f2" class="hidden">
+    <div class="progress"><div class="done"></div><div class="done"></div><div></div></div>
+    <p class="pill">Fase 2 · in coppia (o in gruppo, sullo stesso dispositivo)</p>
+    <h1>Ora in coppia</h1>
+    <p class="sub">Rispondete: nella mossa che avete scelto come esempio, quante osservazioni in più basterebbero perché siate certi al 100% della conclusione? Provate a spiegare perché nessun numero è mai sufficiente.</p>
+    <div class="card" id="f2-list"></div>
+    <button class="btn" id="btn-invia" onclick="invia()">Invia</button>
+  </div>
+
+  <div id="screen-done" class="hidden">
+    <div class="progress"><div class="done"></div><div class="done"></div><div class="done"></div></div>
+    <h1>Fatto!</h1>
+    <div class="card">
+      <p>Le vostre risposte sono state inviate. Chiudete pure questa pagina: per la <b>Fase 3 (plenaria)</b> segue la discussione guidata dal docente in classe.</p>
+    </div>
+  </div>
+
+  <div id="screen-dash" class="hidden">
+    <h1>Area docente — Caratteri del metodo scientifico: induzione e deduzione</h1>
+    <div id="dash-login" class="card dash-gate">
+      <label for="dash-pin">PIN</label>
+      <input type="text" id="dash-pin" placeholder="PIN">
+      <button class="btn btn-gold" onclick="verificaPin()">Entra</button>
+      <p id="dash-err" class="hidden" style="color:#B5451B;font-size:0.9rem;margin-top:10px;">PIN errato.</p>
+    </div>
+    <div id="dash-table-wrap" class="hidden">
+      <button class="btn" onclick="caricaRisposte()">Aggiorna</button>
+      <p id="dash-loading" class="hidden" style="color:#5A6B73;">Caricamento…</p>
+      <table>
+        <thead><tr><th>Nome</th><th>Classe</th><th>Punteggio F1</th><th>Fase 2</th><th>Quando</th></tr></thead>
+        <tbody id="dash-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer><button onclick="apriDashboard()">Area docente</button></footer>
+
+<script>
+const LAB = {"id":"quinta1_metodo","serie":"Filosofia V","numero":1,"totale":5,"titolo":"Caratteri del metodo scientifico: induzione e deduzione","sottotitolo":"Come procede un ragionamento scientifico, e dove rischia di inciampare?","firebasePath":"studenti_palestra_quinta1_metodo","recap":[{"h":"Il momento induttivo","b":"Si osservano molti casi particolari e se ne ricava una legge generale. Bacone: tavole di presenza, assenza, gradi."},{"h":"Il momento deduttivo","b":"Da un'ipotesi o un principio matematico si deducono conseguenze necessarie, poi verificate ('necessarie dimostrazioni')."},{"h":"Il problema aperto","b":"Nessun numero finito di osservazioni garantisce la certezza logica della legge universale che se ne ricava: è un salto, non una deduzione."}],"fase1":{"tipo":"classifica","titolo":"Induttiva o deduttiva?","istruzioni":"Per ciascuna mossa di ragionamento, scegli il tipo giusto.","opzioni":["Induttiva","Deduttiva"],"domande":[{"testo":"Ho lasciato cadere molte volte oggetti di peso diverso e sono arrivati a terra sempre nello stesso momento: dunque tutti i corpi cadono con la stessa accelerazione.","corretta":"Induttiva"},{"testo":"Se la Terra ruotasse su se stessa, un sasso lasciato cadere dalla cima di una torre dovrebbe restare indietro rispetto alla base; verifico e non accade; dunque questo argomento contro il moto della Terra non regge.","corretta":"Deduttiva"},{"testo":"In tutti i corpi in cui ho eliminato l'aria attorno, il calore si è propagato più lentamente: dunque l'aria trasmette il calore meglio del vuoto.","corretta":"Induttiva"},{"testo":"Se in un triangolo la somma degli angoli interni è sempre 180°, allora in questo triangolo, che ha due angoli di 70° e 60°, il terzo deve misurare 50°.","corretta":"Deduttiva"},{"testo":"Ho osservato il sole sorgere ogni mattina della mia vita: dunque il sole sorgerà sempre.","corretta":"Induttiva"}]},"fase2":{"titolo":"Ora in coppia","istruzioni":"Rispondete: nella mossa che avete scelto come esempio, quante osservazioni in più basterebbero perché siate certi al 100% della conclusione? Provate a spiegare perché nessun numero è mai sufficiente.","campi":[{"etichetta":"La nostra risposta","placeholder":"Scrivete qui"}]}};
+const FIREBASE_BASE = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+const TEACHER_PIN = "1970";
+
+let student = { nome: "", classe: "" };
+let f1answers = []; // { corretta?, scelta? } o { testo }
+let submitted = false;
+
+function $(id){ return document.getElementById(id); }
+
+function showScreen(id){
+  ["screen-gate","screen-recap","screen-f1","screen-f2","screen-done","screen-dash"].forEach(s=>{
+    $(s).classList.toggle("hidden", s!==id);
+  });
+  window.scrollTo(0,0);
+}
+
+function startLab(){
+  const nome = $("in-nome").value.trim();
+  const classe = $("in-classe").value.trim();
+  if(!nome || !classe){ $("gate-err").classList.remove("hidden"); return; }
+  student = { nome, classe };
+  showScreen("screen-recap");
+}
+
+function goFase1(){
+  renderFase1();
+  showScreen("screen-f1");
+}
+
+function renderFase1(){
+  const c = $("f1-list");
+  c.innerHTML = "";
+  f1answers = LAB.fase1.domande.map(()=>({}));
+  LAB.fase1.domande.forEach((d, i) => {
+    const div = document.createElement("div");
+    div.className = "q";
+    const p = document.createElement("p");
+    p.className = "stem";
+    p.textContent = (i+1) + ". " + d.testo;
+    div.appendChild(p);
+    if(LAB.fase1.tipo === "aperta"){
+      const ta = document.createElement("textarea");
+      ta.rows = 2;
+      ta.addEventListener("input", ()=>{ f1answers[i] = { testo: ta.value }; updateF1Btn(); });
+      div.appendChild(ta);
+    } else {
+      const opts = document.createElement("div");
+      opts.className = "opts";
+      LAB.fase1.opzioni.forEach(op => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "opt";
+        b.textContent = op;
+        b.addEventListener("click", () => {
+          if(b.disabled) return;
+          const buttons = opts.querySelectorAll(".opt");
+          const isCorrect = op === d.corretta;
+          buttons.forEach(x=>x.disabled = true);
+          b.classList.add(isCorrect ? "correct" : "wrong");
+          if(!isCorrect){
+            buttons.forEach(x=>{ if(x.textContent === d.corretta) x.classList.add("correct"); });
+          }
+          f1answers[i] = { scelta: op, corretta: isCorrect };
+          updateF1Btn();
+        });
+        opts.appendChild(b);
+      });
+      div.appendChild(opts);
+    }
+    c.appendChild(div);
+  });
+  updateF1Btn();
+}
+
+function updateF1Btn(){
+  const done = f1answers.every(a => a && (a.scelta !== undefined || (a.testo !== undefined && a.testo.trim().length>0)));
+  $("btn-f1-continua").disabled = !done;
+}
+
+function goFase2(){
+  const c = $("f2-list");
+  c.innerHTML = "";
+  LAB.fase2.campi.forEach((f, i) => {
+    const lab = document.createElement("label");
+    lab.textContent = f.etichetta;
+    const ta = document.createElement("textarea");
+    ta.id = "f2-campo-" + i;
+    ta.placeholder = f.placeholder || "";
+    c.appendChild(lab);
+    c.appendChild(ta);
+  });
+  showScreen("screen-f2");
+}
+
+function invia(){
+  const fase2 = LAB.fase2.campi.map((f,i) => ({ etichetta: f.etichetta, testo: $("f2-campo-"+i).value.trim() }));
+  const corrette = f1answers.filter(a=>a && a.corretta).length;
+  const totaleClassificabili = f1answers.filter(a=>a && a.scelta!==undefined).length;
+  const payload = {
+    nome: student.nome, classe: student.classe,
+    lab: LAB.id, serie: LAB.serie, timestamp: new Date().toISOString(),
+    fase1: f1answers,
+    punteggio: totaleClassificabili ? (corrette + "/" + totaleClassificabili) : null,
+    fase2: fase2,
+  };
+  $("btn-invia").disabled = true;
+  $("btn-invia").textContent = "Invio...";
+  fetch(FIREBASE_BASE + "/" + LAB.firebasePath + ".json", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(payload),
+  }).then(()=>{
+    submitted = true;
+    showScreen("screen-done");
+  }).catch(()=>{
+    $("btn-invia").disabled = false;
+    $("btn-invia").textContent = "Invia (riprova)";
+    alert("Invio non riuscito: controlla la connessione e riprova.");
+  });
+}
+
+// blocca il tasto "indietro" del browser dopo l'invio
+window.addEventListener("popstate", function(){
+  if(submitted){ history.pushState(null, "", location.href); }
+});
+history.pushState(null, "", location.href);
+
+function apriDashboard(){ showScreen("screen-dash"); }
+
+function verificaPin(){
+  const pin = $("dash-pin").value.trim();
+  if(pin !== TEACHER_PIN){ $("dash-err").classList.remove("hidden"); return; }
+  $("dash-err").classList.add("hidden");
+  $("dash-login").classList.add("hidden");
+  $("dash-table-wrap").classList.remove("hidden");
+  caricaRisposte();
+}
+
+function caricaRisposte(){
+  $("dash-loading").classList.remove("hidden");
+  fetch(FIREBASE_BASE + "/" + LAB.firebasePath + ".json")
+    .then(r => r.json())
+    .then(data => {
+      $("dash-loading").classList.add("hidden");
+      const rows = data ? Object.values(data) : [];
+      rows.sort((a,b)=> (a.timestamp||"").localeCompare(b.timestamp||""));
+      const tbody = $("dash-tbody");
+      tbody.innerHTML = "";
+      if(rows.length === 0){
+        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
+        return;
+      }
+      rows.forEach(r=>{
+        const tr = document.createElement("tr");
+        const f2text = (r.fase2||[]).map(f=>"<b>"+f.etichetta+":</b> "+f.testo).join("<br>");
+        tr.innerHTML = "<td>"+ (r.nome||"") +"</td><td>"+ (r.classe||"") +"</td><td>"+ (r.punteggio||"—") +"</td><td>"+ f2text +"</td><td>"+ (r.timestamp? new Date(r.timestamp).toLocaleString("it-IT"):"") +"</td>";
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(()=>{ $("dash-loading").textContent = "Errore nel caricamento."; });
+}
+</script>
+</body>
+</html>
