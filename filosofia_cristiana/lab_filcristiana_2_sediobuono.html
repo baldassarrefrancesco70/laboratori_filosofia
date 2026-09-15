@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Se Dio è buono</title>
+<style>
+  :root{
+    --tan:#CCA677; --tan-chiaro:#F4EADB; --marrone:#7C6448; --scuro:#2B2B2B;
+    --blu:#2E4A62; --verde:#2E7D4F; --rosso:#B03A2B; --bordo:#E2D5C0;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#FAF7F2;color:var(--scuro);
+       font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+  .wrap{max-width:820px;margin:0 auto;padding:20px 16px 60px}
+  header.top{background:var(--marrone);color:#fff;padding:22px 16px}
+  header.top .inner{max-width:820px;margin:0 auto}
+  header.top .occhiello{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--tan-chiaro)}
+  header.top h1{margin:6px 0 4px;font-size:26px;line-height:1.2}
+  header.top p{margin:0;font-size:15px;color:#EADFCF}
+  .card{background:#fff;border:1px solid var(--bordo);border-radius:10px;padding:18px;margin:16px 0}
+  .card h2{margin:0 0 10px;font-size:19px;color:var(--marrone)}
+  .richiamo{background:var(--tan-chiaro);border:1px solid var(--tan)}
+  .richiamo p{margin:6px 0}
+  .etichetta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--marrone);font-weight:700}
+  label{display:block;font-weight:600;margin:10px 0 4px}
+  input[type=text],textarea{width:100%;padding:10px;border:1px solid #C9CFD5;border-radius:8px;font:inherit;background:#fff}
+  textarea{min-height:90px;resize:vertical}
+  button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--marrone);
+         background:var(--marrone);color:#fff;padding:11px 18px;font-weight:600}
+  button.secondaria{background:#fff;color:var(--marrone)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .item{border-top:1px solid #EFE7DA;padding:14px 0}
+  .item:first-of-type{border-top:0}
+  .item .testo{margin:0 0 10px}
+  .scelte{display:flex;flex-wrap:wrap;gap:8px}
+  .scelte button{background:#fff;color:var(--blu);border-color:#C9CFD5;font-weight:500;text-align:left;flex:1 1 200px}
+  .scelte button.giusta{background:#E8F5EC;border-color:var(--verde);color:#1B5E36}
+  .scelte button.sbagliata{background:#FBEAE7;border-color:var(--rosso);color:#8B2A1E}
+  .esito{margin:8px 0 0;font-size:15px}
+  .esito.ok{color:var(--verde)}
+  .esito.no{color:var(--rosso)}
+  .avviso{background:#FBF3E2;border:1px solid #E0C88A;border-radius:8px;padding:12px;font-size:15px}
+  .barra{height:6px;background:#EDE3D3;border-radius:99px;overflow:hidden;margin:14px 0}
+  .barra i{display:block;height:100%;background:var(--tan);width:0;transition:width .3s}
+  .stato{font-size:14px;color:#6B6B6B;margin-top:10px}
+  footer{max-width:820px;margin:0 auto;padding:0 16px 30px;font-size:13px;color:#8A8A8A}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <div class="occhiello">Filosofia · quarto anno · la filosofia cristiana · attività 2</div>
+  <h1>Se Dio è buono</h1>
+  <p>Agostino, il male e la libertà — ricostruzione argomentativa</p>
+</div></header>
+
+<div class="wrap">
+
+  <section id="gate" class="card">
+    <h2>Prima di cominciare</h2>
+    <label for="nome">Nome e cognome</label>
+    <input id="nome" type="text" autocomplete="name" placeholder="Es. Maria Rossi">
+    <label for="classe">Classe</label>
+    <input id="classe" type="text" placeholder="Es. 4D">
+    <p class="stato">Il tuo lavoro viene salvato con il tuo nome: serve all'insegnante per seguire la classe, non produce un voto.</p>
+    <p><button id="avvia" disabled>Inizia</button></p>
+  </section>
+
+  <section id="lab" hidden>
+    <div class="card richiamo">
+      <div class="etichetta">Richiamo minimo</div>
+      <p>Se Dio è buono e ha creato ogni cosa, da dove viene il male? Da manicheo, Agostino rispondeva: esiste un principio del male, eterno quanto quello del bene. Da cristiano non può più farlo.</p><p>L'argomento che costruisce ha questa forma. <strong>P1</strong> Tutto ciò che esiste è creato da Dio, e in quanto creato è buono. <strong>P2</strong> … <strong>P3</strong> Dio non ha creato il male, perché il male non è una cosa che possa essere creata. <strong>C</strong> …</p>
+    </div>
+
+    <div class="card" id="fase1">
+      <h2>Fase 1 — completa l'argomento</h2>
+      <p>Ricostruisci la premessa mancante, la conclusione e l'idea implicita.</p>
+      <div class="barra"><i id="avanzamento"></i></div>
+      <div id="items"></div>
+      <p class="stato" id="contatore"></p>
+      <p><button id="vaiFase2" disabled>Vai alla Fase 2</button></p>
+    </div>
+
+    <div class="card" id="fase2" hidden>
+      <h2>Fase 2 — l'obiezione</h2>
+      <div class="avviso">Da qui non si torna indietro alla Fase 1: le risposte a scelta sono chiuse.</div>
+      <div id="aperte"></div>
+      <p><button id="invia">Invia il lavoro</button></p>
+      <p class="stato" id="esitoInvio"></p>
+    </div>
+
+    <div class="card" id="fine" hidden>
+      <h2>Fatto</h2>
+      <p id="testoFine"></p>
+      <p class="stato">In plenaria si guarderà quali obiezioni colpiscono davvero una premessa.</p>
+    </div>
+  </section>
+
+</div>
+<footer>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</footer>
+
+<script>
+// ---------------------------------------------------------------- Firebase
+const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+const FIREBASE_PATH = "studenti_filcristiana2_sediobuono";
+
+const DATI = [{"id": "p2", "testo": "Premessa mancante (P2). Quale formulazione regge?", "opzioni": ["Il male non è una cosa: è privazione di un bene che dovrebbe esserci", "Il male è una realtà creata da Dio per mettere alla prova la libertà degli uomini e permettere loro di meritare la salvezza", "Il male è un principio autonomo, eterno quanto il bene, che si contende con esso il dominio sul mondo e sulle anime"], "giusta": 0, "spiegazione": "È la mossa decisiva: togliere al male lo statuto di cosa.", "errore": "Se il male fosse una cosa — creata o eterna — l'argomento di Agostino crollerebbe alla premessa 1."}, {"id": "c", "testo": "Conclusione (C). Quale segue dalle premesse?", "opzioni": ["Dunque il male morale nasce dalla volontà umana, che si allontana liberamente dal bene", "Dunque il male è una punizione che Dio infligge agli uomini per le colpe commesse dai loro antenati", "Dunque il male è soltanto un'illusione dei sensi, e chi lo conosce davvero smette di soffrirne"], "giusta": 0, "spiegazione": "Se non è una cosa e Dio non lo ha creato, resta la volontà che sceglie male.", "errore": "Chiediti che cosa resta, una volta escluso che il male sia una cosa creata."}, {"id": "implicita", "testo": "Il passaggio da P3 a C ha bisogno di un'idea che nell'argomento non è scritta. Quale?", "opzioni": ["Il libero arbitrio: una volontà capace di scegliere", "La grazia divina, che sola rende l'uomo capace di compiere il bene e lo libera dalla necessità di peccare", "La distinzione fra male fisico e male morale, che permette di attribuire i due tipi di male a cause diverse"], "giusta": 0, "spiegazione": "Senza una volontà che può scegliere, non c'è nessuno a cui attribuire il male.", "errore": "La grazia e la distinzione dei due mali servono ad Agostino, ma non sono ciò che tiene in piedi questo passaggio."}];
+const APERTE = [{"id": "obiezione", "domanda": "Scrivi l'obiezione più forte che si può muovere a questo argomento.", "aiuto": "Deve colpire una premessa o il passaggio alle conclusioni. Un esempio di sofferenza terribile non è un'obiezione alla tesi."}, {"id": "bersaglio", "domanda": "Quale premessa colpisce la tua obiezione? (P1, P2, P3 o il passaggio a C)", "aiuto": ""}];
+
+const $ = (id) => document.getElementById(id);
+let studente = {nome:"", classe:""};
+let risposte = {};      // id item -> {scelta, corretta, tentativi}
+let chiuso = false;
+
+function controllaGate(){
+  $("avvia").disabled = !($("nome").value.trim().length > 2 && $("classe").value.trim().length > 0);
+}
+$("nome").addEventListener("input", controllaGate);
+$("classe").addEventListener("input", controllaGate);
+$("avvia").addEventListener("click", () => {
+  studente.nome = $("nome").value.trim();
+  studente.classe = $("classe").value.trim();
+  $("gate").hidden = true;
+  $("lab").hidden = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+function aggiornaAvanzamento(){
+  const fatte = Object.keys(risposte).filter(k => risposte[k].corretta).length;
+  const tot = DATI.length;
+  $("avanzamento").style.width = Math.round(fatte/tot*100) + "%";
+  $("contatore").textContent = fatte + " di " + tot + " completate.";
+  $("vaiFase2").disabled = fatte < tot;
+}
+
+function costruisci(){
+  const cont = $("items");
+  DATI.forEach((it, idx) => {
+    const div = document.createElement("div");
+    div.className = "item";
+    const p = document.createElement("p");
+    p.className = "testo";
+    p.innerHTML = "<strong>" + (idx+1) + ".</strong> " + it.testo;
+    div.appendChild(p);
+    const box = document.createElement("div");
+    box.className = "scelte";
+    it.opzioni.forEach((op, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = op;
+      b.addEventListener("click", () => {
+        if (chiuso || (risposte[it.id] && risposte[it.id].corretta)) return;
+        const giusta = (i === it.giusta);
+        b.classList.add(giusta ? "giusta" : "sbagliata");
+        const prec = risposte[it.id] ? risposte[it.id].tentativi : 0;
+        risposte[it.id] = {scelta: op, corretta: giusta, tentativi: prec + 1};
+        const es = div.querySelector(".esito");
+        es.className = "esito " + (giusta ? "ok" : "no");
+        es.textContent = giusta ? ("Sì. " + it.spiegazione) : (it.errore || "Non è questa: riprova.");
+        if (giusta) box.querySelectorAll("button").forEach(x => { if (x !== b) x.disabled = true; });
+        aggiornaAvanzamento();
+      });
+      box.appendChild(b);
+    });
+    div.appendChild(box);
+    const es = document.createElement("p");
+    es.className = "esito";
+    div.appendChild(es);
+    cont.appendChild(div);
+  });
+  const ap = $("aperte");
+  APERTE.forEach(a => {
+    const l = document.createElement("label");
+    l.setAttribute("for", a.id);
+    l.textContent = a.domanda;
+    const t = document.createElement("textarea");
+    t.id = a.id;
+    t.placeholder = a.aiuto || "";
+    ap.appendChild(l); ap.appendChild(t);
+  });
+  aggiornaAvanzamento();
+}
+
+$("vaiFase2").addEventListener("click", () => {
+  chiuso = true;
+  $("fase1").querySelectorAll("button").forEach(b => b.disabled = true);
+  $("fase2").hidden = false;
+  $("fase2").scrollIntoView({behavior:"smooth"});
+});
+
+$("invia").addEventListener("click", async () => {
+  const testi = {};
+  APERTE.forEach(a => testi[a.id] = ($(a.id).value || "").trim());
+  const vuote = APERTE.filter(a => testi[a.id].length < 5);
+  if (vuote.length) { $("esitoInvio").textContent = "Rispondi a tutte le domande prima di inviare."; return; }
+  const payload = {
+    nome: studente.nome, classe: studente.classe,
+    inviato: new Date().toISOString(),
+    fase1: risposte, fase2: testi
+  };
+  $("invia").disabled = true;
+  $("esitoInvio").textContent = "Invio in corso…";
+  let ok = false;
+  if (FIREBASE_URL) {
+    try {
+      const r = await fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json",
+        {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)});
+      ok = r.ok;
+    } catch (e) { ok = false; }
+  }
+  $("fase2").hidden = true;
+  $("fine").hidden = false;
+  $("testoFine").textContent = ok
+    ? "Lavoro inviato. Puoi chiudere la pagina."
+    : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
+  $("fine").scrollIntoView({behavior:"smooth"});
+});
+
+costruisci();
+</script>
+</body>
+</html>

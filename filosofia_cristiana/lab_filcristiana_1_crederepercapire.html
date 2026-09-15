@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Credere per capire</title>
+<style>
+  :root{
+    --tan:#CCA677; --tan-chiaro:#F4EADB; --marrone:#7C6448; --scuro:#2B2B2B;
+    --blu:#2E4A62; --verde:#2E7D4F; --rosso:#B03A2B; --bordo:#E2D5C0;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#FAF7F2;color:var(--scuro);
+       font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+  .wrap{max-width:820px;margin:0 auto;padding:20px 16px 60px}
+  header.top{background:var(--marrone);color:#fff;padding:22px 16px}
+  header.top .inner{max-width:820px;margin:0 auto}
+  header.top .occhiello{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--tan-chiaro)}
+  header.top h1{margin:6px 0 4px;font-size:26px;line-height:1.2}
+  header.top p{margin:0;font-size:15px;color:#EADFCF}
+  .card{background:#fff;border:1px solid var(--bordo);border-radius:10px;padding:18px;margin:16px 0}
+  .card h2{margin:0 0 10px;font-size:19px;color:var(--marrone)}
+  .richiamo{background:var(--tan-chiaro);border:1px solid var(--tan)}
+  .richiamo p{margin:6px 0}
+  .etichetta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--marrone);font-weight:700}
+  label{display:block;font-weight:600;margin:10px 0 4px}
+  input[type=text],textarea{width:100%;padding:10px;border:1px solid #C9CFD5;border-radius:8px;font:inherit;background:#fff}
+  textarea{min-height:90px;resize:vertical}
+  button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--marrone);
+         background:var(--marrone);color:#fff;padding:11px 18px;font-weight:600}
+  button.secondaria{background:#fff;color:var(--marrone)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .item{border-top:1px solid #EFE7DA;padding:14px 0}
+  .item:first-of-type{border-top:0}
+  .item .testo{margin:0 0 10px}
+  .scelte{display:flex;flex-wrap:wrap;gap:8px}
+  .scelte button{background:#fff;color:var(--blu);border-color:#C9CFD5;font-weight:500;text-align:left;flex:1 1 200px}
+  .scelte button.giusta{background:#E8F5EC;border-color:var(--verde);color:#1B5E36}
+  .scelte button.sbagliata{background:#FBEAE7;border-color:var(--rosso);color:#8B2A1E}
+  .esito{margin:8px 0 0;font-size:15px}
+  .esito.ok{color:var(--verde)}
+  .esito.no{color:var(--rosso)}
+  .avviso{background:#FBF3E2;border:1px solid #E0C88A;border-radius:8px;padding:12px;font-size:15px}
+  .barra{height:6px;background:#EDE3D3;border-radius:99px;overflow:hidden;margin:14px 0}
+  .barra i{display:block;height:100%;background:var(--tan);width:0;transition:width .3s}
+  .stato{font-size:14px;color:#6B6B6B;margin-top:10px}
+  footer{max-width:820px;margin:0 auto;padding:0 16px 30px;font-size:13px;color:#8A8A8A}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <div class="occhiello">Filosofia · quarto anno · la filosofia cristiana · attività 1</div>
+  <h1>Credere per capire</h1>
+  <p>Agostino: fede e ragione — identificazione della tesi</p>
+</div></header>
+
+<div class="wrap">
+
+  <section id="gate" class="card">
+    <h2>Prima di cominciare</h2>
+    <label for="nome">Nome e cognome</label>
+    <input id="nome" type="text" autocomplete="name" placeholder="Es. Maria Rossi">
+    <label for="classe">Classe</label>
+    <input id="classe" type="text" placeholder="Es. 4D">
+    <p class="stato">Il tuo lavoro viene salvato con il tuo nome: serve all'insegnante per seguire la classe, non produce un voto.</p>
+    <p><button id="avvia" disabled>Inizia</button></p>
+  </section>
+
+  <section id="lab" hidden>
+    <div class="card richiamo">
+      <div class="etichetta">Richiamo minimo</div>
+      <p>Dopo la conversione Agostino affronta una domanda: se la verità è già rivelata, che cosa resta da fare alla ragione?</p><p>La sua risposta sta in due formule: <em>crede ut intelligas</em> (credi per capire) e <em>intellige ut credas</em> (capisci per credere). L'incontro con Dio avviene nell'interiorità, e la grazia è indispensabile: la ragione non è esclusa, ma non cammina da sola.</p>
+    </div>
+
+    <div class="card" id="fase1">
+      <h2>Fase 1 — classifica le affermazioni</h2>
+      <p>Ogni affermazione sostiene una di queste tre posizioni. Scegli quale. Se sbagli puoi riprovare: leggi il commento prima di rispondere di nuovo.</p>
+      <div class="barra"><i id="avanzamento"></i></div>
+      <div id="items"></div>
+      <p class="stato" id="contatore"></p>
+      <p><button id="vaiFase2" disabled>Vai alla Fase 2</button></p>
+    </div>
+
+    <div class="card" id="fase2" hidden>
+      <h2>Fase 2 — la tesi di Agostino</h2>
+      <div class="avviso">Da qui non si torna indietro alla Fase 1: le risposte a scelta sono chiuse.</div>
+      <div id="aperte"></div>
+      <p><button id="invia">Invia il lavoro</button></p>
+      <p class="stato" id="esitoInvio"></p>
+    </div>
+
+    <div class="card" id="fine" hidden>
+      <h2>Fatto</h2>
+      <p id="testoFine"></p>
+      <p class="stato">La discussione su questa attività si farà insieme a quella dell'attività successiva.</p>
+    </div>
+  </section>
+
+</div>
+<footer>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</footer>
+
+<script>
+// ---------------------------------------------------------------- Firebase
+const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+const FIREBASE_PATH = "studenti_filcristiana1_crederepercapire";
+
+const DATI = [{"id": "a1", "testo": "«Che cosa hanno in comune Atene e Gerusalemme? Dopo il Vangelo non abbiamo più bisogno di cercare.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 1, "spiegazione": "È la posizione di Tertulliano: la ricerca filosofica non serve più.", "errore": "No: qui la ricerca razionale viene dichiarata inutile, non necessaria né complementare."}, {"id": "a2", "testo": "«Credi, per poter capire; e capisci, per poter credere.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "È la formula di Agostino: nessuna delle due funziona senza l'altra.", "errore": "Guarda la struttura della frase: sono due movimenti, non uno."}, {"id": "a3", "testo": "«Ciò che accogliamo credendo resta oscuro finché l'intelligenza non lo penetra; ma non lo penetrerebbe, se prima non lo avesse accolto.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "Di nuovo Agostino: la frase dice esplicitamente che l'una ha bisogno dell'altra.", "errore": "La frase contiene due condizioni, una per parte: rileggi la seconda metà."}, {"id": "a4", "testo": "«L'uomo può raggiungere da solo la verità con le forze del proprio ragionamento, senza che nessuna autorità debba precedere, guidare o correggere il cammino della sua ricerca.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 0, "spiegazione": "Nessuna autorità precede la ragione: è l'autosufficienza della ragione.", "errore": "«Senza che nessuna autorità debba precedere»: chi parla sta escludendo la fede."}, {"id": "a5", "testo": "«Nei filosofi greci era già presente un seme della verità: il Logos che parla nel Vangelo è lo stesso che ha illuminato la loro ricerca.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "È Giustino: la ricerca filosofica e la rivelazione hanno la stessa sorgente.", "errore": "Attenzione: qui la filosofia greca non viene né respinta né dichiarata sufficiente."}, {"id": "a6", "testo": "«Le verità rivelate vanno accolte esattamente come sono state consegnate: ogni tentativo di spiegarle con argomenti umani finisce per sminuirle e per esporle al dubbio.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 1, "spiegazione": "La ragione qui non è solo inutile: è considerata pericolosa.", "errore": "Chi scrive non chiede alla ragione di collaborare: le chiede di stare fuori."}];
+const APERTE = [{"id": "tesi", "domanda": "Qual è la tesi di Agostino sul rapporto fra fede e ragione? Una frase sola.", "aiuto": "Non riassumere le formule: dì che cosa sostengono."}, {"id": "esclude", "domanda": "Che cosa esclude quella tesi? Indica una delle altre due posizioni e spiega perché Agostino non può accettarla.", "aiuto": ""}];
+
+const $ = (id) => document.getElementById(id);
+let studente = {nome:"", classe:""};
+let risposte = {};      // id item -> {scelta, corretta, tentativi}
+let chiuso = false;
+
+function controllaGate(){
+  $("avvia").disabled = !($("nome").value.trim().length > 2 && $("classe").value.trim().length > 0);
+}
+$("nome").addEventListener("input", controllaGate);
+$("classe").addEventListener("input", controllaGate);
+$("avvia").addEventListener("click", () => {
+  studente.nome = $("nome").value.trim();
+  studente.classe = $("classe").value.trim();
+  $("gate").hidden = true;
+  $("lab").hidden = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+function aggiornaAvanzamento(){
+  const fatte = Object.keys(risposte).filter(k => risposte[k].corretta).length;
+  const tot = DATI.length;
+  $("avanzamento").style.width = Math.round(fatte/tot*100) + "%";
+  $("contatore").textContent = fatte + " di " + tot + " completate.";
+  $("vaiFase2").disabled = fatte < tot;
+}
+
+function costruisci(){
+  const cont = $("items");
+  DATI.forEach((it, idx) => {
+    const div = document.createElement("div");
+    div.className = "item";
+    const p = document.createElement("p");
+    p.className = "testo";
+    p.innerHTML = "<strong>" + (idx+1) + ".</strong> " + it.testo;
+    div.appendChild(p);
+    const box = document.createElement("div");
+    box.className = "scelte";
+    it.opzioni.forEach((op, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = op;
+      b.addEventListener("click", () => {
+        if (chiuso || (risposte[it.id] && risposte[it.id].corretta)) return;
+        const giusta = (i === it.giusta);
+        b.classList.add(giusta ? "giusta" : "sbagliata");
+        const prec = risposte[it.id] ? risposte[it.id].tentativi : 0;
+        risposte[it.id] = {scelta: op, corretta: giusta, tentativi: prec + 1};
+        const es = div.querySelector(".esito");
+        es.className = "esito " + (giusta ? "ok" : "no");
+        es.textContent = giusta ? ("Sì. " + it.spiegazione) : (it.errore || "Non è questa: riprova.");
+        if (giusta) box.querySelectorAll("button").forEach(x => { if (x !== b) x.disabled = true; });
+        aggiornaAvanzamento();
+      });
+      box.appendChild(b);
+    });
+    div.appendChild(box);
+    const es = document.createElement("p");
+    es.className = "esito";
+    div.appendChild(es);
+    cont.appendChild(div);
+  });
+  const ap = $("aperte");
+  APERTE.forEach(a => {
+    const l = document.createElement("label");
+    l.setAttribute("for", a.id);
+    l.textContent = a.domanda;
+    const t = document.createElement("textarea");
+    t.id = a.id;
+    t.placeholder = a.aiuto || "";
+    ap.appendChild(l); ap.appendChild(t);
+  });
+  aggiornaAvanzamento();
+}
+
+$("vaiFase2").addEventListener("click", () => {
+  chiuso = true;
+  $("fase1").querySelectorAll("button").forEach(b => b.disabled = true);
+  $("fase2").hidden = false;
+  $("fase2").scrollIntoView({behavior:"smooth"});
+});
+
+$("invia").addEventListener("click", async () => {
+  const testi = {};
+  APERTE.forEach(a => testi[a.id] = ($(a.id).value || "").trim());
+  const vuote = APERTE.filter(a => testi[a.id].length < 5);
+  if (vuote.length) { $("esitoInvio").textContent = "Rispondi a tutte le domande prima di inviare."; return; }
+  const payload = {
+    nome: studente.nome, classe: studente.classe,
+    inviato: new Date().toISOString(),
+    fase1: risposte, fase2: testi
+  };
+  $("invia").disabled = true;
+  $("esitoInvio").textContent = "Invio in corso…";
+  let ok = false;
+  if (FIREBASE_URL) {
+    try {
+      const r = await fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json",
+        {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)});
+      ok = r.ok;
+    } catch (e) { ok = false; }
+  }
+  $("fase2").hidden = true;
+  $("fine").hidden = false;
+  $("testoFine").textContent = ok
+    ? "Lavoro inviato. Puoi chiudere la pagina."
+    : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
+  $("fine").scrollIntoView({behavior:"smooth"});
+});
+
+costruisci();
+</script>
+</body>
+</html>

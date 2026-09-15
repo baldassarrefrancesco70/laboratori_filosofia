@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La prova ontologica</title>
+<style>
+  :root{
+    --tan:#CCA677; --tan-chiaro:#F4EADB; --marrone:#7C6448; --scuro:#2B2B2B;
+    --blu:#2E4A62; --verde:#2E7D4F; --rosso:#B03A2B; --bordo:#E2D5C0;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#FAF7F2;color:var(--scuro);
+       font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+  .wrap{max-width:820px;margin:0 auto;padding:20px 16px 60px}
+  header.top{background:var(--marrone);color:#fff;padding:22px 16px}
+  header.top .inner{max-width:820px;margin:0 auto}
+  header.top .occhiello{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--tan-chiaro)}
+  header.top h1{margin:6px 0 4px;font-size:26px;line-height:1.2}
+  header.top p{margin:0;font-size:15px;color:#EADFCF}
+  .card{background:#fff;border:1px solid var(--bordo);border-radius:10px;padding:18px;margin:16px 0}
+  .card h2{margin:0 0 10px;font-size:19px;color:var(--marrone)}
+  .richiamo{background:var(--tan-chiaro);border:1px solid var(--tan)}
+  .richiamo p{margin:6px 0}
+  .etichetta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--marrone);font-weight:700}
+  label{display:block;font-weight:600;margin:10px 0 4px}
+  input[type=text],textarea{width:100%;padding:10px;border:1px solid #C9CFD5;border-radius:8px;font:inherit;background:#fff}
+  textarea{min-height:90px;resize:vertical}
+  button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--marrone);
+         background:var(--marrone);color:#fff;padding:11px 18px;font-weight:600}
+  button.secondaria{background:#fff;color:var(--marrone)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .item{border-top:1px solid #EFE7DA;padding:14px 0}
+  .item:first-of-type{border-top:0}
+  .item .testo{margin:0 0 10px}
+  .scelte{display:flex;flex-wrap:wrap;gap:8px}
+  .scelte button{background:#fff;color:var(--blu);border-color:#C9CFD5;font-weight:500;text-align:left;flex:1 1 200px}
+  .scelte button.giusta{background:#E8F5EC;border-color:var(--verde);color:#1B5E36}
+  .scelte button.sbagliata{background:#FBEAE7;border-color:var(--rosso);color:#8B2A1E}
+  .esito{margin:8px 0 0;font-size:15px}
+  .esito.ok{color:var(--verde)}
+  .esito.no{color:var(--rosso)}
+  .avviso{background:#FBF3E2;border:1px solid #E0C88A;border-radius:8px;padding:12px;font-size:15px}
+  .barra{height:6px;background:#EDE3D3;border-radius:99px;overflow:hidden;margin:14px 0}
+  .barra i{display:block;height:100%;background:var(--tan);width:0;transition:width .3s}
+  .stato{font-size:14px;color:#6B6B6B;margin-top:10px}
+  footer{max-width:820px;margin:0 auto;padding:0 16px 30px;font-size:13px;color:#8A8A8A}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <div class="occhiello">Filosofia · quarto anno · la filosofia cristiana · attività 4</div>
+  <h1>La prova ontologica</h1>
+  <p>Anselmo d'Aosta, Proslogion II — ricostruzione argomentativa</p>
+</div></header>
+
+<div class="wrap">
+
+  <section id="gate" class="card">
+    <h2>Prima di cominciare</h2>
+    <label for="nome">Nome e cognome</label>
+    <input id="nome" type="text" autocomplete="name" placeholder="Es. Maria Rossi">
+    <label for="classe">Classe</label>
+    <input id="classe" type="text" placeholder="Es. 4D">
+    <p class="stato">Il tuo lavoro viene salvato con il tuo nome: serve all'insegnante per seguire la classe, non produce un voto.</p>
+    <p><button id="avvia" disabled>Inizia</button></p>
+  </section>
+
+  <section id="lab" hidden>
+    <div class="card richiamo">
+      <div class="etichetta">Richiamo minimo</div>
+      <p>Hai letto a casa il capitolo II del <em>Proslogion</em>. Qui ricostruisci la catena del ragionamento, un passaggio alla volta.</p><p>Anselmo non cerca di convincere chi non crede: crede già, e vuole capire perché. <em>Fides quaerens intellectum</em>.</p>
+    </div>
+
+    <div class="card" id="fase1">
+      <h2>Fase 1 — la catena dei passaggi</h2>
+      <p>Per ogni passaggio scegli la formulazione che rende davvero ciò che Anselmo dice.</p>
+      <div class="barra"><i id="avanzamento"></i></div>
+      <div id="items"></div>
+      <p class="stato" id="contatore"></p>
+      <p><button id="vaiFase2" disabled>Vai alla Fase 2</button></p>
+    </div>
+
+    <div class="card" id="fase2" hidden>
+      <h2>Fase 2 — il punto debole</h2>
+      <div class="avviso">Da qui non si torna indietro alla Fase 1: le risposte a scelta sono chiuse.</div>
+      <div id="aperte"></div>
+      <p><button id="invia">Invia il lavoro</button></p>
+      <p class="stato" id="esitoInvio"></p>
+    </div>
+
+    <div class="card" id="fine" hidden>
+      <h2>Fatto</h2>
+      <p id="testoFine"></p>
+      <p class="stato">In plenaria: l'isola perduta di Gaunilone, e se si possa passare dall'ordine del pensiero a quello dell'essere.</p>
+    </div>
+  </section>
+
+</div>
+<footer>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</footer>
+
+<script>
+// ---------------------------------------------------------------- Firebase
+const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+const FIREBASE_PATH = "studenti_filcristiana4_provaontologica";
+
+const DATI = [{"id": "p1", "testo": "Passaggio 1 — il punto di partenza. Che cosa deve concedere anche chi nega che Dio esista?", "opzioni": ["Che capisce l'espressione «ciò di cui non si può pensare nulla di maggiore»: dunque quella cosa è nel suo intelletto", "Che l'ordine e la bellezza del mondo richiedono una causa intelligente, anche se questa causa potrebbe non coincidere con il Dio dei cristiani", "Che l'idea di Dio è presente in tutti i popoli conosciuti, e un'idea così diffusa non può essere nata dal nulla"], "giusta": 0, "spiegazione": "Anselmo parte da ciò che perfino chi nega è costretto ad ammettere: capisce la frase.", "errore": "Quelle sono altre prove, che partono dal mondo. Anselmo parte da ciò che avviene nella mente di chi ascolta."}, {"id": "p2", "testo": "Passaggio 2 — la distinzione. Che cosa distingue l'esempio del pittore?", "opzioni": ["Essere nell'intelletto ed esistere anche nella realtà", "Essere pensato in modo confuso ed essere pensato in modo chiaro e distinto, come accade quando si porta a termine un'opera", "Essere possibile ed essere necessario, cioè non poter non essere in nessuna condizione immaginabile"], "giusta": 0, "spiegazione": "Il quadro pensato e il quadro dipinto: due modi diversi di «esserci».", "errore": "Rileggi l'esempio: la differenza è fra il quadro che il pittore ha in mente e il quadro già dipinto."}, {"id": "p3", "testo": "Passaggio 3 — la mossa decisiva. Perché ciò di cui non si può pensare nulla di maggiore non può stare nel solo intelletto?", "opzioni": ["Perché se ne potrebbe pensare una maggiore — quella che esiste anche nella realtà: e sarebbe una contraddizione", "Perché tutto ciò che sta soltanto nell'intelletto prima o poi svanisce, mentre l'idea di Dio non è mai svanita in nessuna epoca", "Perché l'intelletto umano è finito e non può contenere per intero un oggetto infinito come Dio"], "giusta": 0, "spiegazione": "È il cuore della prova: negarla porta a contraddire la definizione di partenza.", "errore": "La forza dell'argomento sta in una contraddizione, non in una constatazione di fatto."}, {"id": "p4", "testo": "Passaggio 4 — la conclusione.", "opzioni": ["Dunque ciò di cui non si può pensare nulla di maggiore esiste, nell'intelletto e nella realtà", "Dunque chi nega Dio si contraddice ogni volta che parla, e la sua negazione non ha alcun significato", "Dunque la fede può fare a meno della ragione, perché ha già in sé tutto ciò che le serve"], "giusta": 0, "spiegazione": "La conclusione riguarda l'esistenza, ed è tutto ciò che Anselmo ha voluto dimostrare.", "errore": "Anselmo conclude qualcosa su ciò che esiste, non sullo stolto né sul rapporto fra fede e ragione."}];
+const APERTE = [{"id": "debole", "domanda": "Quale passaggio ti convince meno? Indica il numero e spiega in una riga perché.", "aiuto": "Non basta dire «non sono d'accordo»: dì che cosa non regge nel passaggio."}, {"id": "replica", "domanda": "Prova a rispondere come Anselmo a chi ti muove quell'obiezione.", "aiuto": ""}];
+
+const $ = (id) => document.getElementById(id);
+let studente = {nome:"", classe:""};
+let risposte = {};      // id item -> {scelta, corretta, tentativi}
+let chiuso = false;
+
+function controllaGate(){
+  $("avvia").disabled = !($("nome").value.trim().length > 2 && $("classe").value.trim().length > 0);
+}
+$("nome").addEventListener("input", controllaGate);
+$("classe").addEventListener("input", controllaGate);
+$("avvia").addEventListener("click", () => {
+  studente.nome = $("nome").value.trim();
+  studente.classe = $("classe").value.trim();
+  $("gate").hidden = true;
+  $("lab").hidden = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+function aggiornaAvanzamento(){
+  const fatte = Object.keys(risposte).filter(k => risposte[k].corretta).length;
+  const tot = DATI.length;
+  $("avanzamento").style.width = Math.round(fatte/tot*100) + "%";
+  $("contatore").textContent = fatte + " di " + tot + " completate.";
+  $("vaiFase2").disabled = fatte < tot;
+}
+
+function costruisci(){
+  const cont = $("items");
+  DATI.forEach((it, idx) => {
+    const div = document.createElement("div");
+    div.className = "item";
+    const p = document.createElement("p");
+    p.className = "testo";
+    p.innerHTML = "<strong>" + (idx+1) + ".</strong> " + it.testo;
+    div.appendChild(p);
+    const box = document.createElement("div");
+    box.className = "scelte";
+    it.opzioni.forEach((op, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = op;
+      b.addEventListener("click", () => {
+        if (chiuso || (risposte[it.id] && risposte[it.id].corretta)) return;
+        const giusta = (i === it.giusta);
+        b.classList.add(giusta ? "giusta" : "sbagliata");
+        const prec = risposte[it.id] ? risposte[it.id].tentativi : 0;
+        risposte[it.id] = {scelta: op, corretta: giusta, tentativi: prec + 1};
+        const es = div.querySelector(".esito");
+        es.className = "esito " + (giusta ? "ok" : "no");
+        es.textContent = giusta ? ("Sì. " + it.spiegazione) : (it.errore || "Non è questa: riprova.");
+        if (giusta) box.querySelectorAll("button").forEach(x => { if (x !== b) x.disabled = true; });
+        aggiornaAvanzamento();
+      });
+      box.appendChild(b);
+    });
+    div.appendChild(box);
+    const es = document.createElement("p");
+    es.className = "esito";
+    div.appendChild(es);
+    cont.appendChild(div);
+  });
+  const ap = $("aperte");
+  APERTE.forEach(a => {
+    const l = document.createElement("label");
+    l.setAttribute("for", a.id);
+    l.textContent = a.domanda;
+    const t = document.createElement("textarea");
+    t.id = a.id;
+    t.placeholder = a.aiuto || "";
+    ap.appendChild(l); ap.appendChild(t);
+  });
+  aggiornaAvanzamento();
+}
+
+$("vaiFase2").addEventListener("click", () => {
+  chiuso = true;
+  $("fase1").querySelectorAll("button").forEach(b => b.disabled = true);
+  $("fase2").hidden = false;
+  $("fase2").scrollIntoView({behavior:"smooth"});
+});
+
+$("invia").addEventListener("click", async () => {
+  const testi = {};
+  APERTE.forEach(a => testi[a.id] = ($(a.id).value || "").trim());
+  const vuote = APERTE.filter(a => testi[a.id].length < 5);
+  if (vuote.length) { $("esitoInvio").textContent = "Rispondi a tutte le domande prima di inviare."; return; }
+  const payload = {
+    nome: studente.nome, classe: studente.classe,
+    inviato: new Date().toISOString(),
+    fase1: risposte, fase2: testi
+  };
+  $("invia").disabled = true;
+  $("esitoInvio").textContent = "Invio in corso…";
+  let ok = false;
+  if (FIREBASE_URL) {
+    try {
+      const r = await fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json",
+        {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)});
+      ok = r.ok;
+    } catch (e) { ok = false; }
+  }
+  $("fase2").hidden = true;
+  $("fine").hidden = false;
+  $("testoFine").textContent = ok
+    ? "Lavoro inviato. Puoi chiudere la pagina."
+    : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
+  $("fine").scrollIntoView({behavior:"smooth"});
+});
+
+costruisci();
+</script>
+</body>
+</html>
