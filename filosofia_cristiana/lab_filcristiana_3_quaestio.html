@@ -99,13 +99,45 @@
     </div>
   </section>
 
+
+  <section id="screen-dash" class="card" hidden>
+    <h2>Area docente — Come si costruisce una quaestio</h2>
+    <div id="dash-login">
+      <label for="dash-pin">PIN</label>
+      <input type="text" id="dash-pin" placeholder="PIN">
+      <p><button onclick="verificaPin()">Entra</button></p>
+      <p id="dash-err" class="stato" style="color:var(--rosso);" hidden>PIN errato.</p>
+    </div>
+    <div id="dash-table-wrap" hidden>
+      <p><button class="secondaria" onclick="caricaRisposte()">Aggiorna</button></p>
+      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Nome</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Classe</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Punteggio F1</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Fase 2</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Quando</th>
+            </tr>
+          </thead>
+          <tbody id="dash-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </div>
-<footer>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</footer>
+<footer>
+  <p>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</p>
+  <p><button class="secondaria" onclick="apriDashboard()">Area docente</button></p>
+</footer>
 
 <script>
 // ---------------------------------------------------------------- Firebase
 const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
 const FIREBASE_PATH = "studenti_filcristiana3_quaestio";
+const TEACHER_PIN = "1970";
 
 const DATI = [{"id": "b1", "testo": "Se la filosofia sia utile alla fede.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 0, "spiegazione": "È il punto controverso messo in forma di domanda: apre la quaestio.", "errore": "Guarda la forma: non argomenta nulla, chiede soltanto."}, {"id": "b2", "testo": "Sembra che non lo sia. La verità necessaria alla salvezza è già contenuta per intero nella Scrittura; e ciò che è già dato per intero non va cercato altrove.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 1, "spiegazione": "Prima obiezione: un argomento contro la tesi che si vuole sostenere.", "errore": "Comincia con «sembra che non»: è la mossa con cui si apre un'obiezione."}, {"id": "b3", "testo": "Inoltre: le eresie sono nate quasi tutte dal tentativo di spiegare con argomenti umani ciò che andava soltanto creduto.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 1, "spiegazione": "Seconda obiezione: stessa funzione della precedente, argomento diverso.", "errore": "È un secondo argomento contro la tesi, non la soluzione."}, {"id": "b4", "testo": "Agostino afferma: «credi, per poter capire; e capisci, per poter credere». Ma capire è l'opera della filosofia.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 2, "spiegazione": "È il sed contra: un'autorità citata in senso opposto alle obiezioni.", "errore": "Attenzione: qui si cita un'autorità, non si espone ancora una soluzione propria."}, {"id": "b5", "testo": "La filosofia è utile alla fede, ma non allo stesso titolo della rivelazione: la rivelazione dà il contenuto, la filosofia gli strumenti per chiarirlo e difenderlo.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 3, "spiegazione": "È il respondeo: la soluzione, che distingue invece di scegliere fra sì e no.", "errore": "È qui che per la prima volta si prende posizione articolando una distinzione."}, {"id": "b6", "testo": "Alla prima: la filosofia non aggiunge una seconda verità, permette di comprendere quella che si crede. Alla seconda: che alcuni abbiano sbagliato non dimostra che la ragione vada abbandonata.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 4, "spiegazione": "Sono le risposte alle obiezioni iniziali, una per una: chiudono la quaestio.", "errore": "Nota che il blocco risponde a due cose distinte, nell'ordine in cui erano state poste."}];
 const APERTE = [{"id": "ordine", "domanda": "Scrivi la sequenza corretta usando i numeri dei blocchi come compaiono qui sopra (es. 1-3-2-…).", "aiuto": ""}, {"id": "perche", "domanda": "Perché il metodo obbliga a scrivere le obiezioni PRIMA della propria risposta, e nella forma più forte possibile?", "aiuto": "Pensa a che cosa succede a una tesi che non ha mai attraversato le obiezioni."}];
@@ -218,6 +250,61 @@ $("invia").addEventListener("click", async () => {
     : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
   $("fine").scrollIntoView({behavior:"smooth"});
 });
+
+function apriDashboard(){
+  $("gate").hidden = true;
+  $("lab").hidden = true;
+  $("screen-dash").hidden = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function verificaPin(){
+  const pin = $("dash-pin").value.trim();
+  if(pin !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
+  $("dash-err").hidden = true;
+  $("dash-login").hidden = true;
+  $("dash-table-wrap").hidden = false;
+  caricaRisposte();
+}
+
+function caricaRisposte(){
+  $("dash-loading").hidden = false;
+  fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
+    .then(r => r.json())
+    .then(data => {
+      $("dash-loading").hidden = true;
+      const rows = data ? Object.values(data) : [];
+      rows.sort((a,b) => (a.inviato||"").localeCompare(b.inviato||""));
+      const tbody = $("dash-tbody");
+      tbody.innerHTML = "";
+      if(rows.length === 0){
+        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
+        return;
+      }
+      rows.forEach(r => {
+        const f1 = r.fase1 || {};
+        const f1vals = Object.values(f1);
+        const corrette = f1vals.filter(v => v && v.corretta).length;
+        const totale = f1vals.length;
+        const punteggio = totale ? (corrette + "/" + totale) : "—";
+        const f2 = r.fase2 || {};
+        const f2text = APERTE.map(a => {
+          const testo = f2[a.id];
+          return testo ? ("<b>" + a.domanda + ":</b> " + testo) : "";
+        }).filter(Boolean).join("<br>");
+        const td = "padding:6px 4px;border-bottom:1px solid var(--bordo);vertical-align:top;";
+        const tr = document.createElement("tr");
+        tr.innerHTML = "<td style='" + td + "'>" + (r.nome||"") + "</td>" +
+          "<td style='" + td + "'>" + (r.classe||"") + "</td>" +
+          "<td style='" + td + "'>" + punteggio + "</td>" +
+          "<td style='" + td + "'>" + f2text + "</td>" +
+          "<td style='" + td + "'>" + (r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "") + "</td>";
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(() => { $("dash-loading").textContent = "Errore nel caricamento."; $("dash-loading").hidden = false; });
+}
+
 
 costruisci();
 </script>

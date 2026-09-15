@@ -100,13 +100,45 @@
     </div>
   </section>
 
+
+  <section id="screen-dash" class="card" hidden>
+    <h2>Area docente — Se Dio è buono</h2>
+    <div id="dash-login">
+      <label for="dash-pin">PIN</label>
+      <input type="text" id="dash-pin" placeholder="PIN">
+      <p><button onclick="verificaPin()">Entra</button></p>
+      <p id="dash-err" class="stato" style="color:var(--rosso);" hidden>PIN errato.</p>
+    </div>
+    <div id="dash-table-wrap" hidden>
+      <p><button class="secondaria" onclick="caricaRisposte()">Aggiorna</button></p>
+      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Nome</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Classe</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Punteggio F1</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Fase 2</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Quando</th>
+            </tr>
+          </thead>
+          <tbody id="dash-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </div>
-<footer>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</footer>
+<footer>
+  <p>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</p>
+  <p><button class="secondaria" onclick="apriDashboard()">Area docente</button></p>
+</footer>
 
 <script>
 // ---------------------------------------------------------------- Firebase
 const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
 const FIREBASE_PATH = "studenti_filcristiana2_sediobuono";
+const TEACHER_PIN = "1970";
 
 const DATI = [{"id": "fr_a", "testo": "<strong>a.</strong> Il male non è una cosa: è la mancanza di un bene che dovrebbe esserci.", "opzioni": ["T1 — prima premessa", "T2 — seconda premessa", "T3 — idea data per scontata", "T4 — conclusione", "Nessun testo: è una posizione che Agostino ha abbandonato"], "giusta": 1, "spiegazione": "Riformula T2. È la mossa decisiva: al male viene tolto lo statuto di cosa.", "errore": "La parola chiave è «mancanza»: è una definizione del male, non il punto di partenza né l'esito."}, {"id": "fr_b", "testo": "<strong>b.</strong> Se non c'è una volontà libera che sceglie, non si può parlare di colpa.", "opzioni": ["T1 — prima premessa", "T2 — seconda premessa", "T3 — idea data per scontata", "T4 — conclusione", "Nessun testo: è una posizione che Agostino ha abbandonato"], "giusta": 2, "spiegazione": "Riformula T3. Senza questa condizione la conclusione non seguirebbe: non ci sarebbe nessuno a cui attribuire il male.", "errore": "Questa frase non dice che cos'è il male: dice a quale condizione si può parlare di colpa."}, {"id": "fr_c", "testo": "<strong>c.</strong> Tutto ciò che esiste, in quanto creato, è buono — anche ciò che può corrompersi.", "opzioni": ["T1 — prima premessa", "T2 — seconda premessa", "T3 — idea data per scontata", "T4 — conclusione", "Nessun testo: è una posizione che Agostino ha abbandonato"], "giusta": 0, "spiegazione": "Riformula T1. È il punto di partenza: se non fosse buono, non ci sarebbe nulla da corrompere.", "errore": "Qui non si parla ancora del male: si dice che cosa vale per tutto ciò che esiste."}, {"id": "fr_d", "testo": "<strong>d.</strong> Il male è una potenza autonoma, che si contende il mondo con il bene.", "opzioni": ["T1 — prima premessa", "T2 — seconda premessa", "T3 — idea data per scontata", "T4 — conclusione", "Nessun testo: è una posizione che Agostino ha abbandonato"], "giusta": 4, "spiegazione": "È la posizione manichea, che Agostino ha lasciato con la conversione. T1 la esclude: se il male fosse una sostanza, sarebbe un bene.", "errore": "Rileggi T1: nessuno dei quattro passi può dire questo, perché significherebbe ammettere due principi."}, {"id": "fr_e", "testo": "<strong>e.</strong> Il male nasce da una volontà che abbandona Dio e si volge a beni minori.", "opzioni": ["T1 — prima premessa", "T2 — seconda premessa", "T3 — idea data per scontata", "T4 — conclusione", "Nessun testo: è una posizione che Agostino ha abbandonato"], "giusta": 3, "spiegazione": "Riformula T4. Qui l'argomento si chiude: il male ha un'origine, e non è Dio.", "errore": "Nota il movimento — da Dio verso ciò che vale meno: è l'esito del ragionamento, non una sua premessa."}];
 const APERTE = [{"id": "obiezione", "domanda": "Scrivi l'obiezione più forte che si può muovere a questo argomento, e indica quale passaggio colpisce (prima premessa, seconda premessa, idea data per scontata, conclusione).", "aiuto": "Un esempio di sofferenza terribile colpisce il sentimento, non la tesi: non vale."}];
@@ -219,6 +251,61 @@ $("invia").addEventListener("click", async () => {
     : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
   $("fine").scrollIntoView({behavior:"smooth"});
 });
+
+function apriDashboard(){
+  $("gate").hidden = true;
+  $("lab").hidden = true;
+  $("screen-dash").hidden = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function verificaPin(){
+  const pin = $("dash-pin").value.trim();
+  if(pin !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
+  $("dash-err").hidden = true;
+  $("dash-login").hidden = true;
+  $("dash-table-wrap").hidden = false;
+  caricaRisposte();
+}
+
+function caricaRisposte(){
+  $("dash-loading").hidden = false;
+  fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
+    .then(r => r.json())
+    .then(data => {
+      $("dash-loading").hidden = true;
+      const rows = data ? Object.values(data) : [];
+      rows.sort((a,b) => (a.inviato||"").localeCompare(b.inviato||""));
+      const tbody = $("dash-tbody");
+      tbody.innerHTML = "";
+      if(rows.length === 0){
+        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
+        return;
+      }
+      rows.forEach(r => {
+        const f1 = r.fase1 || {};
+        const f1vals = Object.values(f1);
+        const corrette = f1vals.filter(v => v && v.corretta).length;
+        const totale = f1vals.length;
+        const punteggio = totale ? (corrette + "/" + totale) : "—";
+        const f2 = r.fase2 || {};
+        const f2text = APERTE.map(a => {
+          const testo = f2[a.id];
+          return testo ? ("<b>" + a.domanda + ":</b> " + testo) : "";
+        }).filter(Boolean).join("<br>");
+        const td = "padding:6px 4px;border-bottom:1px solid var(--bordo);vertical-align:top;";
+        const tr = document.createElement("tr");
+        tr.innerHTML = "<td style='" + td + "'>" + (r.nome||"") + "</td>" +
+          "<td style='" + td + "'>" + (r.classe||"") + "</td>" +
+          "<td style='" + td + "'>" + punteggio + "</td>" +
+          "<td style='" + td + "'>" + f2text + "</td>" +
+          "<td style='" + td + "'>" + (r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "") + "</td>";
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(() => { $("dash-loading").textContent = "Errore nel caricamento."; $("dash-loading").hidden = false; });
+}
+
 
 costruisci();
 </script>

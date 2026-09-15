@@ -100,13 +100,45 @@
     </div>
   </section>
 
+
+  <section id="screen-dash" class="card" hidden>
+    <h2>Area docente — La prova ontologica</h2>
+    <div id="dash-login">
+      <label for="dash-pin">PIN</label>
+      <input type="text" id="dash-pin" placeholder="PIN">
+      <p><button onclick="verificaPin()">Entra</button></p>
+      <p id="dash-err" class="stato" style="color:var(--rosso);" hidden>PIN errato.</p>
+    </div>
+    <div id="dash-table-wrap" hidden>
+      <p><button class="secondaria" onclick="caricaRisposte()">Aggiorna</button></p>
+      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Nome</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Classe</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Punteggio F1</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Fase 2</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Quando</th>
+            </tr>
+          </thead>
+          <tbody id="dash-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </div>
-<footer>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</footer>
+<footer>
+  <p>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</p>
+  <p><button class="secondaria" onclick="apriDashboard()">Area docente</button></p>
+</footer>
 
 <script>
 // ---------------------------------------------------------------- Firebase
 const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
 const FIREBASE_PATH = "studenti_filcristiana4_provaontologica";
+const TEACHER_PIN = "1970";
 
 const DATI = [{"id": "fr_a", "testo": "<strong>a.</strong> Se esistesse solo nel pensiero, se ne potrebbe pensare una maggiore: e sarebbe una contraddizione.", "opzioni": ["A · passaggio 1", "B · passaggio 2", "C · passaggio 3", "D · passaggio 4", "E · passaggio 5", "Nessun blocco: dice qualcosa che Anselmo non conclude"], "giusta": 3, "spiegazione": "Blocco D, quarto passaggio: è la mossa decisiva, e il punto in cui si passa dall'ordine del pensiero a quello dell'essere.", "errore": "Questa frase non definisce, non distingue e non conclude: mostra che una delle due possibilità porta a contraddizione."}, {"id": "fr_b", "testo": "<strong>b.</strong> Di Dio si parte da una definizione: ciò di cui non si può pensare nulla di maggiore.", "opzioni": ["A · passaggio 1", "B · passaggio 2", "C · passaggio 3", "D · passaggio 4", "E · passaggio 5", "Nessun blocco: dice qualcosa che Anselmo non conclude"], "giusta": 0, "spiegazione": "Blocco A, primo passaggio: tutto l'argomento nasce da qui. Anselmo non parte dall'esistenza di Dio, parte da come si usa la parola.", "errore": "Prima di ogni altra cosa Anselmo fissa il significato del termine: senza quello, nessuno dei passaggi seguenti funziona."}, {"id": "fr_c", "testo": "<strong>c.</strong> Dunque esiste, e nel pensiero e nella realtà.", "opzioni": ["A · passaggio 1", "B · passaggio 2", "C · passaggio 3", "D · passaggio 4", "E · passaggio 5", "Nessun blocco: dice qualcosa che Anselmo non conclude"], "giusta": 4, "spiegazione": "Blocco E, quinto passaggio: la conclusione, ed è tutto ciò che Anselmo ha voluto dimostrare.", "errore": "Guarda il «dunque»: questa frase non apre il ragionamento, lo chiude."}, {"id": "fr_d", "testo": "<strong>d.</strong> Anche chi nega Dio capisce la definizione: dunque quella cosa è almeno nel suo pensiero.", "opzioni": ["A · passaggio 1", "B · passaggio 2", "C · passaggio 3", "D · passaggio 4", "E · passaggio 5", "Nessun blocco: dice qualcosa che Anselmo non conclude"], "giusta": 1, "spiegazione": "Blocco B, secondo passaggio: la definizione, una volta fissata, viene compresa perfino da chi nega — e questo basta a metterla nel pensiero.", "errore": "Attenzione all'ordine: qui la definizione c'è già, e se ne ricava che cosa deve ammettere chi la ascolta."}, {"id": "fr_e", "testo": "<strong>e.</strong> Dunque chi nega Dio si contraddice ogni volta che apre bocca.", "opzioni": ["A · passaggio 1", "B · passaggio 2", "C · passaggio 3", "D · passaggio 4", "E · passaggio 5", "Nessun blocco: dice qualcosa che Anselmo non conclude"], "giusta": 5, "spiegazione": "Anselmo non conclude nulla sullo stolto: conclude sull'esistenza. Lo stolto gli serve solo come punto di partenza.", "errore": "Rileggi la fine del testo: su che cosa conclude Anselmo, sullo stolto o su ciò che esiste?"}, {"id": "fr_f", "testo": "<strong>f.</strong> Esistere nel pensiero ed esistere nella realtà non sono la stessa cosa.", "opzioni": ["A · passaggio 1", "B · passaggio 2", "C · passaggio 3", "D · passaggio 4", "E · passaggio 5", "Nessun blocco: dice qualcosa che Anselmo non conclude"], "giusta": 2, "spiegazione": "Blocco C, terzo passaggio: è la distinzione dell'esempio del pittore, il quadro pensato e il quadro dipinto.", "errore": "Questa frase distingue due modi di esserci: non è né la definizione di partenza né la mossa decisiva."}];
 const APERTE = [{"id": "debole", "domanda": "Ora che hai la catena in ordine: quale passaggio ti convince meno? Indica il numero e spiega in una riga perché.", "aiuto": "Non basta dire «non sono d'accordo»: dì che cosa non regge nel passaggio."}, {"id": "replica", "domanda": "Prova a rispondere come Anselmo a chi ti muove quell'obiezione.", "aiuto": ""}];
@@ -219,6 +251,61 @@ $("invia").addEventListener("click", async () => {
     : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
   $("fine").scrollIntoView({behavior:"smooth"});
 });
+
+function apriDashboard(){
+  $("gate").hidden = true;
+  $("lab").hidden = true;
+  $("screen-dash").hidden = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function verificaPin(){
+  const pin = $("dash-pin").value.trim();
+  if(pin !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
+  $("dash-err").hidden = true;
+  $("dash-login").hidden = true;
+  $("dash-table-wrap").hidden = false;
+  caricaRisposte();
+}
+
+function caricaRisposte(){
+  $("dash-loading").hidden = false;
+  fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
+    .then(r => r.json())
+    .then(data => {
+      $("dash-loading").hidden = true;
+      const rows = data ? Object.values(data) : [];
+      rows.sort((a,b) => (a.inviato||"").localeCompare(b.inviato||""));
+      const tbody = $("dash-tbody");
+      tbody.innerHTML = "";
+      if(rows.length === 0){
+        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
+        return;
+      }
+      rows.forEach(r => {
+        const f1 = r.fase1 || {};
+        const f1vals = Object.values(f1);
+        const corrette = f1vals.filter(v => v && v.corretta).length;
+        const totale = f1vals.length;
+        const punteggio = totale ? (corrette + "/" + totale) : "—";
+        const f2 = r.fase2 || {};
+        const f2text = APERTE.map(a => {
+          const testo = f2[a.id];
+          return testo ? ("<b>" + a.domanda + ":</b> " + testo) : "";
+        }).filter(Boolean).join("<br>");
+        const td = "padding:6px 4px;border-bottom:1px solid var(--bordo);vertical-align:top;";
+        const tr = document.createElement("tr");
+        tr.innerHTML = "<td style='" + td + "'>" + (r.nome||"") + "</td>" +
+          "<td style='" + td + "'>" + (r.classe||"") + "</td>" +
+          "<td style='" + td + "'>" + punteggio + "</td>" +
+          "<td style='" + td + "'>" + f2text + "</td>" +
+          "<td style='" + td + "'>" + (r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "") + "</td>";
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(() => { $("dash-loading").textContent = "Errore nel caricamento."; $("dash-loading").hidden = false; });
+}
+
 
 costruisci();
 </script>

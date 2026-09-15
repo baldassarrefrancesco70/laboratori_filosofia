@@ -99,13 +99,45 @@
     </div>
   </section>
 
+
+  <section id="screen-dash" class="card" hidden>
+    <h2>Area docente — Credere per capire</h2>
+    <div id="dash-login">
+      <label for="dash-pin">PIN</label>
+      <input type="text" id="dash-pin" placeholder="PIN">
+      <p><button onclick="verificaPin()">Entra</button></p>
+      <p id="dash-err" class="stato" style="color:var(--rosso);" hidden>PIN errato.</p>
+    </div>
+    <div id="dash-table-wrap" hidden>
+      <p><button class="secondaria" onclick="caricaRisposte()">Aggiorna</button></p>
+      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Nome</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Classe</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Punteggio F1</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Fase 2</th>
+              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Quando</th>
+            </tr>
+          </thead>
+          <tbody id="dash-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </div>
-<footer>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</footer>
+<footer>
+  <p>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</p>
+  <p><button class="secondaria" onclick="apriDashboard()">Area docente</button></p>
+</footer>
 
 <script>
 // ---------------------------------------------------------------- Firebase
 const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
 const FIREBASE_PATH = "studenti_filcristiana1_crederepercapire";
+const TEACHER_PIN = "1970";
 
 const DATI = [{"id": "a1", "testo": "«Che cosa hanno in comune Atene e Gerusalemme, l'Accademia e la Chiesa? […] Dopo Cristo Gesù non abbiamo bisogno di curiosità, né di ricerca dopo il Vangelo. Quando crediamo, non desideriamo credere nient'altro.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 1, "spiegazione": "È Tertulliano: dopo il Vangelo la ricerca non serve più.", "errore": "Rileggi l'ultima frase: chi scrive dichiara chiusa la ricerca, non la affianca alla fede."}, {"id": "a2", "testo": "«Vuoi capire? Credi. Perché Dio ha detto per bocca del profeta: \"Se non crederete, non capirete\". […] L'intelligenza è la ricompensa della fede. Non cercare dunque di capire per credere, ma credi per capire.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "È Agostino: la fede viene prima, ma ha come frutto l'intelligenza — che quindi non è messa da parte.", "errore": "Attenzione a «l'intelligenza è la ricompensa della fede»: capire non viene escluso, viene promesso."}, {"id": "a3", "testo": "«Non sia mai che Dio odii in noi ciò per cui ci ha creati superiori agli altri esseri viventi. Non sia mai, dico, che si creda per non dover accogliere o cercare una ragione: non potremmo neppure credere, se non avessimo anime capaci di ragionare.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "Ancora Agostino, dall'altro lato: si crede con un'anima razionale, altrimenti non si crederebbe affatto.", "errore": "Chi scrive difende la ragione — ma dentro la fede, non contro di essa né al posto suo."}, {"id": "a4", "testo": "«Nelle discussioni non si deve cercare tanto il peso dell'autorità quanto quello degli argomenti. Anzi, l'autorità di chi si professa maestro è per lo più di ostacolo a chi vuole imparare.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 0, "spiegazione": "Qui l'autorità non precede la ragione: la ostacola. È l'unico testo non cristiano del gruppo.", "errore": "«Non tanto il peso dell'autorità quanto quello degli argomenti»: chi parla sta togliendo alla fede il primo posto."}, {"id": "a5", "testo": "«Quanto di buono è stato detto da chiunque appartiene a noi cristiani. […] Tutti gli scrittori, grazie al seme del Logos che è in loro, poterono vedere la realtà, ma oscuramente.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "È Giustino: la ricerca dei filosofi e la rivelazione hanno la stessa sorgente, il Logos.", "errore": "Nota il «ma oscuramente»: la filosofia vede qualcosa di vero, e però non le basta — non è né respinta né sufficiente."}, {"id": "a6", "testo": "«Il Figlio di Dio è stato crocifisso: non me ne vergogno, proprio perché è cosa da vergognarsene. Il Figlio di Dio è morto: è del tutto credibile, proprio perché è assurdo. È stato sepolto ed è risorto: è certo, proprio perché è impossibile.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 1, "spiegazione": "Ancora Tertulliano: ciò che la ragione respinge viene assunto come garanzia della fede. Se hai esitato, avevi le tue ragioni: ne parliamo in classe.", "errore": "Qui l'assurdo non è un ostacolo da superare con la ragione: è portato come motivo per credere."}];
 const APERTE = [{"id": "tesi", "domanda": "Qual è la tesi di Agostino sul rapporto fra fede e ragione? Una frase sola.", "aiuto": "Non riassumere le formule: dì che cosa sostengono."}, {"id": "esclude", "domanda": "Che cosa esclude quella tesi? Indica una delle altre due posizioni e spiega perché Agostino non può accettarla.", "aiuto": ""}];
@@ -218,6 +250,61 @@ $("invia").addEventListener("click", async () => {
     : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
   $("fine").scrollIntoView({behavior:"smooth"});
 });
+
+function apriDashboard(){
+  $("gate").hidden = true;
+  $("lab").hidden = true;
+  $("screen-dash").hidden = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function verificaPin(){
+  const pin = $("dash-pin").value.trim();
+  if(pin !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
+  $("dash-err").hidden = true;
+  $("dash-login").hidden = true;
+  $("dash-table-wrap").hidden = false;
+  caricaRisposte();
+}
+
+function caricaRisposte(){
+  $("dash-loading").hidden = false;
+  fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
+    .then(r => r.json())
+    .then(data => {
+      $("dash-loading").hidden = true;
+      const rows = data ? Object.values(data) : [];
+      rows.sort((a,b) => (a.inviato||"").localeCompare(b.inviato||""));
+      const tbody = $("dash-tbody");
+      tbody.innerHTML = "";
+      if(rows.length === 0){
+        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
+        return;
+      }
+      rows.forEach(r => {
+        const f1 = r.fase1 || {};
+        const f1vals = Object.values(f1);
+        const corrette = f1vals.filter(v => v && v.corretta).length;
+        const totale = f1vals.length;
+        const punteggio = totale ? (corrette + "/" + totale) : "—";
+        const f2 = r.fase2 || {};
+        const f2text = APERTE.map(a => {
+          const testo = f2[a.id];
+          return testo ? ("<b>" + a.domanda + ":</b> " + testo) : "";
+        }).filter(Boolean).join("<br>");
+        const td = "padding:6px 4px;border-bottom:1px solid var(--bordo);vertical-align:top;";
+        const tr = document.createElement("tr");
+        tr.innerHTML = "<td style='" + td + "'>" + (r.nome||"") + "</td>" +
+          "<td style='" + td + "'>" + (r.classe||"") + "</td>" +
+          "<td style='" + td + "'>" + punteggio + "</td>" +
+          "<td style='" + td + "'>" + f2text + "</td>" +
+          "<td style='" + td + "'>" + (r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "") + "</td>";
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(() => { $("dash-loading").textContent = "Errore nel caricamento."; $("dash-loading").hidden = false; });
+}
+
 
 costruisci();
 </script>
