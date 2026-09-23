@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contro chi scrivono? — parole chiave e confronto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F3; --paper:#FFFFFF; --ink:#1F2A30; --sub:#4A5A63;
+  --title:#2F5468; --eyebrow:#5B7E92; --banner:#DCE6EC;
+  --line:#C7D3DA; --zebra:#F4F7F8;
+  --accent:#B4451B; --accent-bg:#FBEDE4;
+  --good:#2F6B4F; --good-bg:#E6F1EC;
+  --shadow: 0 1px 2px rgba(31,42,48,.06), 0 8px 24px -12px rgba(31,42,48,.18);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141C22; --paper:#1C262D; --ink:#E7EDF0; --sub:#AFC0C8;
+    --title:#8FB7CC; --eyebrow:#7FA3B6; --banner:#243541;
+    --line:#33454F; --zebra:#202C33;
+    --accent:#E2793E; --accent-bg:#3A2A1F;
+    --good:#6FBE95; --good-bg:#1E3227;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.55);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141C22; --paper:#1C262D; --ink:#E7EDF0; --sub:#AFC0C8;
+  --title:#8FB7CC; --eyebrow:#7FA3B6; --banner:#243541;
+  --line:#33454F; --zebra:#202C33;
+  --accent:#E2793E; --accent-bg:#3A2A1F;
+  --good:#6FBE95; --good-bg:#1E3227;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.55);
+  color-scheme: dark;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Source Sans 3", system-ui, sans-serif;
+  font-size:16px; line-height:1.55;
+  padding-inline:16px;
+}
+.wrap{max-width:760px; margin:0 auto; padding-block:28px 80px;}
+h1,h2,h3{font-family:"Fraunces", Georgia, serif; color:var(--title); text-wrap:balance; margin:0;}
+.eyebrow{
+  font-size:12px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--eyebrow); margin:0 0 6px;
+}
+h1{font-size:clamp(26px,5vw,34px); font-weight:600; line-height:1.15;}
+.meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+.chip{
+  font-size:12.5px; font-weight:600; color:var(--eyebrow); background:var(--banner);
+  border-radius:999px; padding:5px 12px; white-space:nowrap;
+}
+.lede{color:var(--sub); margin-top:14px; font-size:15px; max-width:60ch;}
+
+.viewbar{
+  position:sticky; top:0; z-index:20;
+  margin:22px -16px 0; padding:10px 16px;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+}
+.segmented{display:inline-flex; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:3px; box-shadow:var(--shadow);}
+.segmented button{
+  appearance:none; border:0; background:transparent; color:var(--sub); font:inherit; font-weight:600; font-size:13.5px;
+  padding:7px 14px; border-radius:7px; cursor:pointer;
+}
+.segmented button[aria-pressed="true"]{background:var(--title); color:#fff;}
+.themebtn{
+  appearance:none; border:1px solid var(--line); background:var(--paper); color:var(--sub);
+  border-radius:10px; padding:7px 11px; font:inherit; font-size:13px; font-weight:600; cursor:pointer;
+}
+
+section{margin-top:30px;}
+.card{
+  background:var(--paper); border:1px solid var(--line); border-radius:14px;
+  padding:18px 20px; box-shadow:var(--shadow);
+}
+.recall{
+  background:var(--banner); border-radius:12px; padding:14px 18px; margin-top:18px;
+  font-size:14.5px; color:var(--ink);
+}
+.recall b{color:var(--title);}
+
+.phase-h{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
+.phase-h h2{font-size:20px; font-weight:600;}
+.phase-time{
+  font-family:"Source Sans 3",sans-serif; font-variant-numeric:tabular-nums; font-weight:700;
+  font-size:13px; color:var(--eyebrow); background:var(--banner); border-radius:999px; padding:4px 10px;
+}
+p.help{color:var(--sub); font-size:14px; margin:2px 0 14px;}
+
+.timer{
+  display:flex; align-items:center; gap:10px; margin:0 0 16px;
+  background:var(--zebra); border:1px solid var(--line); border-radius:12px; padding:10px 14px;
+}
+.timer .t{
+  font-family:"Fraunces",serif; font-variant-numeric:tabular-nums; font-size:26px; font-weight:600;
+  color:var(--title); min-width:72px;
+}
+.timer .bar{flex:1; height:6px; border-radius:999px; background:var(--line); overflow:hidden;}
+.timer .bar i{display:block; height:100%; background:var(--eyebrow); width:100%; transition:width 1s linear;}
+.timer.done .bar i{background:var(--accent);}
+.timer.done .t{color:var(--accent);}
+.timer button{
+  appearance:none; border:1px solid var(--line); background:var(--paper); color:var(--ink);
+  border-radius:8px; padding:6px 12px; font:inherit; font-weight:600; font-size:13px; cursor:pointer;
+}
+.timer button:hover{border-color:var(--eyebrow);}
+
+.text-card{border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:14px; background:var(--paper);}
+.text-card h3{font-size:16px; font-weight:600; display:flex; align-items:center; gap:8px;}
+.tag{
+  font-family:"Source Sans 3",sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.04em;
+  color:var(--eyebrow); background:var(--banner); border-radius:6px; padding:2px 7px;
+}
+textarea, input[type=text]{
+  width:100%; font:inherit; font-size:14.5px; color:var(--ink); background:var(--bg);
+  border:1px solid var(--line); border-radius:9px; padding:10px 12px; resize:vertical;
+}
+textarea:focus, input[type=text]:focus{outline:2px solid var(--eyebrow); outline-offset:1px;}
+.cite{font-size:12.5px; color:var(--sub); margin:8px 0 0; font-style:italic;}
+.gloss{
+  font-size:13px; color:var(--ink); background:var(--zebra); border-radius:9px;
+  padding:9px 12px; margin-top:10px; border:1px dashed var(--line);
+}
+.gloss b{color:var(--title); font-weight:700;}
+
+.q{margin-top:12px;}
+.q label{display:block; font-weight:600; font-size:13.5px; color:var(--title); margin-bottom:5px;}
+.q textarea{min-height:56px;}
+.kw label{display:block; font-weight:600; font-size:13.5px; color:var(--title); margin-bottom:5px;}
+.kw input{margin-bottom:2px;}
+.kw .hint{font-size:12px; color:var(--sub); margin-top:4px;}
+
+.frag-block{border-top:1px dashed var(--line); padding-top:14px; margin-top:14px;}
+.frag-block:first-of-type{border-top:none; padding-top:0; margin-top:0;}
+.frag-block h3{font-family:"Fraunces",serif; font-size:17px; margin-bottom:8px;}
+
+.pair-sentence{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:15px; margin-bottom:14px;
+  font-family:"Fraunces",serif; color:var(--ink);
+}
+.pair-sentence select{
+  font:inherit; font-family:"Source Sans 3",sans-serif; font-weight:600; font-size:14px; color:var(--title);
+  background:var(--banner); border:1px solid var(--line); border-radius:8px; padding:5px 8px;
+}
+.choice{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+.choice label{
+  display:flex; align-items:center; gap:7px; font-weight:600; font-size:14px;
+  background:var(--zebra); border:1px solid var(--line); border-radius:9px; padding:8px 14px; cursor:pointer;
+}
+.choice input{width:auto;}
+
+.teacher-only{display:none;}
+[data-view="docente"] .teacher-only{display:block;}
+[data-view="docente"] .student-only{display:none;}
+
+.acc{border:1px solid var(--line); border-radius:12px; margin-top:14px; overflow:hidden; background:var(--paper);}
+.acc > summary{
+  cursor:pointer; list-style:none; padding:12px 16px; font-weight:600; color:var(--title);
+  display:flex; justify-content:space-between; align-items:center; font-family:"Fraunces",serif; font-size:16px;
+}
+.acc > summary::-webkit-details-marker{display:none;}
+.acc > summary::after{content:"+"; color:var(--eyebrow); font-size:18px; font-family:"Source Sans 3",sans-serif;}
+.acc[open] > summary::after{content:"–";}
+.acc .inner{padding:0 16px 16px; font-size:14.5px; color:var(--ink);}
+.acc .inner ul{margin:6px 0; padding-left:20px;}
+.acc .inner li{margin-bottom:6px;}
+.acc .inner table{width:100%; border-collapse:collapse; margin-top:8px; font-size:13.5px;}
+.acc .inner th,.acc .inner td{border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top;}
+.acc .inner th{background:var(--banner); color:var(--title);}
+
+.badge-eval{
+  font-size:11.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
+  color:var(--good); background:var(--good-bg); border-radius:6px; padding:3px 8px;
+}
+
+footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); color:var(--sub); font-size:12.5px;}
+
+/* ---------- gate, invio, area docente ---------- */
+[hidden]{display:none !important;}
+.btn{
+  appearance:none; border:1px solid var(--title); background:var(--title); color:#fff;
+  border-radius:10px; padding:10px 18px; font:inherit; font-weight:600; font-size:14.5px; cursor:pointer;
+}
+.btn.sec{background:var(--paper); color:var(--title); border-color:var(--line);}
+.btn:disabled{opacity:.45; cursor:not-allowed;}
+.field{margin-top:12px;}
+.field label{display:block; font-weight:600; font-size:13.5px; color:var(--title); margin-bottom:5px;}
+.stato{font-size:13.5px; color:var(--sub); margin:10px 0 0;}
+.stato.err{color:var(--accent); font-weight:600;}
+.stato.ok{color:var(--good); font-weight:600;}
+.studente-bar{font-size:13px; color:var(--sub);}
+.studente-bar b{color:var(--title);}
+.locked textarea:not([readonly]), .locked input, .locked select{opacity:.75;}
+
+.dash-summary{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 4px;}
+.dash-row{border:1px solid var(--line); border-radius:12px; margin-top:10px; background:var(--paper); overflow:hidden;}
+.dash-row > summary{
+  cursor:pointer; list-style:none; padding:10px 14px; display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline;
+}
+.dash-row > summary::-webkit-details-marker{display:none;}
+.dash-row > summary b{color:var(--title);}
+.dash-row > summary span{font-size:13px; color:var(--sub);}
+.dash-row .inner{padding:0 14px 14px; font-size:14px;}
+.dash-row h4{font-family:"Fraunces",serif; color:var(--title); font-size:15px; margin:12px 0 4px;}
+.dash-row p{margin:3px 0;}
+.dash-row .lbl{color:var(--sub); font-size:12.5px; font-weight:700;}
+.kw-list{margin:6px 0 0; padding-left:20px; font-size:14px;}
+</style>
+</head>
+<body>
+<div class="wrap" id="app" data-view="studenti">
+
+  <p class="eyebrow">Filosofia · Quinto anno · Attività 1 (variante) · Ora 1</p>
+  <h1>Contro chi scrivono?</h1>
+  <div class="meta">
+    <span class="chip">20 minuti</span>
+    <span class="chip">Guida alta</span>
+    <span class="chip">Formativa, non valutata</span>
+    <span class="chip">Contestualizzazione filosofica</span>
+  </div>
+  <p class="lede">Tre frammenti romantici (T1, T2, T3) e un passo di Kant che già conosci (K). Non sai chi ha scritto i frammenti: lo scoprirai alla fine.</p>
+
+  <div class="viewbar">
+    <span class="studente-bar" id="studenteBar">Vista studenti</span>
+    <button class="themebtn" id="themeToggle" type="button">Tema: sistema</button>
+  </div>
+
+  <section id="gate" class="card">
+    <h2 style="font-size:20px;">Prima di cominciare</h2>
+    <div class="field">
+      <label for="nome">Nome e cognome</label>
+      <input id="nome" type="text" autocomplete="name" placeholder="Es. Maria Rossi">
+    </div>
+    <div class="field">
+      <label for="classe">Classe</label>
+      <input id="classe" type="text" placeholder="Es. 5D">
+    </div>
+    <p class="stato">Il tuo lavoro viene salvato con il tuo nome: serve all'insegnante per seguire la classe, non produce un voto.</p>
+    <p style="margin:14px 0 0;"><button class="btn" id="avvia" type="button" disabled>Inizia</button></p>
+  </section>
+
+  <section id="screen-dash" class="card" hidden>
+    <div class="phase-h"><h2>Area docente — risposte</h2></div>
+    <div id="dash-login">
+      <div class="field">
+        <label for="dash-pin">PIN</label>
+        <input type="text" id="dash-pin" inputmode="numeric" placeholder="PIN">
+      </div>
+      <p style="margin:12px 0 0;"><button class="btn" type="button" id="dash-entra">Entra</button>
+        <button class="btn sec" type="button" id="dash-annulla">Annulla</button></p>
+      <p id="dash-err" class="stato err" hidden>PIN errato.</p>
+    </div>
+    <div id="dash-wrap" hidden>
+      <p class="help" style="margin-top:0;">Le note per il docente sono ora visibili anche nel corpo della pagina.</p>
+      <p style="margin:0;"><button class="btn sec" type="button" id="dash-aggiorna">Aggiorna</button>
+        <button class="btn sec" type="button" id="dash-esci">Esci dall'area docente</button></p>
+      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
+      <div id="dash-summary"></div>
+      <div id="dash-list"></div>
+    </div>
+  </section>
+
+  <div id="lab" hidden>
+  <div class="recall">
+    <b>Richiamo minimo.</b> Per Kant conosciamo fenomeni, non cose in sé. L'infinito e l'assoluto stanno oltre l'esperienza e quindi oltre la conoscenza.
+  </div>
+
+  <section class="teacher-only acc-wrap">
+    <details class="acc">
+      <summary>Lezione che precede (20')</summary>
+      <div class="inner">
+        <ul>
+          <li>Il Romanticismo come <b>ambiente</b>, non come scuola. A Jena, tra il 1795 e il 1800 circa (<span style="color:var(--accent);font-weight:700">da verificare le date</span>), gravitano Fichte, Schelling, Novalis, i fratelli Schlegel, Schleiermacher, Hölderlin. Hegel arriva nel 1801.</li>
+          <li>Tre motivi da <i>nominare</i>, non da sviscerare: l'infinito e la nostalgia (<i>Sehnsucht</i>); la natura come organismo vivente; l'arte come accesso privilegiato al reale.</li>
+          <li>Il punto centrale: partono da Kant, non lo rifiutano. Ne cambiano la domanda.</li>
+          <li>Perimetro: solo Romanticismo filosofico. Niente Leopardi, Manzoni, Byron.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <section id="testi">
+    <div class="phase-h"><h2>I testi</h2></div>
+    <p class="help">Passo K e frammenti T1–T3, con fonte e nota per lo studente.</p>
+
+    <div class="text-card" data-key="K">
+      <h3><span class="tag">K</span> Kant — passo già noto</h3>
+      <textarea rows="6" readonly>L'illuminismo è l'uscita dell'uomo dallo stato di minorità di cui egli stesso è colpevole. Minorità è l'incapacità di servirsi della propria intelligenza senza la guida di un altro. Colpevole è questa minorità, se la sua causa non dipende da un difetto di intelligenza, ma dalla mancanza di decisione e del coraggio di servirsi di essa senza essere guidati da un altro. Sapere aude! Abbi il coraggio di servirti della tua propria intelligenza! Questo dunque è il motto dell'illuminismo.</textarea>
+      <p class="cite">I. Kant, <i>Risposta alla domanda: che cos'è l'illuminismo?</i> (1784).</p>
+    </div>
+
+    <div class="text-card" data-key="T1">
+      <h3><span class="tag">T1</span> Schleiermacher</h3>
+      <textarea rows="6" readonly>L'intuizione dell'Universo [...] è il perno del mio intero discorso [...]: considerare ogni cosa limitata come una manifestazione dell'Infinito, questo è religione. [...] Nel rapporto dell'uomo con questo mondo ci sono certi passaggi verso l'Infinito, certe prospettive dischiuse, di fronte a cui viene condotto ogni individuo, affinché il suo sentimento trovi la via che conduce all'Universo.</textarea>
+      <p class="cite">F. Schleiermacher, <i>Sulla religione. Discorsi alle persone colte che la disprezzano</i>, secondo discorso, trad. it. a cura di G. Moretto, UTET, Torino 1998.</p>
+      <div class="gloss"><b>Nota esplicativa.</b> "Intuizione" non è qui uno sguardo distratto, ma un sentire immediato che coglie il finito come segno dell'Infinito: è lo stesso movimento che, davanti a un panorama o a un'opera d'arte, fa dire "mi sento parte di qualcosa di più grande" — solo che Schleiermacher lo chiama religione.</div>
+    </div>
+
+    <div class="text-card" data-key="T2">
+      <h3><span class="tag">T2</span> Novalis</h3>
+      <textarea rows="7" readonly>Gli uomini percorrono strade molteplici. Chi le segue e le confronta vedrà originarsi figure bizzarre; figure che sembrano far parte di quella grande scrittura cifrata che si scorge dappertutto: sulle ali, sui gusci d'uovo, nelle nuvole, nella neve, nei cristalli e nelle formazioni rocciose, sulle acque che ghiacciano, nella struttura interna e nell'aspetto esteriore delle montagne, delle piante, degli animali, degli uomini, negli astri del cielo, sulle lastre di pece e di vetro che vengono toccate e colpite, nella limatura intorno ad una calamita e nelle singolari congiunzioni del caso.</textarea>
+      <p class="cite">Novalis, <i>I discepoli di Sais</i>. Traduzione: Alberto Reale.</p>
+      <div class="gloss"><b>Nota esplicativa.</b> La "grande scrittura cifrata" è l'idea romantica che la natura non sia un meccanismo muto ma un testo da decifrare: le stesse forme (spirali, ramificazioni, cristalli) ricorrono in cose diversissime, come se un unico linguaggio le attraversasse tutte.</div>
+    </div>
+
+    <div class="text-card" data-key="T3">
+      <h3><span class="tag">T3</span> F. Schlegel</h3>
+      <textarea rows="4" readonly>La poesia romantica è una poesia universale progressiva. Suo fine non è solo riunire nuovamente tutti i distinti generi della poesia e mettere a contatto la poesia con la filosofia e la retorica.</textarea>
+      <p class="cite">F. Schlegel, Frammento 116, in «Athenaeum» (1798-1800), a cura di G. Cusatelli, Sansoni, Milano 2000.</p>
+      <div class="gloss"><b>Nota esplicativa.</b> "Universale progressiva" significa che per Schlegel la poesia romantica non è un genere fra gli altri, ma un progetto sempre aperto: mescola i generi (lirica, romanzo, saggio) e non si dà mai per conclusa, perché il suo compito è avvicinarsi senza fine a un tutto che nessuna opera singola può esaurire.</div>
+    </div>
+  </section>
+
+  <section id="fase1">
+    <div class="phase-h">
+      <h2>Fase 1 — da solo</h2>
+      <span class="phase-time">7 min</span>
+    </div>
+    <p class="help">Per ciascun frammento: individua una o più parole chiave, poi rispondi alle due domande.</p>
+
+    <div class="timer" data-timer="420">
+      <span class="t">07:00</span>
+      <div class="bar"><i></i></div>
+      <button data-act="start">Avvia</button>
+      <button data-act="reset">Azzera</button>
+    </div>
+
+    <div class="card">
+      <div class="frag-block" data-frag="T1">
+        <h3><span class="tag">T1</span></h3>
+        <div class="kw">
+          <label>Parola o parole chiave nel testo:</label>
+          <input type="text" data-id="f1-t1-kw">
+          <p class="hint">Scegli il termine (o i termini) che porta il peso del passo — non una parola qualsiasi.</p>
+        </div>
+        <div class="q"><label>a) Che cosa mette in contatto con la realtà?</label><textarea data-id="f1-t1-a"></textarea></div>
+        <div class="q"><label>b) Opera un confronto con il testo di Kant.</label><textarea data-id="f1-t1-b"></textarea></div>
+      </div>
+      <div class="frag-block" data-frag="T2">
+        <h3><span class="tag">T2</span></h3>
+        <div class="kw">
+          <label>Parola o parole chiave nel testo:</label>
+          <input type="text" data-id="f1-t2-kw">
+          <p class="hint">Scegli il termine (o i termini) che porta il peso del passo — non una parola qualsiasi.</p>
+        </div>
+        <div class="q"><label>a) Che cosa mette in contatto con la realtà?</label><textarea data-id="f1-t2-a"></textarea></div>
+        <div class="q"><label>b) Opera un confronto con il testo di Kant.</label><textarea data-id="f1-t2-b"></textarea></div>
+      </div>
+      <div class="frag-block" data-frag="T3">
+        <h3><span class="tag">T3</span></h3>
+        <div class="kw">
+          <label>Parola o parole chiave nel testo:</label>
+          <input type="text" data-id="f1-t3-kw">
+          <p class="hint">Scegli il termine (o i termini) che porta il peso del passo — non una parola qualsiasi.</p>
+        </div>
+        <div class="q"><label>a) Che cosa mette in contatto con la realtà?</label><textarea data-id="f1-t3-a"></textarea></div>
+        <div class="q"><label>b) Opera un confronto con il testo di Kant.</label><textarea data-id="f1-t3-b"></textarea></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fase2">
+    <div class="phase-h">
+      <h2>Fase 2 — in coppia</h2>
+      <span class="phase-time">10 min</span>
+    </div>
+    <p class="help">Scegliete un frammento da confrontare con Kant, poi decidete quale tesi vi convince di più — e perché.</p>
+
+    <div class="timer" data-timer="600">
+      <span class="t">10:00</span>
+      <div class="bar"><i></i></div>
+      <button data-act="start">Avvia</button>
+      <button data-act="reset">Azzera</button>
+    </div>
+
+    <div class="card">
+      <div class="field" style="margin:0 0 14px;">
+        <label for="compagno">Con chi lavori in coppia? (nome e cognome)</label>
+        <input type="text" id="compagno" data-id="f2-compagno">
+      </div>
+      <div class="pair-sentence">
+        <span>Confrontiamo K con</span>
+        <select id="fragPick" data-id="f2-fragpick">
+          <option value="T1">T1 — Schleiermacher</option>
+          <option value="T2">T2 — Novalis</option>
+          <option value="T3">T3 — Schlegel</option>
+        </select>
+      </div>
+      <div class="choice" role="radiogroup" aria-label="Quale tesi vi convince di più">
+        <label><input type="radio" name="f2-scelta" value="K" data-id="f2-scelta"> La tesi di Kant</label>
+        <label><input type="radio" name="f2-scelta" value="frammento" data-id="f2-scelta"> La tesi del frammento scelto</label>
+      </div>
+      <div class="q"><label>Motivate la scelta.</label><textarea data-id="f2-motivazione" rows="3"></textarea></div>
+    </div>
+  </section>
+
+  <section id="invio" class="student-only">
+    <div class="card">
+      <div class="phase-h"><h2>Invia il lavoro</h2></div>
+      <p class="help">Invia una sola volta, alla fine della Fase 2. Anche il compagno o la compagna di coppia invia dal proprio dispositivo. Dopo l'invio le risposte non si possono più modificare.</p>
+      <p style="margin:0;"><button class="btn" type="button" id="invia">Invia il lavoro</button></p>
+      <p class="stato" id="esitoInvio"></p>
+    </div>
+  </section>
+
+  <section class="teacher-only">
+    <details class="acc">
+      <summary>Che cosa osservare</summary>
+      <div class="inner"><ul>
+        <li>Nella <b>parola chiave</b>: un termine che porta davvero il peso del passo (es. «intuizione», «scrittura cifrata», «universale progressiva»), non un sostantivo qualsiasi ripreso a caso.</li>
+        <li>Nella domanda (a): una facoltà o un'esperienza specifica (sentimento, intuizione, immaginazione, arte), non un generico «il cuore».</li>
+        <li>Nella domanda (b): il confronto deve dire <i>su che cosa</i> il frammento va oltre Kant e <i>che cosa</i> di Kant resta comunque valido — non solo «sono diversi».</li>
+        <li>Nella scelta di coppia: la motivazione deve toccare il punto in discussione (conoscenza vs. esperienza dei limiti), non restare sul piano del gusto personale.</li>
+      </ul></div>
+    </details>
+    <details class="acc">
+      <summary>Punti attesi <span class="badge-eval">per te, non da dettare</span></summary>
+      <div class="inner">
+        <p><b>T1</b> — parola chiave attesa: «intuizione» o «sentimento». Dove Kant dice che l'infinito non è oggetto di conoscenza, il frammento ne fa oggetto di esperienza immediata. Il limite kantiano resta intatto: non si tratta di conoscere l'infinito, ma di sentirlo.</p>
+        <p><b>T2</b> — parola chiave attesa: «scrittura cifrata» (o «figure»). Dove la natura di Kant è l'insieme dei fenomeni retti da leggi meccaniche, il frammento pensa la natura come testo da decifrare, animato da un'unica logica. La terza <i>Critica</i> (finalità) è il ponte.</p>
+        <p><b>T3</b> — parola chiave attesa: «universale progressiva» (o «poesia»). L'arte come conoscenza. Dal quarto anno: per Kant il genio dà la regola all'arte; qui l'arte diventa organo del sapere, mai concluso.</p>
+        <p><b>Sulla scelta di coppia</b> — non c'è una risposta «giusta»: l'obiettivo è che la motivazione mostri di aver colto la posta in gioco (che cosa possiamo sapere vs. che cosa possiamo sentire/intuire/creare), non che scelgano un «vincitore».</p>
+      </div>
+    </details>
+    <details class="acc">
+      <summary>Errori tipici e come intervenire</summary>
+      <div class="inner"><ul>
+        <li>«I romantici sono irrazionalisti.» Intervieni con: «il frammento rifiuta di ragionare o cambia l'oggetto a cui applica il ragionamento?»</li>
+        <li>Parola chiave troppo generica (es. «mondo», «uomo»). Chiedi: «se tolgo questa parola, il passo dice ancora la stessa cosa?»</li>
+        <li>Confondere Romanticismo letterario e filosofico. Riporta al perimetro.</li>
+        <li>Motivazione di coppia solo emotiva («mi piace di più»): chiedi di riformularla in termini di che cosa consideriamo conoscibile.</li>
+      </ul></div>
+    </details>
+    <details class="acc">
+      <summary>Cronoprogramma dell'ora</summary>
+      <div class="inner">
+        <table>
+          <tr><th>Min.</th><th>Studenti</th><th>Docente</th></tr>
+          <tr><td>0–5</td><td>Richiamo: dettano dalla Palestra 5 che cosa Kant ha stabilito e ha lasciato fuori.</td><td>Scrivi alla lavagna, due colonne.</td></tr>
+          <tr><td>5–25</td><td>Lezione.</td><td>Vedi «Lezione che precede».</td></tr>
+          <tr><td>25–32</td><td><b>Fase 1</b>, individuale.</td><td>Passa tra i banchi, soprattutto sulla domanda (b).</td></tr>
+          <tr><td>32–42</td><td><b>Fase 2</b>, coppie.</td><td>Circola tra le coppie; raccogli a voce un paio di motivazioni diverse.</td></tr>
+          <tr><td>42–50</td><td>Chiusura, a voce.</td><td>Tira le fila senza rivelare formalmente gli autori; ponte all'ora 2: «Fichte e Schelling, stessi anni. Che cosa fanno di quella cosa in sé?»</td></tr>
+        </table>
+      </div>
+    </details>
+    <details class="acc">
+      <summary style="color:var(--accent);">Da verificare / da fissare</summary>
+      <div class="inner">
+        <ul>
+          <li>Date di Jena e composizione del circolo, prima di dirle in classe.</li>
+          <li>Riferimento di pagina del manuale nel richiamo minimo.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+  </div><!-- /#lab -->
+
+  <footer>
+    <p style="margin:0 0 10px;">Filosofia V · Modulo Hegel · Attività 1 (variante: parole chiave e confronto) · attività formativa, non valutata.</p>
+    <button class="btn sec" type="button" id="apriDash">Area docente</button>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var app = document.getElementById('app');
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---------- Firebase ----------
+  var FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+  var FIREBASE_PATH = "studenti_hegel1_controchiscrivono";
+  var TEACHER_PIN = "1970";
+
+  var FRAMMENTI = [
+    {key:"T1", nome:"T1 — Schleiermacher"},
+    {key:"T2", nome:"T2 — Novalis"},
+    {key:"T3", nome:"T3 — Schlegel"}
+  ];
+  var studente = {nome:"", classe:""};
+  var inviato = false;
+  var gateSuperato = false;
+
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  // ---------- gate ----------
+  function controllaGate(){
+    $("avvia").disabled = !($("nome").value.trim().length > 2 && $("classe").value.trim().length > 0);
+  }
+  $("nome").addEventListener("input", controllaGate);
+  $("classe").addEventListener("input", controllaGate);
+  $("avvia").addEventListener("click", function(){
+    studente.nome = $("nome").value.trim();
+    studente.classe = $("classe").value.trim();
+    gateSuperato = true;
+    $("gate").hidden = true;
+    $("lab").hidden = false;
+    $("studenteBar").innerHTML = "<b>" + esc(studente.nome) + "</b> · " + esc(studente.classe);
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  // ---------- raccolta e invio ----------
+  function val(id){
+    var el = document.querySelector('[data-id="' + id + '"]');
+    return el ? (el.value || "").trim() : "";
+  }
+  function raccogli(){
+    var fase1 = {};
+    FRAMMENTI.forEach(function(f){
+      var k = f.key.toLowerCase();
+      fase1[f.key] = {kw: val("f1-" + k + "-kw"), a: val("f1-" + k + "-a"), b: val("f1-" + k + "-b")};
+    });
+    var radio = document.querySelector('input[name="f2-scelta"]:checked');
+    return {
+      fase1: fase1,
+      fase2: {
+        compagno: val("f2-compagno"),
+        frammento: $("fragPick").value,
+        scelta: radio ? radio.value : "",
+        motivazione: val("f2-motivazione")
+      }
+    };
+  }
+  function mancanti(d){
+    var m = [];
+    FRAMMENTI.forEach(function(f){
+      var r = d.fase1[f.key];
+      if(!r.kw || r.a.length < 5 || r.b.length < 5) m.push("Fase 1 · " + f.key);
+    });
+    if(!d.fase2.scelta) m.push("Fase 2 · scelta della tesi");
+    if(d.fase2.motivazione.length < 5) m.push("Fase 2 · motivazione");
+    return m;
+  }
+
+  $("invia").addEventListener("click", function(){
+    if(inviato) return;
+    var d = raccogli();
+    var m = mancanti(d);
+    var es = $("esitoInvio");
+    if(m.length){
+      es.className = "stato err";
+      es.textContent = "Completa prima: " + m.join(", ") + ".";
+      return;
+    }
+    var payload = {
+      nome: studente.nome, classe: studente.classe,
+      inviato: new Date().toISOString(),
+      fase1: d.fase1, fase2: d.fase2
+    };
+    $("invia").disabled = true;
+    es.className = "stato";
+    es.textContent = "Invio in corso…";
+    fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json",
+      {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); })
+      .then(function(){
+        inviato = true;
+        $("lab").classList.add("locked");
+        $("lab").querySelectorAll('textarea:not([readonly]), input, select').forEach(function(el){ el.disabled = true; });
+        es.className = "stato ok";
+        es.textContent = "Lavoro inviato. Puoi chiudere la pagina.";
+      })
+      .catch(function(){
+        $("invia").disabled = false;
+        es.className = "stato err";
+        es.textContent = "Invio non riuscito: controlla la connessione e riprova. Non chiudere la pagina, le risposte sono ancora qui.";
+      });
+  });
+
+  // ---------- area docente ----------
+  function setView(v){ app.setAttribute('data-view', v); }
+
+  $("apriDash").addEventListener("click", function(){
+    $("screen-dash").hidden = false;
+    $("dash-pin").focus();
+    $("screen-dash").scrollIntoView({behavior:"smooth"});
+  });
+  $("dash-annulla").addEventListener("click", function(){
+    $("screen-dash").hidden = true;
+    $("dash-err").hidden = true;
+  });
+  function verificaPin(){
+    if($("dash-pin").value.trim() !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
+    $("dash-err").hidden = true;
+    $("dash-login").hidden = true;
+    $("dash-wrap").hidden = false;
+    $("gate").hidden = true;
+    $("lab").hidden = false;
+    $("apriDash").hidden = true;
+    $("studenteBar").innerHTML = "<b>Vista docente</b>";
+    setView("docente");
+    caricaRisposte();
+  }
+  $("dash-entra").addEventListener("click", verificaPin);
+  $("dash-pin").addEventListener("keydown", function(e){ if(e.key === "Enter") verificaPin(); });
+  $("dash-aggiorna").addEventListener("click", caricaRisposte);
+  $("dash-esci").addEventListener("click", function(){
+    setView("studenti");
+    $("dash-pin").value = "";
+    $("dash-login").hidden = false;
+    $("dash-wrap").hidden = true;
+    $("screen-dash").hidden = true;
+    $("apriDash").hidden = false;
+    if(gateSuperato){
+      $("studenteBar").innerHTML = "<b>" + esc(studente.nome) + "</b> · " + esc(studente.classe);
+    } else {
+      $("studenteBar").textContent = "Vista studenti";
+      $("lab").hidden = true;
+      $("gate").hidden = false;
+    }
+  });
+
+  function nomeFrammento(k){
+    for(var i=0;i<FRAMMENTI.length;i++){ if(FRAMMENTI[i].key === k) return FRAMMENTI[i].nome; }
+    return k || "—";
+  }
+
+  function caricaRisposte(){
+    $("dash-loading").hidden = false;
+    $("dash-loading").textContent = "Caricamento…";
+    fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
+      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(data){
+        $("dash-loading").hidden = true;
+        var rows = data ? Object.keys(data).map(function(k){ return data[k]; }) : [];
+        rows.sort(function(a,b){
+          return (a.classe||"").localeCompare(b.classe||"") || (a.nome||"").localeCompare(b.nome||"");
+        });
+        renderSintesi(rows);
+        renderElenco(rows);
+      })
+      .catch(function(){
+        $("dash-loading").hidden = false;
+        $("dash-loading").textContent = "Errore nel caricamento.";
+      });
+  }
+
+  function renderSintesi(rows){
+    var box = $("dash-summary");
+    if(!rows.length){ box.innerHTML = ""; return; }
+    // scelte di coppia per frammento
+    var conta = {};
+    rows.forEach(function(r){
+      var f2 = r.fase2 || {};
+      var k = f2.frammento || "?";
+      conta[k] = conta[k] || {K:0, frammento:0};
+      if(f2.scelta === "K") conta[k].K++;
+      else if(f2.scelta === "frammento") conta[k].frammento++;
+    });
+    var chips = Object.keys(conta).sort().map(function(k){
+      return '<span class="chip">K vs ' + esc(k) + ': Kant ' + conta[k].K + ' · frammento ' + conta[k].frammento + '</span>';
+    }).join("");
+    // parole chiave per frammento
+    var kw = FRAMMENTI.map(function(f){
+      var voci = rows.map(function(r){ return ((r.fase1||{})[f.key]||{}).kw; }).filter(Boolean);
+      return '<li><b>' + esc(f.nome) + ':</b> ' + (voci.length ? voci.map(esc).join(" · ") : "—") + '</li>';
+    }).join("");
+    box.innerHTML =
+      '<p class="stato">' + rows.length + ' invii. Le coppie inviano due volte: una per studente.</p>' +
+      '<div class="dash-summary">' + chips + '</div>' +
+      '<details class="acc"><summary>Parole chiave scelte, per frammento</summary><div class="inner"><ul class="kw-list">' + kw + '</ul></div></details>';
+  }
+
+  function renderElenco(rows){
+    var list = $("dash-list");
+    if(!rows.length){ list.innerHTML = '<p class="stato">Nessuna risposta ancora.</p>'; return; }
+    list.innerHTML = rows.map(function(r){
+      var f1 = r.fase1 || {}, f2 = r.fase2 || {};
+      var quando = r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "";
+      var scelta = f2.scelta === "K" ? "Kant" : (f2.scelta === "frammento" ? "frammento" : "—");
+      var fase1 = FRAMMENTI.map(function(f){
+        var x = f1[f.key] || {};
+        return '<h4>' + esc(f.nome) + '</h4>' +
+          '<p><span class="lbl">Parole chiave:</span> ' + esc(x.kw || "—") + '</p>' +
+          '<p><span class="lbl">a) Contatto con la realtà:</span> ' + esc(x.a || "—") + '</p>' +
+          '<p><span class="lbl">b) Confronto con Kant:</span> ' + esc(x.b || "—") + '</p>';
+      }).join("");
+      return '<details class="dash-row"><summary>' +
+          '<b>' + esc(r.nome) + '</b><span>' + esc(r.classe) + '</span>' +
+          '<span>Coppia: ' + esc(f2.compagno || "—") + '</span>' +
+          '<span>K vs ' + esc(f2.frammento || "?") + ' → ' + scelta + '</span>' +
+          '<span>' + esc(quando) + '</span>' +
+        '</summary><div class="inner">' + fase1 +
+          '<h4>Fase 2 — K vs ' + esc(nomeFrammento(f2.frammento)) + '</h4>' +
+          '<p><span class="lbl">Tesi più convincente:</span> ' + scelta + '</p>' +
+          '<p><span class="lbl">Motivazione:</span> ' + esc(f2.motivazione || "—") + '</p>' +
+        '</div></details>';
+    }).join("");
+  }
+
+  // ---------- theme toggle (system -> light -> dark -> system, in memory) ----------
+  var themeBtn = document.getElementById('themeToggle');
+  var root = document.documentElement;
+  var themeLabels = {system:'Tema: sistema', light:'Tema: chiaro', dark:'Tema: scuro'};
+  function applyTheme(t){
+    if(t === 'system'){ root.removeAttribute('data-theme'); }
+    else { root.setAttribute('data-theme', t); }
+    themeBtn.textContent = themeLabels[t];
+  }
+  var themeOrder = ['system','light','dark'];
+  var curTheme = 'system';
+  applyTheme(curTheme);
+  themeBtn.addEventListener('click', function(){
+    curTheme = themeOrder[(themeOrder.indexOf(curTheme)+1) % themeOrder.length];
+    applyTheme(curTheme);
+  });
+
+  // ---------- timers ----------
+  document.querySelectorAll('.timer').forEach(function(box){
+    var total = parseInt(box.getAttribute('data-timer'), 10);
+    var remaining = total;
+    var tEl = box.querySelector('.t');
+    var barI = box.querySelector('.bar i');
+    var btnStart = box.querySelector('[data-act="start"]');
+    var btnReset = box.querySelector('[data-act="reset"]');
+    var iv = null;
+
+    function fmt(s){
+      var m = Math.floor(s/60), sec = s%60;
+      return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;
+    }
+    function render(){
+      tEl.textContent = fmt(Math.max(remaining,0));
+      barI.style.width = Math.max(0, (remaining/total)*100) + '%';
+      box.classList.toggle('done', remaining <= 0);
+    }
+    function tick(){
+      remaining -= 1;
+      if(remaining <= 0){
+        remaining = 0;
+        clearInterval(iv); iv = null;
+        btnStart.textContent = 'Avvia';
+      }
+      render();
+    }
+    btnStart.addEventListener('click', function(){
+      if(iv){ clearInterval(iv); iv = null; btnStart.textContent = 'Avvia'; return; }
+      if(remaining <= 0) remaining = total;
+      iv = setInterval(tick, 1000);
+      btnStart.textContent = 'Pausa';
+    });
+    btnReset.addEventListener('click', function(){
+      clearInterval(iv); iv = null;
+      remaining = total;
+      btnStart.textContent = 'Avvia';
+      render();
+    });
+    render();
+  });
+})();
+</script>
+</body>
+</html>
