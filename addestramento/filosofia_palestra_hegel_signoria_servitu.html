@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signoria e servitù — palestra su Hegel</title>
+<meta name="portale:titolo" content="Signoria e servitù — palestra su Hegel">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Palestra di analisi del testo: il passo di Hegel su signoria e servitù. Lessico, struttura delle mediazioni, che cosa dice davvero il testo.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{
+  --bg:#f4f9f5; --ink:#17261d; --muted:#51625a; --card:#ffffff; --line:#d5e4d9;
+  --accent:#2b6cb0; --primary:#1e6b45; --primary-ink:#ffffff;
+  --ok:#1e6b45; --ok-bg:#e3f2e8; --ko:#b42318; --ko-bg:#fbe9e7; --warn:#9a4a07; --soft:#eef4f0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0f1a14; --ink:#e6f1ea; --muted:#a9bbb1; --card:#16241c; --line:#2a3d31;
+    --accent:#7fb2f0; --primary:#4fb583; --primary-ink:#0b1510;
+    --ok:#6fd39f; --ok-bg:#15301f; --ko:#f19a9a; --ko-bg:#3a1a1a; --warn:#f0b35a; --soft:#1b2b21;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:16px 16px 88px;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;overflow-wrap:break-word}
+main{max-width:680px;margin:0 auto}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.25}
+h1{font-size:1.55rem;margin:.2em 0 .3em;color:var(--accent)}
+h2{font-size:1.3rem;margin:.2em 0 .5em;color:var(--accent)}
+h3{font-size:1.05rem;margin:0 0 .4em}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 14px}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+.steps{display:flex;gap:4px;margin:4px 0 14px}
+.steps span{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.steps span.on{background:var(--accent)}
+.intro{font-style:italic;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.par{margin:0 0 .9em}
+.par b{color:var(--accent);font-family:Georgia,serif}
+.gloss{color:var(--muted);font-size:.9em}
+.trad{color:var(--warn);font-size:.9rem;border:1px solid currentColor;border-radius:10px;padding:8px 12px;margin-top:10px}
+.cit{font-style:italic;color:var(--muted);font-size:.95rem;margin:.2em 0 .6em}
+details{margin:.4em 0 .8em}
+summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--accent);font-weight:600}
+details .par{font-size:.95rem;background:var(--soft);padding:10px 12px;border-radius:10px}
+button{font:inherit;min-height:44px;border-radius:10px;cursor:pointer}
+.btn{padding:10px 18px;border:1px solid var(--primary);background:var(--primary);color:var(--primary-ink);font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 14px;background:transparent;color:var(--ink);border:1px solid var(--line);line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt[aria-pressed=true]{outline:2px solid var(--accent);border-color:var(--accent)}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--ko);background:var(--ko-bg)}
+.tag{font-weight:700;margin-right:.35em}
+.fb{border-radius:10px;padding:10px 12px;margin-top:8px;font-size:.95rem}
+.fb.ok{background:var(--ok-bg);border-left:4px solid var(--ok)}
+.fb.ko{background:var(--ko-bg);border-left:4px solid var(--ko)}
+.fb strong{display:block;margin-bottom:2px}
+.cats{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}
+.cats .opt{margin:0}
+.fill{margin:10px 0 18px}
+.blank{color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent)}
+.fill label{display:block;margin-bottom:4px}
+select{font:inherit;width:100%;min-height:44px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+select.right{border-color:var(--ok);background:var(--ok-bg)}
+select.wrong{border-color:var(--ko);background:var(--ko-bg)}
+textarea{width:100%;min-height:150px;font:inherit;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.counter{text-align:right;font-size:.85rem;color:var(--muted)}
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap}
+.nav .btn{flex:1 1 140px}
+.notice{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:.92rem;color:var(--muted);margin-bottom:12px}
+.check label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;min-height:44px;cursor:pointer}
+.check input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--primary)}
+.score{font-family:Georgia,serif;font-size:2rem;color:var(--accent);margin:.1em 0}
+.res li{margin-bottom:.5em}
+svg text{font-family:-apple-system,"Segoe UI",Roboto,sans-serif}
+.err{color:var(--ko)}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"><p class="muted">Caricamento…</p></main>
+
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+var DATA = {"meta":{"titolo":"Signoria e servitù","sottotitolo":"Palestra di analisi del testo su un passo della Fenomenologia dello spirito di Hegel","labId":"filosofia_palestra_hegel_signoria","descrizione":"Palestra di analisi del testo: il passo di Hegel su signoria e servitù. Lessico, struttura delle mediazioni, che cosa dice davvero il testo.","tempoAtteso":840,"caratteriAttesi":250},"richiamo":{"titolo":"Prima di leggere","paragrafi":["Nella Fenomenologia dello spirito (1807) Hegel racconta il cammino con cui la coscienza arriva a conoscere se stessa. A un certo punto la coscienza diventa autocoscienza e vuole essere certa di sé. Prima cerca questa certezza nel desiderio, che consuma le cose; ma le cose ricompaiono sempre, e il desiderio ricomincia. Capisce allora che può trovare conferma solo in un'altra autocoscienza che la riconosca.","Due autocoscienze si scontrano così in una lotta per la vita e la morte: ognuna vuole essere riconosciuta dall'altra. Chi ha paura di morire e preferisce la vita cede, e diventa servo. Chi ha messo in gioco la vita diventa signore. Il passo che leggerai comincia qui, subito dopo la lotta."],"rimando":"Se non ricordi questi passaggi, riprendili sul manuale, nelle pagine dedicate alla Fenomenologia dello spirito."},"introduzione":"Introduzione della scheda (non è di Hegel): La figura della signoria e della servitù viene spesso letta come un riflesso del rapporto tra padrone e schiavo nel mondo antico. Nel cammino della Fenomenologia è una tappa del percorso con cui la coscienza arriva a conoscere se stessa: l'incontro conflittuale tra due autocoscienze, che contiene una contraddizione destinata a rovesciarlo.","nota_traduzione":"Traduzione di lavoro con supporto AI, condotta sul testo tedesco (G.W.F. Hegel, Phänomenologie des Geistes, 1807, sez. B, cap. IV A). I tagli [...] seguono quelli dell'antologia di partenza.","testo":["Il signore è la coscienza che è per sé; non più però soltanto il concetto di essa, ma una coscienza che è per sé e che è mediata con se stessa da un'altra coscienza: da una coscienza, cioè, alla cui essenza appartiene di essere sintetizzata con un essere indipendente, ossia con la cosalità in generale. [...]","Il signore si rapporta al servo in modo mediato, attraverso l'essere indipendente: proprio a questo, infatti, il servo è legato. È la sua catena, dalla quale nella lotta non ha potuto astrarre; e per questo si è mostrato dipendente, come uno che ha la propria indipendenza nella cosalità. Il signore, invece, è la potenza che sta sopra questo essere, perché nella lotta ha mostrato che esso per lui vale soltanto come qualcosa di negativo. Poiché il signore è la potenza su questo essere, e questo essere è la potenza sull'altro, in questo sillogismo il signore ha sotto di sé quell'altro. Allo stesso modo il signore si rapporta alla cosa in modo mediato, attraverso il servo. Anche il servo, in quanto autocoscienza in generale, si rapporta alla cosa negativamente e la toglie [aufheben: la nega e insieme la conserva trasformata]; ma per lui la cosa è al tempo stesso indipendente, e perciò con il suo negarla non riesce a venirne a capo fino ad annientarla: si limita a lavorarla. Per il signore, invece, grazie a questa mediazione il rapporto immediato con la cosa diventa la pura negazione di essa, cioè il godimento. Ciò che non era riuscito al desiderio riesce a lui: venire a capo della cosa e appagarsi nel godimento. Al desiderio questo non riusciva, a causa dell'indipendenza della cosa; il signore invece, che ha messo il servo tra la cosa e se stesso, si congiunge così soltanto con la dipendenza della cosa e ne gode puramente; il lato dell'indipendenza della cosa lo lascia al servo, che la lavora.","In questi due momenti si realizza, per il signore, il suo essere riconosciuto da un'altra coscienza: questa, infatti, si pone in essi come qualcosa di inessenziale, una volta nel lavoro sulla cosa, l'altra nella dipendenza da un'esistenza determinata. In entrambi i casi non riesce a farsi padrona dell'essere e a giungere alla negazione assoluta. [...]","La coscienza inessenziale è dunque, per il signore, l'oggetto che costituisce la verità della certezza di se stesso. È chiaro però che questo oggetto non corrisponde al suo concetto: proprio là dove il signore si è compiuto, gli è diventato qualcosa di completamente diverso da una coscienza indipendente. Non una coscienza indipendente è per lui, ma una coscienza dipendente; egli dunque non è certo dell'essere-per-sé come verità: la sua verità è piuttosto la coscienza inessenziale e il suo agire inessenziale.","La verità della coscienza indipendente è quindi la coscienza servile. Questa sulle prime appare fuori di sé, e non come la verità dell'autocoscienza. Ma come la signoria ha mostrato che la sua essenza è il rovescio di ciò che vuole essere, così anche la servitù, è da credere, nel suo compimento diventerà piuttosto il contrario di ciò che è immediatamente: come coscienza respinta in se stessa, rientrerà in sé e si rovescerà in vera indipendenza."],"fase1":{"titolo":"Fase 1 — Le parole nel loro contesto","minuti":5,"consegna":"Per ogni parola, rileggi la frase in cui compare e scegli che cosa significa lì, in questo passo. Non cercare la definizione da dizionario: chiediti che cosa fa quella parola nella frase.","domande":[{"id":"f1_perse","par":1,"citazione":"«Il signore è la coscienza che è per sé»","prompt":"Che cosa vuol dire, qui, che la coscienza del signore è «per sé»?","options":["Che si afferma come indipendente: non ha la propria essenza in altro.","Che vive in solitudine, lontana dagli altri, e non ha bisogno di rapporti con nessuno.","Che è egoista e persegue soltanto il proprio interesse, anche a danno degli altri."],"correct":0,"spiegazione":"«Per sé» indica una coscienza che si sa e si afferma come indipendente. Non ha nulla a che fare con l'egoismo né con l'isolamento: anzi, il signore è per sé proprio attraverso un'altra coscienza, quella del servo."},{"id":"f1_mediato","par":2,"citazione":"«Il signore si rapporta al servo in modo mediato, attraverso l'essere indipendente»","prompt":"Che cosa significa che il rapporto è «mediato»?","options":["Che passa attraverso un terzo termine: la cosa.","Che è un rapporto moderato, senza eccessi, perché il signore evita la violenza.","Che è regolato da un accordo stabilito tra i due da un mediatore esterno."],"correct":0,"spiegazione":"Mediato vuol dire «che passa per un medio», un terzo termine. Il signore non tiene il servo con la forza nuda: lo tiene attraverso la cosa, a cui il servo è legato."},{"id":"f1_cosalita","par":1,"citazione":"«…di essere sintetizzata con un essere indipendente, ossia con la cosalità in generale»","prompt":"A che cosa si riferisce, qui, «cosalità»?","options":["Al mondo delle cose materiali, a cui il servo resta legato per vivere.","Agli oggetti di lusso che il signore accumula come segno della propria ricchezza.","Alla tendenza del servo a trattare le persone come semplici oggetti da usare."],"correct":0,"spiegazione":"La cosalità è l'essere delle cose in quanto tali. Il servo ha scelto la vita: è rimasto attaccato all'esistenza materiale, e questa diventa la sua «catena»."},{"id":"f1_godimento","par":2,"citazione":"«…il rapporto immediato con la cosa diventa la pura negazione di essa, cioè il godimento»","prompt":"Che cos'è il «godimento» del signore?","options":["Consumare la cosa senza incontrarne la resistenza, perché a lavorarla è un altro.","Un piacere spirituale e disinteressato, come quello di chi contempla un'opera d'arte.","La soddisfazione morale di chi ha fatto il proprio dovere e si concede un riposo."],"correct":0,"spiegazione":"Il godimento è la «pura negazione» della cosa: il signore la consuma senza fatica. La resistenza della cosa (la sua indipendenza) la incontra il servo, che la lavora."},{"id":"f1_inessenziale","par":3,"citazione":"«…questa, infatti, si pone in essi come qualcosa di inessenziale»","prompt":"In che senso la coscienza del servo è «inessenziale»?","options":["Non vale per sé: conta solo in funzione del signore e della cosa.","È inutile, perché il suo lavoro non produce nulla che abbia un valore reale.","È una figura secondaria, che Hegel introduce come esempio e poi abbandona."],"correct":0,"spiegazione":"Inessenziale non vuol dire inutile: il lavoro del servo produce eccome. Vuol dire che il servo non ha in sé la propria essenza; esiste per il signore e dipende dalla cosa."}]},"fase2":{"titolo":"Fase 2 — Il «sillogismo» del dominio","minuti":5,"consegna":"Nel paragrafo [2] Hegel parla di un «sillogismo»: tre termini (signore, cosa, servo) collegati in due modi diversi. Completa le frasi scegliendo tra le tre possibilità. Quando hai finito, compare lo schema.","catene":[{"titolo":"Primo modo: il signore si rapporta al servo attraverso la cosa","frasi":[{"id":"f2_domina","prima":"Il signore","dopo":"la cosa.","options":["domina","lavora e trasforma","dipende interamente da"],"correct":0,"spiegazione":"Il signore è «la potenza che sta sopra questo essere»: nella lotta ha mostrato che la vita, e le cose, per lui contano poco."},{"id":"f2_catena","prima":"La cosa è, per il servo,","dopo":".","options":["una catena","un piacere da godere","un semplice nulla da ignorare"],"correct":0,"spiegazione":"«È la sua catena, dalla quale nella lotta non ha potuto astrarre»: il servo è legato alla vita e alle cose."},{"id":"f2_sotto","prima":"Perciò il signore","dopo":"il servo.","options":["ha sotto di sé","riconosce come suo pari","teme e rispetta come più forte"],"correct":0,"spiegazione":"È la conclusione del sillogismo: il signore domina la cosa, la cosa pesa sul servo, dunque il signore ha sotto di sé il servo."}]},{"titolo":"Secondo modo: il signore si rapporta alla cosa attraverso il servo","frasi":[{"id":"f2_lavora","prima":"Il servo, davanti alla cosa,","dopo":".","options":["la lavora ma non può annientarla","la gode puramente, senza alcuna fatica","la domina come potenza che le sta sopra"],"correct":0,"spiegazione":"Per il servo la cosa resta indipendente: la nega, ma non fino ad annientarla. Può solo lavorarla."},{"id":"f2_gode","prima":"Il signore, davanti alla cosa,","dopo":".","options":["la gode puramente","la lavora ma non può annientarla","ne resta incatenato come il servo"],"correct":0,"spiegazione":"Avendo messo il servo tra sé e la cosa, il signore incontra solo il lato dipendente della cosa e ne gode."},{"id":"f2_indip","prima":"Al servo il signore lascia il lato della cosa che riguarda la sua","dopo":".","options":["indipendenza","dipendenza dal signore","pura negazione nel godimento"],"correct":0,"spiegazione":"«Il lato dell'indipendenza della cosa lo lascia al servo, che la lavora»: la resistenza della cosa la affronta il servo."}]}]},"fase3":{"titolo":"Fase 3 — Che cosa dice davvero il testo?","minuti":5,"consegna":"Su questo passo si è scritto moltissimo, e quello che si legge nei manuali non sempre è nel testo. Per ogni affermazione, decidi da dove viene. Rileggi il passo prima di rispondere: non basta che un'affermazione sia vera su Hegel.","categorie":{"H":"Lo afferma Hegel nel passo","I":"Lo afferma l'introduzione della scheda, non Hegel","N":"Non è in questo passo"},"affermazioni":[{"id":"f3_trasforma","testo":"Il servo, lavorando la cosa, non la annienta ma la trasforma.","cat":"H","spiegazione":"Paragrafo [2]: il servo «non riesce a venirne a capo fino ad annientarla: si limita a lavorarla»."},{"id":"f3_antico","testo":"Il rapporto tra signore e servo è un riflesso del rapporto tra padrone e schiavo nel mondo antico.","cat":"I","spiegazione":"Il passo non nomina mai il mondo antico. È una lettura storica proposta dall'introduzione: si può discutere, ma non è di Hegel."},{"id":"f3_paura","testo":"Il servo si libera grazie alla paura della morte e alla disciplina del servizio.","cat":"N","spiegazione":"Hegel ne parla nelle pagine che vengono subito dopo, che qui sono state tagliate. Nel passo la liberazione è solo annunciata, non spiegata."},{"id":"f3_verita","testo":"La verità della coscienza indipendente è la coscienza servile.","cat":"H","spiegazione":"È la prima frase del paragrafo [5], quasi alla lettera."},{"id":"f3_tappa","testo":"Signoria e servitù sono una tappa del percorso con cui la coscienza arriva a conoscere se stessa.","cat":"I","spiegazione":"È vero dell'opera nel suo insieme, ma in questo passo Hegel non lo dice: lo dice l'introduzione, per collocarlo."},{"id":"f3_opera","testo":"Il servo prende coscienza di sé riconoscendo nell'oggetto lavorato la propria opera.","cat":"N","spiegazione":"È un'idea di Hegel, ma sta nelle pagine successive. Qui il lavoro compare solo come «lavorare la cosa senza annientarla»."},{"id":"f3_gode","testo":"Il signore gode della cosa senza doverla lavorare.","cat":"H","spiegazione":"Paragrafo [2]: il signore «si congiunge soltanto con la dipendenza della cosa e ne gode puramente»."}],"domandaFinale":{"id":"f3_futuro","prompt":"Nel paragrafo [5] Hegel usa verbi al futuro («diventerà», «rientrerà», «si rovescerà») e un inciso: «è da credere». Che cosa ne ricavi?","options":["Il passo annuncia il rovesciamento della servitù, ma non mostra ancora come avviene.","Hegel prevede un evento storico che al suo tempo doveva ancora accadere: la liberazione dei servi.","Il rovesciamento è già avvenuto, e Hegel lo racconta in forma di profezia per renderlo più solenne."],"correct":0,"spiegazione":"Il futuro e il «è da credere» (in tedesco wohl) dicono che qui il rovesciamento è un'attesa fondata sull'analogia con la signoria, non ancora una dimostrazione. Il come arriva dopo."}},"chiusura":{"titolo":"Chiusura — Con parole tue","minuti":3,"id":"chiusura","prompt":"Perché il signore, proprio là dove ha vinto, non trova ciò che cercava? Rispondi in due o tre frasi, con parole tue.","max":400,"checklist":["Il signore cercava di essere riconosciuto da una coscienza indipendente: solo così la certezza di sé sarebbe diventata verità.","Ottiene invece il riconoscimento di una coscienza dipendente, inessenziale: quella del servo, che non vale per sé.","Un riconoscimento che viene da chi non conta non conferma nulla: la verità del signore finisce per essere la coscienza servile."]}};
+// Mescolamento deterministico condiviso da scheda e HTML: stesso id -> stesso ordine.
+function order(id, n) {
+  id = "s123" + id;
+  var h = 2166136261;
+  for (var i = 0; i < id.length; i++) { h ^= id.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  var a = []; for (var k = 0; k < n; k++) a.push(k);
+  for (var j = n - 1; j > 0; j--) {
+    h = (Math.imul(h ^ (h >>> 15), 2246822507) + 0x9e3779b9) >>> 0;
+    var r = h % (j + 1); var t = a[j]; a[j] = a[r]; a[r] = t;
+  }
+  return a;
+}
+
+(function () {
+"use strict";
+var D = DATA, KEY = "palestra:" + D.meta.labId;
+var STEPS = ["richiamo", "testo", "f1", "f2", "f3", "chiusura", "fine"];
+var S = { step: 0, f1: {}, f2: {}, f2ok: false, f3: {}, ff: null, essay: "", done: false, self: [] };
+var app = document.getElementById("app");
+var STUDENT = null, STARTED = false;
+
+function load() { try { var t = localStorage.getItem(KEY); if (t) { var o = JSON.parse(t); if (o && typeof o === "object") S = Object.assign(S, o); } } catch (e) {} }
+function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function el(tag, attrs, kids) {
+  var n = document.createElement(tag);
+  if (attrs) for (var k in attrs) { if (k === "text") n.textContent = attrs[k]; else if (k === "html") n.innerHTML = attrs[k]; else if (k.slice(0, 2) === "on") n[k] = attrs[k]; else n.setAttribute(k, attrs[k]); }
+  (kids || []).forEach(function (c) { if (c) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+  return n;
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function parNode(i) {
+  var t = esc(D.testo[i - 1]).replace(/\[(aufheben[^\]]*)\]/, '<span class="gloss">[$1]</span>');
+  return el("p", { "class": "par", html: "<b>[" + i + "]</b> " + t });
+}
+function reread(nums, label) {
+  var d = el("details", null, [el("summary", { text: label })]);
+  nums.forEach(function (i) { d.appendChild(parNode(i)); });
+  return d;
+}
+function go(i) { S.step = i; persist(); render(); window.scrollTo(0, 0); }
+function allPar() { var a = []; for (var i = 1; i <= D.testo.length; i++) a.push(i); return a; }
+
+/* ---------- punteggio e answers[] ---------- */
+function items() {
+  var L = [];
+  D.fase1.domande.forEach(function (q) { L.push({ id: q.id, prompt: q.prompt, type: "mc", sel: S.f1[q.id], opts: q.options, correct: q.correct }); });
+  D.fase2.catene.forEach(function (c) { c.frasi.forEach(function (f) { L.push({ id: f.id, prompt: (f.prima + " … " + f.dopo).replace(" … .", " …"), type: "mc", sel: S.f2ok ? S.f2[f.id] : undefined, opts: f.options, correct: f.correct }); }); });
+  D.fase3.affermazioni.forEach(function (a) { var ks = ["H", "I", "N"]; L.push({ id: a.id, prompt: a.testo, type: "mc", sel: S.f3[a.id] === undefined ? undefined : ks.indexOf(S.f3[a.id]), opts: ks.map(function (k) { return D.fase3.categorie[k]; }), correct: ks.indexOf(a.cat) }); });
+  var ff = D.fase3.domandaFinale; L.push({ id: ff.id, prompt: ff.prompt, type: "mc", sel: S.ff === null ? undefined : S.ff, opts: ff.options, correct: ff.correct });
+  return L;
+}
+function answers() {
+  var out = items().filter(function (x) { return x.sel !== undefined && x.sel !== null; }).map(function (x) {
+    return { id: x.id, prompt: x.prompt.slice(0, 300), type: "mc", answer: x.opts[x.sel], correct: x.sel === x.correct };
+  });
+  if (S.essay.trim()) out.push({ id: D.chiusura.id, prompt: D.chiusura.prompt, type: "essay", answer: S.essay.slice(0, 4000), correct: null });
+  return out;
+}
+function score() { var mc = items(), ok = mc.filter(function (x) { return x.sel === x.correct; }).length; return Math.round(100 * ok / mc.length); }
+function counts() { var mc = items(); return { ok: mc.filter(function (x) { return x.sel === x.correct; }).length, tot: mc.length }; }
+
+/* ---------- componenti ---------- */
+function mcBlock(q, sel, onPick, n) {
+  var box = el("div", { "class": "card" });
+  box.appendChild(el("h3", { text: (n ? n + ". " : "") + q.prompt }));
+  if (q.citazione) box.appendChild(el("p", { "class": "cit", text: "Paragrafo [" + q.par + "]: " + q.citazione }));
+  if (q.par) box.appendChild(reread([q.par], "Rileggi il paragrafo [" + q.par + "]"));
+  var answered = sel !== undefined && sel !== null;
+  order(q.id, q.options.length).forEach(function (k) {
+    var b = el("button", { "class": "opt", type: "button", "aria-pressed": sel === k ? "true" : "false" });
+    if (answered) {
+      b.disabled = true;
+      if (k === q.correct) { b.classList.add("right"); b.appendChild(el("span", { "class": "tag", text: "✓ Corretta:" })); }
+      else if (k === sel) { b.classList.add("wrong"); b.appendChild(el("span", { "class": "tag", text: "✗ La tua scelta:" })); }
+    }
+    b.appendChild(document.createTextNode(q.options[k]));
+    b.onclick = function () { if (!answered) onPick(k); };
+    box.appendChild(b);
+  });
+  if (answered) box.appendChild(fb(sel === q.correct, q.spiegazione));
+  return box;
+}
+function fb(ok, txt) { return el("div", { "class": "fb " + (ok ? "ok" : "ko") }, [el("strong", { text: ok ? "Giusto." : "Non proprio." }), txt]); }
+function header(title, min) {
+  var s = el("div", { "class": "steps", "aria-hidden": "true" });
+  for (var i = 0; i < STEPS.length - 1; i++) s.appendChild(el("span", { "class": i <= S.step ? "on" : "" }));
+  var f = el("div", null, [s, el("p", { "class": "eyebrow", text: "Signoria e servitù" + (min ? " · " + min + " minuti" : "") }), el("h2", { text: title })]);
+  return f;
+}
+function nav(opts) {
+  var n = el("div", { "class": "nav" });
+  if (opts.back) n.appendChild(el("button", { "class": "btn ghost", type: "button", text: "← Indietro", onclick: function () { go(S.step - 1); } }));
+  var fw = el("button", { "class": "btn", type: "button", text: opts.label || "Avanti →" });
+  fw.disabled = !!opts.disabled; fw.onclick = opts.onNext || function () { go(S.step + 1); };
+  n.appendChild(fw);
+  if (opts.hint) app.appendChild(el("p", { "class": "small muted", text: opts.hint }));
+  return n;
+}
+function triangle() {
+  var svg = '<svg viewBox="0 0 350 250" width="100%" role="img" aria-labelledby="tt td" style="max-width:420px;display:block;margin:6px auto">' +
+    '<title id="tt">Schema del sillogismo del dominio</title><desc id="td">Il signore domina e gode la cosa; la cosa è la catena del servo; il servo lavora la cosa senza annientarla; il signore ha sotto di sé il servo attraverso la cosa.</desc>' +
+    '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>' +
+    '<g stroke="var(--muted)" stroke-width="1.6" fill="none">' +
+    '<line x1="150" y1="52" x2="62" y2="186" marker-end="url(#ar)"/>' +
+    '<line x1="190" y1="52" x2="278" y2="186" stroke-dasharray="5 4" marker-end="url(#ar)"/>' +
+    '<line x1="102" y1="196" x2="236" y2="196" marker-end="url(#ar)"/>' +
+    '<line x1="236" y1="214" x2="102" y2="214" marker-end="url(#ar)"/></g>' +
+    '<g font-size="16" font-weight="700" fill="var(--ink)" text-anchor="middle">' +
+    '<text x="170" y="40">SIGNORE</text><text x="58" y="210">COSA</text><text x="292" y="210">SERVO</text></g>' +
+    '<g font-size="13.5" fill="var(--accent)">' +
+    '<text x="30" y="112">domina</text><text x="30" y="128">e gode</text>' +
+    '<text x="236" y="100">ha sotto di sé</text><text x="236" y="116">(attraverso</text><text x="236" y="132">la cosa)</text>' +
+    '<text x="170" y="189" text-anchor="middle">è la sua catena</text>' +
+    '<text x="170" y="232" text-anchor="middle">la lavora, non la annienta</text></g></svg>';
+  var d = el("div", { html: svg });
+  return d;
+}
+
+/* ---------- schermate ---------- */
+function render() {
+  app.innerHTML = "";
+  if (S.done) S.step = STEPS.length - 1;
+  var st = STEPS[S.step];
+
+  if (st === "richiamo") {
+    app.appendChild(header(D.richiamo.titolo, 2));
+    if (STUDENT && STUDENT.nome) app.appendChild(el("p", { "class": "muted small", text: "Ciao " + STUDENT.nome + "." }));
+    var c = el("div", { "class": "card" });
+    c.appendChild(el("h1", { text: D.meta.titolo }));
+    c.appendChild(el("p", { "class": "muted", text: "Venti minuti, da solo. Non è una verifica: serve a te per capire se stai leggendo il testo o quello che ricordi del testo. Dopo ogni risposta vedi subito se è giusta e perché." }));
+    app.appendChild(c);
+    var r = el("div", { "class": "card" });
+    D.richiamo.paragrafi.forEach(function (t) { r.appendChild(el("p", { text: t })); });
+    r.appendChild(el("p", { "class": "muted small", text: D.richiamo.rimando }));
+    app.appendChild(r);
+    app.appendChild(nav({ label: "Leggi il testo →" }));
+  }
+
+  if (st === "testo") {
+    app.appendChild(header("Il testo"));
+    var t = el("div", { "class": "card" });
+    t.appendChild(el("p", { "class": "intro", text: D.introduzione }));
+    for (var i = 1; i <= D.testo.length; i++) t.appendChild(parNode(i));
+    t.appendChild(el("p", { "class": "small muted", style: "text-align:right", text: "G.W.F. Hegel, Fenomenologia dello spirito (1807)" }));
+    t.appendChild(el("p", { "class": "trad", text: "⚠ " + D.nota_traduzione }));
+    app.appendChild(t);
+    app.appendChild(el("p", { "class": "small muted", text: "Leggilo una volta con calma. Non devi capire tutto adesso: nelle domande troverai sempre il paragrafo da rileggere." }));
+    app.appendChild(nav({ back: true, label: "Comincia →" }));
+  }
+
+  if (st === "f1") {
+    app.appendChild(header(D.fase1.titolo.replace("Fase 1 — ", "Fase 1. "), D.fase1.minuti));
+    app.appendChild(el("p", { text: D.fase1.consegna }));
+    D.fase1.domande.forEach(function (q, i) {
+      app.appendChild(mcBlock(q, S.f1[q.id], function (k) { S.f1[q.id] = k; persist(); render(); }, i + 1));
+    });
+    var done1 = D.fase1.domande.every(function (q) { return S.f1[q.id] !== undefined; });
+    app.appendChild(nav({ back: true, disabled: !done1, hint: done1 ? "" : "Rispondi a tutte e cinque le domande per andare avanti." }));
+  }
+
+  if (st === "f2") {
+    app.appendChild(header(D.fase2.titolo.replace("Fase 2 — ", "Fase 2. "), D.fase2.minuti));
+    app.appendChild(el("p", { text: D.fase2.consegna }));
+    app.appendChild(reread([2], "Rileggi il paragrafo [2]"));
+    var n = 0;
+    D.fase2.catene.forEach(function (c) {
+      var card = el("div", { "class": "card" }, [el("h3", { text: c.titolo })]);
+      c.frasi.forEach(function (f) {
+        n++;
+        var w = el("div", { "class": "fill", role: "group", "aria-label": "Frase " + n });
+        w.appendChild(el("p", { style: "margin:0 0 4px", html: "<strong>" + n + ".</strong> " + esc(f.prima) + " <span class=\"blank\">" + (S.f2[f.id] !== undefined ? esc(f.options[S.f2[f.id]]) : "___") + "</span>" + (f.dopo === "." ? "." : " " + esc(f.dopo)) }));
+        order(f.id, f.options.length).forEach(function (k) {
+          var b = el("button", { "class": "opt", type: "button", "aria-pressed": S.f2[f.id] === k ? "true" : "false" });
+          if (S.f2ok) { b.disabled = true; if (k === f.correct) { b.classList.add("right"); b.appendChild(el("span", { "class": "tag", text: "✓" })); } else if (k === S.f2[f.id]) { b.classList.add("wrong"); b.appendChild(el("span", { "class": "tag", text: "✗" })); } }
+          b.appendChild(document.createTextNode(f.options[k]));
+          b.onclick = function () { if (!S.f2ok) { S.f2[f.id] = k; persist(); render(); } };
+          w.appendChild(b);
+        });
+        if (S.f2ok) w.appendChild(fb(S.f2[f.id] === f.correct, (S.f2[f.id] === f.correct ? "" : "Risposta corretta: «" + f.options[f.correct] + "». ") + f.spiegazione));
+        card.appendChild(w);
+      });
+      app.appendChild(card);
+    });
+    var all2 = D.fase2.catene.every(function (c) { return c.frasi.every(function (f) { return S.f2[f.id] !== undefined; }); });
+    if (S.f2ok) {
+      var sc = el("div", { "class": "card" }, [el("h3", { text: "Lo schema" }), triangle(),
+        el("p", { "class": "small muted", text: "Il signore tiene il servo attraverso la cosa, e gode la cosa attraverso il servo. Nota da che parte sta il contatto con l'indipendenza della cosa: dalla parte del servo." })]);
+      app.appendChild(sc);
+      app.appendChild(nav({ back: true }));
+    } else {
+      app.appendChild(nav({ back: true, label: "Controlla", disabled: !all2, hint: all2 ? "Dopo il controllo le scelte non si cambiano più." : "Completa tutte e sei le frasi, poi controlla.",
+        onNext: function () { S.f2ok = true; persist(); render(); } }));
+    }
+  }
+
+  if (st === "f3") {
+    var F = D.fase3, ks = ["H", "I", "N"];
+    app.appendChild(header(F.titolo.replace("Fase 3 — ", "Fase 3. "), F.minuti));
+    app.appendChild(el("p", { text: F.consegna }));
+    app.appendChild(reread(allPar(), "Rileggi il testo intero"));
+    app.appendChild(el("details", null, [el("summary", { text: "Rileggi l'introduzione della scheda" }), el("p", { "class": "par", text: D.introduzione })]));
+    order("fase3", F.affermazioni.length).forEach(function (k, i) {
+      var a = F.affermazioni[k], sel = S.f3[a.id];
+      var card = el("div", { "class": "card" }, [el("h3", { text: (i + 1) + ". «" + a.testo + "»" })]);
+      var g = el("div", { "class": "cats", role: "group", "aria-label": "Da dove viene l'affermazione " + (i + 1) });
+      ks.forEach(function (key) {
+        var b = el("button", { "class": "opt", type: "button", "aria-pressed": sel === key ? "true" : "false" });
+        if (sel) { b.disabled = true; if (key === a.cat) { b.classList.add("right"); b.appendChild(el("span", { "class": "tag", text: "✓" })); } else if (key === sel) { b.classList.add("wrong"); b.appendChild(el("span", { "class": "tag", text: "✗" })); } }
+        b.appendChild(document.createTextNode(F.categorie[key]));
+        b.onclick = function () { if (!sel) { S.f3[a.id] = key; persist(); render(); } };
+        g.appendChild(b);
+      });
+      card.appendChild(g);
+      if (sel) card.appendChild(fb(sel === a.cat, a.spiegazione));
+      app.appendChild(card);
+    });
+    app.appendChild(mcBlock({ id: F.domandaFinale.id, prompt: F.domandaFinale.prompt, options: F.domandaFinale.options, correct: F.domandaFinale.correct, spiegazione: F.domandaFinale.spiegazione, par: 5 },
+      S.ff === null ? undefined : S.ff, function (k) { S.ff = k; persist(); render(); }, F.affermazioni.length + 1));
+    var all3 = F.affermazioni.every(function (a) { return S.f3[a.id]; }) && S.ff !== null;
+    app.appendChild(nav({ back: true, disabled: !all3, hint: all3 ? "Attenzione: dopo questa fase non si torna indietro." : "Rispondi a tutte le domande per andare avanti." }));
+  }
+
+  if (st === "chiusura") {
+    var Z = D.chiusura;
+    app.appendChild(header(Z.titolo.replace("Chiusura — ", "Chiusura. "), Z.minuti));
+    app.appendChild(el("p", { "class": "notice", text: "Le risposte a scelta multipla sono chiuse: da qui non si torna indietro, perché le soluzioni le hai già viste." }));
+    var cc = el("div", { "class": "card" });
+    cc.appendChild(el("label", { "for": "essay", html: "<strong>" + esc(Z.prompt) + "</strong>" }));
+    cc.appendChild(reread([3, 4], "Rileggi i paragrafi [3] e [4]"));
+    var ta = el("textarea", { id: "essay", maxlength: String(Z.max), "aria-describedby": "cnt" });
+    ta.value = S.essay;
+    var cnt = el("div", { "class": "counter", id: "cnt", text: S.essay.length + " / " + Z.max });
+    var sub = el("button", { "class": "btn", type: "button", text: "Consegna" });
+    var msg = el("p", { "class": "small err", role: "status" });
+    sub.disabled = S.essay.trim().length < 20;
+    ta.oninput = function () { S.essay = ta.value; cnt.textContent = ta.value.length + " / " + Z.max; sub.disabled = ta.value.trim().length < 20; persist(); };
+    cc.appendChild(ta); cc.appendChild(cnt);
+    app.appendChild(cc);
+    sub.onclick = function () {
+      sub.disabled = true; msg.textContent = "";
+      try { if (typeof Addestramento !== "undefined" && Addestramento.completa) Addestramento.completa(answers(), score()); }
+      catch (e) { msg.textContent = "Registrazione non riuscita: puoi comunque vedere le soluzioni."; }
+      S.done = true; persist(); render(); window.scrollTo(0, 0);
+    };
+    var nv = el("div", { "class": "nav" }, [sub]);
+    app.appendChild(nv); app.appendChild(msg);
+    app.appendChild(el("p", { "class": "small muted", text: "Scrivi almeno una frase. Dopo la consegna vedrai che cosa doveva esserci." }));
+  }
+
+  if (st === "fine") {
+    var k = counts();
+    app.appendChild(header("Fatto. Ecco come è andata"));
+    var s1 = el("div", { "class": "card" }, [el("p", { "class": "eyebrow", text: "Domande chiuse" }), el("p", { "class": "score", text: k.ok + " su " + k.tot }),
+      el("p", { "class": "small muted", text: "È un'indicazione su lessico e struttura, non un voto. Conta di più che cosa hai sbagliato: se l'errore è nella Fase 3, probabilmente stavi leggendo il manuale al posto del testo." })]);
+    app.appendChild(s1);
+    var s2 = el("div", { "class": "card" }, [el("h3", { text: "La tua risposta finale" }), el("p", { "class": "par", text: S.essay || "(nessuna risposta)" }),
+      el("h3", { text: "Che cosa doveva esserci" }), el("p", { "class": "small muted", text: "Spunta i punti che trovi nella tua risposta, anche detti con altre parole. Serve solo a te: non viene registrato." })]);
+    var ch = el("div", { "class": "check" });
+    D.chiusura.checklist.forEach(function (t, i) {
+      var cb = el("input", { type: "checkbox", id: "ck" + i }); cb.checked = !!S.self[i];
+      cb.onchange = function () { S.self[i] = cb.checked; persist(); };
+      ch.appendChild(el("label", { "for": "ck" + i }, [cb, el("span", { text: t })]));
+    });
+    s2.appendChild(ch); app.appendChild(s2);
+    var wrong = items().filter(function (x) { return x.sel !== x.correct; });
+    var s3 = el("div", { "class": "card" }, [el("h3", { text: wrong.length ? "Da rivedere" : "Nessun errore nelle domande chiuse" })]);
+    if (wrong.length) {
+      var ul = el("ul", { "class": "res" });
+      wrong.forEach(function (x) { ul.appendChild(el("li", null, [el("span", { text: x.prompt }), el("br"), el("span", { "class": "small muted", text: "Risposta corretta: " + x.opts[x.correct] })])); });
+      s3.appendChild(ul);
+    }
+    app.appendChild(s3);
+    app.appendChild(el("p", { "class": "small muted", text: "Per approfondire, riprendi sul manuale le pagine sulla Fenomenologia dello spirito: che cosa succede al servo nelle pagine che qui sono state tagliate?" }));
+  }
+}
+
+function start(ctx) {
+  if (STARTED) return; STARTED = true;
+  STUDENT = ctx && ctx.student ? ctx.student : null;
+  load(); render();
+}
+try {
+  if (typeof Addestramento !== "undefined" && Addestramento.start) {
+    Addestramento.start({ labId: D.meta.labId, title: D.meta.titolo + " — palestra su Hegel", tempoAtteso: D.meta.tempoAtteso, caratteriAttesi: D.meta.caratteriAttesi, onReady: start });
+  } else { start(null); }
+} catch (e) { start(null); }
+})();
+</script>
+</body>
+</html>
