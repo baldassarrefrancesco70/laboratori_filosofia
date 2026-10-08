@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kant, Critica della ragion pura — Filosofia V</title>
+<meta name="portale:titolo" content="Kant, Critica della ragion pura">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="comprendere">
+<meta name="portale:descrizione" content="Palestra di apertura (Filosofia V): Che cosa possiamo conoscere, e che cosa resta fuori dalla nostra portata?">
+<meta name="portale:uso" content="addestramento">
 <style>
 :root{
   --navy:#2F5468; --navy-dark:#203C48; --slate:#5B7E92; --banner:#DCE6EC;
@@ -54,19 +59,7 @@ th{background:var(--navy);color:#fff;}
 
 <div class="wrap">
 
-  <div id="screen-gate">
-    <p class="eyebrow">Filosofia V · Palestra di apertura 5 di 5</p>
-    <h1>Kant, Critica della ragion pura</h1>
-    <p class="sub">Che cosa possiamo conoscere, e che cosa resta fuori dalla nostra portata?</p>
-    <div class="card">
-      <label for="in-nome">Nome e cognome</label>
-      <input type="text" id="in-nome" placeholder="es. Maria Rossi">
-      <label for="in-classe">Classe</label>
-      <input type="text" id="in-classe" placeholder="es. 4D">
-      <p id="gate-err" class="hidden" style="color:#B5451B;font-size:0.9rem;">Compila entrambi i campi per iniziare.</p>
-      <button class="btn" onclick="startLab()">Inizia</button>
-    </div>
-  </div>
+  <div id="app" aria-live="polite"></div>
 
   <div id="screen-recap" class="hidden">
     <p class="eyebrow">Filosofia V · Palestra 5 di 5</p>
@@ -110,52 +103,24 @@ th{background:var(--navy);color:#fff;}
     </div>
   </div>
 
-  <div id="screen-dash" class="hidden">
-    <h1>Area docente — Kant, Critica della ragion pura</h1>
-    <div id="dash-login" class="card dash-gate">
-      <label for="dash-pin">PIN</label>
-      <input type="text" id="dash-pin" placeholder="PIN">
-      <button class="btn btn-gold" onclick="verificaPin()">Entra</button>
-      <p id="dash-err" class="hidden" style="color:#B5451B;font-size:0.9rem;margin-top:10px;">PIN errato.</p>
-    </div>
-    <div id="dash-table-wrap" class="hidden">
-      <button class="btn" onclick="caricaRisposte()">Aggiorna</button>
-      <p id="dash-loading" class="hidden" style="color:#5A6B73;">Caricamento…</p>
-      <table>
-        <thead><tr><th>Nome</th><th>Classe</th><th>Punteggio F1</th><th>Fase 2</th><th>Quando</th></tr></thead>
-        <tbody id="dash-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
 </div>
 
-<footer><button onclick="apriDashboard()">Area docente</button></footer>
-
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
 <script>
 const LAB = {"id":"quinta5_kantpura","serie":"Filosofia V","numero":5,"totale":5,"titolo":"Kant, Critica della ragion pura","sottotitolo":"Che cosa possiamo conoscere, e che cosa resta fuori dalla nostra portata?","firebasePath":"studenti_palestra_quinta5_kantpura","recap":[{"h":"La rivoluzione copernicana","b":"Non la mente si adegua agli oggetti: sono gli oggetti a conformarsi alle forme della mente."},{"h":"Forme a priori e categorie","b":"Spazio e tempo organizzano la sensibilità; le categorie (causa, sostanza) organizzano l'intelletto."},{"h":"Fenomeno / noumeno","b":"La scienza vale solo per il fenomeno. La cosa in sé resta pensabile ma inconoscibile."}],"fase1":{"tipo":"classifica","titolo":"Kant afferma o nega?","istruzioni":"Per ciascuna affermazione, scegli se è ciò che Kant sostiene o ciò che esclude.","opzioni":["AFFERMA","NEGA"],"domande":[{"testo":"Possiamo conoscere con validità oggettiva le leggi che regolano i fenomeni, cioè il mondo come ci appare.","corretta":"AFFERMA"},{"testo":"Possiamo conoscere che cosa sono le cose indipendentemente da come la nostra mente le percepisce e le organizza.","corretta":"NEGA"},{"testo":"Spazio e tempo sono condizioni universali e necessarie di ogni esperienza possibile, non proprietà delle cose in sé.","corretta":"AFFERMA"},{"testo":"La ragione teoretica può dimostrare l'esistenza di Dio, della libertà e dell'anima immortale con la stessa certezza con cui conosce i fenomeni.","corretta":"NEGA"}]},"fase2":{"titolo":"Ora in coppia","istruzioni":"Scrivete in una frase il limite che Kant traccia, poi rispondete senza timore di lasciarla aperta.","campi":[{"etichetta":"Il limite che Kant traccia tra ciò che si può conoscere e ciò che non si può conoscere è...","placeholder":"Scrivete qui"},{"etichetta":"Se la cosa in sé resta inconoscibile, ha ancora senso dire che esiste?","placeholder":"Scrivete qui"}]}};
-const FIREBASE_BASE = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
-const TEACHER_PIN = "1970";
-
 let student = { nome: "", classe: "" };
 let f1answers = []; // { corretta?, scelta? } o { testo }
 let submitted = false;
+let tentativi = 0;
+const offline = !window.Addestramento; // se l'adattatore non si carica, la palestra funziona lo stesso (senza registrazione)
 
 function $(id){ return document.getElementById(id); }
 
 function showScreen(id){
-  ["screen-gate","screen-recap","screen-f1","screen-f2","screen-done","screen-dash"].forEach(s=>{
+  ["app","screen-recap","screen-f1","screen-f2","screen-done"].forEach(s=>{
     $(s).classList.toggle("hidden", s!==id);
   });
   window.scrollTo(0,0);
-}
-
-function startLab(){
-  const nome = $("in-nome").value.trim();
-  const classe = $("in-classe").value.trim();
-  if(!nome || !classe){ $("gate-err").classList.remove("hidden"); return; }
-  student = { nome, classe };
-  showScreen("screen-recap");
 }
 
 function goFase1(){
@@ -230,29 +195,37 @@ function goFase2(){
 
 function invia(){
   const fase2 = LAB.fase2.campi.map((f,i) => ({ etichetta: f.etichetta, testo: $("f2-campo-"+i).value.trim() }));
-  const corrette = f1answers.filter(a=>a && a.corretta).length;
-  const totaleClassificabili = f1answers.filter(a=>a && a.scelta!==undefined).length;
-  const payload = {
-    nome: student.nome, classe: student.classe,
-    lab: LAB.id, serie: LAB.serie, timestamp: new Date().toISOString(),
-    fase1: f1answers,
-    punteggio: totaleClassificabili ? (corrette + "/" + totaleClassificabili) : null,
-    fase2: fase2,
-  };
+  const answers = [];
+  LAB.fase1.domande.forEach((d, i) => {
+    const a = f1answers[i] || {};
+    if(a.scelta !== undefined) answers.push({ id: "f1_" + (i+1), prompt: d.testo, type: "mc", answer: a.scelta, correct: !!a.corretta });
+    else if(a.testo && a.testo.trim()) answers.push({ id: "f1_" + (i+1), prompt: d.testo, type: "essay", answer: a.testo.trim(), correct: null });
+  });
+  fase2.forEach((f, i) => { if(f.testo) answers.push({ id: "f2_" + (i+1), prompt: f.etichetta, type: "essay", answer: f.testo, correct: null }); });
+  const mc = answers.filter(a => a.type === "mc");
+  const punteggio = mc.length ? Math.round(100 * mc.filter(a => a.correct).length / mc.length) : null;
   $("btn-invia").disabled = true;
   $("btn-invia").textContent = "Invio...";
-  fetch(FIREBASE_BASE + "/" + LAB.firebasePath + ".json", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify(payload),
-  }).then(()=>{
-    submitted = true;
-    showScreen("screen-done");
-  }).catch(()=>{
+  if(offline){ finito(false); return; }
+  Promise.resolve(Addestramento.completa(answers, punteggio)).catch(()=>false).then(ok=>{
+    if(ok !== false){ finito(true); return; }
+    tentativi++;
+    if(tentativi >= 2){ finito(false); return; }
     $("btn-invia").disabled = false;
     $("btn-invia").textContent = "Invia (riprova)";
     alert("Invio non riuscito: controlla la connessione e riprova.");
   });
+}
+
+function finito(registrato){
+  submitted = true;
+  if(!registrato){
+    const p = document.createElement("p");
+    p.style.color = "#B5451B";
+    p.textContent = "Attenzione: le risposte non sono state registrate (connessione assente o bloccata). Avvisa il docente.";
+    $("screen-done").querySelector(".card").appendChild(p);
+  }
+  showScreen("screen-done");
 }
 
 // blocca il tasto "indietro" del browser dopo l'invio
@@ -261,40 +234,18 @@ window.addEventListener("popstate", function(){
 });
 history.pushState(null, "", location.href);
 
-function apriDashboard(){ showScreen("screen-dash"); }
-
-function verificaPin(){
-  const pin = $("dash-pin").value.trim();
-  if(pin !== TEACHER_PIN){ $("dash-err").classList.remove("hidden"); return; }
-  $("dash-err").classList.add("hidden");
-  $("dash-login").classList.add("hidden");
-  $("dash-table-wrap").classList.remove("hidden");
-  caricaRisposte();
+function avvia(){
+  if(offline){ student = { nome: "", classe: "" }; showScreen("screen-recap"); return; }
+  Addestramento.start({
+    labId: "filosofia_palestra_quinta5_kantpura",
+    title: LAB.titolo,
+    salvaRisposte: true,
+    tempoAtteso: 228,
+    caratteriAttesi: 200,
+    onReady: function(ctx){ student = ctx.student; showScreen("screen-recap"); }
+  });
 }
-
-function caricaRisposte(){
-  $("dash-loading").classList.remove("hidden");
-  fetch(FIREBASE_BASE + "/" + LAB.firebasePath + ".json")
-    .then(r => r.json())
-    .then(data => {
-      $("dash-loading").classList.add("hidden");
-      const rows = data ? Object.values(data) : [];
-      rows.sort((a,b)=> (a.timestamp||"").localeCompare(b.timestamp||""));
-      const tbody = $("dash-tbody");
-      tbody.innerHTML = "";
-      if(rows.length === 0){
-        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
-        return;
-      }
-      rows.forEach(r=>{
-        const tr = document.createElement("tr");
-        const f2text = (r.fase2||[]).map(f=>"<b>"+f.etichetta+":</b> "+f.testo).join("<br>");
-        tr.innerHTML = "<td>"+ (r.nome||"") +"</td><td>"+ (r.classe||"") +"</td><td>"+ (r.punteggio||"—") +"</td><td>"+ f2text +"</td><td>"+ (r.timestamp? new Date(r.timestamp).toLocaleString("it-IT"):"") +"</td>";
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(()=>{ $("dash-loading").textContent = "Errore nel caricamento."; });
-}
+avvia();
 </script>
 </body>
 </html>
