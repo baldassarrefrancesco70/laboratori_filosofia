@@ -4,39 +4,15 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Laboratorio — Induzione, deduzione e sillogismo</title>
+<meta name="portale:titolo" content="Laboratorio — Induzione, deduzione e sillogismo">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="comprendere">
+<meta name="portale:descrizione" content="Laboratorio sul sillogismo — 1: Induzione, deduzione, struttura">
+<meta name="portale:uso" content="addestramento">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<script type="module">
-// ═══════════════════════════════════════════════
-// FIREBASE CONFIG
-// ═══════════════════════════════════════════════
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",
-  authDomain: "laboratorio-vico.firebaseapp.com",
-  databaseURL: "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "laboratorio-vico",
-  storageBucket: "laboratorio-vico.firebasestorage.app",
-  messagingSenderId: "551766473976",
-  appId: "1:551766473976:web:190c0907ce2987e2d78f0d"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-// Esponi le funzioni Firebase al contesto globale
-window._fbSet = (path, data) => set(ref(db, path), data);
-window._fbGet = (path) => get(ref(db, path));
-window._fbRemove = (path) => remove(ref(db, path));
-window._fbListen = (path, cb) => onValue(ref(db, path), snap => cb(snap.val()));
-window._dbReady = true;
-
-// Notifica che Firebase è pronto
-document.dispatchEvent(new Event('firebase-ready'));
-</script>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
 <style>
 :root {
   --bg: #faf8f4;
@@ -444,40 +420,9 @@ tr:last-child td { border-bottom: none; }
   </div>
 </div>
 
-<!-- ══ ROLE ══ -->
-<div id="screen-role" class="screen active">
-  <div class="wrap">
-    <div class="role-hero">
-      <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-faint);margin-bottom:8px">Laboratorio sul sillogismo — 1</p>
-      <h1>Induzione, deduzione, struttura</h1>
-      <p>Seleziona il tuo ruolo per iniziare</p>
-      <div class="role-cards">
-        <div class="role-card" onclick="startStudent()">
-          <div class="role-icon">📖</div>
-          <h3>Studente</h3>
-          <p>Svolgi gli esercizi</p>
-        </div>
-        <div class="role-card" onclick="showScreen('screen-prof-login')">
-          <div class="role-icon">📊</div>
-          <h3>Professore</h3>
-          <p>Visualizza i risultati</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ STUDENT LOGIN ══ -->
-<div id="screen-student-login" class="screen">
-  <div class="wrap">
-    <div class="login-box">
-      <h2>Il tuo nome</h2>
-      <p>Inserisci nome e cognome per salvare i tuoi risultati</p>
-      <input type="text" id="student-name-input" placeholder="Es. Mario Rossi" onkeydown="if(event.key==='Enter')confirmStudentName()"/>
-      <button class="btn btn-primary" onclick="confirmStudentName()" style="width:100%;justify-content:center">Inizia il laboratorio →</button>
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role')" style="margin-top:8px">← Indietro</button>
-    </div>
-  </div>
+<!-- ══ CANCELLO (adattatore di addestramento) ══ -->
+<div id="screen-gate" class="screen active">
+  <div class="wrap"><div id="ad-gate"></div></div>
 </div>
 
 <!-- ══ EXERCISES ══ -->
@@ -497,47 +442,6 @@ tr:last-child td { border-bottom: none; }
         <span class="lbl">punteggio</span>
       </div>
       <button class="btn btn-ghost" onclick="restartStudent()">Ricomincia</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ PROF LOGIN ══ -->
-<div id="screen-prof-login" class="screen">
-  <div class="wrap">
-    <div class="login-box">
-      <h2>Dashboard professore</h2>
-      <p>Inserisci il PIN per accedere ai risultati della classe.</p>
-      <input type="password" id="prof-pin-input" placeholder="PIN" maxlength="8"
-        onkeydown="if(event.key==='Enter')checkProfPin()"
-        style="letter-spacing:0.3em;font-size:1.2rem;text-align:center;margin-bottom:12px"/>
-      <div id="pin-error" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;text-align:center">
-        PIN non corretto.
-      </div>
-      <button class="btn btn-primary" onclick="checkProfPin()" style="width:100%;justify-content:center;margin-bottom:8px">Accedi →</button>
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('screen-role');document.getElementById('prof-pin-input').value='';document.getElementById('pin-error').style.display='none'">← Indietro</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ DASHBOARD ══ -->
-<div id="screen-dashboard" class="screen">
-  <div class="wrap">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px">
-      <h2 style="font-size:1.4rem">Dashboard</h2>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <span style="font-size:11px;color:var(--teal);background:var(--teal-light);padding:4px 10px;border-radius:20px;font-weight:500">● In tempo reale</span>
-        <button class="btn btn-sm btn-danger" onclick="clearData()">Azzera dati classe</button>
-        <button class="btn btn-sm btn-ghost" onclick="showScreen('screen-role')">← Esci</button>
-      </div>
-    </div>
-    <div class="dash-stats" id="dash-stats"></div>
-    <div class="dash-card">
-      <h3>Risultati per studente</h3>
-      <div id="dash-table"></div>
-    </div>
-    <div class="dash-card">
-      <h3>Difficoltà per esercizio</h3>
-      <div id="dash-exercises"></div>
     </div>
   </div>
 </div>
@@ -838,19 +742,6 @@ function showScreen(id) {
   document.getElementById(id).classList.add('active');
 }
 
-const PROF_PIN = '1970';
-function checkProfPin() {
-  const val = document.getElementById('prof-pin-input').value.trim();
-  if (val === PROF_PIN) {
-    document.getElementById('prof-pin-input').value = '';
-    document.getElementById('pin-error').style.display = 'none';
-    loadDashboard();
-  } else {
-    document.getElementById('pin-error').style.display = 'block';
-    document.getElementById('prof-pin-input').value = '';
-    document.getElementById('prof-pin-input').focus();
-  }
-}
 function norm(s) { return (s || '').toLowerCase().trim().replace(/[.,;!?]/g,''); }
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
@@ -864,12 +755,8 @@ function updateDots() {
 // ═══════════════════════════════════════════════
 // FLUSSO STUDENTE
 // ═══════════════════════════════════════════════
-function startStudent() { showScreen('screen-student-login'); }
-
-function confirmStudentName() {
-  const v = document.getElementById('student-name-input').value.trim();
-  if (!v) { alert('Inserisci il tuo nome per continuare.'); return; }
-  studentName = v;
+function iniziaLab(nome) {
+  studentName = nome;
   currentEx = 0;
   scores = {};
   const pill = document.getElementById('student-pill');
@@ -881,10 +768,8 @@ function confirmStudentName() {
 }
 
 function restartStudent() {
-  document.getElementById('student-name-input').value = '';
-  document.getElementById('student-pill').style.display = 'none';
-  document.getElementById('progress-dots').innerHTML = '';
-  showScreen('screen-role');
+  document.getElementById('done-reg') && document.getElementById('done-reg').remove();
+  iniziaLab(studentName);
 }
 
 function renderExercise() {
@@ -912,7 +797,7 @@ function showDone() {
   document.getElementById('score-num').textContent = avg + '%';
   const s = avg >= 80 ? 'Ottimo lavoro!' : avg >= 50 ? 'Buon lavoro, rivedete le parti più difficili.' : 'Ripassate il materiale e riprovate.';
   document.getElementById('done-summary').textContent = s;
-  saveToDB();
+  registra();
 }
 
 // ═══════════════════════════════════════════════
@@ -967,7 +852,6 @@ function checkIndDed() {
       it.correct + '</strong>. ' + it.spiegazione;
   });
   scores[ex.id] = ok / ex.items.length;
-  saveToDB();
   document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
 }
 
@@ -1050,7 +934,6 @@ function checkParti() {
          Conclusione: <strong>${it.conclusione}</strong>`;
   });
   scores[ex.id] = ok / ex.items.length;
-  saveToDB();
   document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
 }
 
@@ -1138,7 +1021,6 @@ function checkTermini() {
       : `✗ Risposta corretta: Termine medio (M) = <strong>${it.termM}</strong> · Termine maggiore (A) = <strong>${it.termA}</strong> · Termine minore (B) = <strong>${it.termB}</strong>`;
   });
   scores[ex.id] = ok / ex.items.length;
-  saveToDB();
   document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
 }
 
@@ -1214,7 +1096,6 @@ function checkCompleta() {
       : `✗ La ${it.tipo} corretta è: <strong>${it.correct}</strong>`;
   });
   scores[ex.id] = ok / ex.items.length;
-  saveToDB();
   document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
 }
 
@@ -1295,131 +1176,48 @@ function checkValVer() {
       `Il sillogismo è <strong>${it.valido ? 'valido' : 'non valido'}</strong> e <strong>${it.vero ? 'vero' : 'non vero'}</strong>. ${it.spiegazione}`;
   });
   scores[ex.id] = ok / ex.items.length;
-  saveToDB();
   document.getElementById('verify-btn').outerHTML = `<button class="btn btn-success" onclick="nextEx()">Avanti →</button>`;
 }
 
 // ═══════════════════════════════════════════════
-// FIREBASE — SALVATAGGIO E DASHBOARD
+// REGISTRAZIONE (adattatore di addestramento) — solo a fine laboratorio
 // ═══════════════════════════════════════════════
+const offline = !window.Addestramento; // se l'adattatore non si carica, il laboratorio funziona lo stesso (senza registrazione)
 
-async function saveToDB() {
-  if (!window._dbReady) {
-    await new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject('Firebase timeout'), 5000);
-      document.addEventListener('firebase-ready', () => { clearTimeout(timeout); resolve(); }, { once: true });
-    }).catch(e => { console.warn('saveToDB: ' + e); return null; });
-    if (!window._dbReady) return;
-  }
-  const key = fbKey(studentName);
-  const data = { name: studentName, scores, completed: currentEx, total: EXERCISES.length, ts: Date.now() };
-  try { await window._fbSet('studenti_sillogismo1/' + key, data); } catch(e) { console.warn('Firebase write error', e); }
-}
-
-function fbKey(name) {
-  // Chiave sicura per Firebase (no punti, slash, etc.)
-  return name.replace(/[.#$/\[\]]/g, '_').replace(/\s+/g, '_');
-}
-
-// Ascoltatore in tempo reale per la dashboard
-let _dashUnsubscribe = null;
-
-function loadDashboard() {
-  showScreen('screen-dashboard');
-  document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">⏳ Caricamento dati...</p>';
-
-  if (!window._dbReady) {
-    document.addEventListener('firebase-ready', () => startDashListener(), { once: true });
-  } else {
-    startDashListener();
-  }
-}
-
-function startDashListener() {
-  // Rimuovi listener precedente se esiste
-  if (_dashUnsubscribe) { _dashUnsubscribe(); _dashUnsubscribe = null; }
-
-  // Ascolta in tempo reale — si aggiorna automaticamente quando arrivano nuovi dati
-  _dashUnsubscribe = window._fbListen('studenti_sillogismo1', (data) => {
-    if (!data) { renderDash([]); return; }
-    const students = Object.values(data);
-    renderDash(students);
+function registra() {
+  const answers = [];
+  EXERCISES.forEach(ex => {
+    if (scores[ex.id] === undefined) return;
+    const p = Math.round(scores[ex.id] * 100);
+    answers.push({ id: ex.id, prompt: (ex.label + ' — ' + ex.title).slice(0, 300), type: 'mc',
+                   answer: p >= 100 ? 'Svolto correttamente' : 'Svolto con errori (' + p + '% corretto)', correct: p >= 100 });
+  });
+  const vals = Object.values(scores);
+  const avg = vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length * 100) : 0;
+  const nota = document.createElement('p');
+  nota.id = 'done-reg';
+  nota.style.cssText = 'font-size:13px;color:var(--text-muted);margin-top:12px';
+  nota.textContent = 'Registrazione del risultato…';
+  const box = document.querySelector('#screen-done .done-screen');
+  const old = document.getElementById('done-reg'); if (old) old.remove();
+  box.appendChild(nota);
+  if (offline) { nota.textContent = 'Risultato NON registrato (connessione assente o bloccata): avvisa il docente.'; return; }
+  Promise.resolve(Addestramento.completa(answers, avg)).catch(() => false).then(ok => {
+    nota.textContent = ok === false ? 'Risultato NON registrato (connessione assente o bloccata): avvisa il docente.' : 'Risultato registrato.';
   });
 }
 
-function renderDash(students) {
-  const total = students.length;
-  const completed = students.filter(s => s.completed >= s.total - 1).length;
-  const avgAll = total > 0 ? Math.round(students.reduce((acc, s) => {
-    const vals = Object.values(s.scores || {});
-    return acc + (vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0);
-  }, 0) / total * 100) : 0;
-
-  document.getElementById('dash-stats').innerHTML = `
-    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Studenti</div></div>
-    <div class="stat-card"><div class="stat-num">${completed}</div><div class="stat-lbl">Completati</div></div>
-    <div class="stat-card"><div class="stat-num">${avgAll}%</div><div class="stat-lbl">Media classe</div></div>`;
-
-  if (!total) {
-    document.getElementById('dash-table').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">Nessun dato ancora. In attesa che gli studenti si colleghino...</p>';
-    document.getElementById('dash-exercises').innerHTML = '';
-    return;
-  }
-
-  const exLabels = {
-    ind1:'Induttivo o deduttivo',
-    parti1:'Parti del sillogismo',
-    term1:'Termini del sillogismo',
-    comp1:'Completa il sillogismo',
-    valver1:'Valido e/o vero'
-  };
-
-  // Ordina per cognome
-  students.sort((a,b) => a.name.localeCompare(b.name));
-
-  const rows = students.map(s => {
-    const vals = Object.values(s.scores || {});
-    const avg = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*100) : 0;
-    const prog = Math.round((s.completed||0) / (s.total||EXERCISES.length) * 100);
-    const badgeClass = avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : vals.length > 0 ? 'badge-low' : 'badge-none';
-    const ts = s.ts ? new Date(s.ts).toLocaleTimeString('it-IT', {hour:'2-digit',minute:'2-digit'}) : '—';
-    return `<tr>
-      <td style="font-weight:500">${s.name}</td>
-      <td>${s.completed||0} / ${s.total||EXERCISES.length}</td>
-      <td><div class="pbar-wrap"><div class="pbar-fill" style="width:${prog}%"></div></div></td>
-      <td><span class="badge ${badgeClass}">${vals.length > 0 ? avg+'%' : '—'}</span></td>
-      <td style="color:var(--text-faint);font-size:12px">${ts}</td>
-    </tr>`;
-  }).join('');
-
-  document.getElementById('dash-table').innerHTML = `
-    <table>
-      <thead><tr><th>Studente</th><th>Progresso</th><th>Completamento</th><th>Media</th><th>Ultimo aggiorn.</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
-
-  const exRows = EXERCISES.map(ex => {
-    const results = students.map(s => (s.scores||{})[ex.id]).filter(v => v !== undefined);
-    const avg = results.length ? Math.round(results.reduce((a,b)=>a+b,0)/results.length*100) : null;
-    const fill = avg ?? 0;
-    const badgeClass = avg === null ? 'badge-none' : avg >= 80 ? 'badge-ok' : avg >= 50 ? 'badge-mid' : 'badge-low';
-    return `<div class="ex-bar-row">
-      <span class="ex-bar-name">${exLabels[ex.id]||ex.id}</span>
-      <div class="ex-bar-wrap"><div class="ex-bar-fill" style="width:${fill}%"></div></div>
-      <span class="badge ${badgeClass}" style="min-width:44px;text-align:center">${avg===null?'—':avg+'%'}</span>
-      <span style="font-size:11px;color:var(--text-faint)">(${results.length} risp.)</span>
-    </div>`;
-  }).join('');
-
-  document.getElementById('dash-exercises').innerHTML = exRows;
-}
-
-async function clearData() {
-  if (!confirm('Azzerare tutti i dati degli studenti da Firebase?')) return;
-  try {
-    await window._fbRemove('studenti_sillogismo1');
-    renderDash([]);
-  } catch(e) { alert('Errore durante l\'eliminazione dei dati.'); }
+if (offline) {
+  iniziaLab('');
+} else {
+  Addestramento.start({
+    appId: 'ad-gate',
+    labId: "filosofia_logica_sillogismo1",
+    title: "Induzione, deduzione, struttura",
+    salvaRisposte: true,
+    tempoAtteso: 450,
+    onReady: function (ctx) { iniziaLab(ctx.student.nome); }
+  });
 }
 </script>
 </body>

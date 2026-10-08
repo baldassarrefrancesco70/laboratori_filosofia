@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Il foglio che ragiona — Laboratorio</title>
+<meta name="portale:titolo" content="Il foglio che ragiona — Laboratorio">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="comprendere">
+<meta name="portale:descrizione" content="Costruire in Google Sheets un validatore di sillogismi aristotelici, passo per passo, con verifica a ogni passaggio.">
+<meta name="portale:uso" content="addestramento">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -31,7 +36,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   color:#fff;font-family:var(--sans);font-size:1rem;font-weight:600;cursor:pointer;}
 .btn-start:hover{background:#3d8f8f;}
 .gate-err{color:var(--red);font-size:.85rem;margin-top:8px;}
-.dash-link{margin-top:20px;font-size:.8rem;color:var(--muted);cursor:pointer;text-decoration:underline;}
 
 #pbwrap{position:fixed;top:0;left:0;right:0;height:4px;background:var(--bg3);z-index:100;display:none;}
 #pbfill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .4s;}
@@ -209,11 +213,7 @@ select.cs{background:var(--bg2);border:1px solid var(--teal);border-radius:4px;
     <h1>Il foglio che ragiona</h1>
     <p class="gate-sub">Costruire un validatore di sillogismi · Liceo G.B. Vico · Chieti</p>
     <div class="gate-istr">Lavorerai in parallelo: questo laboratorio ti guida passo per passo, Google Sheets è dove costruisci. Apri Sheets adesso, poi inizia.</div>
-    <input type="text" id="in-nome" placeholder="Nome" autocomplete="given-name">
-    <input type="text" id="in-cognome" placeholder="Cognome" autocomplete="family-name">
-    <button class="btn-start" onclick="avvia()">Inizia</button>
-    <p id="gate-err" class="gate-err"></p>
-    <p class="dash-link" onclick="apreDash()">Accesso docente →</p>
+        <div id="ad-gate"></div>
   </div>
 </div>
 
@@ -734,41 +734,7 @@ select.cs{background:var(--bg2);border:1px solid var(--teal);border-radius:4px;
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard">
-  <div class="dash-inner">
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
-      <h1 style="font-family:var(--serif);color:var(--gold);font-size:1.5rem">Dashboard docente</h1>
-      <button class="dash-btn sec" onclick="chiudiDash()">← Esci</button>
-      <button class="dash-btn" onclick="caricaDash()">↺ Aggiorna</button>
-      <button class="dash-btn sec" onclick="esportaCSV()">Esporta CSV</button>
-    </div>
-    <div id="dash-stats" style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px"></div>
-    <div id="dash-content"><p style="color:var(--muted)">Caricamento…</p></div>
-  </div>
-</div>
-
-<!-- PIN -->
-<div id="pin-overlay">
-  <div class="pin-box">
-    <h3>Accesso docente</h3>
-    <input type="password" id="pin-in" placeholder="PIN" onkeydown="if(event.key==='Enter')checkPin()">
-    <button onclick="checkPin()">Entra</button>
-    <p class="pin-err" id="pin-err"></p>
-    <p class="pin-cancel" onclick="chiudiPin()">Annulla</p>
-  </div>
-</div>
-
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getDatabase, ref, set, get } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
-const cfg={apiKey:"AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",authDomain:"laboratorio-vico.firebaseapp.com",
-  databaseURL:"https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId:"laboratorio-vico",storageBucket:"laboratorio-vico.firebasestorage.app",
-  messagingSenderId:"551766473976",appId:"1:551766473976:web:190c0907ce2987e2d78f0d"};
-const app=initializeApp(cfg);const db=getDatabase(app);
-window._db=db;window._ref=ref;window._set=set;window._get=get;window._dbReady=true;
-</script>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
 
 <script>
 // ══════════════════════════════════════════
@@ -792,24 +758,19 @@ const FIGURE=['I','II','III','IV'];
 //  STATO
 // ══════════════════════════════════════════
 const TOTAL=6;
-let cur=1,nomeS='',keyS='',dbReady=false;
+let cur=1,nomeS='';
 const risposte={};
 const att={};
 for(let i=1;i<=TOTAL;i++) att[i]=0;
 let modiSelezionati=new Set();
 let modiVerificati=false;
 
-function waitDB(cb){if(window._dbReady){dbReady=true;cb();}else{setTimeout(()=>waitDB(cb),200);}}
 
 // ══════════════════════════════════════════
 //  GATE
 // ══════════════════════════════════════════
-function avvia(){
-  const n=document.getElementById('in-nome').value.trim();
-  const c=document.getElementById('in-cognome').value.trim();
-  if(!n||!c){document.getElementById('gate-err').textContent='Inserisci nome e cognome.';return;}
-  nomeS=n+' '+c;
-  keyS=(c+'_'+n).toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+function iniziaLab(nome){
+  nomeS=nome;
   document.getElementById('gate').style.display='none';
   document.getElementById('lab').style.display='block';
   document.getElementById('pbwrap').style.display='block';
@@ -818,7 +779,17 @@ function avvia(){
   aggProg();
   buildModiGrid();
   buildTabellaModi();
-  waitDB(()=>{});
+}
+function avvia(){
+  if(!window.Addestramento){ iniziaLab(''); return; } // se l'adattatore non si carica, il laboratorio funziona lo stesso (senza registrazione)
+  Addestramento.start({
+    appId:'ad-gate',
+    labId:'filosofia_logica_foglio_sillogismi',
+    title:'Il foglio che ragiona',
+    salvaRisposte:true,
+    tempoAtteso:1200,
+    onReady:function(ctx){ iniziaLab(ctx.student.nome+' ('+ctx.student.classe+')'); }
+  });
 }
 
 // ══════════════════════════════════════════
@@ -852,11 +823,7 @@ function sblocca(step){
   document.getElementById('next-'+step).style.display='inline-flex';
   const c=document.getElementById('check-'+step);if(c)c.style.display='none';
 }
-function salva(){
-  if(!dbReady||!keyS)return;
-  window._set(window._ref(window._db,'studenti_foglio_sillogismi/'+keyS),
-    {nome:nomeS,step:cur,ts:Date.now(),risposte}).catch(()=>{});
-}
+function salva(){} // i salvataggi intermedi non ci sono più: si registra solo alla consegna
 
 // ══════════════════════════════════════════
 //  SPIEGAZIONI
@@ -1062,93 +1029,37 @@ function consegna(){
   document.getElementById('comp-nome').textContent=nomeS;
   let ok=0,tot=0;
   Object.values(risposte).forEach(r=>{if(r.corretta!==undefined){tot++;if(r.corretta)ok++;}});
-  if(dbReady&&keyS){
-    window._set(window._ref(window._db,'studenti_foglio_sillogismi/'+keyS),
-      {nome:nomeS,consegnato:true,ts:Date.now(),punteggio:ok,totale:tot,risposte}).catch(()=>{});
-  }
+  registra(ok,tot);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ══════════════════════════════════════════
-//  DASHBOARD
+//  REGISTRAZIONE (adattatore di addestramento) — solo alla consegna
 // ══════════════════════════════════════════
-function apreDash(){document.getElementById('pin-overlay').classList.add('vis');setTimeout(()=>document.getElementById('pin-in').focus(),100);}
-function chiudiPin(){document.getElementById('pin-overlay').classList.remove('vis');document.getElementById('pin-in').value='';document.getElementById('pin-err').textContent='';}
-function checkPin(){
-  if(document.getElementById('pin-in').value==='1970'){
-    chiudiPin();
-    ['gate','lab','completamento'].forEach(id=>document.getElementById(id).style.display='none');
-    document.getElementById('dashboard').style.display='block';
-    waitDB(()=>caricaDash());
-  }else{document.getElementById('pin-err').textContent='PIN non corretto.';document.getElementById('pin-in').value='';}
-}
-function chiudiDash(){document.getElementById('dashboard').style.display='none';document.getElementById('gate').style.display='flex';}
-
-function caricaDash(){
-  if(!window._dbReady){setTimeout(caricaDash,300);return;}
-  const cont=document.getElementById('dash-content');
-  cont.innerHTML='<p style="color:var(--muted)">Caricamento…</p>';
-  window._get(window._ref(window._db,'studenti_foglio_sillogismi'))
-    .then(snap=>{
-      if(!snap.exists()){cont.innerHTML='<p style="color:var(--muted)">Nessun dato.</p>';return;}
-      const data=snap.val();
-      const studenti=Object.values(data);
-      const cons=studenti.filter(s=>s.consegnato).length;
-      const media=cons>0?Math.round(studenti.filter(s=>s.consegnato).reduce((a,s)=>a+(s.punteggio||0),0)/cons*10)/10:0;
-      document.getElementById('dash-stats').innerHTML=`
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
-          <div style="font-size:.78rem;color:var(--muted);font-family:var(--mono)">STUDENTI</div>
-          <div style="font-size:1.8rem;color:var(--gold);font-family:var(--serif)">${studenti.length}</div>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
-          <div style="font-size:.78rem;color:var(--muted);font-family:var(--mono)">CONSEGNATI</div>
-          <div style="font-size:1.8rem;color:var(--green);font-family:var(--serif)">${cons}</div>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
-          <div style="font-size:.78rem;color:var(--muted);font-family:var(--mono)">MEDIA</div>
-          <div style="font-size:1.8rem;color:var(--teal);font-family:var(--serif)">${cons>0?media:'—'}</div>
-        </div>`;
-      let html=`<table class="dash-table"><thead><tr><th>Studente</th><th>Punteggio</th><th>Passo</th><th>Modi (corr/falsi/mancati)</th><th>Consegnato</th><th>Timestamp</th></tr></thead><tbody>`;
-      studenti.sort((a,b)=>(b.punteggio||0)-(a.punteggio||0)).forEach(s=>{
-        const pct=s.totale>0?(s.punteggio||0)/s.totale*100:0;
-        const cls=pct>=70?'high':pct>=45?'mid':'low';
-        const ts=s.ts?new Date(s.ts).toLocaleString('it-IT'):'—';
-        const md=s.risposte?.d_modi;
-        const modiStr=md?`${md.corretti}/${md.falsi}/${md.mancati}`:'—';
-        html+=`<tr>
-          <td>${s.nome||'—'}</td>
-          <td><span class="pill ${cls}">${s.punteggio||0}/${s.totale||'?'}</span></td>
-          <td>${s.step||'—'}</td>
-          <td style="font-family:var(--mono);font-size:.82rem">${modiStr}</td>
-          <td>${s.consegnato?'✓':'in corso'}</td>
-          <td style="font-size:.8rem;color:var(--muted)">${ts}</td>
-        </tr>`;
-      });
-      html+='</tbody></table>';
-      cont.innerHTML=html;
-    }).catch(e=>{cont.innerHTML=`<p style="color:var(--red)">Errore: ${e.message}</p>`;});
+function registra(ok,tot){
+  const answers=[];
+  Object.keys(risposte).forEach(k=>{
+    const r=risposte[k];
+    if(k==='d_modi'){
+      answers.push({id:'d_modi',prompt:'Modi validi del sillogismo (griglia)',type:'mc',
+        answer:(r.corretti||0)+' corretti, '+(r.falsi||0)+' errati, '+(r.mancati||0)+' mancanti',correct:!r.falsi&&!r.mancati});
+    }else if(r&&r.corretta!==undefined){
+      answers.push({id:k,prompt:'Domanda '+k.slice(2),type:'mc',answer:String(r.risposta),correct:!!r.corretta});
+    }
+  });
+  const punteggio=tot?Math.round(100*ok/tot):null;
+  const nota=document.createElement('p');
+  nota.style.cssText='font-size:.85rem;color:var(--muted);margin-top:14px';
+  nota.textContent='Registrazione del risultato…';
+  const box=document.querySelector('#completamento .comp-box'); if(box) box.appendChild(nota);
+  if(!window.Addestramento){ nota.textContent='Risultato NON registrato (connessione assente o bloccata): avvisa il docente.'; return; }
+  Promise.resolve(Addestramento.completa(answers,punteggio)).catch(()=>false).then(r=>{
+    nota.textContent=r===false?'Risultato NON registrato (connessione assente o bloccata): avvisa il docente.':'Risultato registrato.';
+  });
 }
 
-function esportaCSV(){
-  if(!window._dbReady)return;
-  window._get(window._ref(window._db,'studenti_foglio_sillogismi'))
-    .then(snap=>{
-      if(!snap.exists())return;
-      const rows=[['Nome','Punteggio','Totale','Consegnato','Timestamp','Modi corretti','Modi falsi','Modi mancati']];
-      Object.values(snap.val()).forEach(s=>{
-        const md=s.risposte?.d_modi||{};
-        rows.push([s.nome||'',s.punteggio||0,s.totale||0,s.consegnato?'sì':'no',
-          s.ts?new Date(s.ts).toLocaleString('it-IT'):'',md.corretti||0,md.falsi||0,md.mancati||0]);
-      });
-      const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-      const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-      a.download='foglio_sillogismi_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
-    });
-}
-
-Object.assign(window,{avvia,goNext,goBack,goTo,checkOpt,checkPasso,verificaModi,mostraTabella,apreDash,chiudiPin,checkPin,chiudiDash,caricaDash,esportaCSV,consegna});
-document.getElementById('in-nome').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('in-cognome').focus();});
-document.getElementById('in-cognome').addEventListener('keydown',e=>{if(e.key==='Enter')avvia();});
+Object.assign(window,{avvia,goNext,goBack,goTo,checkOpt,checkPasso,verificaModi,mostraTabella,consegna});
+avvia();
 </script>
 </body>
 </html>
