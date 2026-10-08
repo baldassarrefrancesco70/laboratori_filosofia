@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laboratorio — In dialogo con Kant</title>
+<meta name="portale:titolo" content="Laboratorio — In dialogo con Kant">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="comprendere">
+<meta name="portale:descrizione" content="Quattro sezioni, quattordici domande, tre riflessioni scritte: un percorso attraverso le tre Critiche di Kant.">
+<meta name="portale:uso" content="addestramento">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -158,14 +163,7 @@ table.dash td.essay{max-width:200px;font-size:12px;color:var(--text-dim);white-s
     <h1>In dialogo con <span class="accent">Kant</span></h1>
     <p class="lede">Quattro sezioni, quattordici domande, tre riflessioni scritte. Un percorso attraverso le tre Critiche.</p>
   </header>
-  <div class="gate" id="gate">
-    <h2>Prima di iniziare</h2>
-    <p>Inserisci nome e cognome: i tuoi risultati verranno raccolti per la revisione in classe.</p>
-    <div class="field-row">
-      <input type="text" id="nameInput" placeholder="Nome e cognome" autocomplete="name">
-      <button class="btn-primary" id="startBtn" disabled>Inizia il laboratorio</button>
-    </div>
-  </div>
+  <div class="gate" id="gate"></div>
   <div id="labBody" class="hidden">
     <div class="progress-wrap">
       <div class="progress-label"><span id="progLabel">Domanda 1</span><span id="progPct">0%</span></div>
@@ -173,44 +171,14 @@ table.dash td.essay{max-width:200px;font-size:12px;color:var(--text-dim);white-s
     </div>
     <div id="stepContainer"></div>
   </div>
-  <div class="dash-link"><a id="dashOpen">Area docente</a></div>
   <p class="footer-note">«Due cose riempiono l'animo di ammirazione e venerazione: il cielo stellato sopra di me, e la legge morale in me.» — I. Kant</p>
 </div>
 
-<div class="modal-backdrop" id="dashModal">
-  <div class="modal">
-    <button class="modal-close" id="dashClose">Chiudi</button>
-    <div id="dashGate">
-      <h2>Area docente</h2>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">Inserisci il PIN per visualizzare i risultati della classe.</p>
-      <div class="field-row">
-        <input type="password" id="pinInput" placeholder="PIN" inputmode="numeric">
-        <button class="btn-primary" id="pinBtn">Entra</button>
-      </div>
-      <p id="pinErr" style="color:var(--red);font-size:13px;margin-top:10px;display:none;">PIN errato.</p>
-    </div>
-    <div id="dashContent" class="hidden">
-      <h2>Risultati · In dialogo con Kant</h2>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:8px;" id="dashCount"></p>
-      <div style="overflow-x:auto;"><table class="dash" id="dashTable"></table></div>
-    </div>
-  </div>
-</div>
-
-<script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import{getDatabase,ref,set,get,child}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-const C={apiKey:"AIzaSyAb01kyYdSna57OYJD-q5OVMeWQwhKAH0g",authDomain:"laboratorio-vico.firebaseapp.com",databaseURL:"https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app",projectId:"laboratorio-vico",storageBucket:"laboratorio-vico.firebasestorage.app",messagingSenderId:"551766473976",appId:"1:551766473976:web:190c0907ce2987e2d78f0d"};
-const P="studenti_kant1";let db=null,ok=false;
-try{const a=initializeApp(C);db=getDatabase(a);ok=true;}catch(e){console.error(e);}
-window.__fb={ready:()=>ok,save:async(n,d)=>{if(!ok)throw 0;const k=n.trim().replace(/[.#$\[\]\/]/g,"_").replace(/\s+/g,"_");await set(ref(db,`${P}/${k}`),d);},loadAll:async()=>{if(!ok)throw 0;const s=await get(child(ref(db),P));return s.exists()?s.val():{};}}; 
-window.dispatchEvent(new Event("fb-ready-check"));
-</script>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
 
 <script>
 (function(){
 "use strict";
-const PIN="1970";
 
 /* Indice dell'ultimo step MC: serve per bloccare il tasto Indietro oltre quel punto */
 /* Verrà calcolato dopo la definizione di STEPS */
@@ -560,16 +528,6 @@ const progressBar=document.getElementById("progressBar");
 const progLabel=document.getElementById("progLabel");
 const progPct=document.getElementById("progPct");
 
-nameInput.addEventListener("input",()=>{startBtn.disabled=nameInput.value.trim().length<2;});
-nameInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&!startBtn.disabled)startBtn.click();});
-startBtn.addEventListener("click",()=>{
-  studentName=nameInput.value.trim();
-  gate.classList.add("hidden");
-  labBody.classList.remove("hidden");
-  buildProgressBar();
-  renderStep(0);
-});
-
 /* ================================================================
    PROGRESS
 ================================================================ */
@@ -821,68 +779,72 @@ function renderFinal(){
 ================================================================ */
 async function saveResults(scored,essayResult){
   const saveState=document.getElementById("saveState");
-  const detail={};
-  STEPS.forEach((s,i)=>{if(s.type==="mc"&&results[i]){detail["d"+(i+1)]={sezione:s.section,domanda:s.question.replace(/<[^>]+>/g,"").substring(0,60),esito:results[i].correct?"corretto":"errato"};}});
-  const payload={nome:studentName,laboratorio:"In dialogo con Kant",dataISO:new Date().toISOString(),punteggio:scored,totale:TOTAL_MC,
-    riflessione_A:essayResult?(essayResult.texts.A||null):null,
-    riflessione_B:essayResult?(essayResult.texts.B||null):null,
-    riflessione_C:essayResult?(essayResult.texts.C||null):null,
-    dettaglio:detail};
-  let waited=0;
-  while(!(window.__fb&&window.__fb.ready())&&waited<5000){await new Promise(r=>setTimeout(r,200));waited+=200;}
-  if(window.__fb&&window.__fb.ready()){
-    try{await window.__fb.save(studentName,payload);saveState.textContent="✓ Risultati salvati. Puoi chiudere la pagina.";saveState.style.color="var(--green)";}
-    catch(e){console.error(e);saveState.textContent="⚠ Impossibile salvare online. Avvisa il docente.";saveState.style.color="var(--red)";}
-  } else {
-    saveState.textContent="⚠ Connessione al database non disponibile. Avvisa il docente.";saveState.style.color="var(--red)";
+  const pulito=t=>String(t==null?"":t).replace(/<[^>]+>/g,"").replace(/\s+/g," ").trim();
+  const answers=[];
+  STEPS.forEach((s,i)=>{
+    if(s.type!=="mc"||!results[i])return;
+    answers.push({id:"d"+(i+1),prompt:pulito(s.question),type:"mc",answer:pulito(s.options[results[i].chosen]),correct:!!results[i].correct});
+  });
+  if(essayResult&&essayResult.texts){
+    STEPS[STEPS.length-1].prompts.forEach(pr=>{
+      const t=(essayResult.texts[pr.id]||"").trim();
+      if(t.length>10)answers.push({id:"rifl_"+pr.id,prompt:"Riflessione "+pr.id+" — "+pr.crit+": "+pulito(pr.text),type:"essay",answer:t,correct:null});
+    });
   }
+  const punteggio=TOTAL_MC?Math.round(100*scored/TOTAL_MC):null;
+  let ok=false;
+  if(window.Addestramento){try{ok=(await Addestramento.completa(answers,punteggio))!==false;}catch(e){ok=false;}}
+  saveState.textContent=ok?"✓ Risultati salvati. Puoi chiudere la pagina.":"⚠ Risultati NON registrati (connessione assente o bloccata). Avvisa il docente.";
+  saveState.style.color=ok?"var(--green)":"var(--red)";
+  mostraModelli(essayResult);
+}
+
+/* Modello di risposta per le tre riflessioni (si vede dopo la consegna) */
+const MODELLI={"A":{"crit":"Critica della ragion pura","punti":["racconta un'esperienza concreta in cui la tua percezione era distorta o incompleta, non un'idea generica","la collega alla tesi di Kant: conosciamo le cose come ci appaiono, filtrate da spazio, tempo e categorie (il fenomeno), non come sono in sé (il noumeno)","distingue il tuo caso dal punto kantiano: un errore di percezione si corregge con più informazioni, mentre per Kant anche la conoscenza «corretta» resta condizionata dalle nostre forme, e il noumeno resta inconoscibile","evita la banalizzazione «ognuno vede a modo suo» e riconosce dove l'analogia con la tua esperienza si ferma"]},"B":{"crit":"Critica della ragion pratica","punti":["descrive una situazione concreta in cui il dovere confligge con le conseguenze o con i sentimenti (per esempio dire una verità che farà soffrire)","usa i termini kantiani: dovere compiuto «per il dovere», intenzione contro conseguenze, imperativo categorico","risponde a Kant con un argomento: un'obiezione (rigidità, conflitto fra doveri) e, meglio ancora, la replica che Kant potrebbe dare (universalizzabilità della massima, rispetto della persona come fine)","non si ferma a «non sono d'accordo»: spiega che cosa, nella regola, non regge e perché"]},"C":{"crit":"Critica del Giudizio","punti":["porta un esempio concreto di qualcosa di bello (non solo di piacevole) e lo descrive","distingue il «mi piace» (piacevole, soggettivo) dal «è bello» (pretende l'accordo di chiunque)","spiega perché pretendiamo questo accordo: il giudizio di gusto è disinteressato e non dipende da un concetto o da una regola, ma dal libero accordo delle nostre facoltà","evita «mi emoziona» come unica ragione: l'emozione personale non basta a fondare la pretesa di universalità"]}};
+function mostraModelli(essayResult){
+  const box=document.createElement("div");
+  box.style.cssText="margin-top:22px;text-align:left;background:var(--bg-deep);border:1px solid var(--border-soft);border-radius:12px;padding:18px 20px;";
+  const h=document.createElement("h3");h.textContent="Modello di risposta per le riflessioni";h.style.cssText="font-family:var(--serif);color:var(--gold-soft);margin-bottom:6px;";box.appendChild(h);
+  const p0=document.createElement("p");p0.textContent="Non esiste una risposta unica: confronta ciò che hai scritto con gli elementi di una buona riflessione.";p0.style.cssText="color:var(--text-dim);font-size:14px;margin-bottom:10px;";box.appendChild(p0);
+  STEPS[STEPS.length-1].prompts.forEach(pr=>{
+    const m=MODELLI[pr.id];if(!m)return;
+    const t=document.createElement("div");t.textContent="Domanda "+pr.id+" — "+m.crit;t.style.cssText="font-weight:600;color:var(--teal-soft);margin:12px 0 4px;";box.appendChild(t);
+    const mine=essayResult&&essayResult.texts?(essayResult.texts[pr.id]||"").trim():"";
+    if(mine){const q=document.createElement("div");q.textContent="La tua risposta: "+mine;q.style.cssText="font-size:13px;color:var(--text-dim);white-space:pre-wrap;border-left:3px solid var(--border);padding-left:10px;margin-bottom:6px;";box.appendChild(q);}
+    const l=document.createElement("div");l.textContent="Una buona riflessione:";l.style.cssText="font-size:13px;color:var(--text-dim);";box.appendChild(l);
+    const ul=document.createElement("ul");ul.style.cssText="margin:4px 0 0 18px;font-size:14px;color:var(--text);";
+    m.punti.forEach(x=>{const li=document.createElement("li");li.textContent=x;li.style.marginBottom="4px";ul.appendChild(li);});
+    box.appendChild(ul);
+  });
+  stepContainer.appendChild(box);
 }
 
 /* ================================================================
-   DASHBOARD
+   AVVIO (adattatore di addestramento)
 ================================================================ */
-const dashModal=document.getElementById("dashModal");
-const dashGate=document.getElementById("dashGate");
-const dashContent=document.getElementById("dashContent");
-const pinInput=document.getElementById("pinInput");
-const pinBtn=document.getElementById("pinBtn");
-const pinErr=document.getElementById("pinErr");
-
-document.getElementById("dashOpen").addEventListener("click",()=>{dashModal.classList.add("show");dashGate.classList.remove("hidden");dashContent.classList.add("hidden");pinInput.value="";pinErr.style.display="none";});
-document.getElementById("dashClose").addEventListener("click",()=>dashModal.classList.remove("show"));
-dashModal.addEventListener("click",e=>{if(e.target===dashModal)dashModal.classList.remove("show");});
-pinInput.addEventListener("keydown",e=>{if(e.key==="Enter")pinBtn.click();});
-pinBtn.addEventListener("click",async()=>{
-  if(pinInput.value.trim()!==PIN){pinErr.style.display="block";return;}
-  dashGate.classList.add("hidden");dashContent.classList.remove("hidden");
-  await loadDashboard();
-});
-
-async function loadDashboard(){
-  const table=document.getElementById("dashTable");
-  const count=document.getElementById("dashCount");
-  table.innerHTML=`<tr><td style="color:var(--text-faint);">Caricamento…</td></tr>`;
-  let waited=0;
-  while(!(window.__fb&&window.__fb.ready())&&waited<5000){await new Promise(r=>setTimeout(r,200));waited+=200;}
-  if(!(window.__fb&&window.__fb.ready())){table.innerHTML=`<tr><td style="color:var(--red);">Database non disponibile.</td></tr>`;return;}
-  try{
-    const data=await window.__fb.loadAll();
-    const rows=Object.values(data||{});
-    if(!rows.length){count.textContent="Nessun risultato ancora registrato.";table.innerHTML="";return;}
-    rows.sort((a,b)=>(a.nome||"").localeCompare(b.nome||""));
-    count.textContent=`${rows.length} student${rows.length===1?"e":"i"} · ordinati per nome`;
-    let html=`<tr><th>Studente</th><th>Punteggio</th><th>Ris. A — Conoscenza</th><th>Ris. B — Morale</th><th>Ris. C — Bello</th><th>Data</th></tr>`;
-    rows.forEach(r=>{
-      const d=r.dataISO?new Date(r.dataISO):null;
-      const ds=d?d.toLocaleString("it-IT",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—";
-      html+=`<tr><td>${escapeHtml(r.nome||"—")}</td><td class="num">${r.punteggio??"—"} / ${r.totale??""}</td><td class="essay">${escapeHtml(r.riflessione_A||"—")}</td><td class="essay">${escapeHtml(r.riflessione_B||"—")}</td><td class="essay">${escapeHtml(r.riflessione_C||"—")}</td><td>${ds}</td></tr>`;
-    });
-    table.innerHTML=html;
-  }catch(e){console.error(e);table.innerHTML=`<tr><td style="color:var(--red);">Errore nel caricamento.</td></tr>`;}
+function avvia(){
+  function parti(nome){
+    studentName=nome;
+    gate.classList.add("hidden");
+    labBody.classList.remove("hidden");
+    buildProgressBar();
+    renderStep(0);
+  }
+  if(!window.Addestramento){parti("");return;} /* se l'adattatore non si carica, il laboratorio funziona lo stesso (senza registrazione) */
+  Addestramento.start({
+    appId:"gate",
+    labId:"filosofia_kant_in_dialogo",
+    title:"In dialogo con Kant",
+    salvaRisposte:true,
+    tempoAtteso:TOTAL_MC*45+300,
+    caratteriAttesi:300,
+    onReady:function(ctx){parti(ctx.student.nome);}
+  });
 }
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
+avvia();
 })();
 </script>
 </body>
