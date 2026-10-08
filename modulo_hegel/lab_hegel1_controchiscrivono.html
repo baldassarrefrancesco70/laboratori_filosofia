@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contro chi scrivono? — parole chiave e confronto</title>
+<meta name="portale:titolo" content="Contro chi scrivono? — parole chiave e confronto">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="contestualizzare">
+<meta name="portale:descrizione" content="Tre frammenti romantici a confronto con un passo di Kant: parole chiave, rapporto con la realtà, confronto e scelta in coppia.">
+<meta name="portale:uso" content="addestramento">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -160,6 +165,8 @@ textarea:focus, input[type=text]:focus{outline:2px solid var(--eyebrow); outline
 .choice input{width:auto;}
 
 .teacher-only{display:none;}
+.modello-only{display:none;}
+[data-view="correzione"] .modello-only{display:block;}
 [data-view="docente"] .teacher-only{display:block;}
 [data-view="docente"] .student-only{display:none;}
 
@@ -202,18 +209,6 @@ footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); colo
 .studente-bar b{color:var(--title);}
 .locked textarea:not([readonly]), .locked input, .locked select{opacity:.75;}
 
-.dash-summary{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 4px;}
-.dash-row{border:1px solid var(--line); border-radius:12px; margin-top:10px; background:var(--paper); overflow:hidden;}
-.dash-row > summary{
-  cursor:pointer; list-style:none; padding:10px 14px; display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline;
-}
-.dash-row > summary::-webkit-details-marker{display:none;}
-.dash-row > summary b{color:var(--title);}
-.dash-row > summary span{font-size:13px; color:var(--sub);}
-.dash-row .inner{padding:0 14px 14px; font-size:14px;}
-.dash-row h4{font-family:"Fraunces",serif; color:var(--title); font-size:15px; margin:12px 0 4px;}
-.dash-row p{margin:3px 0;}
-.dash-row .lbl{color:var(--sub); font-size:12.5px; font-weight:700;}
 .kw-list{margin:6px 0 0; padding-left:20px; font-size:14px;}
 </style>
 </head>
@@ -235,41 +230,9 @@ footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); colo
     <button class="themebtn" id="themeToggle" type="button">Tema: sistema</button>
   </div>
 
-  <section id="gate" class="card">
-    <h2 style="font-size:20px;">Prima di cominciare</h2>
-    <div class="field">
-      <label for="nome">Nome e cognome</label>
-      <input id="nome" type="text" autocomplete="name" placeholder="Es. Maria Rossi">
-    </div>
-    <div class="field">
-      <label for="classe">Classe</label>
-      <input id="classe" type="text" placeholder="Es. 5D">
-    </div>
-    <p class="stato">Il tuo lavoro viene salvato con il tuo nome: serve all'insegnante per seguire la classe, non produce un voto.</p>
-    <p style="margin:14px 0 0;"><button class="btn" id="avvia" type="button" disabled>Inizia</button></p>
-  </section>
+  <section id="gate"></section>
 
-  <section id="screen-dash" class="card" hidden>
-    <div class="phase-h"><h2>Area docente — risposte</h2></div>
-    <div id="dash-login">
-      <div class="field">
-        <label for="dash-pin">PIN</label>
-        <input type="text" id="dash-pin" inputmode="numeric" placeholder="PIN">
-      </div>
-      <p style="margin:12px 0 0;"><button class="btn" type="button" id="dash-entra">Entra</button>
-        <button class="btn sec" type="button" id="dash-annulla">Annulla</button></p>
-      <p id="dash-err" class="stato err" hidden>PIN errato.</p>
-    </div>
-    <div id="dash-wrap" hidden>
-      <p class="help" style="margin-top:0;">Le note per il docente sono ora visibili anche nel corpo della pagina.</p>
-      <p style="margin:0;"><button class="btn sec" type="button" id="dash-aggiorna">Aggiorna</button>
-        <button class="btn sec" type="button" id="dash-esci">Esci dall'area docente</button></p>
-      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
-      <div id="dash-summary"></div>
-      <div id="dash-list"></div>
-    </div>
-  </section>
-
+  
   <div id="lab" hidden>
   <div class="recall">
     <b>Richiamo minimo.</b> Per Kant conosciamo fenomeni, non cose in sé. L'infinito e l'assoluto stanno oltre l'esperienza e quindi oltre la conoscenza.
@@ -413,6 +376,30 @@ footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); colo
     </div>
   </section>
 
+  <section id="modello" class="modello-only">
+    <div class="card">
+      <div class="phase-h"><h2>Modello di risposta</h2></div>
+      <p class="help">Confronta il tuo lavoro con queste indicazioni. Non esiste una formulazione unica: conta aver colto la posta in gioco.</p>
+      <h3 style="margin:12px 0 4px;">Che cosa guardare nelle tue risposte</h3>
+      <ul>
+        <li>Nella <b>parola chiave</b>: un termine che porta davvero il peso del passo (es. «intuizione», «scrittura cifrata», «universale progressiva»), non un sostantivo qualsiasi ripreso a caso.</li>
+        <li>Nella domanda (a): una facoltà o un'esperienza specifica (sentimento, intuizione, immaginazione, arte), non un generico «il cuore».</li>
+        <li>Nella domanda (b): il confronto deve dire <i>su che cosa</i> il frammento va oltre Kant e <i>che cosa</i> di Kant resta comunque valido, non solo «sono diversi».</li>
+        <li>Nella scelta di coppia: la motivazione deve toccare il punto in discussione (conoscenza vs. esperienza dei limiti), non restare sul piano del gusto personale.</li>
+      </ul>
+      <h3 style="margin:12px 0 4px;">Punti attesi, frammento per frammento</h3>
+      <p><b>T1 — Schleiermacher.</b> Parola chiave attesa: «intuizione» o «sentimento». Dove Kant dice che l'infinito non è oggetto di conoscenza, il frammento ne fa oggetto di esperienza immediata. Il limite kantiano resta intatto: non si tratta di conoscere l'infinito, ma di sentirlo.</p>
+      <p><b>T2 — Novalis.</b> Parola chiave attesa: «scrittura cifrata» (o «figure»). Dove la natura di Kant è l'insieme dei fenomeni retti da leggi meccaniche, il frammento pensa la natura come testo da decifrare, animato da un'unica logica. La terza <i>Critica</i> (finalità) è il ponte.</p>
+      <p><b>T3 — Schlegel.</b> Parola chiave attesa: «universale progressiva» (o «poesia»). L'arte come conoscenza. Per Kant il genio dà la regola all'arte; qui l'arte diventa organo del sapere, mai concluso.</p>
+      <p><b>Sulla scelta di coppia.</b> Non c'è una risposta «giusta»: la motivazione deve mostrare di aver colto la posta in gioco (che cosa possiamo sapere vs. che cosa possiamo sentire, intuire, creare), non designare un «vincitore».</p>
+      <h3 style="margin:12px 0 4px;">Due errori da evitare</h3>
+      <ul>
+        <li>«I romantici sono irrazionalisti»: il frammento rifiuta di ragionare, o cambia l'oggetto a cui applica il ragionamento?</li>
+        <li>Parola chiave troppo generica (es. «mondo», «uomo»): se tolgo questa parola, il passo dice ancora la stessa cosa?</li>
+      </ul>
+    </div>
+  </section>
+
   <section class="teacher-only">
     <details class="acc">
       <summary>Che cosa osservare</summary>
@@ -468,20 +455,15 @@ footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); colo
 
   <footer>
     <p style="margin:0 0 10px;">Filosofia V · Modulo Hegel · Attività 1 (variante: parole chiave e confronto) · attività formativa, non valutata.</p>
-    <button class="btn sec" type="button" id="apriDash">Area docente</button>
   </footer>
 </div>
 
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
 <script>
 (function(){
   "use strict";
   var app = document.getElementById('app');
   var $ = function(id){ return document.getElementById(id); };
-
-  // ---------- Firebase ----------
-  var FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
-  var FIREBASE_PATH = "studenti_hegel1_controchiscrivono";
-  var TEACHER_PIN = "1970";
 
   var FRAMMENTI = [
     {key:"T1", nome:"T1 — Schleiermacher"},
@@ -498,21 +480,33 @@ footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); colo
     });
   }
 
-  // ---------- gate ----------
-  function controllaGate(){
-    $("avvia").disabled = !($("nome").value.trim().length > 2 && $("classe").value.trim().length > 0);
-  }
-  $("nome").addEventListener("input", controllaGate);
-  $("classe").addEventListener("input", controllaGate);
-  $("avvia").addEventListener("click", function(){
-    studente.nome = $("nome").value.trim();
-    studente.classe = $("classe").value.trim();
+  // ---------- gate: adattatore di addestramento ----------
+  var offline = !window.Addestramento; // se l'adattatore non si carica, l'attività funziona lo stesso (senza registrazione)
+  var tentativi = 0;
+  function apriLab(){
     gateSuperato = true;
     $("gate").hidden = true;
     $("lab").hidden = false;
-    $("studenteBar").innerHTML = "<b>" + esc(studente.nome) + "</b> · " + esc(studente.classe);
+    $("studenteBar").innerHTML = studente.nome ? "<b>" + esc(studente.nome) + "</b> · " + esc(studente.classe) : "Vista studenti";
     window.scrollTo({top:0, behavior:"smooth"});
-  });
+  }
+  function setView(v){ app.setAttribute('data-view', v); }
+  function avvia(){
+    if(/[?&]docente\b/.test(location.search)){
+      // vista docente: note, punti attesi e cronoprogramma; nessuna registrazione
+      $("gate").hidden = true; $("lab").hidden = false; $("studenteBar").innerHTML = "<b>Vista docente</b>"; setView("docente"); return;
+    }
+    if(offline){ apriLab(); return; }
+    Addestramento.start({
+      appId: "gate",
+      labId: "filosofia_hegel1_controchiscrivono",
+      title: "Contro chi scrivono?",
+      salvaRisposte: true,
+      tempoAtteso: 900,
+      caratteriAttesi: 900,
+      onReady: function(ctx){ studente = ctx.student; apriLab(); }
+    });
+  }
 
   // ---------- raccolta e invio ----------
   function val(id){
@@ -557,150 +551,44 @@ footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); colo
       es.textContent = "Completa prima: " + m.join(", ") + ".";
       return;
     }
-    var payload = {
-      nome: studente.nome, classe: studente.classe,
-      inviato: new Date().toISOString(),
-      fase1: d.fase1, fase2: d.fase2
-    };
+    var answers = [];
+    function agg(id, prompt, answer){ if(answer) answers.push({ id: id, prompt: prompt, type: "essay", answer: answer, correct: null }); }
+    FRAMMENTI.forEach(function(f){
+      var k = f.key.toLowerCase(), r = d.fase1[f.key];
+      agg("f1_" + k + "_kw", f.nome + ": parole chiave nel testo", r.kw);
+      agg("f1_" + k + "_a", f.nome + " — a) Che cosa mette in contatto con la realtà?", r.a);
+      agg("f1_" + k + "_b", f.nome + " — b) Confronto con il testo di Kant", r.b);
+    });
+    agg("f2_compagno", "Con chi lavori in coppia? (nome e cognome)", d.fase2.compagno);
+    agg("f2_frammento", "Frammento scelto per il confronto con Kant", nomeFrammento(d.fase2.frammento));
+    agg("f2_scelta", "Tesi più convincente", d.fase2.scelta === "K" ? "La tesi di Kant" : "La tesi del frammento scelto");
+    agg("f2_motivazione", "Motivazione della scelta", d.fase2.motivazione);
     $("invia").disabled = true;
     es.className = "stato";
     es.textContent = "Invio in corso…";
-    fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json",
-      {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); })
-      .then(function(){
-        inviato = true;
-        $("lab").classList.add("locked");
-        $("lab").querySelectorAll('textarea:not([readonly]), input, select').forEach(function(el){ el.disabled = true; });
-        es.className = "stato ok";
-        es.textContent = "Lavoro inviato. Puoi chiudere la pagina.";
-      })
-      .catch(function(){
+    var invio = offline ? Promise.resolve(false) : Promise.resolve(Addestramento.completa(answers, null)).catch(function(){ return false; });
+    invio.then(function(ok){
+      if(ok === false && !offline && ++tentativi < 2){
         $("invia").disabled = false;
         es.className = "stato err";
         es.textContent = "Invio non riuscito: controlla la connessione e riprova. Non chiudere la pagina, le risposte sono ancora qui.";
-      });
-  });
-
-  // ---------- area docente ----------
-  function setView(v){ app.setAttribute('data-view', v); }
-
-  $("apriDash").addEventListener("click", function(){
-    $("screen-dash").hidden = false;
-    $("dash-pin").focus();
-    $("screen-dash").scrollIntoView({behavior:"smooth"});
-  });
-  $("dash-annulla").addEventListener("click", function(){
-    $("screen-dash").hidden = true;
-    $("dash-err").hidden = true;
-  });
-  function verificaPin(){
-    if($("dash-pin").value.trim() !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
-    $("dash-err").hidden = true;
-    $("dash-login").hidden = true;
-    $("dash-wrap").hidden = false;
-    $("gate").hidden = true;
-    $("lab").hidden = false;
-    $("apriDash").hidden = true;
-    $("studenteBar").innerHTML = "<b>Vista docente</b>";
-    setView("docente");
-    caricaRisposte();
-  }
-  $("dash-entra").addEventListener("click", verificaPin);
-  $("dash-pin").addEventListener("keydown", function(e){ if(e.key === "Enter") verificaPin(); });
-  $("dash-aggiorna").addEventListener("click", caricaRisposte);
-  $("dash-esci").addEventListener("click", function(){
-    setView("studenti");
-    $("dash-pin").value = "";
-    $("dash-login").hidden = false;
-    $("dash-wrap").hidden = true;
-    $("screen-dash").hidden = true;
-    $("apriDash").hidden = false;
-    if(gateSuperato){
-      $("studenteBar").innerHTML = "<b>" + esc(studente.nome) + "</b> · " + esc(studente.classe);
-    } else {
-      $("studenteBar").textContent = "Vista studenti";
-      $("lab").hidden = true;
-      $("gate").hidden = false;
-    }
+        return;
+      }
+      inviato = true;
+      $("lab").classList.add("locked");
+      $("lab").querySelectorAll('textarea:not([readonly]), input, select').forEach(function(el){ el.disabled = true; });
+      setView("correzione");
+      es.className = ok === false ? "stato err" : "stato ok";
+      es.textContent = ok === false
+        ? "Lavoro completato, ma NON registrato (connessione assente o bloccata): avvisa l'insegnante. Qui sotto trovi comunque il modello di risposta."
+        : "Lavoro inviato. Qui sotto trovi il modello di risposta: confrontalo con il tuo lavoro.";
+      var m = document.getElementById("modello"); if(m) m.scrollIntoView({behavior:"smooth"});
+    });
   });
 
   function nomeFrammento(k){
     for(var i=0;i<FRAMMENTI.length;i++){ if(FRAMMENTI[i].key === k) return FRAMMENTI[i].nome; }
     return k || "—";
-  }
-
-  function caricaRisposte(){
-    $("dash-loading").hidden = false;
-    $("dash-loading").textContent = "Caricamento…";
-    fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
-      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function(data){
-        $("dash-loading").hidden = true;
-        var rows = data ? Object.keys(data).map(function(k){ return data[k]; }) : [];
-        rows.sort(function(a,b){
-          return (a.classe||"").localeCompare(b.classe||"") || (a.nome||"").localeCompare(b.nome||"");
-        });
-        renderSintesi(rows);
-        renderElenco(rows);
-      })
-      .catch(function(){
-        $("dash-loading").hidden = false;
-        $("dash-loading").textContent = "Errore nel caricamento.";
-      });
-  }
-
-  function renderSintesi(rows){
-    var box = $("dash-summary");
-    if(!rows.length){ box.innerHTML = ""; return; }
-    // scelte di coppia per frammento
-    var conta = {};
-    rows.forEach(function(r){
-      var f2 = r.fase2 || {};
-      var k = f2.frammento || "?";
-      conta[k] = conta[k] || {K:0, frammento:0};
-      if(f2.scelta === "K") conta[k].K++;
-      else if(f2.scelta === "frammento") conta[k].frammento++;
-    });
-    var chips = Object.keys(conta).sort().map(function(k){
-      return '<span class="chip">K vs ' + esc(k) + ': Kant ' + conta[k].K + ' · frammento ' + conta[k].frammento + '</span>';
-    }).join("");
-    // parole chiave per frammento
-    var kw = FRAMMENTI.map(function(f){
-      var voci = rows.map(function(r){ return ((r.fase1||{})[f.key]||{}).kw; }).filter(Boolean);
-      return '<li><b>' + esc(f.nome) + ':</b> ' + (voci.length ? voci.map(esc).join(" · ") : "—") + '</li>';
-    }).join("");
-    box.innerHTML =
-      '<p class="stato">' + rows.length + ' invii. Le coppie inviano due volte: una per studente.</p>' +
-      '<div class="dash-summary">' + chips + '</div>' +
-      '<details class="acc"><summary>Parole chiave scelte, per frammento</summary><div class="inner"><ul class="kw-list">' + kw + '</ul></div></details>';
-  }
-
-  function renderElenco(rows){
-    var list = $("dash-list");
-    if(!rows.length){ list.innerHTML = '<p class="stato">Nessuna risposta ancora.</p>'; return; }
-    list.innerHTML = rows.map(function(r){
-      var f1 = r.fase1 || {}, f2 = r.fase2 || {};
-      var quando = r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "";
-      var scelta = f2.scelta === "K" ? "Kant" : (f2.scelta === "frammento" ? "frammento" : "—");
-      var fase1 = FRAMMENTI.map(function(f){
-        var x = f1[f.key] || {};
-        return '<h4>' + esc(f.nome) + '</h4>' +
-          '<p><span class="lbl">Parole chiave:</span> ' + esc(x.kw || "—") + '</p>' +
-          '<p><span class="lbl">a) Contatto con la realtà:</span> ' + esc(x.a || "—") + '</p>' +
-          '<p><span class="lbl">b) Confronto con Kant:</span> ' + esc(x.b || "—") + '</p>';
-      }).join("");
-      return '<details class="dash-row"><summary>' +
-          '<b>' + esc(r.nome) + '</b><span>' + esc(r.classe) + '</span>' +
-          '<span>Coppia: ' + esc(f2.compagno || "—") + '</span>' +
-          '<span>K vs ' + esc(f2.frammento || "?") + ' → ' + scelta + '</span>' +
-          '<span>' + esc(quando) + '</span>' +
-        '</summary><div class="inner">' + fase1 +
-          '<h4>Fase 2 — K vs ' + esc(nomeFrammento(f2.frammento)) + '</h4>' +
-          '<p><span class="lbl">Tesi più convincente:</span> ' + scelta + '</p>' +
-          '<p><span class="lbl">Motivazione:</span> ' + esc(f2.motivazione || "—") + '</p>' +
-        '</div></details>';
-    }).join("");
   }
 
   // ---------- theme toggle (system -> light -> dark -> system, in memory) ----------
@@ -719,6 +607,8 @@ footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); colo
     curTheme = themeOrder[(themeOrder.indexOf(curTheme)+1) % themeOrder.length];
     applyTheme(curTheme);
   });
+
+  avvia();
 
   // ---------- timers ----------
   document.querySelectorAll('.timer').forEach(function(box){

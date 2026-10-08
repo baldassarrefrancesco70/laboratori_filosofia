@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Come si costruisce una quaestio</title>
+<meta name="portale:titolo" content="Come si costruisce una quaestio">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="comprendere">
+<meta name="portale:descrizione" content="Il metodo della Scolastica — ricostruzione argomentativa">
+<meta name="portale:uso" content="addestramento">
 <style>
   :root{
     --tan:#CCA677; --tan-chiaro:#F4EADB; --marrone:#7C6448; --scuro:#2B2B2B;
@@ -47,6 +52,10 @@
   .barra i{display:block;height:100%;background:var(--tan);width:0;transition:width .3s}
   .stato{font-size:14px;color:#6B6B6B;margin-top:10px}
   footer{max-width:820px;margin:0 auto;padding:0 16px 30px;font-size:13px;color:#8A8A8A}
+  .modello{background:#F4EADB;border:1px solid var(--tan);border-radius:8px;padding:12px 14px;margin:10px 0}
+  .modello h3{margin:0 0 6px;font-size:16px;color:var(--marrone)}
+  .modello ul{margin:6px 0 0 18px;padding:0}
+  .modello .tua{background:#fff;border:1px solid var(--bordo);border-radius:6px;padding:8px 10px;margin:6px 0;white-space:pre-wrap}
   [hidden]{display:none!important}
 </style>
 </head>
@@ -59,15 +68,7 @@
 
 <div class="wrap">
 
-  <section id="gate" class="card">
-    <h2>Prima di cominciare</h2>
-    <label for="nome">Nome e cognome</label>
-    <input id="nome" type="text" autocomplete="name" placeholder="Es. Maria Rossi">
-    <label for="classe">Classe</label>
-    <input id="classe" type="text" placeholder="Es. 4D">
-    <p class="stato">Il tuo lavoro viene salvato con il tuo nome: serve all'insegnante per seguire la classe, non produce un voto.</p>
-    <p><button id="avvia" disabled>Inizia</button></p>
-  </section>
+  <section id="gate"></section>
 
   <section id="lab" hidden>
     <div class="card richiamo">
@@ -95,70 +96,48 @@
     <div class="card" id="fine" hidden>
       <h2>Fatto</h2>
       <p id="testoFine"></p>
+      <div id="modelli"></div>
       <p class="stato">La sequenza corretta si ricostruisce dalle funzioni: domanda, obiezioni, sed contra, respondeo, risposte.</p>
     </div>
   </section>
 
 
-  <section id="screen-dash" class="card" hidden>
-    <h2>Area docente — Come si costruisce una quaestio</h2>
-    <div id="dash-login">
-      <label for="dash-pin">PIN</label>
-      <input type="text" id="dash-pin" placeholder="PIN">
-      <p><button onclick="verificaPin()">Entra</button></p>
-      <p id="dash-err" class="stato" style="color:var(--rosso);" hidden>PIN errato.</p>
-    </div>
-    <div id="dash-table-wrap" hidden>
-      <p><button class="secondaria" onclick="caricaRisposte()">Aggiorna</button></p>
-      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-          <thead>
-            <tr>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Nome</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Classe</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Punteggio F1</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Fase 2</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Quando</th>
-            </tr>
-          </thead>
-          <tbody id="dash-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
 </div>
 <footer>
   <p>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</p>
-  <p><button class="secondaria" onclick="apriDashboard()">Area docente</button></p>
 </footer>
 
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
 <script>
-// ---------------------------------------------------------------- Firebase
-const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
-const FIREBASE_PATH = "studenti_filcristiana3_quaestio";
-const TEACHER_PIN = "1970";
-
-const DATI = [{"id": "b1", "testo": "Se la filosofia sia utile alla fede.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 0, "spiegazione": "È il punto controverso messo in forma di domanda: apre la quaestio.", "errore": "Guarda la forma: non argomenta nulla, chiede soltanto."}, {"id": "b2", "testo": "Sembra che non lo sia. La verità necessaria alla salvezza è già contenuta per intero nella Scrittura; e ciò che è già dato per intero non va cercato altrove.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 1, "spiegazione": "Prima obiezione: un argomento contro la tesi che si vuole sostenere.", "errore": "Comincia con «sembra che non»: è la mossa con cui si apre un'obiezione."}, {"id": "b3", "testo": "Inoltre: le eresie sono nate quasi tutte dal tentativo di spiegare con argomenti umani ciò che andava soltanto creduto.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 1, "spiegazione": "Seconda obiezione: stessa funzione della precedente, argomento diverso.", "errore": "È un secondo argomento contro la tesi, non la soluzione."}, {"id": "b4", "testo": "Agostino afferma: «credi, per poter capire; e capisci, per poter credere». Ma capire è l'opera della filosofia.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 2, "spiegazione": "È il sed contra: un'autorità citata in senso opposto alle obiezioni.", "errore": "Attenzione: qui si cita un'autorità, non si espone ancora una soluzione propria."}, {"id": "b5", "testo": "La filosofia è utile alla fede, ma non allo stesso titolo della rivelazione: la rivelazione dà il contenuto, la filosofia gli strumenti per chiarirlo e difenderlo.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 3, "spiegazione": "È il respondeo: la soluzione, che distingue invece di scegliere fra sì e no.", "errore": "È qui che per la prima volta si prende posizione articolando una distinzione."}, {"id": "b6", "testo": "Alla prima: la filosofia non aggiunge una seconda verità, permette di comprendere quella che si crede. Alla seconda: che alcuni abbiano sbagliato non dimostra che la ragione vada abbandonata.", "opzioni": ["Domanda", "Obiezione", "Sed contra", "Respondeo", "Risposte alle obiezioni"], "giusta": 4, "spiegazione": "Sono le risposte alle obiezioni iniziali, una per una: chiudono la quaestio.", "errore": "Nota che il blocco risponde a due cose distinte, nell'ordine in cui erano state poste."}];
-const APERTE = [{"id": "ordine", "domanda": "Scrivi la sequenza corretta usando i numeri dei blocchi come compaiono qui sopra (es. 1-3-2-…).", "aiuto": ""}, {"id": "perche", "domanda": "Perché il metodo obbliga a scrivere le obiezioni PRIMA della propria risposta, e nella forma più forte possibile?", "aiuto": "Pensa a che cosa succede a una tesi che non ha mai attraversato le obiezioni."}];
+// ---------------------------------------------------------------- Dati
+const DATI = [{"id":"b3","testo":"Inoltre: le eresie sono nate quasi tutte dal tentativo di spiegare con argomenti umani ciò che andava soltanto creduto.","opzioni":["Domanda","Obiezione","Sed contra","Respondeo","Risposte alle obiezioni"],"giusta":1,"spiegazione":"Seconda obiezione: stessa funzione della precedente, argomento diverso.","errore":"È un secondo argomento contro la tesi, non la soluzione."},{"id":"b5","testo":"La filosofia è utile alla fede, ma non allo stesso titolo della rivelazione: la rivelazione dà il contenuto, la filosofia gli strumenti per chiarirlo e difenderlo.","opzioni":["Domanda","Obiezione","Sed contra","Respondeo","Risposte alle obiezioni"],"giusta":3,"spiegazione":"È il respondeo: la soluzione, che distingue invece di scegliere fra sì e no.","errore":"È qui che per la prima volta si prende posizione articolando una distinzione."},{"id":"b1","testo":"Se la filosofia sia utile alla fede.","opzioni":["Domanda","Obiezione","Sed contra","Respondeo","Risposte alle obiezioni"],"giusta":0,"spiegazione":"È il punto controverso messo in forma di domanda: apre la quaestio.","errore":"Guarda la forma: non argomenta nulla, chiede soltanto."},{"id":"b6","testo":"Alla prima: la filosofia non aggiunge una seconda verità, permette di comprendere quella che si crede. Alla seconda: che alcuni abbiano sbagliato non dimostra che la ragione vada abbandonata.","opzioni":["Domanda","Obiezione","Sed contra","Respondeo","Risposte alle obiezioni"],"giusta":4,"spiegazione":"Sono le risposte alle obiezioni iniziali, una per una: chiudono la quaestio.","errore":"Nota che il blocco risponde a due cose distinte, nell'ordine in cui erano state poste."},{"id":"b2","testo":"Sembra che non lo sia. La verità necessaria alla salvezza è già contenuta per intero nella Scrittura; e ciò che è già dato per intero non va cercato altrove.","opzioni":["Domanda","Obiezione","Sed contra","Respondeo","Risposte alle obiezioni"],"giusta":1,"spiegazione":"Prima obiezione: un argomento contro la tesi che si vuole sostenere.","errore":"Comincia con «sembra che non»: è la mossa con cui si apre un'obiezione."},{"id":"b4","testo":"Agostino afferma: «credi, per poter capire; e capisci, per poter credere». Ma capire è l'opera della filosofia.","opzioni":["Domanda","Obiezione","Sed contra","Respondeo","Risposte alle obiezioni"],"giusta":2,"spiegazione":"È il sed contra: un'autorità citata in senso opposto alle obiezioni.","errore":"Attenzione: qui si cita un'autorità, non si espone ancora una soluzione propria."}];
+const APERTE = [{"id":"ordine","domanda":"Scrivi la sequenza corretta usando i numeri dei blocchi come compaiono qui sopra (es. 1-3-2-…).","aiuto":"","modello":{"intro":"La sequenza corretta della quaestio è: domanda → obiezione → obiezione → sed contra → respondeo → risposte alle obiezioni.","punti":["con i numeri come li vedi nella scheda, è 3-5-1-6-2-4","la seconda obiezione («Inoltre…») viene dopo la prima, e le risposte alle obiezioni («Alla prima… Alla seconda…») si leggono in coda, dopo il respondeo"]}},{"id":"perche","domanda":"Perché il metodo obbliga a scrivere le obiezioni PRIMA della propria risposta, e nella forma più forte possibile?","aiuto":"Pensa a che cosa succede a una tesi che non ha mai attraversato le obiezioni.","modello":{"intro":"Una buona risposta contiene almeno due di questi punti:","punti":["una tesi che non ha mai attraversato le obiezioni non sa se regge: la sua forza si vede quando resiste","scrivere per prime le obiezioni, nella forma più forte, impedisce di rispondere a una versione indebolita e comoda delle ragioni opposte","il respondeo che segue deve farsi carico di quelle obiezioni: per questo distingue, invece di scegliere semplicemente sì o no","il metodo obbliga chi risponde a conoscere davvero le ragioni degli altri"]}}];
 
 const $ = (id) => document.getElementById(id);
 let studente = {nome:"", classe:""};
 let risposte = {};      // id item -> {scelta, corretta, tentativi}
 let chiuso = false;
 
-function controllaGate(){
-  $("avvia").disabled = !($("nome").value.trim().length > 2 && $("classe").value.trim().length > 0);
+const offline = !window.Addestramento; // se l'adattatore non si carica, l'attività funziona lo stesso (senza registrazione)
+let tentativiInvio = 0;
+function testoPulito(t){ return String(t).replace(/<[^>]+>/g, "").trim(); }
+function avvia(){
+  if (offline) { $("gate").hidden = true; $("lab").hidden = false; return; }
+  Addestramento.start({
+    appId: "gate",
+    labId: "filosofia_cristiana_3_quaestio",
+    title: "Come si costruisce una quaestio",
+    salvaRisposte: true,
+    tempoAtteso: 420,
+    caratteriAttesi: 150,
+    onReady: function (ctx) {
+      studente = ctx.student;
+      $("gate").hidden = true;
+      $("lab").hidden = false;
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+  });
 }
-$("nome").addEventListener("input", controllaGate);
-$("classe").addEventListener("input", controllaGate);
-$("avvia").addEventListener("click", () => {
-  studente.nome = $("nome").value.trim();
-  studente.classe = $("classe").value.trim();
-  $("gate").hidden = true;
-  $("lab").hidden = false;
-  window.scrollTo({top:0, behavior:"smooth"});
-});
 
 function aggiornaAvanzamento(){
   const fatte = Object.keys(risposte).filter(k => risposte[k].corretta).length;
@@ -223,90 +202,57 @@ $("vaiFase2").addEventListener("click", () => {
   $("fase2").scrollIntoView({behavior:"smooth"});
 });
 
+function mostraModelli(testi){
+  const box = $("modelli");
+  box.innerHTML = "";
+  APERTE.forEach(a => {
+    const d = document.createElement("div");
+    d.className = "modello";
+    const h = document.createElement("h3"); h.textContent = a.domanda; d.appendChild(h);
+    const l1 = document.createElement("strong"); l1.textContent = "La tua risposta"; d.appendChild(l1);
+    const t = document.createElement("div"); t.className = "tua"; t.textContent = testi[a.id] || ""; d.appendChild(t);
+    const l2 = document.createElement("strong"); l2.textContent = a.modello.intro; d.appendChild(l2);
+    const ul = document.createElement("ul");
+    a.modello.punti.forEach(p => { const li = document.createElement("li"); li.textContent = p; ul.appendChild(li); });
+    d.appendChild(ul);
+    if (a.modello.nota) { const n = document.createElement("p"); n.className = "stato"; n.textContent = a.modello.nota; d.appendChild(n); }
+    box.appendChild(d);
+  });
+}
+
 $("invia").addEventListener("click", async () => {
   const testi = {};
   APERTE.forEach(a => testi[a.id] = ($(a.id).value || "").trim());
   const vuote = APERTE.filter(a => testi[a.id].length < 5);
   if (vuote.length) { $("esitoInvio").textContent = "Rispondi a tutte le domande prima di inviare."; return; }
-  const payload = {
-    nome: studente.nome, classe: studente.classe,
-    inviato: new Date().toISOString(),
-    fase1: risposte, fase2: testi
-  };
+  const answers = [];
+  DATI.forEach(it => {
+    const r = risposte[it.id];
+    if (r) answers.push({ id: it.id, prompt: testoPulito(it.testo), type: "mc", answer: r.scelta, correct: r.tentativi === 1 });
+  });
+  APERTE.forEach(a => answers.push({ id: a.id, prompt: a.domanda, type: "essay", answer: testi[a.id], correct: null }));
+  const mc = answers.filter(a => a.type === "mc");
+  const punteggio = mc.length ? Math.round(100 * mc.filter(a => a.correct).length / mc.length) : null;
   $("invia").disabled = true;
   $("esitoInvio").textContent = "Invio in corso…";
   let ok = false;
-  if (FIREBASE_URL) {
-    try {
-      const r = await fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json",
-        {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)});
-      ok = r.ok;
-    } catch (e) { ok = false; }
+  if (!offline) { try { ok = (await Addestramento.completa(answers, punteggio)) !== false; } catch (e) { ok = false; } }
+  if (!ok && !offline && ++tentativiInvio < 2) {
+    $("invia").disabled = false;
+    $("esitoInvio").textContent = "Invio non riuscito: controlla la connessione e riprova.";
+    return;
   }
   $("fase2").hidden = true;
   $("fine").hidden = false;
   $("testoFine").textContent = ok
-    ? "Lavoro inviato. Puoi chiudere la pagina."
-    : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
+    ? "Lavoro inviato. Qui sotto trovi un modello di risposta: confrontalo con la tua."
+    : "Lavoro completato, ma NON registrato (connessione assente o bloccata): avvisa l'insegnante. Qui sotto trovi comunque un modello di risposta.";
+  mostraModelli(testi);
   $("fine").scrollIntoView({behavior:"smooth"});
 });
 
-function apriDashboard(){
-  $("gate").hidden = true;
-  $("lab").hidden = true;
-  $("screen-dash").hidden = false;
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-function verificaPin(){
-  const pin = $("dash-pin").value.trim();
-  if(pin !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
-  $("dash-err").hidden = true;
-  $("dash-login").hidden = true;
-  $("dash-table-wrap").hidden = false;
-  caricaRisposte();
-}
-
-function caricaRisposte(){
-  $("dash-loading").hidden = false;
-  fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
-    .then(r => r.json())
-    .then(data => {
-      $("dash-loading").hidden = true;
-      const rows = data ? Object.values(data) : [];
-      rows.sort((a,b) => (a.inviato||"").localeCompare(b.inviato||""));
-      const tbody = $("dash-tbody");
-      tbody.innerHTML = "";
-      if(rows.length === 0){
-        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
-        return;
-      }
-      rows.forEach(r => {
-        const f1 = r.fase1 || {};
-        const f1vals = Object.values(f1);
-        const corrette = f1vals.filter(v => v && v.corretta).length;
-        const totale = f1vals.length;
-        const punteggio = totale ? (corrette + "/" + totale) : "—";
-        const f2 = r.fase2 || {};
-        const f2text = APERTE.map(a => {
-          const testo = f2[a.id];
-          return testo ? ("<b>" + a.domanda + ":</b> " + testo) : "";
-        }).filter(Boolean).join("<br>");
-        const td = "padding:6px 4px;border-bottom:1px solid var(--bordo);vertical-align:top;";
-        const tr = document.createElement("tr");
-        tr.innerHTML = "<td style='" + td + "'>" + (r.nome||"") + "</td>" +
-          "<td style='" + td + "'>" + (r.classe||"") + "</td>" +
-          "<td style='" + td + "'>" + punteggio + "</td>" +
-          "<td style='" + td + "'>" + f2text + "</td>" +
-          "<td style='" + td + "'>" + (r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "") + "</td>";
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(() => { $("dash-loading").textContent = "Errore nel caricamento."; $("dash-loading").hidden = false; });
-}
-
-
 costruisci();
+avvia();
 </script>
 </body>
 </html>

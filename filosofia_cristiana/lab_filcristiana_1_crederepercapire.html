@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Credere per capire</title>
+<meta name="portale:titolo" content="Credere per capire">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Agostino: fede e ragione — identificazione della tesi">
+<meta name="portale:uso" content="addestramento">
 <style>
   :root{
     --tan:#CCA677; --tan-chiaro:#F4EADB; --marrone:#7C6448; --scuro:#2B2B2B;
@@ -47,6 +52,10 @@
   .barra i{display:block;height:100%;background:var(--tan);width:0;transition:width .3s}
   .stato{font-size:14px;color:#6B6B6B;margin-top:10px}
   footer{max-width:820px;margin:0 auto;padding:0 16px 30px;font-size:13px;color:#8A8A8A}
+  .modello{background:#F4EADB;border:1px solid var(--tan);border-radius:8px;padding:12px 14px;margin:10px 0}
+  .modello h3{margin:0 0 6px;font-size:16px;color:var(--marrone)}
+  .modello ul{margin:6px 0 0 18px;padding:0}
+  .modello .tua{background:#fff;border:1px solid var(--bordo);border-radius:6px;padding:8px 10px;margin:6px 0;white-space:pre-wrap}
   [hidden]{display:none!important}
 </style>
 </head>
@@ -59,15 +68,7 @@
 
 <div class="wrap">
 
-  <section id="gate" class="card">
-    <h2>Prima di cominciare</h2>
-    <label for="nome">Nome e cognome</label>
-    <input id="nome" type="text" autocomplete="name" placeholder="Es. Maria Rossi">
-    <label for="classe">Classe</label>
-    <input id="classe" type="text" placeholder="Es. 4D">
-    <p class="stato">Il tuo lavoro viene salvato con il tuo nome: serve all'insegnante per seguire la classe, non produce un voto.</p>
-    <p><button id="avvia" disabled>Inizia</button></p>
-  </section>
+  <section id="gate"></section>
 
   <section id="lab" hidden>
     <div class="card richiamo">
@@ -95,70 +96,48 @@
     <div class="card" id="fine" hidden>
       <h2>Fatto</h2>
       <p id="testoFine"></p>
+      <div id="modelli"></div>
       <p class="stato">La discussione su questa attività si farà insieme a quella dell'attività successiva.</p>
     </div>
   </section>
 
 
-  <section id="screen-dash" class="card" hidden>
-    <h2>Area docente — Credere per capire</h2>
-    <div id="dash-login">
-      <label for="dash-pin">PIN</label>
-      <input type="text" id="dash-pin" placeholder="PIN">
-      <p><button onclick="verificaPin()">Entra</button></p>
-      <p id="dash-err" class="stato" style="color:var(--rosso);" hidden>PIN errato.</p>
-    </div>
-    <div id="dash-table-wrap" hidden>
-      <p><button class="secondaria" onclick="caricaRisposte()">Aggiorna</button></p>
-      <p class="stato" id="dash-loading" hidden>Caricamento…</p>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-          <thead>
-            <tr>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Nome</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Classe</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Punteggio F1</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Fase 2</th>
-              <th style="text-align:left;border-bottom:2px solid var(--bordo);padding:6px 4px;">Quando</th>
-            </tr>
-          </thead>
-          <tbody id="dash-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
 </div>
 <footer>
   <p>Laboratorio di filosofia · quarto anno · attività formativa, non valutata singolarmente.</p>
-  <p><button class="secondaria" onclick="apriDashboard()">Area docente</button></p>
 </footer>
 
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
 <script>
-// ---------------------------------------------------------------- Firebase
-const FIREBASE_URL = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
-const FIREBASE_PATH = "studenti_filcristiana1_crederepercapire";
-const TEACHER_PIN = "1970";
-
-const DATI = [{"id": "a1", "testo": "«Che cosa hanno in comune Atene e Gerusalemme, l'Accademia e la Chiesa? […] Dopo Cristo Gesù non abbiamo bisogno di curiosità, né di ricerca dopo il Vangelo. Quando crediamo, non desideriamo credere nient'altro.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 1, "spiegazione": "È Tertulliano: dopo il Vangelo la ricerca non serve più.", "errore": "Rileggi l'ultima frase: chi scrive dichiara chiusa la ricerca, non la affianca alla fede."}, {"id": "a2", "testo": "«Vuoi capire? Credi. Perché Dio ha detto per bocca del profeta: \"Se non crederete, non capirete\". […] L'intelligenza è la ricompensa della fede. Non cercare dunque di capire per credere, ma credi per capire.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "È Agostino: la fede viene prima, ma ha come frutto l'intelligenza — che quindi non è messa da parte.", "errore": "Attenzione a «l'intelligenza è la ricompensa della fede»: capire non viene escluso, viene promesso."}, {"id": "a3", "testo": "«Non sia mai che Dio odii in noi ciò per cui ci ha creati superiori agli altri esseri viventi. Non sia mai, dico, che si creda per non dover accogliere o cercare una ragione: non potremmo neppure credere, se non avessimo anime capaci di ragionare.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "Ancora Agostino, dall'altro lato: si crede con un'anima razionale, altrimenti non si crederebbe affatto.", "errore": "Chi scrive difende la ragione — ma dentro la fede, non contro di essa né al posto suo."}, {"id": "a4", "testo": "«Nelle discussioni non si deve cercare tanto il peso dell'autorità quanto quello degli argomenti. Anzi, l'autorità di chi si professa maestro è per lo più di ostacolo a chi vuole imparare.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 0, "spiegazione": "Qui l'autorità non precede la ragione: la ostacola. È l'unico testo non cristiano del gruppo.", "errore": "«Non tanto il peso dell'autorità quanto quello degli argomenti»: chi parla sta togliendo alla fede il primo posto."}, {"id": "a5", "testo": "«Quanto di buono è stato detto da chiunque appartiene a noi cristiani. […] Tutti gli scrittori, grazie al seme del Logos che è in loro, poterono vedere la realtà, ma oscuramente.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 2, "spiegazione": "È Giustino: la ricerca dei filosofi e la rivelazione hanno la stessa sorgente, il Logos.", "errore": "Nota il «ma oscuramente»: la filosofia vede qualcosa di vero, e però non le basta — non è né respinta né sufficiente."}, {"id": "a6", "testo": "«Il Figlio di Dio è stato crocifisso: non me ne vergogno, proprio perché è cosa da vergognarsene. Il Figlio di Dio è morto: è del tutto credibile, proprio perché è assurdo. È stato sepolto ed è risorto: è certo, proprio perché è impossibile.»", "opzioni": ["La ragione basta da sola", "La fede basta da sola", "Fede e ragione si richiedono"], "giusta": 1, "spiegazione": "Ancora Tertulliano: ciò che la ragione respinge viene assunto come garanzia della fede. Se hai esitato, avevi le tue ragioni: ne parliamo in classe.", "errore": "Qui l'assurdo non è un ostacolo da superare con la ragione: è portato come motivo per credere."}];
-const APERTE = [{"id": "tesi", "domanda": "Qual è la tesi di Agostino sul rapporto fra fede e ragione? Una frase sola.", "aiuto": "Non riassumere le formule: dì che cosa sostengono."}, {"id": "esclude", "domanda": "Che cosa esclude quella tesi? Indica una delle altre due posizioni e spiega perché Agostino non può accettarla.", "aiuto": ""}];
+// ---------------------------------------------------------------- Dati
+const DATI = [{"id":"a1","testo":"«Che cosa hanno in comune Atene e Gerusalemme, l'Accademia e la Chiesa? […] Dopo Cristo Gesù non abbiamo bisogno di curiosità, né di ricerca dopo il Vangelo. Quando crediamo, non desideriamo credere nient'altro.»","opzioni":["La ragione basta da sola","La fede basta da sola","Fede e ragione si richiedono"],"giusta":1,"spiegazione":"È Tertulliano: dopo il Vangelo la ricerca non serve più.","errore":"Rileggi l'ultima frase: chi scrive dichiara chiusa la ricerca, non la affianca alla fede."},{"id":"a2","testo":"«Vuoi capire? Credi. Perché Dio ha detto per bocca del profeta: \"Se non crederete, non capirete\". […] L'intelligenza è la ricompensa della fede. Non cercare dunque di capire per credere, ma credi per capire.»","opzioni":["La ragione basta da sola","La fede basta da sola","Fede e ragione si richiedono"],"giusta":2,"spiegazione":"È Agostino: la fede viene prima, ma ha come frutto l'intelligenza — che quindi non è messa da parte.","errore":"Attenzione a «l'intelligenza è la ricompensa della fede»: capire non viene escluso, viene promesso."},{"id":"a3","testo":"«Non sia mai che Dio odii in noi ciò per cui ci ha creati superiori agli altri esseri viventi. Non sia mai, dico, che si creda per non dover accogliere o cercare una ragione: non potremmo neppure credere, se non avessimo anime capaci di ragionare.»","opzioni":["La ragione basta da sola","La fede basta da sola","Fede e ragione si richiedono"],"giusta":2,"spiegazione":"Ancora Agostino, dall'altro lato: si crede con un'anima razionale, altrimenti non si crederebbe affatto.","errore":"Chi scrive difende la ragione — ma dentro la fede, non contro di essa né al posto suo."},{"id":"a4","testo":"«Nelle discussioni non si deve cercare tanto il peso dell'autorità quanto quello degli argomenti. Anzi, l'autorità di chi si professa maestro è per lo più di ostacolo a chi vuole imparare.»","opzioni":["La ragione basta da sola","La fede basta da sola","Fede e ragione si richiedono"],"giusta":0,"spiegazione":"Qui l'autorità non precede la ragione: la ostacola. È l'unico testo non cristiano del gruppo.","errore":"«Non tanto il peso dell'autorità quanto quello degli argomenti»: chi parla sta togliendo alla fede il primo posto."},{"id":"a5","testo":"«Quanto di buono è stato detto da chiunque appartiene a noi cristiani. […] Tutti gli scrittori, grazie al seme del Logos che è in loro, poterono vedere la realtà, ma oscuramente.»","opzioni":["La ragione basta da sola","La fede basta da sola","Fede e ragione si richiedono"],"giusta":2,"spiegazione":"È Giustino: la ricerca dei filosofi e la rivelazione hanno la stessa sorgente, il Logos.","errore":"Nota il «ma oscuramente»: la filosofia vede qualcosa di vero, e però non le basta — non è né respinta né sufficiente."},{"id":"a6","testo":"«Il Figlio di Dio è stato crocifisso: non me ne vergogno, proprio perché è cosa da vergognarsene. Il Figlio di Dio è morto: è del tutto credibile, proprio perché è assurdo. È stato sepolto ed è risorto: è certo, proprio perché è impossibile.»","opzioni":["La ragione basta da sola","La fede basta da sola","Fede e ragione si richiedono"],"giusta":1,"spiegazione":"Ancora Tertulliano: ciò che la ragione respinge viene assunto come garanzia della fede. Se hai esitato, avevi le tue ragioni: ne parliamo in classe.","errore":"Qui l'assurdo non è un ostacolo da superare con la ragione: è portato come motivo per credere."}];
+const APERTE = [{"id":"tesi","domanda":"Qual è la tesi di Agostino sul rapporto fra fede e ragione? Una frase sola.","aiuto":"Non riassumere le formule: dì che cosa sostengono.","modello":{"intro":"Una buona risposta, in una frase, dice che:","punti":["fede e ragione si richiedono a vicenda: non sono due strade alternative","la fede viene prima e apre la strada («credi per capire»), ma ha come frutto l'intelligenza («capisci per credere»): la ragione non è messa da parte","è una tesi, non due formule: dice che cosa fa ciascuna delle due, non si limita a ripetere il latino"],"nota":"Esempio: «Per Agostino la fede precede e rende possibile il comprendere, e la ragione approfondisce ciò che si crede: le due si richiedono.»"}},{"id":"esclude","domanda":"Che cosa esclude quella tesi? Indica una delle altre due posizioni e spiega perché Agostino non può accettarla.","aiuto":"","modello":{"intro":"Una buona risposta sceglie UNA posizione e spiega il perché con un argomento di Agostino:","punti":["esclude «la fede basta da sola» (Tertulliano): Agostino non può accettarla perché Dio ci ha creati con l'anima razionale e non vuole che si creda rinunciando a cercare ragioni: non si potrebbe nemmeno credere, senza una ragione che crede","oppure esclude «la ragione basta da sola»: non può accettarla perché l'intelligenza è la ricompensa della fede e, senza la grazia, la ragione non cammina da sola fino a Dio","non basta nominare la posizione: serve il «perché non può accettarla»"]}}];
 
 const $ = (id) => document.getElementById(id);
 let studente = {nome:"", classe:""};
 let risposte = {};      // id item -> {scelta, corretta, tentativi}
 let chiuso = false;
 
-function controllaGate(){
-  $("avvia").disabled = !($("nome").value.trim().length > 2 && $("classe").value.trim().length > 0);
+const offline = !window.Addestramento; // se l'adattatore non si carica, l'attività funziona lo stesso (senza registrazione)
+let tentativiInvio = 0;
+function testoPulito(t){ return String(t).replace(/<[^>]+>/g, "").trim(); }
+function avvia(){
+  if (offline) { $("gate").hidden = true; $("lab").hidden = false; return; }
+  Addestramento.start({
+    appId: "gate",
+    labId: "filosofia_cristiana_1_crederepercapire",
+    title: "Credere per capire",
+    salvaRisposte: true,
+    tempoAtteso: 420,
+    caratteriAttesi: 250,
+    onReady: function (ctx) {
+      studente = ctx.student;
+      $("gate").hidden = true;
+      $("lab").hidden = false;
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+  });
 }
-$("nome").addEventListener("input", controllaGate);
-$("classe").addEventListener("input", controllaGate);
-$("avvia").addEventListener("click", () => {
-  studente.nome = $("nome").value.trim();
-  studente.classe = $("classe").value.trim();
-  $("gate").hidden = true;
-  $("lab").hidden = false;
-  window.scrollTo({top:0, behavior:"smooth"});
-});
 
 function aggiornaAvanzamento(){
   const fatte = Object.keys(risposte).filter(k => risposte[k].corretta).length;
@@ -223,90 +202,57 @@ $("vaiFase2").addEventListener("click", () => {
   $("fase2").scrollIntoView({behavior:"smooth"});
 });
 
+function mostraModelli(testi){
+  const box = $("modelli");
+  box.innerHTML = "";
+  APERTE.forEach(a => {
+    const d = document.createElement("div");
+    d.className = "modello";
+    const h = document.createElement("h3"); h.textContent = a.domanda; d.appendChild(h);
+    const l1 = document.createElement("strong"); l1.textContent = "La tua risposta"; d.appendChild(l1);
+    const t = document.createElement("div"); t.className = "tua"; t.textContent = testi[a.id] || ""; d.appendChild(t);
+    const l2 = document.createElement("strong"); l2.textContent = a.modello.intro; d.appendChild(l2);
+    const ul = document.createElement("ul");
+    a.modello.punti.forEach(p => { const li = document.createElement("li"); li.textContent = p; ul.appendChild(li); });
+    d.appendChild(ul);
+    if (a.modello.nota) { const n = document.createElement("p"); n.className = "stato"; n.textContent = a.modello.nota; d.appendChild(n); }
+    box.appendChild(d);
+  });
+}
+
 $("invia").addEventListener("click", async () => {
   const testi = {};
   APERTE.forEach(a => testi[a.id] = ($(a.id).value || "").trim());
   const vuote = APERTE.filter(a => testi[a.id].length < 5);
   if (vuote.length) { $("esitoInvio").textContent = "Rispondi a tutte le domande prima di inviare."; return; }
-  const payload = {
-    nome: studente.nome, classe: studente.classe,
-    inviato: new Date().toISOString(),
-    fase1: risposte, fase2: testi
-  };
+  const answers = [];
+  DATI.forEach(it => {
+    const r = risposte[it.id];
+    if (r) answers.push({ id: it.id, prompt: testoPulito(it.testo), type: "mc", answer: r.scelta, correct: r.tentativi === 1 });
+  });
+  APERTE.forEach(a => answers.push({ id: a.id, prompt: a.domanda, type: "essay", answer: testi[a.id], correct: null }));
+  const mc = answers.filter(a => a.type === "mc");
+  const punteggio = mc.length ? Math.round(100 * mc.filter(a => a.correct).length / mc.length) : null;
   $("invia").disabled = true;
   $("esitoInvio").textContent = "Invio in corso…";
   let ok = false;
-  if (FIREBASE_URL) {
-    try {
-      const r = await fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json",
-        {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)});
-      ok = r.ok;
-    } catch (e) { ok = false; }
+  if (!offline) { try { ok = (await Addestramento.completa(answers, punteggio)) !== false; } catch (e) { ok = false; } }
+  if (!ok && !offline && ++tentativiInvio < 2) {
+    $("invia").disabled = false;
+    $("esitoInvio").textContent = "Invio non riuscito: controlla la connessione e riprova.";
+    return;
   }
   $("fase2").hidden = true;
   $("fine").hidden = false;
   $("testoFine").textContent = ok
-    ? "Lavoro inviato. Puoi chiudere la pagina."
-    : "Lavoro completato. L'invio non è attivo su questa copia: mostra lo schermo all'insegnante o copia le risposte sul quaderno.";
+    ? "Lavoro inviato. Qui sotto trovi un modello di risposta: confrontalo con la tua."
+    : "Lavoro completato, ma NON registrato (connessione assente o bloccata): avvisa l'insegnante. Qui sotto trovi comunque un modello di risposta.";
+  mostraModelli(testi);
   $("fine").scrollIntoView({behavior:"smooth"});
 });
 
-function apriDashboard(){
-  $("gate").hidden = true;
-  $("lab").hidden = true;
-  $("screen-dash").hidden = false;
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-function verificaPin(){
-  const pin = $("dash-pin").value.trim();
-  if(pin !== TEACHER_PIN){ $("dash-err").hidden = false; return; }
-  $("dash-err").hidden = true;
-  $("dash-login").hidden = true;
-  $("dash-table-wrap").hidden = false;
-  caricaRisposte();
-}
-
-function caricaRisposte(){
-  $("dash-loading").hidden = false;
-  fetch(FIREBASE_URL + "/" + FIREBASE_PATH + ".json")
-    .then(r => r.json())
-    .then(data => {
-      $("dash-loading").hidden = true;
-      const rows = data ? Object.values(data) : [];
-      rows.sort((a,b) => (a.inviato||"").localeCompare(b.inviato||""));
-      const tbody = $("dash-tbody");
-      tbody.innerHTML = "";
-      if(rows.length === 0){
-        tbody.innerHTML = "<tr><td colspan='5'>Nessuna risposta ancora.</td></tr>";
-        return;
-      }
-      rows.forEach(r => {
-        const f1 = r.fase1 || {};
-        const f1vals = Object.values(f1);
-        const corrette = f1vals.filter(v => v && v.corretta).length;
-        const totale = f1vals.length;
-        const punteggio = totale ? (corrette + "/" + totale) : "—";
-        const f2 = r.fase2 || {};
-        const f2text = APERTE.map(a => {
-          const testo = f2[a.id];
-          return testo ? ("<b>" + a.domanda + ":</b> " + testo) : "";
-        }).filter(Boolean).join("<br>");
-        const td = "padding:6px 4px;border-bottom:1px solid var(--bordo);vertical-align:top;";
-        const tr = document.createElement("tr");
-        tr.innerHTML = "<td style='" + td + "'>" + (r.nome||"") + "</td>" +
-          "<td style='" + td + "'>" + (r.classe||"") + "</td>" +
-          "<td style='" + td + "'>" + punteggio + "</td>" +
-          "<td style='" + td + "'>" + f2text + "</td>" +
-          "<td style='" + td + "'>" + (r.inviato ? new Date(r.inviato).toLocaleString("it-IT") : "") + "</td>";
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(() => { $("dash-loading").textContent = "Errore nel caricamento."; $("dash-loading").hidden = false; });
-}
-
-
 costruisci();
+avvia();
 </script>
 </body>
 </html>
