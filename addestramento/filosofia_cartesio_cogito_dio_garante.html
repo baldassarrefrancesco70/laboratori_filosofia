@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Che cosa posso conoscere con certezza? Cartesio, il cogito e Dio garante</title>
+<meta name="portale:titolo" content="Che cosa posso conoscere con certezza? Cartesio, il cogito e Dio garante">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Ricostruire passo per passo la catena delle Meditazioni: dal cogito alla regola della chiarezza e distinzione, fino a Dio garante. Con correzione immediata.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--acc:#2b6cb0;--accbg:#eaf2fb;--quote:#f7f5ef}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--acc:#7fb2f0;--accbg:#18283a;--quote:#1b2b22}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:700px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.3rem 0 .2rem}
+h2{font-size:1.15rem;margin:.3rem 0 .6rem}
+h3{font-size:1rem;margin:1rem 0 .4rem}
+.sub{color:var(--muted);margin:0 0 .6rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg)}
+.opt[aria-pressed=true]::before{content:"✓ ";font-weight:700}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px;flex-wrap:wrap}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea{width:100%;min-height:150px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.92rem;border-left:4px solid var(--ko);padding:4px 10px;margin:10px 0}
+.res{border-radius:10px;padding:10px 14px;margin:8px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.lbl{font-weight:700}
+ul.chk{margin:.4rem 0 0 1.1rem;padding:0}
+ul.chk li{margin:.25rem 0}
+.score{font-family:Georgia,serif;font-size:1.6rem;margin:.2rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+blockquote{margin:10px 0;padding:10px 14px;background:var(--quote);border-left:4px solid var(--acc);border-radius:6px;font-family:Georgia,serif}
+blockquote p{margin:.4rem 0}
+.ref{font-size:.85rem;color:var(--muted);font-family:system-ui,sans-serif}
+.where{display:inline-block;font-size:.85rem;font-weight:600;color:var(--acc);margin-bottom:4px}
+details{border:1px solid var(--line);border-radius:10px;padding:6px 12px;margin:12px 0}
+summary{cursor:pointer;font-weight:600;min-height:40px;display:flex;align-items:center}
+.mossa{border-top:1px solid var(--line);padding:10px 0}
+.mossa:first-of-type{border-top:0}
+.mossa .n{font-family:Georgia,serif;font-weight:700;color:var(--acc)}
+.mossa p{margin:.2rem 0}
+.open{color:var(--muted);font-style:italic}
+.box{border:2px solid var(--acc);background:var(--accbg);border-radius:12px;padding:14px 16px;margin:12px 0}
+.yours{white-space:pre-wrap;background:var(--quote);border-radius:8px;padding:8px 12px}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var LAB_ID = "filosofia_cartesio_cogito_dio_garante";
+  var TITLE = "Che cosa posso conoscere con certezza?";
+  var KEY = "addestr_state_" + LAB_ID;
+  var MAXC = 1500, MINC = 20;
+
+  // ---- Fonti (identiche alla scheda) ----
+  var F1 = {
+    titolo: "Fonte 1 — Il cogito",
+    ref: "R. Cartesio, Meditazioni metafisiche, Meditazione II (1641), §§ 2, 3, 6, 8.",
+    p: [
+      "Suppongo dunque che tutte le cose che vedo siano false; credo che non sia mai esistito nulla di ciò che la memoria menzognera mi rappresenta; non ho alcun senso; corpo, figura, estensione, movimento e luogo sono chimere. […]",
+      "Ma vi è un non so quale ingannatore, sommamente potente, sommamente astuto, che di proposito mi inganna sempre. Senza dubbio dunque anche io sono, se mi inganna; e mi inganni pure quanto può, tuttavia non farà mai in modo che io sia nulla, mentre penso di essere qualcosa. […] alla fine bisogna ritenere valido questo: la proposizione «Io sono, io esisto», ogni qual volta viene da me espressa o anche solo concepita con la mente, necessariamente è vera.",
+      "«Io sono, io esisto»; è certo. Ma per quanto tempo? Evidentemente per tutto il tempo che penso; infatti potrebbe anche accadere che, se cessassi da ogni pensiero, cessassi di essere tutto quanto. […] e dunque sono esattamente soltanto una cosa che pensa, cioè una mente, un animo, un intelletto o piuttosto una ragione.",
+      "Ma che cosa sono dunque? Una cosa che pensa. E che cos'è essa? Certo una cosa che dubita, comprende, afferma, nega, vuole, disvuole, immagina anche e percepisce."
+    ]
+  };
+  var F2 = {
+    titolo: "Fonte 2 — La regola e il garante",
+    ref: "R. Cartesio, Meditazioni metafisiche, Meditazione III, §§ 2, 4; Meditazione V, §§ 15–16.",
+    p: [
+      "[La regola] già mi sembra di poter stabilire, come regola generale, che è vero tutto ciò che concepisco in maniera molto chiara e distinta.",
+      "[Il contraccolpo] Quando consideravo qualcosa di molto semplice e facile nell’aritmetica o nella geometria, per esempio che due più tre fanno cinque, non lo vedevo forse con chiarezza sufficiente per affermare che era vero? […] Ma […] non posso non ammettere che, se solo lo volesse, sarebbe facile per lui [Dio] fare in modo che io cada in errore anche in ciò che ritengo di intuire con gli occhi della mente nella maniera più nitida. […] senza avere una conoscenza certa di ciò [se Dio esista e se possa ingannare] non mi sembra di poter essere completamente certo di nessun'altra cosa.",
+      "[Il garante] Ma dopo che ho compreso che Dio esiste, poiché nello stesso tempo ho compreso anche che tutto il resto dipende da lui, e che egli non inganna […] ho giudicato che tutte quelle cose, che comprendo in maniera chiara e distinta, sono vere necessariamente. […] la certezza e la verità di ogni scienza dipende dalla sola conoscenza del vero Dio."
+    ]
+  };
+
+  // ---- Lo schema: mosse date (0, 7) e mosse da completare (1-6) ----
+  var MOSSE = [
+    { n: 0, nome: "Il punto di partenza", txt: "Suppongo che tutto sia falso: nessun senso, nessun corpo, nessun mondo. Il genio maligno mi inganni pure.", dove: "Med. II, §2", q: null },
+    { n: 1, nome: "Il colpo a vuoto del genio", txt: "C'è una cosa che il genio non riesce a rendere falsa. Qual è? E perché proprio questa gli sfugge?", dove: "Med. II, §3", q: "q1" },
+    { n: 2, nome: "La prima certezza", txt: "«Io sono, io esisto» è necessariamente vero — ma solo quando? e per quanto tempo?", dove: "Med. II, §§3, 6", q: "q2" },
+    { n: 3, nome: "Che cosa sono", txt: "Se resisto al dubbio, sono soltanto una cosa che… E che cosa fa una cosa così?", dove: "Med. II, §§6, 8", q: "q3" },
+    { n: 4, nome: "La regola generale", txt: "Dalla certezza del cogito ricavo una regola: è vero tutto ciò che… Perché proprio da qui? Che cosa, nel cogito, mi autorizza a generalizzare?", dove: "Med. III, §2", q: "q4" },
+    { n: 5, nome: "Il contraccolpo", txt: "Ma la regola non è ancora al sicuro: un vecchio dubbio la minaccia perfino su «2+3=5». Quale?", dove: "Med. III, §4", q: "q5" },
+    { n: 6, nome: "Il garante", txt: "Perché la regola tenga serve un garante, da cui tutto dipende e che… Cartesio lo trova in… quale caratteristica gli serve, e perché?", dove: "Med. III, §4; Med. V, §§15–16", q: "q6" },
+    { n: 7, nome: "Il ritorno", txt: "Con questo garante, ciò che è chiaro e distinto è vero: la matematica e ogni scienza tornano al sicuro. Per il mondo dei corpi servirà ancora un passo, nella Sesta Meditazione.", dove: "Med. V, §16", q: null }
+  ];
+
+  // ---- Mosse 1-3: scelta multipla (la corretta cambia posizione; distrattori non più corti) ----
+  var MC = [
+    { id: "q1", mossa: 1, prompt: "Mossa 1 — Il colpo a vuoto del genio. C'è una cosa che il genio maligno non riesce a rendere falsa. Qual è, e perché proprio questa gli sfugge?",
+      src: [F1.p[1]],
+      opts: ["Che il mondo esterno esiste davvero, perché anche per ingannarmi il genio ha bisogno di un mondo in cui agire",
+             "Che io esisto: per essere ingannato devo esserci, quindi ogni suo inganno conferma che sono",
+             "Che ho un corpo, perché è proprio attraverso i sensi del corpo che il genio fa arrivare i suoi inganni",
+             "Che le verità della matematica sono vere, perché 2+3 fa 5 anche quando il genio prova a confondermi"], ok: 1,
+      why: "«Senza dubbio dunque anche io sono, se mi inganna»: l'inganno stesso ha bisogno di qualcuno da ingannare, quindi conferma che io ci sono. Il mondo e il corpo sono proprio ciò che la mossa 0 ha già messo in dubbio: non possono essere il punto fermo. La matematica sembra sicura, ma tornerà sotto attacco alla mossa 5." },
+    { id: "q2", mossa: 2, prompt: "Mossa 2 — La prima certezza. «Io sono, io esisto» è necessariamente vero: ma quando, e per quanto tempo?",
+      src: [F1.p[1], F1.p[2]],
+      opts: ["Sempre, da quando sono nato e per tutta la vita, perché una cosa che esiste non può smettere di esistere da sola",
+             "Solo dopo che ho dimostrato l'esistenza di Dio, perché prima di allora nessuna certezza può dirsi davvero salda",
+             "Ogni volta che lo penso o lo dico, e per tutto il tempo in cui sto pensando",
+             "Solo finché percepisco il mio corpo con i sensi, perché è il corpo che mi fa sentire di essere presente"], ok: 2,
+      why: "Il testo è preciso: è vero «ogni qual volta viene da me espressa o anche solo concepita» ed è certo «per tutto il tempo che penso». La certezza è legata all'atto del pensare, adesso: non dice nulla sul mio passato o sul futuro. Non dipende dai sensi (sono in dubbio) e regge finché la penso, prima ancora che entri in gioco Dio, che arriva solo alla mossa 6." },
+    { id: "q3", mossa: 3, prompt: "Mossa 3 — Che cosa sono. Se resisto al dubbio, che cosa sono soltanto? E che cosa fa una cosa così?",
+      src: [F1.p[2], F1.p[3]],
+      opts: ["Una cosa che pensa: una cosa che dubita, comprende, afferma, nega, vuole, immagina e percepisce",
+             "Un corpo vivente dotato di sensi, che si muove, si nutre, respira e percepisce il mondo che lo circonda",
+             "Un'anima immortale creata da Dio, che sa con certezza di essere destinata a sopravvivere al proprio corpo",
+             "Un cervello che elabora i dati dei sensi, perché il pensiero non è altro che un'attività del corpo umano"], ok: 0,
+      why: "«Sono esattamente soltanto una cosa che pensa» (res cogitans). Il corpo è ancora in dubbio, quindi non può entrare nella definizione: per la stessa ragione Cartesio non può dire che il pensiero è attività del cervello, che è un corpo. Immortalità e Dio non sono ancora dimostrati. Attenzione a «immagina» e «percepisce»: anche se ciò che percepisco fosse falso, è certo che io penso di percepirlo." }
+  ];
+  // ---- Mosse 4-6 e domanda finale: risposta aperta, con modello dopo la consegna ----
+  var OPEN = [
+    { id: "q4", mossa: 4, prompt: "Mossa 4 — La regola generale. Dalla certezza del cogito ricavo una regola: è vero tutto ciò che… Completa la regola. Poi spiega: perché proprio da qui? Che cosa, nel cogito, mi autorizza a generalizzare?",
+      src: [F2.p[0]],
+      model: "Una buona risposta contiene almeno tre di questi punti:",
+      chk: ["la regola completa: è vero tutto ciò che concepisco in maniera molto chiara e distinta",
+            "nel cogito non c'è nient'altro che mi assicuri la verità, se non il fatto che lo vedo in modo chiaro e distinto",
+            "quindi chiarezza e distinzione sono il «segno» del vero: se bastano per il cogito, varranno per ogni idea che abbia la stessa caratteristica",
+            "chiaro = presente e evidente alla mente che vi presta attenzione; distinto = separato da tutto il resto, senza nulla che non gli appartenga (va bene anche senza le definizioni)",
+            "punto in più: è una generalizzazione ricavata da un solo caso, e proprio per questo ha bisogno di essere messa al sicuro (è ciò che succede alle mosse 5 e 6)"] },
+    { id: "q5", mossa: 5, prompt: "Mossa 5 — Il contraccolpo. La regola non è ancora al sicuro: un vecchio dubbio la minaccia perfino su «2+3=5». Quale dubbio? E perché colpisce proprio la regola?",
+      src: [F2.p[1]],
+      model: "Una buona risposta contiene almeno tre di questi punti:",
+      chk: ["il dubbio è quello di un Dio onnipotente (o di un ingannatore) che potrebbe avermi fatto in modo che io sbagli anche nelle cose più evidenti",
+            "colpisce proprio ciò che vedo in modo chiaro e distinto («con gli occhi della mente nella maniera più nitida»), cioè il campo della regola",
+            "se questo è possibile, la chiarezza non basta più a garantire la verità: «non mi sembra di poter essere completamente certo di nessun'altra cosa»",
+            "per uscirne bisogna sapere se Dio esiste e se può ingannare",
+            "punto in più: il cogito resiste finché lo penso; un calcolo o una dimostrazione, invece, possono tornare in dubbio quando non vi sto più prestando attenzione"] },
+    { id: "q6", mossa: 6, prompt: "Mossa 6 — Il garante. Perché la regola tenga serve un garante, da cui tutto dipende e che… Cartesio lo trova in… Quale caratteristica gli serve, e perché proprio quella?",
+      src: [F2.p[1], F2.p[2]],
+      model: "Una buona risposta contiene almeno tre di questi punti:",
+      chk: ["il garante è Dio, e la caratteristica decisiva è che non inganna",
+            "non basta che Dio esista: serve un Dio che non mi abbia fatto in modo da sbagliare quando vedo qualcosa in modo chiaro e distinto",
+            "tutto dipende da lui, compresa la mia mente: se lui non inganna, la mia capacità di conoscere, usata bene, non mi porta all'errore",
+            "ingannare è un segno di imperfezione, e Dio è perfetto (va bene anche senza questo punto, che hai visto a lezione)",
+            "da qui la conclusione: ciò che è chiaro e distinto è vero «necessariamente», e la certezza di ogni scienza «dipende dalla sola conoscenza del vero Dio»"] },
+    { id: "q7", mossa: null, prompt: "Domanda. Il cogito viene citato come la certezza incrollabile da cui Cartesio ricostruisce tutto. Guarda lo schema: quanto ti restituisce il cogito da solo? Scegli una certezza quotidiana — che il tuo corpo esista, che il sole sorgerà domani, che 8×7 faccia 56 — e di' se il cogito da solo te la ridà, da quale mossa dello schema dipende il suo ritorno, oppure se lo schema non te la ridà affatto. E poi: che cosa succede all'edificio se togli quella mossa?",
+      src: null, rp: "Domanda finale: quanto ti restituisce il cogito da solo? Una certezza quotidiana seguita lungo lo schema, e che cosa succede se togli quella mossa.",
+      model: "Una buona risposta segue una certezza lungo lo schema e contiene almeno tre di questi punti:",
+      chk: ["il cogito da solo restituisce soltanto la mia esistenza come cosa che pensa, mentre penso: nessuna delle tre certezze quotidiane",
+            "8×7=56 è chiaro e distinto, ma la mossa 5 lo mette in dubbio: torna solo con il garante (mossa 6). Tolto il garante, è certo solo mentre lo sto calcolando",
+            "il corpo non torna neanche con la mossa 7: Cartesio lo recupera nella Sesta Meditazione, ancora una volta appoggiandosi a Dio che non inganna. Tolto Dio, il corpo resta nel dubbio",
+            "che il sole sorgerà domani non torna in nessuna mossa dello schema: è una previsione fondata sull'esperienza, né chiara e distinta né dimostrata. Accorgersene è un'ottima risposta",
+            "tolta la mossa 6, dell'edificio resta soltanto il primo mattone (io penso, io sono) e la regola rimane senza fondamento",
+            "va bene anche notare il rischio di circolo: Cartesio usa idee chiare e distinte per dimostrare Dio, e Dio per garantire le idee chiare e distinte"] }
+  ];
+  var N = MC.length + OPEN.length;
+
+  // S.i: -1 = lettura delle fonti; 0..N-1 = domande
+  var S = { i: -1, a: {}, t: {}, sub: false, ok: null };
+  var app, regAttivo = false;
+
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Analizzare testi"));
+    h.appendChild(el("h1", null, "«" + TITLE + "»"));
+    h.appendChild(el("p", "sub", "Cartesio — il cogito e Dio garante"));
+    return h;
+  }
+  function fonte(F) {
+    var b = el("blockquote");
+    F.p.forEach(function (t) { b.appendChild(el("p", null, t)); });
+    b.appendChild(el("div", "ref", F.ref));
+    return b;
+  }
+  function tutteLeFonti() {
+    var d = el("details");
+    d.appendChild(el("summary", null, "Rileggi le due fonti"));
+    d.appendChild(el("h3", null, F1.titolo)); d.appendChild(fonte(F1));
+    d.appendChild(el("h3", null, F2.titolo)); d.appendChild(fonte(F2));
+    return d;
+  }
+  function brano(list, dove) {
+    var w = el("div");
+    w.appendChild(el("span", "where", "Nel testo: " + dove));
+    var b = el("blockquote");
+    list.forEach(function (t) { b.appendChild(el("p", null, t)); });
+    w.appendChild(b);
+    return w;
+  }
+  function schema(compilato) {
+    var c = el("div");
+    MOSSE.forEach(function (m) {
+      var r = el("div", "mossa");
+      var t = el("p"); t.appendChild(el("span", "n", m.n + " · " + m.nome)); t.appendChild(document.createTextNode("  (" + m.dove + ")"));
+      r.appendChild(t);
+      if (m.q && !compilato) r.appendChild(el("p", "open", "Da completare: " + m.txt));
+      else if (m.q && compilato) r.appendChild(el("p", null, SINTESI[m.q]));
+      else r.appendChild(el("p", null, m.txt));
+      c.appendChild(r);
+    });
+    return c;
+  }
+  var SINTESI = {
+    q1: "Il genio non può rendere falso che io esisto: per ingannarmi, deve esserci qualcuno da ingannare.",
+    q2: "«Io sono, io esisto» è vero ogni volta che lo penso, e per tutto il tempo in cui penso.",
+    q3: "Sono soltanto una cosa che pensa: che dubita, comprende, afferma, nega, vuole, immagina, percepisce.",
+    q4: "È vero tutto ciò che concepisco in modo molto chiaro e distinto: nel cogito è l'unica cosa che mi garantisce la verità.",
+    q5: "Un Dio onnipotente potrebbe farmi sbagliare anche in ciò che vedo con la massima chiarezza: la regola vacilla.",
+    q6: "Dio, da cui tutto dipende, non inganna: perciò ciò che è chiaro e distinto è vero necessariamente."
+  };
+
+  function render() {
+    clear();
+    app.appendChild(header());
+    if (S.sub) return renderReview();
+    if (S.i < 0) return renderIntro();
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Domanda " + (S.i + 1) + " di " + N));
+    var bar = el("div", "bar"); var fill = el("i"); fill.style.width = Math.round(S.i / N * 100) + "%"; bar.appendChild(fill); c.appendChild(bar);
+    var back = el("button", "btn sec", "Indietro"); back.type = "button";
+    var next = el("button", "btn", S.i === N - 1 ? "Consegna" : "Avanti"); next.type = "button";
+    var err = el("div", "err");
+
+    if (S.i < MC.length) {
+      var q = MC[S.i];
+      c.appendChild(brano(q.src, MOSSE[q.mossa].dove));
+      c.appendChild(el("h2", null, q.prompt));
+      q.opts.forEach(function (t, k) {
+        var b = el("button", "opt", t); b.type = "button";
+        b.setAttribute("aria-pressed", S.a[q.id] === k ? "true" : "false");
+        b.onclick = function () { S.a[q.id] = k; persist(); render(); };
+        c.appendChild(b);
+      });
+      back.disabled = false; // dalla prima domanda si può tornare alle fonti
+      next.disabled = S.a[q.id] == null;
+      if (S.i === MC.length - 1) c.appendChild(el("div", "note", "Attenzione: dopo questa domanda non potrai più tornare alle risposte a scelta multipla."));
+    } else {
+      var o = OPEN[S.i - MC.length];
+      if (o.src) c.appendChild(brano(o.src, MOSSE[o.mossa].dove));
+      else { var s = el("details"); s.appendChild(el("summary", null, "Guarda lo schema che hai completato")); s.appendChild(schema(false)); c.appendChild(s); }
+      c.appendChild(el("h2", null, o.prompt));
+      var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.t[o.id] || "";
+      ta.setAttribute("aria-label", "La tua risposta");
+      var cnt = el("div", "cnt");
+      function upd() { cnt.textContent = ta.value.length + " / " + MAXC; next.disabled = ta.value.trim().length < MINC; }
+      ta.oninput = function () { S.t[o.id] = ta.value; persist(); upd(); };
+      c.appendChild(ta); c.appendChild(cnt);
+      if (S.i === MC.length) {
+        c.appendChild(el("div", "note", "Da qui in poi non si torna più alle domande a scelta multipla: quelle risposte sono definitive."));
+        back.disabled = true;
+      }
+      upd();
+      c.appendChild(el("div", "note", "Scrivi almeno " + MINC + " caratteri, con parole tue, e appoggiati al testo. Dopo la consegna vedrai che cosa dovrebbe contenere una buona risposta."));
+      if (S.i === N - 1) c.appendChild(el("div", "note", "«Consegna» chiude l'esercitazione: dopo non potrai più modificare le risposte."));
+    }
+    c.appendChild(tutteLeFonti());
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(back); row.appendChild(next); c.appendChild(row);
+    back.onclick = function () { if (S.i > -1) { S.i--; persist(); render(); } };
+    next.onclick = function () {
+      if (S.i < N - 1) { S.i++; persist(); render(); } else consegna(next, err);
+    };
+    app.appendChild(c);
+    window.scrollTo(0, 0);
+  }
+
+  function renderIntro() {
+    var g = el("div", "card");
+    g.appendChild(el("h2", null, "Guida alla lettura"));
+    g.appendChild(el("p", null, "Nella Seconda Meditazione Cartesio trova un punto che il dubbio non scalfisce; da lì ricava una regola per riconoscere il vero; ma scopre che quella regola, da sola, non basta — e per tenerla in piedi deve fare un passo ulteriore, su Dio."));
+    g.appendChild(el("p", null, "Il tuo lavoro principale non è riassumere: è ricostruire la catena, passo per passo, usando lo schema. Leggi prima le due fonti, poi completa le mosse aperte: le prime tre con una scelta, le altre con una risposta scritta."));
+    app.appendChild(g);
+    var f = el("div", "card");
+    f.appendChild(el("h2", null, F1.titolo)); f.appendChild(fonte(F1));
+    f.appendChild(el("h2", null, F2.titolo)); f.appendChild(fonte(F2));
+    app.appendChild(f);
+    var s = el("div", "card");
+    s.appendChild(el("h2", null, "Lo schema da ricostruire"));
+    s.appendChild(el("p", "sub", "Le mosse 0 e 7 sono l'impalcatura. Le mosse 1-6 le completi tu; l'indicazione tra parentesi ti dice dove guardare nel testo."));
+    s.appendChild(schema(false));
+    var row = el("div", "row"); var go = el("button", "btn", "Ho letto: comincio"); go.type = "button";
+    go.onclick = function () { S.i = 0; persist(); render(); };
+    row.appendChild(el("span")); row.appendChild(go); s.appendChild(row);
+    app.appendChild(s);
+    window.scrollTo(0, 0);
+  }
+
+  function buildAnswers() {
+    var list = [], right = 0;
+    MC.forEach(function (q) {
+      var k = S.a[q.id]; if (k == null) return;
+      var good = k === q.ok; if (good) right++;
+      list.push({ id: q.id, prompt: q.prompt.slice(0, 300), type: "mc", answer: q.opts[k], correct: good });
+    });
+    OPEN.forEach(function (o) {
+      var t = (S.t[o.id] || "").trim(); if (!t) return;
+      list.push({ id: o.id, prompt: (o.rp || o.prompt).slice(0, 300), type: "essay", answer: t, correct: null });
+    });
+    return { list: list, right: right, score: Math.round(right / MC.length * 100) };
+  }
+
+  var sending = false, tentativi = 0;
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    var r = buildAnswers();
+    var invio = window.Addestramento && regAttivo ? Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && regAttivo && ++tentativi < 2) {
+        sending = false; btn.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e riprova."; return;
+      }
+      S.sub = true; S.ok = (ok !== false); persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var r = buildAnswers();
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    c.appendChild(el("div", "score", r.right + " su " + MC.length + " scelte corrette"));
+    c.appendChild(el("p", null, "Ecco la correzione. Confronta con calma le tue risposte: serve a capire che cosa ti manca, non a prendere un voto."));
+    c.appendChild(el("p", S.ok === false ? "warn" : "note", S.ok === false ? "Attenzione: il risultato NON è stato registrato (connessione assente o bloccata). Avvisa il docente." : "Risultato registrato."));
+    app.appendChild(c);
+    MC.forEach(function (q, n) {
+      var k = S.a[q.id], good = k === q.ok;
+      var d = el("div", "card");
+      d.appendChild(el("h2", null, (n + 1) + ". " + q.prompt));
+      var m = el("div", "res " + (good ? "ok" : "ko"));
+      m.appendChild(el("span", "lbl", good ? "Corretto — " : "Non corretto — "));
+      m.appendChild(document.createTextNode("la tua risposta: " + (k == null ? "(nessuna)" : q.opts[k])));
+      d.appendChild(m);
+      if (!good) { var g = el("div", "res ok"); g.appendChild(el("span", "lbl", "Risposta giusta: ")); g.appendChild(document.createTextNode(q.opts[q.ok])); d.appendChild(g); }
+      d.appendChild(el("p", null, q.why));
+      app.appendChild(d);
+    });
+    OPEN.forEach(function (o, n) {
+      var d = el("div", "card");
+      d.appendChild(el("h2", null, (MC.length + n + 1) + ". " + o.prompt));
+      d.appendChild(el("div", "lbl", "La tua risposta"));
+      d.appendChild(el("p", "yours", S.t[o.id] || "(nessuna)"));
+      d.appendChild(el("div", "lbl", o.model));
+      var ul = el("ul", "chk"); o.chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul);
+      d.appendChild(el("p", "note", "Confronta: che cosa avevi già scritto? Che cosa ti è sfuggito?"));
+      app.appendChild(d);
+    });
+    var s = el("div", "card");
+    s.appendChild(el("h2", null, "Lo schema ricostruito"));
+    s.appendChild(schema(true));
+    app.appendChild(s);
+    var p = el("div", "box");
+    p.appendChild(el("h2", null, "Da portare alla prossima lezione"));
+    p.appendChild(el("p", null, "Cartesio tiene in piedi tutta la conoscenza appoggiandola su Dio garante."));
+    var q = el("p"); q.appendChild(el("span", "lbl", "Prendi posizione: ")); q.appendChild(document.createTextNode("se qualcuno non ti concede quel passo su Dio, quanto resta della certezza cartesiana?"));
+    p.appendChild(q);
+    p.appendChild(el("p", "sub", "Non scriverlo qui: ne parleremo in classe."));
+    app.appendChild(p);
+    window.scrollTo(0, 0);
+  }
+
+  // Se l'adattatore non si carica, l'esercitazione funziona lo stesso (senza registrazione).
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    regAttivo = true;
+    window.Addestramento.start({
+      labId: LAB_ID,
+      title: TITLE,
+      salvaRisposte: true,            // decisione del docente: le risposte finali vengono registrate
+      tempoAtteso: 1200,              // ~20 minuti per uno studente concentrato (lettura + 7 risposte)
+      caratteriAttesi: 1300,          // 3 aperte brevi (~250) + domanda finale (~550)
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
