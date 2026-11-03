@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartesio risponde: tre obiezioni, tre round</title>
+<meta name="portale:titolo" content="Cartesio risponde: tre obiezioni, tre round">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="argomentare">
+<meta name="portale:descrizione" content="A coppie o in tre: Gassendi, Hobbes ed Elisabetta di Boemia obiettano, uno studente risponde come Cartesio, poi si confronta con la risposta vera.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--okbg:#e3f3e8;--ko:#a32020;--acc:#6d28d9;--accbg:#f1ebfd;--quote:#f7f5ef;--obj:#8a4b08;--objbg:#fdf3e6}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--okbg:#17382a;--ko:#f19a9a;--acc:#b59af0;--accbg:#231c36;--quote:#1b2b22;--obj:#f0b35a;--objbg:#2e2412}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:700px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.5rem;margin:.3rem 0 .2rem}
+h2{font-size:1.18rem;margin:.2rem 0 .6rem}
+h3{font-size:1rem;margin:1rem 0 .4rem}
+p{margin:.5rem 0}
+.sub{color:var(--muted);margin:0 0 .6rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg)}
+.opt[aria-pressed=true]::before{content:"✓ ";font-weight:700}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+textarea{width:100%;min-height:130px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+textarea.short{min-height:70px}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.92rem;border-left:4px solid var(--ko);padding:4px 10px;margin:10px 0}
+.lbl{font-weight:700}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+blockquote{margin:10px 0;padding:10px 14px;border-radius:6px;font-family:Georgia,serif}
+blockquote p{margin:.45rem 0}
+blockquote.obj{background:var(--objbg);border-left:4px solid var(--obj)}
+blockquote.cart{background:var(--accbg);border-left:4px solid var(--acc)}
+.ref{font-size:.85rem;color:var(--muted);font-family:system-ui,sans-serif;margin-top:6px}
+.kind{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;margin-bottom:2px}
+.kind.obj{color:var(--obj)} .kind.cart{color:var(--acc)}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.role{border:2px solid var(--line);border-radius:99px;padding:4px 12px;font-size:.92rem}
+.role b{font-family:Georgia,serif}
+.role.c{border-color:var(--acc)} .role.o{border-color:var(--obj)}
+details{border:1px solid var(--line);border-radius:10px;padding:6px 12px;margin:12px 0}
+summary{cursor:pointer;font-weight:600;min-height:40px;display:flex;align-items:center}
+dl.kit dt{font-weight:700;margin-top:.5rem} dl.kit dd{margin:0 0 .2rem 0}
+.yours{white-space:pre-wrap;background:var(--quote);border-radius:8px;padding:8px 12px;margin:4px 0 10px}
+ul.chk{margin:.4rem 0 0 1.1rem;padding:0} ul.chk li{margin:.25rem 0}
+ol.rules{padding-left:1.2rem} ol.rules li{margin:.3rem 0}
+.big{font-family:Georgia,serif;font-size:1.25rem}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var D = {"titolo":"Cartesio risponde","sottotitolo":"Tre obiezioni, tre round: Gassendi, Hobbes, Elisabetta di Boemia","intro":["Le Meditazioni metafisiche uscirono nel 1641 insieme a un fascicolo di obiezioni: Cartesio aveva fatto circolare il testo tra filosofi e teologi, e pubblicò le loro critiche con le sue risposte. Due anni dopo una giovane principessa, Elisabetta di Boemia, gli scrisse per chiedergli la cosa che nessuno gli aveva chiesto in modo così netto.","Oggi fate rivivere quel dibattito. In ogni round uno di voi è Cartesio e deve difendersi; l'altro è l'obiettore e deve attaccare. Poi si apre la risposta vera di Cartesio e si decide chi ha risposto meglio: voi o lui. Non è detto che vinca sempre lui."],"regole":["Siete in due o in tre. In due: un Cartesio e un obiettore, e il verdetto lo date insieme. In tre: c'è anche un giudice, che scrive il verdetto. I ruoli girano a ogni round.","L'obiettore legge l'obiezione ad alta voce. Cartesio scrive la sua risposta in poche righe (almeno tre), usando almeno uno degli attrezzi del kit. Niente manuale, niente appunti.","L'obiettore replica in una riga: la risposta regge o no, e perché.","Solo dopo si apre la risposta vera di Cartesio. Poi il verdetto: meglio la vostra, meglio la sua, o dicono la stessa cosa? Con una riga di motivazione.","Il terzo round, con Elisabetta, ha due tempi: lei obietta, Cartesio risponde, lei rilancia, e Cartesio deve rispondere una seconda volta."],"kit":[["Dubbio e sogno","Posso dubitare dei sensi e perfino di essere sveglio: nei sogni mi sembra di vedere e di camminare anche quando sono fermo a letto. Il genio ingannatore porta il dubbio fino alla matematica."],["Cogito","«Io sono, io esisto» è vero ogni volta che lo penso, e per tutto il tempo in cui penso."],["Pensare","Per Cartesio pensare è tutto ciò di cui ho coscienza immediata: dubitare, capire, affermare, volere, immaginare, e anche sentire."],["Due sostanze","La cosa che pensa (res cogitans) pensa e non ha estensione. La cosa estesa (res extensa), cioè i corpi, ha lunghezza, larghezza, profondità, figura e movimento, e non pensa."],["Chiaro e distinto","Ciò che concepisco in modo molto chiaro e distinto è vero; a garantirlo è Dio, che non inganna."],["Spiriti animali","Per Cartesio sono le parti più sottili e veloci del sangue: corrono nei nervi e muovono i muscoli. Servono a capire la domanda di Elisabetta."]],"ruoli":{"2":[["A","B"],["B","A"],["A","B"],["B","A"]],"3":[["A","B","C"],["B","C","A"],["C","A","B"],["A","B","C"]]},"passi":[{"id":"r1","round":"Round 1","chi":"Pierre Gassendi","minuti":8,"breve":"Gassendi: perché non «cammino, dunque sono»?","presenta":"Pierre Gassendi (1592-1655), sacerdote, matematico e filosofo, voleva rifondare la fisica sugli atomi e partiva dall'esperienza dei sensi. Le sue obiezioni sono le più lunghe e le più ironiche.","obiezione":{"tipo":"sintesi","rif":"P. Gassendi, Quinte obiezioni (1641), contro la Meditazione II. Sintesi, non citazione.","testo":["Non vedo che bisogno ci fosse di tutto questo apparato. Eri già certo di esistere; e avresti potuto ricavarlo da qualunque altra tua azione, perché la luce naturale ci insegna che tutto ciò che agisce, esiste. Perché non dire, per esempio: «cammino, dunque sono»?"]},"consegna":"Cartesio, rispondi: perché non va bene «cammino, dunque sono»? Che cosa ha il pensiero che il camminare non ha?","risposta":{"tipo":"citazione","rif":"R. Cartesio, Principi della filosofia, I, 9 (1644). Traduzione di lavoro. Cartesio aveva già risposto così a Gassendi nelle Quinte risposte (1641); nei Principi riprende la stessa risposta, con lo stesso esempio.","testo":["Con la parola pensiero intendo tutto ciò che avviene in noi in modo tale che ne siamo immediatamente consapevoli; perciò non solo capire, volere, immaginare, ma anche sentire è qui lo stesso che pensare.","Se infatti dico: vedo, oppure cammino, dunque sono, e intendo per vista o per camminata l'azione degli occhi o delle gambe, che è opera del corpo, la conclusione non è assolutamente certa: come accade spesso nei sogni, posso credere di vedere o di camminare anche se non apro gli occhi e non mi muovo dal mio posto, e forse anche se non ho un corpo.","Ma se intendo la sensazione stessa, cioè la coscienza di vedere o di camminare, la conclusione è del tutto certa, perché allora si riferisce alla mente, che sola sente o pensa di vedere o di camminare."]},"punti":["distingue l'azione del corpo (camminare davvero: si può sognare, quindi è dubbia) dalla coscienza di camminare (è un pensiero, quindi è certa)","«cammino, dunque sono» funziona solo se «cammino» vuol dire «mi sembra di camminare»: ma allora è già un cogito","quindi Gassendi non offre un'alternativa al cogito: la sua inferenza o è dubbia, o lo presuppone","per l'obiettore: si può insistere che «tutto ciò che agisce esiste» vale anche per il pensiero, e chiedere perché Cartesio non lo dichiari come premessa"]},{"id":"r2","round":"Round 2","chi":"Thomas Hobbes","minuti":9,"breve":"Hobbes: «passeggio, dunque sono una passeggiata»?","presenta":"Thomas Hobbes (1588-1679), filosofo inglese, in quegli anni esule a Parigi. Per lui esistono solo corpi in movimento: anche il pensiero è movimento della materia.","obiezione":{"tipo":"sintesi","rif":"T. Hobbes, Terze obiezioni (1641), obiezione II, sulla Meditazione II. Sintesi, non citazione.","testo":["D'accordo: da «penso» segue «sono», perché ciò che pensa non è nulla. Ma quando dici «sono una cosa che pensa, cioè una mente, un intelletto, una ragione», qui nasce il dubbio. Da «sono uno che pensa» non segue «sono un pensiero», così come da «sono uno che passeggia» non segue «sono una passeggiata». Bisogna distinguere chi fa una cosa da ciò che fa. E poiché il soggetto di qualunque attività lo conosciamo sempre come qualcosa di materiale, la conclusione giusta sembra un'altra: la cosa che pensa è qualcosa di corporeo."]},"consegna":"Cartesio, rispondi: che cosa concedi a Hobbes, e dove secondo te sbaglia? Perché la cosa che pensa non dovrebbe essere un corpo?","risposta":{"tipo":"sintesi","rif":"R. Cartesio, Terze risposte (1641), risposta II. Sintesi, non citazione.","testo":["Quando ho scritto «mente, intelletto, ragione» non intendevo l'atto del pensare, ma la cosa che ha la capacità di pensare. L'errore della «passeggiata» Hobbes me lo attribuisce, ma io non l'ho fatto.","È vero che il pensiero ha bisogno di un soggetto, di una sostanza. Ma non ne segue che questa sostanza sia un corpo. Gli atti del pensiero non hanno nulla in comune con gli atti corporei, e il pensiero è di un genere del tutto diverso dall'estensione.","Del resto, nella Seconda Meditazione non ho ancora deciso se la cosa che pensa sia o no un corpo: l'ho lasciato in sospeso fino alla Sesta, dove lo dimostro."]},"punti":["concede la distinzione tra soggetto e atto: la «mente» è la cosa che pensa, non il pensiero","concede che serve una sostanza, ma nega il passaggio da «sostanza» a «corpo»: nel pensiero non c'è nulla di esteso","pensiero ed estensione sono di genere diverso: le due nozioni non si contengono l'una nell'altra","riconosce un punto vero dell'obiezione: nella Seconda Meditazione la non corporeità della mente non è ancora dimostrata (Cartesio la rimanda alla Sesta)","per l'obiettore: dire che il pensiero «non ha nulla in comune» con il corpo è proprio ciò che va dimostrato"]},{"id":"r3a","round":"Round 3 · primo tempo","chi":"Elisabetta di Boemia","minuti":7,"breve":"Elisabetta: come fa l'anima a muovere il corpo?","presenta":"Elisabetta del Palatinato, principessa di Boemia (1618-1680), aveva 24 anni, viveva in esilio all'Aia e studiava matematica e filosofia. Questa è la prima lettera di una corrispondenza con Cartesio che durerà fino alla morte di lui.","obiezione":{"tipo":"citazione","rif":"Elisabetta di Boemia a Cartesio, L'Aia, 16 maggio 1643. Traduzione di lavoro.","testo":["[…] vi prego di dirmi come l'anima dell'uomo possa determinare gli spiriti del corpo a compiere le azioni volontarie (non essendo che una sostanza pensante). Infatti sembra che ogni determinazione del movimento avvenga per la spinta della cosa mossa, secondo il modo in cui è spinta da ciò che la muove, oppure per la qualità e la figura della superficie di quest'ultima. Il contatto è richiesto dalle prime due condizioni, e l'estensione dalla terza. Voi escludete interamente l'estensione dalla nozione che avete dell'anima, e il contatto mi sembra incompatibile con una cosa immateriale. Perciò vi chiedo una definizione dell'anima più particolare che nella vostra Metafisica, cioè della sua sostanza, separata dalla sua azione, il pensiero."]},"consegna":"Cartesio, rispondi alla principessa: come fa una cosa che pensa, senza estensione, a muovere il corpo?","risposta":{"tipo":"citazione","rif":"R. Cartesio a Elisabetta, 21 maggio 1643. Traduzione di lavoro.","testo":["Anzitutto, considero che vi siano in noi certe nozioni primitive, che sono come degli originali sul cui modello formiamo tutte le nostre altre conoscenze. E di tali nozioni ce ne sono pochissime: dopo le più generali, dell'essere, del numero, della durata, ecc., che convengono a tutto ciò che possiamo concepire, per il corpo in particolare abbiamo soltanto la nozione dell'estensione, da cui seguono quelle della figura e del movimento; per l'anima sola abbiamo soltanto quella del pensiero, in cui sono comprese le percezioni dell'intelletto e le inclinazioni della volontà; infine, per l'anima e il corpo insieme, abbiamo soltanto quella della loro unione, da cui dipende quella della forza che l'anima ha di muovere il corpo, e il corpo di agire sull'anima […].","Per esempio, supponendo che la pesantezza sia una qualità reale, della quale non abbiamo altra conoscenza se non che ha la forza di muovere il corpo in cui si trova verso il centro della terra, non facciamo fatica a concepire come muova quel corpo, né come gli sia unita; e non pensiamo che ciò avvenga per un contatto reale di una superficie contro un'altra, perché sperimentiamo in noi stessi di avere una nozione particolare per concepirlo; e credo che usiamo male questa nozione applicandola alla pesantezza, che non è nulla di realmente distinto dal corpo, come spero di mostrare nella Fisica, ma che essa ci sia stata data per concepire il modo in cui l'anima muove il corpo."]},"punti":["Elisabetta chiede un meccanismo: il movimento richiede contatto o estensione, e l'anima non ha né l'uno né l'altra","Cartesio non fornisce un meccanismo: dice che l'unione di anima e corpo è una terza nozione primitiva, accanto a pensiero ed estensione","l'errore, per lui, è spiegare l'unione con le nozioni del corpo (contatto, spinta): ogni nozione va usata nel suo campo","l'esempio del peso: concepiamo senza difficoltà qualcosa che muove un corpo senza toccarlo; Cartesio dice che quella nozione l'abbiamo presa dall'esperienza dell'anima che muove il corpo","una risposta che ammette che il problema resta aperto è legittima: è esattamente ciò che penserà Elisabetta"]},{"id":"r3b","round":"Round 3 · secondo tempo","chi":"Elisabetta di Boemia","minuti":7,"breve":"Elisabetta rilancia: meglio un'anima estesa","presenta":"La principessa non si accontenta. L'esempio del peso non la convince, e risponde un mese dopo.","obiezione":{"tipo":"citazione","rif":"Elisabetta di Boemia a Cartesio, L'Aia, 20 giugno 1643. Traduzione di lavoro. Il primo periodo parla del peso: non vedendo nessuna causa materiale che lo produca, lo si è attribuito all'immateriale.","testo":["[…] E poiché nessuna causa materiale si presentava ai sensi, lo si sarebbe attribuito al suo contrario, l'immateriale, che io tuttavia non ho mai potuto concepire se non come una negazione della materia, che non può avere alcuna comunicazione con essa. E confesso che mi sarebbe più facile concedere la materia e l'estensione all'anima, che la capacità di muovere un corpo e di esserne mossa a un essere immateriale. […] è tuttavia molto difficile comprendere che un'anima, come voi l'avete descritta, dopo aver avuto la facoltà e l'abitudine di ragionare bene, possa perdere tutto questo per qualche vapore, e che, potendo sussistere senza il corpo e non avendo nulla in comune con esso, ne sia a tal punto governata."]},"consegna":"Cartesio, seconda risposta: Elisabetta ti propone di dare materia ed estensione all'anima, e aggiunge che basta un malessere del corpo per togliere la ragione. Che cosa le rispondi?","risposta":{"tipo":"citazione","rif":"R. Cartesio a Elisabetta, 28 giugno 1643. Traduzione di lavoro. Cartesio si rivolge alla principessa in terza persona («Vostra Altezza»).","testo":["Anzitutto, dunque, noto una grande differenza tra queste tre sorte di nozioni: l'anima si concepisce soltanto con l'intelletto puro; il corpo, cioè l'estensione, le figure e i movimenti, si può conoscere anche con l'intelletto solo, ma molto meglio con l'intelletto aiutato dall'immaginazione; e infine le cose che appartengono all'unione dell'anima e del corpo si conoscono solo oscuramente con l'intelletto solo, e neppure con l'intelletto aiutato dall'immaginazione; ma si conoscono molto chiaramente con i sensi. […]","[…] è usando soltanto la vita e le conversazioni ordinarie, e astenendosi dal meditare e dallo studiare le cose che esercitano l'immaginazione, che si impara a concepire l'unione dell'anima e del corpo. […]","[…] supplico Vostra Altezza di voler liberamente attribuire questa materia e questa estensione all'anima; perché ciò non è altro che concepirla unita al corpo."]},"punti":["Elisabetta rovescia la scelta: piuttosto che un immateriale che muove la materia, meglio un'anima con materia ed estensione","aggiunge un argomento d'esperienza: i «vapori» del corpo tolgono la ragione, quindi l'anima dipende dal corpo","Cartesio non difende la separazione con un nuovo argomento: dice che l'unione non si capisce con l'intelletto (la metafisica), ma si conosce chiaramente con i sensi e vivendo","e le concede di attribuire materia ed estensione all'anima, nel senso di pensarla unita al corpo: la distinzione delle sostanze resta, ma l'unione sfugge al chiaro e distinto","dare ragione a Elisabetta nel verdetto è legittimo, se motivato: Cartesio sposta il problema più di quanto lo risolva"]}],"finale":{"id":"fin","prompt":"Ultima scelta, tutti insieme: quale delle tre obiezioni ha messo più in difficoltà Cartesio? Scegliete e motivate in due righe, usando una frase dei testi.","punti":["nomina un'obiezione e indica la frase (dell'obiezione o della risposta) su cui si gioca","spiega che cosa Cartesio non riesce a dare: un argomento, una dimostrazione, un meccanismo","non c'è una risposta giusta: va bene anche Gassendi, se si mostra dove la risposta dei Principi lascia un punto scoperto"]},"verdetti":["Meglio la nostra","Meglio quella di Cartesio","Dicono la stessa cosa"]};
+  var LAB_ID = "filosofia_cartesio_risponde_obiezioni";
+  var KEY = "addestr_state_" + LAB_ID;
+  var MAXC = 1500, MINC = 20, MINR = 10, MAXR = 400;
+  var P = D.passi;
+
+  // S.p: -1 = introduzione e scelta dei giocatori; 0..P.length-1 = round; P.length = scelta finale
+  // S.f: fase del round: 0 = risponde Cartesio; 1 = replica l'obiettore; 2 = risposta vera e verdetto
+  var S = { n: 0, p: -1, f: 0, t: {}, v: {}, sub: false, ok: null };
+  var app, regAttivo = false;
+  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && typeof o === "object") S = Object.assign(S, o); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function btn(text, cls) { var b = el("button", "btn" + (cls ? " " + cls : ""), text); b.type = "button"; return b; }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Interpretare, confrontare, argomentare"));
+    h.appendChild(el("h1", null, D.titolo));
+    h.appendChild(el("p", "sub", D.sottotitolo));
+    return h;
+  }
+  function kitBox(open) {
+    var d = el("details"); if (open) d.open = true;
+    d.appendChild(el("summary", null, "Il kit di Cartesio"));
+    var dl = el("dl", "kit");
+    D.kit.forEach(function (k) { dl.appendChild(el("dt", null, k[0])); dl.appendChild(el("dd", null, k[1])); });
+    d.appendChild(dl);
+    return d;
+  }
+  function quote(blk, cls, label) {
+    var w = el("div");
+    w.appendChild(el("span", "kind " + cls, label + (blk.tipo === "sintesi" ? " — in sintesi" : "")));
+    var b = el("blockquote", cls);
+    blk.testo.forEach(function (t) { b.appendChild(el("p", null, t)); });
+    b.appendChild(el("div", "ref", blk.rif));
+    w.appendChild(b);
+    return w;
+  }
+  function ruoli(i) {
+    var r = D.ruoli[S.n][i];
+    var w = el("div", "roles");
+    var c = el("span", "role c"); c.appendChild(document.createTextNode("Cartesio: ")); c.appendChild(el("b", null, "Giocatore " + r[0])); w.appendChild(c);
+    var o = el("span", "role o"); o.appendChild(document.createTextNode("Obiettore: ")); o.appendChild(el("b", null, "Giocatore " + r[1])); w.appendChild(o);
+    if (S.n === 3) { var g = el("span", "role"); g.appendChild(document.createTextNode("Giudice: ")); g.appendChild(el("b", null, "Giocatore " + r[2])); w.appendChild(g); }
+    return w;
+  }
+  function chiGiudica(i) { return S.n === 3 ? "Giocatore " + D.ruoli[3][i][2] + " (giudice)" : "insieme"; }
+  function area(id, min, max, short, label, onok) {
+    var w = el("div");
+    var ta = el("textarea", short ? "short" : null); ta.maxLength = max; ta.value = S.t[id] || "";
+    ta.setAttribute("aria-label", label);
+    var cnt = el("div", "cnt");
+    function upd() { cnt.textContent = ta.value.length + " / " + max; onok(ta.value.trim().length >= min); }
+    ta.oninput = function () { S.t[id] = ta.value; persist(); upd(); };
+    w.appendChild(ta); w.appendChild(cnt);
+    setTimeout(upd, 0);
+    return w;
+  }
+
+  function render() {
+    clear();
+    app.appendChild(header());
+    if (S.sub) return renderReview();
+    if (S.p < 0 || !S.n) return renderIntro();
+    if (S.p >= P.length) return renderFinale();
+    renderRound();
+  }
+
+  function renderIntro() {
+    var c = el("div", "card");
+    D.intro.forEach(function (t) { c.appendChild(el("p", null, t)); });
+    c.appendChild(el("h2", null, "Le regole"));
+    var ol = el("ol", "rules"); D.regole.forEach(function (t) { ol.appendChild(el("li", null, t)); }); c.appendChild(ol);
+    app.appendChild(c);
+    var k = el("div", "card"); k.appendChild(el("h2", null, "Prima di cominciare: il kit"));
+    k.appendChild(el("p", "sub", "Sono gli attrezzi che Cartesio può usare. Lo trovate anche in ogni round, in fondo."));
+    var kb = kitBox(true); k.appendChild(kb); app.appendChild(k);
+    var s = el("div", "card");
+    s.appendChild(el("h2", null, "Quanti siete?"));
+    s.appendChild(el("p", "sub", "Decidete chi è il Giocatore A, chi il B (e chi il C). Basta saperlo tra voi: qui non si scrivono nomi."));
+    [2, 3].forEach(function (n) {
+      var b = el("button", "opt", n === 2 ? "Siamo in due (A e B)" : "Siamo in tre (A, B e C)"); b.type = "button";
+      b.setAttribute("aria-pressed", S.n === n ? "true" : "false");
+      b.onclick = function () { S.n = n; persist(); render(); };
+      s.appendChild(b);
+    });
+    var row = el("div", "row"); var go = btn("Cominciamo: round 1"); go.disabled = !S.n;
+    go.onclick = function () { S.p = 0; S.f = 0; persist(); render(); };
+    row.appendChild(go); s.appendChild(row);
+    app.appendChild(s);
+    window.scrollTo(0, 0);
+  }
+
+  function renderRound() {
+    var i = S.p, q = P[i], r = D.ruoli[S.n][i];
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", q.round + " · circa " + q.minuti + " minuti"));
+    var bar = el("div", "bar"); var fill = el("i"); fill.style.width = Math.round((i * 3 + S.f) / (P.length * 3 + 1) * 100) + "%"; bar.appendChild(fill); c.appendChild(bar);
+    c.appendChild(el("h2", null, q.chi));
+    c.appendChild(ruoli(i));
+    c.appendChild(el("p", null, q.presenta));
+    c.appendChild(quote(q.obiezione, "obj", "L'obiezione"));
+    c.appendChild(el("p", "note", "Giocatore " + r[1] + ": leggi l'obiezione ad alta voce."));
+    var err = el("div", "err");
+    var row = el("div", "row");
+
+    // Fase 0: risponde Cartesio
+    c.appendChild(el("h3", null, q.consegna));
+    if (S.f === 0) {
+      c.appendChild(el("p", "sub", "Scrive il Giocatore " + r[0] + ", nei panni di Cartesio. Almeno tre righe, usando almeno un attrezzo del kit. Quando bloccate la risposta, non si può più cambiare."));
+      var b0 = btn("Blocca la risposta di Cartesio");
+      c.appendChild(area(q.id + "_c", MINC, MAXC, false, "Risposta di Cartesio", function (ok) { b0.disabled = !ok; }));
+      b0.onclick = function () { S.f = 1; persist(); render(); };
+      row.appendChild(b0);
+    } else {
+      c.appendChild(el("div", "lbl", "La risposta di Cartesio (Giocatore " + r[0] + ")"));
+      c.appendChild(el("p", "yours", S.t[q.id + "_c"] || ""));
+    }
+    // Fase 1: replica dell'obiettore
+    if (S.f >= 1) {
+      c.appendChild(el("h3", null, "Obiettore: la risposta regge o no? Perché?"));
+      if (S.f === 1) {
+        c.appendChild(el("p", "sub", "Scrive il Giocatore " + r[1] + ", in una o due righe."));
+        var b1 = btn("Apri la risposta vera di Cartesio");
+        c.appendChild(area(q.id + "_o", MINR, MAXR, true, "Replica dell'obiettore", function (ok) { b1.disabled = !ok; }));
+        b1.onclick = function () { S.f = 2; persist(); render(); };
+        row.appendChild(b1);
+      } else c.appendChild(el("p", "yours", S.t[q.id + "_o"] || ""));
+    }
+    // Fase 2: risposta vera e verdetto
+    if (S.f === 2) {
+      c.appendChild(quote(q.risposta, "cart", "La risposta vera di Cartesio"));
+      c.appendChild(el("h3", null, "Il verdetto: chi ha risposto meglio?"));
+      c.appendChild(el("p", "sub", "Decide: " + chiGiudica(i) + "."));
+      D.verdetti.forEach(function (t, k) {
+        var b = el("button", "opt", t); b.type = "button";
+        b.setAttribute("aria-pressed", S.v[q.id] === k ? "true" : "false");
+        b.onclick = function () { S.v[q.id] = k; persist(); render(); };
+        c.appendChild(b);
+      });
+      c.appendChild(el("p", "sub", "Perché? Una riga, citando qualcosa dei due testi."));
+      var b2 = btn(i === P.length - 1 ? "Alla scelta finale" : "Prossimo round");
+      var motOk = false;
+      c.appendChild(area(q.id + "_m", MINR, MAXR, true, "Motivazione del verdetto", function (ok) { motOk = ok; b2.disabled = !(ok && S.v[q.id] != null); }));
+      b2.onclick = function () { S.p++; S.f = 0; persist(); render(); };
+      row.appendChild(b2);
+    }
+    c.appendChild(kitBox(false));
+    c.appendChild(err); c.appendChild(row);
+    app.appendChild(c);
+    window.scrollTo(0, 0);
+  }
+
+  function renderFinale() {
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Ultimo passo"));
+    c.appendChild(el("h2", null, D.finale.prompt));
+    var list = el("ul", "chk");
+    P.forEach(function (q) { list.appendChild(el("li", null, q.breve)); });
+    c.appendChild(list);
+    var err = el("div", "err");
+    var b = btn("Consegna");
+    c.appendChild(area(D.finale.id, MINC, MAXC, false, "Scelta finale", function (ok) { b.disabled = !ok; }));
+    c.appendChild(el("p", "note", "«Consegna» chiude il laboratorio: dopo vedrete che cosa contava in ogni round, e non potrete più modificare le risposte."));
+    b.onclick = function () { consegna(b, err); };
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(b); c.appendChild(row);
+    app.appendChild(c);
+    window.scrollTo(0, 0);
+  }
+
+  function buildAnswers() {
+    var list = [];
+    function add(id, prompt, txt) { txt = (txt || "").trim(); if (txt) list.push({ id: id, prompt: prompt.slice(0, 300), type: "essay", answer: txt.slice(0, 4000), correct: null }); }
+    P.forEach(function (q) {
+      var r = D.ruoli[S.n || 2][P.indexOf(q)];
+      add(q.id + "_cartesio", q.round + " (" + q.chi + ") — risposta di Cartesio. " + q.consegna, S.t[q.id + "_c"]);
+      add(q.id + "_replica", q.round + " (" + q.chi + ") — replica dell'obiettore", S.t[q.id + "_o"]);
+      var v = S.v[q.id];
+      add(q.id + "_verdetto", q.round + " (" + q.chi + ") — verdetto: chi ha risposto meglio?", (v != null ? D.verdetti[v] + ". " : "") + (S.t[q.id + "_m"] || ""));
+    });
+    add(D.finale.id, D.finale.prompt, S.t[D.finale.id]);
+    return list;
+  }
+
+  var sending = false, tentativi = 0;
+  function consegna(b, err) {
+    if (sending) return; sending = true; b.disabled = true; err.textContent = "Consegna in corso…";
+    var list = buildAnswers();
+    var invio = regAttivo ? Promise.resolve(window.Addestramento.completa(list, null)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && regAttivo && ++tentativi < 2) { sending = false; b.disabled = false; err.textContent = "Invio non riuscito: controllate la connessione e riprovate."; return; }
+      S.sub = true; S.ok = (ok !== false); persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Laboratorio consegnato"));
+    c.appendChild(el("p", "big", "Ecco che cosa contava in ogni round."));
+    c.appendChild(el("p", null, "Confrontate le vostre risposte con i punti qui sotto: non sono la risposta giusta, ma gli elementi che una buona risposta tocca. In plenaria si discute chi ha avuto la meglio."));
+    c.appendChild(el("p", S.ok === false ? "warn" : "note", S.ok === false ? "Attenzione: il risultato NON è stato registrato (connessione assente o bloccata). Avvisate il docente." : "Risultato registrato."));
+    app.appendChild(c);
+    P.forEach(function (q) {
+      var d = el("div", "card");
+      d.appendChild(el("h2", null, q.round + " — " + q.chi));
+      d.appendChild(el("div", "lbl", "La vostra risposta come Cartesio"));
+      d.appendChild(el("p", "yours", S.t[q.id + "_c"] || "(nessuna)"));
+      d.appendChild(el("div", "lbl", "La replica dell'obiettore"));
+      d.appendChild(el("p", "yours", S.t[q.id + "_o"] || "(nessuna)"));
+      var v = S.v[q.id];
+      d.appendChild(el("div", "lbl", "Il vostro verdetto"));
+      d.appendChild(el("p", "yours", (v != null ? D.verdetti[v] + ". " : "") + (S.t[q.id + "_m"] || "")));
+      d.appendChild(el("div", "lbl", "Che cosa contava in questo round:"));
+      var ul = el("ul", "chk"); q.punti.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul);
+      var dt = el("details"); dt.appendChild(el("summary", null, "Rileggi obiezione e risposta vera"));
+      dt.appendChild(quote(q.obiezione, "obj", "L'obiezione")); dt.appendChild(quote(q.risposta, "cart", "La risposta vera di Cartesio"));
+      d.appendChild(dt);
+      app.appendChild(d);
+    });
+    var f = el("div", "card");
+    f.appendChild(el("h2", null, "La vostra scelta finale"));
+    f.appendChild(el("p", "yours", S.t[D.finale.id] || "(nessuna)"));
+    f.appendChild(el("div", "lbl", "Una buona scelta finale:"));
+    var ul = el("ul", "chk"); D.finale.punti.forEach(function (t) { ul.appendChild(el("li", null, t)); }); f.appendChild(ul);
+    app.appendChild(f);
+    window.scrollTo(0, 0);
+  }
+
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    regAttivo = true;
+    window.Addestramento.start({
+      labId: LAB_ID,
+      title: "Cartesio risponde",
+      salvaRisposte: true,          // decisione del docente: le risposte finali vengono registrate
+      tempoAtteso: 1800,            // ~30 minuti di lavoro a coppie (lettura + tre round + scelta finale)
+      caratteriAttesi: 1600,        // 4 risposte di Cartesio (~250) + repliche e verdetti brevi + scelta finale
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
