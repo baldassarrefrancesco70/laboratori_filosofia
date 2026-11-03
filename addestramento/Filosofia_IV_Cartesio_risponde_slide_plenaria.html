@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartesio risponde — plenaria</title>
+<style>
+:root{--bg:#f4f9f5;--fg:#1c2a22;--muted:#4d6155;--acc:#6d28d9;--accbg:#f1ebfd;--obj:#8a4b08;--objbg:#fdf3e6;--pri:#1e6b45}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.slide{display:none;min-height:100vh;padding:5vh 7vw;flex-direction:column;justify-content:center}
+.slide.on{display:flex}
+h1{font-family:Georgia,serif;font-size:clamp(28px,4.4vw,58px);margin:0 0 4vh;line-height:1.15}
+.three{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;counter-reset:n}
+.three li{border:3px solid var(--line,#c9dccf);border-radius:14px;padding:2.5vh 1.5vw;font-size:clamp(18px,2vw,30px);background:#fff}
+.three li b{display:block;font-family:Georgia,serif;font-size:1.2em;margin-bottom:1vh;color:var(--pri)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw}
+blockquote{margin:0;padding:3vh 2vw;border-radius:12px;font-family:Georgia,serif;font-size:clamp(18px,2.1vw,32px);line-height:1.4}
+blockquote span{display:block;font-family:system-ui,sans-serif;font-weight:700;font-size:.62em;text-transform:uppercase;letter-spacing:.04em;margin-bottom:1.5vh}
+blockquote.obj{background:var(--objbg);border-left:8px solid var(--obj)} blockquote.obj span{color:var(--obj)}
+blockquote.cart{background:var(--accbg);border-left:8px solid var(--acc)} blockquote.cart span{color:var(--acc)}
+.ask{font-family:Georgia,serif;font-size:clamp(20px,2.6vw,40px);margin-top:5vh;color:var(--pri)}
+.qs{font-size:clamp(20px,2.4vw,36px);line-height:1.35;padding-left:1.3em}.qs li{margin:2vh 0}
+.small{font-size:14px;color:var(--muted);margin-top:4vh}
+.nav{position:fixed;bottom:12px;right:16px;display:flex;gap:8px}
+.nav button{min-width:48px;min-height:44px;font-size:20px;border-radius:10px;border:2px solid var(--pri);background:#fff;color:var(--pri);cursor:pointer}
+.count{position:fixed;bottom:22px;left:16px;color:var(--muted);font-size:14px}
+@media (max-width:800px){.three,.duo{grid-template-columns:1fr}}
+</style></head><body>
+<section class="slide on" aria-label="Slide 1"><h1>Quale obiezione ha fatto più male a Cartesio?</h1>
+   <ol class="three"><li><b>Pierre Gassendi</b><span>perché non «cammino, dunque sono»?</span></li><li><b>Thomas Hobbes</b><span>«passeggio, dunque sono una passeggiata»?</span></li><li><b>Elisabetta di Boemia</b><span>come fa l'anima a muovere il corpo?</span></li></ol>
+   <p class="ask">Alzata di mano, poi una coppia per obiezione legge il verdetto e la motivazione.</p></section>
+<section class="slide" aria-label="Slide 2"><h1>L'ultimo scambio</h1>
+   <div class="duo"><blockquote class="obj"><span>Elisabetta, 20 giugno 1643</span>«E confesso che mi sarebbe più facile concedere la materia e l'estensione all'anima, che la capacità di muovere un corpo e di esserne mossa a un essere immateriale.»</blockquote>
+   <blockquote class="cart"><span>Cartesio, 28 giugno 1643</span>«[…] supplico Vostra Altezza di voler liberamente attribuire questa materia e questa estensione all'anima; perché ciò non è altro che concepirla unita al corpo.»</blockquote></div>
+   <p class="ask">Cartesio le risponde, o le dà ragione?</p></section>
+<section class="slide" aria-label="Slide 3"><h1>Tre domande per chiudere</h1>
+   <ol class="qs"><li>In quale round la vostra risposta era migliore di quella di Cartesio? Che cosa avevate visto voi che lui non dice?</li>
+   <li>Hobbes ed Elisabetta attaccano lo stesso punto da due lati diversi. Quale?</li>
+   <li>«L'unione si conosce con i sensi, vivendo»: è una risposta filosofica o una resa?</li></ol>
+   <p class="small">Traduzioni di lavoro dagli originali francesi (corrispondenza Elisabetta–Cartesio, 1643).</p></section>
+<div class="count" id="c"></div>
+<div class="nav"><button type="button" id="p" aria-label="Slide precedente">‹</button><button type="button" id="n" aria-label="Slide successiva">›</button></div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,c=document.getElementById('c');
+function go(k){i=Math.max(0,Math.min(s.length-1,k));s.forEach(function(e,j){e.classList.toggle('on',j===i)});c.textContent=(i+1)+' / '+s.length}
+document.getElementById('p').onclick=function(){go(i-1)};document.getElementById('n').onclick=function(){go(i+1)};
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')go(i-1)});go(0);
+</script></body></html>
