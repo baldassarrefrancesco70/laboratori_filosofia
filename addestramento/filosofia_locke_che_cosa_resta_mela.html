@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Che cosa resta della mela?</title>
+<meta name="portale:titolo" content="Che cosa resta della mela?">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="L'inventario delle idee di una mela, la sottrazione delle qualità e il confronto con il testo di Locke sulla sostanza.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--acc:#2b6cb0;--neu:#eef3ef}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--acc:#7fb2f0;--neu:#1d2f26}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.3rem 0 .2rem}
+h2{font-size:1.18rem;margin:.2rem 0 .6rem}
+h3{font-size:1.02rem;margin:.9rem 0 .4rem}
+p{margin:.45rem 0}
+.sub{color:var(--muted);margin:0 0 .7rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.pill{font-size:.85rem;font-weight:700;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 12px}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.grp{margin:12px 0}
+.grp>.lb{font-weight:700;margin-bottom:4px}
+.opt{display:block;width:100%;text-align:left;min-height:46px;margin:6px 0;padding:9px 13px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg);font-weight:600}
+.opt[aria-pressed=true]::before{content:"✓ "}
+.scale{display:flex;gap:6px}
+.scale .opt{text-align:center;flex:1;min-width:0;padding:8px 0;margin:4px 0}
+.scale .opt[aria-pressed=true]::before{content:""}
+.ends{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,.chip:focus-visible,a:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea,input[type=text]{width:100%;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit}
+textarea{min-height:130px;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.res{border-radius:10px;padding:9px 13px;margin:7px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.res.neu{background:var(--neu);border-left:5px solid var(--muted)}
+.lbl{font-weight:700}
+ul.chk{margin:.4rem 0 .4rem 1.1rem;padding:0}
+.score{font-family:Georgia,serif;font-size:1.5rem;margin:.2rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+.mine{white-space:pre-wrap;overflow-wrap:anywhere}
+table.mini{width:100%;border-collapse:collapse;font-size:.95rem}
+table.mini td{border-top:1px solid var(--line);padding:6px 4px;vertical-align:top}
+table.mini td:first-child{font-weight:700;width:38%}
+a{color:var(--pri)}
+blockquote{margin:.6rem 0;padding:.5rem .8rem;border-left:4px solid var(--acc);background:var(--neu);border-radius:0 8px 8px 0}
+.stage{display:flex;justify-content:center;align-items:center;min-height:170px;margin:8px 0}
+.box{width:150px;height:150px;border:3px dashed var(--muted);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-style:italic;font-size:1.15rem;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:46px;padding:8px 13px;border:2px solid var(--pri);border-radius:99px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.chip:disabled{border-color:var(--line);color:var(--muted);cursor:default}
+.chip.gone{text-decoration:line-through}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var D = {"labId":"filosofia_locke_che_cosa_resta_mela","titolo":"Che cosa resta della mela?","sottotitolo":"Smontare un'idea fino al punto in cui Locke si ferma","descrizione":"L'inventario delle idee di una mela, la sottrazione delle qualità e il confronto con il testo di Locke sulla sostanza.","tipologia":"analizzare","tipologiaNome":"Analizzare testi","richiamo":[["Sensazione e riflessione","le due fonti delle idee: i sensi e l'osservazione delle operazioni della nostra mente."],["Semplice e complessa","un'idea semplice non si può scomporre; una complessa è composta dalla mente."],["Qualità primarie","solidità, estensione, figura, movimento o quiete, numero. Secondo Locke restano nel corpo in ogni cambiamento."],["Qualità secondarie","colori, suoni, sapori, odori. Nel corpo sono solo poteri di produrre in noi certe sensazioni, grazie alle qualità primarie."]],"rimando":"Per riprendere: Sintesi, paragrafo 1.10.","carte":[{"id":"rossa","nome":"è rossa","sol":{"orig":0,"strutt":0,"qual":1},"why":"Colore: idea semplice di sensazione e qualità secondaria. Nella mela c'è il potere di produrre in noi l'idea del rosso."},{"id":"rotonda","nome":"è rotonda","sol":{"orig":0,"strutt":0,"qual":0},"why":"Figura: idea di sensazione e qualità primaria, che ricevi con la vista e con il tatto."},{"id":"percepirla","nome":"il fatto che la sto percependo","sol":{"orig":1,"strutt":0,"qual":2},"why":"Percepire è un'operazione della mente: l'idea viene dalla riflessione. Non è una qualità della mela, quindi il terzo asse non si applica."},{"id":"peso","nome":"pesa","dubbio":true,"why":"Caso discutibile. Viene dalla sensazione, ma non è nell'elenco lockiano delle primarie. Nel passo sulla sostanza Locke nomina il peso accanto al colore. Si può leggerlo come un potere del corpo. Conta come hai motivato la scelta."},{"id":"buona","nome":"è buona","dubbio":true,"why":"Caso discutibile. Se indica il sapore, è vicino alle secondarie. Se indica il piacere che provi, Locke parla di un'idea che viene sia dalla sensazione sia dalla riflessione. Se indica che fa bene, stai facendo un confronto, cioè una relazione."},{"id":"mia","nome":"è mia","dubbio":true,"why":"Caso discutibile. Nessun senso ti mostra che è tua: nasce dal mettere la mela in rapporto con te. Si avvicina a una relazione, quindi non è una qualità della mela."}],"secondarie":["il rosso","il sapore dolce","il profumo","il rumore del morso"],"primarie":["la figura","l'estensione","la solidità","il movimento o la quiete","il numero: una mela"],"domande":{"q0":"Immagina di togliere alla mela tutte le sue qualità, una alla volta. Prima di cominciare: secondo te, che cosa resterà?","q1":"Hai tolto colore, sapore, odore e suono. Che cosa resta ora della mela?","q2":"Hai tolto tutto ciò che percepivi. Resta qualcosa? Se sì, che cosa. Se no, perché continuiamo a dire «questa mela»?","frase":"Copia qui, tra virgolette, una frase del testo 10 che secondo te risponde alla domanda.","finale":"Che cosa resta della mela? Rispondi in cinque righe, citando la frase che hai scelto.","diff":"Che differenza c'è tra dire che la sostanza è sconosciuta e dire che non esiste?"},"indiano":"Se a qualcuno si chiedesse in che cosa si trovino il colore o il peso, non saprebbe dire altro che: nelle parti solide ed estese. E se gli si chiedesse in che cosa si trovino la solidità e l'estensione, non starebbe molto meglio di quell'indiano che diceva che il mondo era sostenuto da un grande elefante. Gli chiesero su che cosa poggiasse l'elefante, e rispose: su una grande tartaruga. Incalzato a dire che cosa sostenesse la tartaruga dal largo dorso, rispose: qualcosa, non sapeva che cosa.","indianoFonte":"J. Locke, Saggio sull'intelletto umano, II, 23, 2. Traduzione di lavoro.","modelli":{"q0":{"testa":"Qui non c'è una risposta da indovinare: è il tuo punto di partenza. Rileggila dopo le altre due e controlla:","punti":["hai detto che cosa resterebbe, o hai detto solo che non resta niente?","la tua risposta è cambiata alla fine?"]},"q1":{"testa":"Una buona risposta contiene almeno due di questi punti:","punti":["restano le qualità primarie: figura, estensione, solidità, movimento o quiete, numero","ciò che abbiamo tolto, nel corpo, era solo un potere di produrre sensazioni","resta qualcosa di esteso: fin qui il risultato somiglia a quello di Cartesio con la cera, anche se Locke conserva la solidità"]},"q2":{"testa":"Una buona risposta contiene almeno due di questi punti:","punti":["non resta niente che si possa percepire o descrivere","il nome «mela» riunisce idee che si presentano sempre insieme","continuiamo a parlare di una cosa perché non riusciamo a immaginare qualità che stiano da sole","va bene anche sostenere che non resta nulla, se spieghi perché diciamo ancora «questa mela»"]},"finale":{"testa":"Una buona risposta contiene almeno tre di questi punti:","punti":["tolte le qualità percepite, di ciò che resta non abbiamo idea","l'idea di mela è un insieme di idee semplici, riunite da un solo nome","supponiamo un sostegno, il substratum, perché non immaginiamo qualità senza qualcosa che le sostenga","questo sostegno è supposto, non percepito: la frase citata lo mostra","va bene anche discutere se la parola «substratum» aggiunga davvero qualcosa, come nell'aneddoto dell'indiano"]},"diff":{"testa":"Una buona risposta contiene almeno due di questi punti:","punti":["«sconosciuta» riguarda ciò che sappiamo, «non esiste» riguarda ciò che c'è","Locke sostiene la prima tesi: dice di non sapere che cosa sia, non che manchi","dall'assenza di un'idea chiara non segue che la cosa non esista","va bene anche obiettare che, senza nessuna idea, è difficile sapere di che cosa stiamo parlando: è un'obiezione seria, se argomentata"]}}};
+  var ASSI = [{"id":"orig","nome":"Da dove viene?","opz":["sensazione","riflessione","tutte e due"]},{"id":"strutt","nome":"Com'è?","opz":["semplice","complessa"]},{"id":"qual","nome":"Che qualità è?","opz":["primaria","secondaria","non si applica"]}], LINK_ANTOLOGIA = "https://drive.google.com/file/d/16MCT9FfeZErdte4TFSUfGKuGasyV335O/view";
+  var KEY = "addestr_state_" + D.labId;
+  var MAXC = 1500, MINC = 20;
+  var app, S;
+  function loadS(def) { S = def; try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {} }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function top() { window.scrollTo(0, 0); }
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", D.tipologiaNome));
+    h.appendChild(el("h1", null, D.titolo));
+    h.appendChild(el("p", "sub", D.sottotitolo));
+    return h;
+  }
+  function choice(cont, label, opts, val, onpick) {
+    var g = el("div", "grp"); if (label) g.appendChild(el("div", "lb", label));
+    opts.forEach(function (t, k) {
+      var b = el("button", "opt", t); b.type = "button"; b.setAttribute("aria-pressed", val === k ? "true" : "false");
+      b.onclick = function () { onpick(k); }; g.appendChild(b);
+    });
+    cont.appendChild(g);
+  }
+  function area(cont, label, key, onchange, min) {
+    var g = el("div", "grp"); g.appendChild(el("div", "lb", label));
+    var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.t[key] || ""; ta.setAttribute("aria-label", label);
+    var cnt = el("div", "cnt");
+    function upd() { cnt.textContent = ta.value.length + " / " + MAXC; if (onchange) onchange(); }
+    ta.oninput = function () { S.t[key] = ta.value; persist(); upd(); };
+    g.appendChild(ta); g.appendChild(cnt); cont.appendChild(g); upd();
+    return ta;
+  }
+  function filled(key, min) { return (S.t[key] || "").trim().length >= (min || MINC); }
+  function checklist(cont, m) {
+    cont.appendChild(el("div", "lbl", m.testa));
+    var ul = el("ul", "chk"); m.punti.forEach(function (t) { ul.appendChild(el("li", null, t)); }); cont.appendChild(ul);
+  }
+  function mine(cont, t) { cont.appendChild(el("div", "lbl", "La tua risposta")); cont.appendChild(el("p", "mine", t || "(nessuna)")); }
+  function esito(cont, good, testo, giusta) {
+    var m = el("div", "res " + (good ? "ok" : "ko"));
+    m.appendChild(el("span", "lbl", good ? "Corretto: " : "Non corretto: "));
+    m.appendChild(document.createTextNode(testo)); cont.appendChild(m);
+    if (!good) { var g = el("div", "res ok"); g.appendChild(el("span", "lbl", "Risposta giusta: ")); g.appendChild(document.createTextNode(giusta)); cont.appendChild(g); }
+  }
+  var sending = false, tentativi = 0;
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    var r = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && window.Addestramento && ++tentativi < 2) {
+        sending = false; btn.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e riprova."; return;
+      }
+      S.sub = true; S.ok = (ok !== false); persist(); sending = false; render();
+    });
+  }
+  function reviewHead(right, tot) {
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    if (tot) c.appendChild(el("div", "score", right + " su " + tot + " etichette corrette"));
+    c.appendChild(el("p", null, "Ecco la correzione. Serve a capire che cosa ti manca, non a prendere un voto."));
+    c.appendChild(el("p", "note", S.ok === false ? "Attenzione: il risultato NON è stato registrato (connessione assente o bloccata). Avvisa il docente." : "Risultato registrato."));
+    app.appendChild(c);
+  }
+  function avvia(cfg) {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: D.labId, title: D.titolo, salvaRisposte: true,
+      tempoAtteso: cfg.tempo, caratteriAttesi: cfg.car,
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+
+  var NC = D.carte.length, NF = 3;
+  var IDX = { intro: 0, carta: 1, free: 1 + NC, q0: 1 + NC + NF, sec: 2 + NC + NF, pri: 3 + NC + NF, testo: 4 + NC + NF, fin: 5 + NC + NF };
+  var N = 6 + NC + NF;
+  loadS({ i: 0, a: {}, free: {}, xs: 0, xp: 0, t: {}, sub: false, ok: null });
+
+  function apple(frac, colored) {
+    var col = colored ? "#b3261e" : "#8d9a92";
+    return '<svg viewBox="0 0 120 130" width="150" height="160" role="img" aria-label="Disegno della mela" style="opacity:' + frac + '">' +
+      '<path d="M60 38c-12-12-44-8-44 28 0 32 22 56 34 56 5 0 7-3 10-3s5 3 10 3c12 0 34-24 34-56 0-36-32-40-44-28z" fill="' + col + '"/>' +
+      '<path d="M60 38c0-10 3-20 12-26" stroke="#5b4a2f" stroke-width="4" fill="none"/></svg>';
+  }
+  function stage(html) { var s = el("div", "stage"); s.innerHTML = html; return s; }
+  function axes(c, val, onpick) {
+    ASSI.forEach(function (ax) {
+      choice(c, ax.nome, ax.opz, val[ax.id], function (k) { onpick(ax.id, k); });
+    });
+  }
+  function axesDone(v) { return v && ASSI.every(function (ax) { return v[ax.id] != null; }); }
+
+  function render() {
+    clear(); app.appendChild(header());
+    if (S.sub) return renderReview();
+    var c = el("div", "card");
+    var bar = el("div", "bar"); var fill = el("i"); fill.style.width = Math.round(S.i / (N - 1) * 100) + "%"; bar.appendChild(fill);
+    var back = el("button", "btn sec", "Indietro"); back.type = "button";
+    var next = el("button", "btn", S.i === N - 1 ? "Consegna" : "Avanti"); next.type = "button";
+    var err = el("div", "err");
+    back.disabled = S.i === 0 || S.i >= IDX.q0;
+    function can(v) { next.disabled = !v; }
+    function keep() { var y = window.scrollY; render(); window.scrollTo(0, y); }
+
+    if (S.i === IDX.intro) {
+      c.appendChild(el("h2", null, "Prima di cominciare"));
+      c.appendChild(el("p", null, "Lavori da solo: circa 25-30 minuti. Tieni a portata di mano il testo 10 dell'Antologia: ti servirà verso la fine, non prima."));
+      var t = el("table", "mini");
+      D.richiamo.forEach(function (r) { var tr = el("tr"); tr.appendChild(el("td", null, r[0])); tr.appendChild(el("td", null, r[1])); t.appendChild(tr); });
+      c.appendChild(t);
+      c.appendChild(el("p", "note", D.rimando));
+    } else if (S.i < IDX.free) {
+      var n = S.i - IDX.carta, k = D.carte[n];
+      S.a[k.id] = S.a[k.id] || {};
+      c.appendChild(el("div", "pill", "Fase 1 · l'inventario · idea " + (n + 1) + " di " + NC)); c.appendChild(bar);
+      c.appendChild(el("h2", null, "La mela: «" + k.nome + "»"));
+      if (k.dubbio) c.appendChild(el("p", "note", "Questo è un caso dubbio: scegli e tieni pronta la tua ragione."));
+      axes(c, S.a[k.id], function (ax, v) { S.a[k.id][ax] = v; persist(); keep(); });
+      can(axesDone(S.a[k.id]));
+    } else if (S.i < IDX.q0) {
+      var m = S.i - IDX.free, fid = "f" + m;
+      S.free[fid] = S.free[fid] || { nome: "" };
+      c.appendChild(el("div", "pill", "Fase 1 · l'inventario · la tua idea " + (m + 1) + " di " + NF)); c.appendChild(bar);
+      c.appendChild(el("h2", null, "Aggiungi un'idea tua sulla mela"));
+      var inp = el("input"); inp.type = "text"; inp.maxLength = 80; inp.value = S.free[fid].nome; inp.setAttribute("aria-label", "La tua idea");
+      c.appendChild(inp);
+      function upd() { var v = S.free[fid]; can(v.nome.trim().length >= 3 && axesDone(v)); }
+      inp.oninput = function () { S.free[fid].nome = inp.value; persist(); upd(); };
+      axes(c, S.free[fid], function (ax, v) { S.free[fid][ax] = v; persist(); keep(); });
+      upd();
+    } else if (S.i === IDX.q0) {
+      c.appendChild(el("div", "pill", "Fase 2 · la sottrazione")); c.appendChild(bar);
+      c.appendChild(stage(apple(1, true)));
+      c.appendChild(el("div", "note", "L'inventario è chiuso: da qui non si torna indietro, così resta traccia di come cambia la tua risposta."));
+      function u0() { can(filled("q0")); }
+      area(c, D.domande.q0, "q0", u0); u0();
+    } else if (S.i === IDX.sec || S.i === IDX.pri) {
+      var sec = S.i === IDX.sec, list = sec ? D.secondarie : D.primarie, key = sec ? "xs" : "xp", done = S[key] >= list.length;
+      c.appendChild(el("div", "pill", "Fase 2 · la sottrazione")); c.appendChild(bar);
+      c.appendChild(el("h2", null, sec ? "Togli le qualità secondarie" : "Togli le qualità primarie"));
+      var frac = sec ? 1 - .12 * S.xs : Math.max(.08, .5 - .1 * S.xp);
+      c.appendChild(stage(!sec && done ? '<div class="box" aria-label="Riquadro vuoto"></div>' : apple(frac, sec && S.xs === 0)));
+      var ch = el("div", "chips");
+      list.forEach(function (q, j) {
+        var b = el("button", j < S[key] ? "chip gone" : "chip", q); b.type = "button"; b.disabled = j !== S[key];
+        if (j < S[key]) b.setAttribute("aria-label", q + ": tolto");
+        b.onclick = function () { S[key]++; persist(); keep(); };
+        ch.appendChild(b);
+      });
+      c.appendChild(ch);
+      if (done) {
+        var qk = sec ? "q1" : "q2";
+        function u1() { can(filled(qk)); }
+        area(c, D.domande[qk], qk, u1); u1();
+      } else { c.appendChild(el("p", "note", "Tocca le qualità una alla volta, nell'ordine.")); can(false); }
+    } else if (S.i === IDX.testo) {
+      c.appendChild(el("div", "pill", "Fase 3 · il testo")); c.appendChild(bar);
+      c.appendChild(el("h2", null, "Che cosa dice Locke di quel riquadro"));
+      c.appendChild(stage('<div class="box">substratum</div>'));
+      var p = el("p"); p.appendChild(document.createTextNode("Apri l'"));
+      var a = el("a", null, "Antologia, testo 10"); a.href = LINK_ANTOLOGIA; a.target = "_blank"; a.rel = "noopener noreferrer"; p.appendChild(a);
+      p.appendChild(document.createTextNode(" («Un sostegno supposto ma sconosciuto») e leggilo con le note. Poi leggi il passo che l'Antologia non riporta:")); c.appendChild(p);
+      var bq = el("blockquote"); bq.appendChild(el("p", null, D.indiano)); bq.appendChild(el("p", "sub", D.indianoFonte)); c.appendChild(bq);
+      function u2() { can(filled("frase", 10)); }
+      area(c, D.domande.frase, "frase", u2); u2();
+    } else {
+      c.appendChild(el("div", "pill", "Fase 4 · la risposta")); c.appendChild(bar);
+      function u3() { can(filled("finale", 150) && filled("diff")); }
+      area(c, D.domande.finale, "finale", u3);
+      area(c, D.domande.diff, "diff", u3); u3();
+      c.appendChild(el("p", "note", "Per la prima risposta servono almeno 150 caratteri, per la seconda almeno " + MINC + ". Scrivi con parole tue: dopo la consegna vedrai gli elementi da confrontare."));
+    }
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(back); row.appendChild(next); c.appendChild(row);
+    back.onclick = function () { if (!back.disabled) { S.i--; persist(); render(); top(); } };
+    next.onclick = function () { if (S.i < N - 1) { S.i++; persist(); render(); top(); } else consegna(next, err); };
+    app.appendChild(c);
+  }
+  function txt(v) { return ASSI.map(function (ax) { return v[ax.id] == null ? "-" : ax.opz[v[ax.id]]; }).join(" · "); }
+  function buildAnswers() {
+    var list = [], right = 0, tot = 0;
+    D.carte.forEach(function (k) {
+      var v = S.a[k.id]; if (!v) return;
+      if (k.dubbio) { list.push({ id: "dub_" + k.id, prompt: "Caso dubbio: " + k.nome, type: "essay", answer: txt(v), correct: null }); return; }
+      ASSI.forEach(function (ax) {
+        if (v[ax.id] == null) return; tot++; var g = v[ax.id] === k.sol[ax.id]; if (g) right++;
+        list.push({ id: k.id + "_" + ax.id, prompt: k.nome + " · " + ax.nome, type: "mc", answer: ax.opz[v[ax.id]], correct: g });
+      });
+    });
+    [0, 1, 2].forEach(function (m) { var v = S.free["f" + m]; if (v && v.nome.trim()) list.push({ id: "idea_" + m, prompt: "Idea aggiunta dallo studente", type: "essay", answer: v.nome.trim() + " (" + txt(v) + ")", correct: null }); });
+    ["q0", "q1", "q2", "frase", "finale", "diff"].forEach(function (q) { var t = (S.t[q] || "").trim(); if (t) list.push({ id: q, prompt: D.domande[q], type: "essay", answer: t, correct: null }); });
+    return { list: list, right: right, tot: tot, score: tot ? Math.round(right / tot * 100) : null };
+  }
+  function renderReview() {
+    var r = buildAnswers(); reviewHead(r.right, r.tot);
+    var c = el("div", "card"); c.appendChild(el("h2", null, "L'inventario"));
+    D.carte.forEach(function (k) {
+      c.appendChild(el("h3", null, "«" + k.nome + "»")); var v = S.a[k.id] || {};
+      if (k.dubbio) {
+        c.appendChild(el("p", null, "La tua scelta: " + txt(v)));
+        var nd = el("div", "res neu"); nd.textContent = k.why; c.appendChild(nd);
+      } else {
+        ASSI.forEach(function (ax) { esito(c, v[ax.id] === k.sol[ax.id], ax.nome + " " + (v[ax.id] == null ? "(nessuna)" : ax.opz[v[ax.id]]), ax.opz[k.sol[ax.id]]); });
+        c.appendChild(el("p", null, k.why));
+      }
+    });
+    var own = [0, 1, 2].map(function (m) { return S.free["f" + m]; }).filter(function (v) { return v && v.nome.trim(); });
+    if (own.length) {
+      c.appendChild(el("h3", null, "Le tue idee"));
+      own.forEach(function (v) { c.appendChild(el("p", null, v.nome + ": " + txt(v))); });
+      c.appendChild(el("p", "note", "Queste non si correggono in automatico. Controlla: è davvero una qualità della mela, o riguarda il tuo rapporto con la mela?"));
+    }
+    app.appendChild(c);
+    [["q0", "Prima di togliere"], ["q1", "Dopo le secondarie"], ["q2", "Dopo le primarie"], ["finale", "La tua risposta finale"], ["diff", "Sconosciuta o inesistente?"]].forEach(function (p) {
+      var d = el("div", "card"); d.appendChild(el("h2", null, p[1]));
+      d.appendChild(el("p", "sub", D.domande[p[0]]));
+      if (p[0] === "finale") { d.appendChild(el("div", "lbl", "La frase scelta")); d.appendChild(el("p", "mine", S.t.frase || "(nessuna)")); }
+      mine(d, S.t[p[0]]); checklist(d, D.modelli[p[0]]); app.appendChild(d);
+    });
+    var e = el("div", "card"); e.appendChild(el("p", null, "Porta in plenaria la tua risposta e i casi dubbi su cui hai esitato di più.")); app.appendChild(e);
+  }
+  avvia({ tempo: 1200, car: 800 });
+
+})();
+</script>
+</body>
+</html>

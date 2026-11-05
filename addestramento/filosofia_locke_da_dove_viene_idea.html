@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Da dove viene questa idea?</title>
+<meta name="portale:titolo" content="Da dove viene questa idea?">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="argomentare">
+<meta name="portale:descrizione" content="Otto idee con due etichette, Cartesio e Locke, poi una scala della certezza, prima da soli e poi a coppie.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--acc:#6d28d9;--neu:#eef3ef}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--acc:#b59af0;--neu:#1d2f26}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.3rem 0 .2rem}
+h2{font-size:1.18rem;margin:.2rem 0 .6rem}
+h3{font-size:1.02rem;margin:.9rem 0 .4rem}
+p{margin:.45rem 0}
+.sub{color:var(--muted);margin:0 0 .7rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.pill{font-size:.85rem;font-weight:700;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 12px}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.grp{margin:12px 0}
+.grp>.lb{font-weight:700;margin-bottom:4px}
+.opt{display:block;width:100%;text-align:left;min-height:46px;margin:6px 0;padding:9px 13px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg);font-weight:600}
+.opt[aria-pressed=true]::before{content:"✓ "}
+.scale{display:flex;gap:6px}
+.scale .opt{text-align:center;flex:1;min-width:0;padding:8px 0;margin:4px 0}
+.scale .opt[aria-pressed=true]::before{content:""}
+.ends{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,.chip:focus-visible,a:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea,input[type=text]{width:100%;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit}
+textarea{min-height:130px;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.res{border-radius:10px;padding:9px 13px;margin:7px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.res.neu{background:var(--neu);border-left:5px solid var(--muted)}
+.lbl{font-weight:700}
+ul.chk{margin:.4rem 0 .4rem 1.1rem;padding:0}
+.score{font-family:Georgia,serif;font-size:1.5rem;margin:.2rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+.mine{white-space:pre-wrap;overflow-wrap:anywhere}
+table.mini{width:100%;border-collapse:collapse;font-size:.95rem}
+table.mini td{border-top:1px solid var(--line);padding:6px 4px;vertical-align:top}
+table.mini td:first-child{font-weight:700;width:38%}
+a{color:var(--pri)}
+blockquote{margin:.6rem 0;padding:.5rem .8rem;border-left:4px solid var(--acc);background:var(--neu);border-radius:0 8px 8px 0}
+.stage{display:flex;justify-content:center;align-items:center;min-height:170px;margin:8px 0}
+.box{width:150px;height:150px;border:3px dashed var(--muted);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-style:italic;font-size:1.15rem;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:46px;padding:8px 13px;border:2px solid var(--pri);border-radius:99px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.chip:disabled{border-color:var(--line);color:var(--muted);cursor:default}
+.chip.gone{text-decoration:line-through}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var D = {"labId":"filosofia_locke_da_dove_viene_idea","titolo":"Da dove viene questa idea?","sottotitolo":"Cartesio e Locke davanti alle stesse idee e alle stesse certezze","descrizione":"Otto idee con due etichette, Cartesio e Locke, poi una scala della certezza, prima da soli e poi a coppie.","tipologia":"argomentare","tipologiaNome":"Interpretare, confrontare, argomentare","richiamoC":[["Innate","presenti nella mente da sempre: le conosco con la sola capacità di pensare."],["Avventizie","sembrano venire dall'esterno."],["Fattizie","formate da me, combinando altre idee."]],"richiamoL":[["Semplici","la mente le riceve: dalla sensazione (senso esterno) o dalla riflessione (senso interno)."],["Complesse: modi","idee che non sussistono di per sé."],["Complesse: sostanze","idee di ciò che si considera esistente di per sé."],["Complesse: relazioni","idee che nascono dal confronto tra idee."]],"rimando":"Per riprendere: Sintesi, paragrafi 1.5 («Tre tipi di idee») e 1.10.","voci":[{"id":"giallo","nome":"il giallo di un limone","c":1,"l":0,"whyC":"Cartesio la tratta come un'idea che sembra venire da fuori: il dubbio resta finché non è garantita l'esistenza dei corpi.","whyL":"È uno degli esempi di Locke nel testo 6: una qualità sensibile che i sensi portano alla mente."},{"id":"triangolo","nome":"il triangolo","c":0,"l":2,"whyC":"Le verità sul triangolo non dipendono dai triangoli disegnati: la mente le trova nella sua stessa idea. Nel testo 5 Cartesio la usa proprio così.","whyL":"Per Locke è un'idea composta dalla mente, che non indica una cosa esistente di per sé: è un modo. È l'esempio della Sintesi."},{"id":"ippogrifo","nome":"l'ippogrifo","c":2,"l":3,"whyC":"È l'esempio cartesiano di idea costruita da me: unisco idee che ho già.","whyL":"Anche Locke lo vede composto, da idee semplici di sensazione. È un'idea di sostanza immaginaria: pensiamo una cosa che esisterebbe di per sé, ma che non esiste. L'etichetta dice com'è fatta l'idea, non che la cosa ci sia."},{"id":"cosa_pensa","nome":"la cosa che pensa","c":0,"l":3,"whyC":"Per Cartesio l'idea di me come cosa che pensa non viene dai sensi: la trovo pensando.","whyL":"Locke la ricostruisce come idea di sostanza: raccoglie le idee di riflessione (pensare, dubitare, volere) e suppone qualcosa che le sostenga."},{"id":"albero","nome":"un albero","c":1,"l":3,"whyC":"È l'esempio cartesiano di idea delle cose naturali, che sembra venire dall'esterno.","whyL":"È un insieme di idee semplici che si presentano sempre insieme e che riuniamo con un solo nome."},{"id":"infinito","nome":"l'infinito","c":0,"l":2,"whyC":"Per Cartesio non posso produrla io, che sono finito: anzi, «la percezione dell'infinito precede in qualche modo quella del finito».","whyL":"Per Locke nasce dal ripetere senza fine un'idea di quantità, come spazio, durata o numero. Non esiste di per sé: è un modo. Gassendi obiettava qualcosa di simile: si forma negando il finito."},{"id":"sostanza","nome":"la sostanza","c":0,"l":3,"whyC":"Nella Sintesi è tra gli esempi di idee innate, con la cosa pensante e la cosa estesa.","whyL":"L'etichetta è quella di sostanza, ma questo è il caso più scomodo: Locke dice che non la riceviamo né dalla sensazione né dalla riflessione. È solo una supposizione. Tornerà nel prossimo laboratorio."},{"id":"dio","nome":"Dio","c":0,"l":null,"whyC":"È il caso centrale: l'idea di un essere infinito non può venire da me, che sono finito. Per Cartesio è innata."}],"domandaDio":"Se l'idea di Dio non è innata, da dove potrebbe ricavarla Locke? Scrivi la tua ipotesi usando le parole del richiamo.","affermazioni":[{"id":"a1","testo":"io esisto","f":0,"why":"Per Locke la mia esistenza è colta per intuizione, in modo immediato. Qui è molto vicino a Cartesio."},{"id":"a2","testo":"la somma degli angoli del triangolo è 180°","f":1,"why":"Ci si arriva attraverso idee intermedie: è una dimostrazione. L'uguaglianza degli angoli a due retti è anche un esempio dello stesso Locke."},{"id":"a3","testo":"questa mela è qui adesso","f":2,"why":"È la conoscenza delle cose esterne: vale per ciò che percepisco ora, finché lo percepisco."},{"id":"a4","testo":"la mela c'è ancora quando esco dalla stanza","f":3,"why":"Quando non la percepisco più, posso ritenere ragionevole che ci sia, ma questo per Locke è probabile, non certo."},{"id":"a5","testo":"domani il sole sorgerà","f":3,"why":"Si fonda sulla conformità con l'esperienza passata. Puoi averle dato 5: la fiducia può essere altissima, ma per Locke non diventa conoscenza certa."}],"domandaDistanza":"Perché siete così distanti su questa affermazione? Scrivete una o due righe.","domandaForme":"Secondo Locke, di che forma di conoscenza si tratta? Assegnate un'etichetta a ogni affermazione.","domandaDivergenza":"Su quale affermazione Cartesio e Locke divergono di più? Scrivete perché, in tre o quattro righe.","modelloDistanza":{"testa":"Una buona risposta non dice solo chi ha messo il numero più alto, ma almeno una di queste cose:","punti":["da che cosa dipende la vostra fiducia: ragionamento, esperienza passata, percezione presente","che cosa dovrebbe accadere perché cambiaste idea","se state distinguendo tra ciò che credete e ciò che potete giustificare"]},"modelloDivergenza":{"testa":"Una buona risposta contiene almeno tre di questi punti:","punti":["il punto di maggiore distanza riguarda il mondo esterno, non l'io: su «io esisto» sono vicini, perché anche Locke parla di intuizione","per Cartesio l'esistenza dei corpi è garantita da Dio, che non inganna","per Locke l'esistenza delle cose esterne è certa solo mentre le percepisco","quando smetto di percepirle (la mela fuori dalla stanza) resta il probabile","va bene anche un'altra affermazione, per esempio il sole, se la scelta è argomentata: per Cartesio le leggi della natura dipendono dall'immutabilità di Dio, per Locke dall'esperienza passata"]}};
+  var OPZ_C = ["innata","avventizia","fattizia"], OPZ_L = ["semplice di sensazione","semplice di riflessione","complessa: modo","complessa: sostanza","complessa: relazione"], FORME = ["intuizione","dimostrazione","sensazione attuale","probabile"];
+  var KEY = "addestr_state_" + D.labId;
+  var MAXC = 1500, MINC = 20;
+  var app, S;
+  function loadS(def) { S = def; try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {} }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function top() { window.scrollTo(0, 0); }
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", D.tipologiaNome));
+    h.appendChild(el("h1", null, D.titolo));
+    h.appendChild(el("p", "sub", D.sottotitolo));
+    return h;
+  }
+  function choice(cont, label, opts, val, onpick) {
+    var g = el("div", "grp"); if (label) g.appendChild(el("div", "lb", label));
+    opts.forEach(function (t, k) {
+      var b = el("button", "opt", t); b.type = "button"; b.setAttribute("aria-pressed", val === k ? "true" : "false");
+      b.onclick = function () { onpick(k); }; g.appendChild(b);
+    });
+    cont.appendChild(g);
+  }
+  function area(cont, label, key, onchange, min) {
+    var g = el("div", "grp"); g.appendChild(el("div", "lb", label));
+    var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.t[key] || ""; ta.setAttribute("aria-label", label);
+    var cnt = el("div", "cnt");
+    function upd() { cnt.textContent = ta.value.length + " / " + MAXC; if (onchange) onchange(); }
+    ta.oninput = function () { S.t[key] = ta.value; persist(); upd(); };
+    g.appendChild(ta); g.appendChild(cnt); cont.appendChild(g); upd();
+    return ta;
+  }
+  function filled(key, min) { return (S.t[key] || "").trim().length >= (min || MINC); }
+  function checklist(cont, m) {
+    cont.appendChild(el("div", "lbl", m.testa));
+    var ul = el("ul", "chk"); m.punti.forEach(function (t) { ul.appendChild(el("li", null, t)); }); cont.appendChild(ul);
+  }
+  function mine(cont, t) { cont.appendChild(el("div", "lbl", "La tua risposta")); cont.appendChild(el("p", "mine", t || "(nessuna)")); }
+  function esito(cont, good, testo, giusta) {
+    var m = el("div", "res " + (good ? "ok" : "ko"));
+    m.appendChild(el("span", "lbl", good ? "Corretto: " : "Non corretto: "));
+    m.appendChild(document.createTextNode(testo)); cont.appendChild(m);
+    if (!good) { var g = el("div", "res ok"); g.appendChild(el("span", "lbl", "Risposta giusta: ")); g.appendChild(document.createTextNode(giusta)); cont.appendChild(g); }
+  }
+  var sending = false, tentativi = 0;
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    var r = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && window.Addestramento && ++tentativi < 2) {
+        sending = false; btn.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e riprova."; return;
+      }
+      S.sub = true; S.ok = (ok !== false); persist(); sending = false; render();
+    });
+  }
+  function reviewHead(right, tot) {
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    if (tot) c.appendChild(el("div", "score", right + " su " + tot + " etichette corrette"));
+    c.appendChild(el("p", null, "Ecco la correzione. Serve a capire che cosa ti manca, non a prendere un voto."));
+    c.appendChild(el("p", "note", S.ok === false ? "Attenzione: il risultato NON è stato registrato (connessione assente o bloccata). Avvisa il docente." : "Risultato registrato."));
+    app.appendChild(c);
+  }
+  function avvia(cfg) {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: D.labId, title: D.titolo, salvaRisposte: true,
+      tempoAtteso: cfg.tempo, caratteriAttesi: cfg.car,
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+
+  var NV = D.voci.length;
+  var IDX = { intro: 0, voce: 1, scala: 1 + NV, dist: 2 + NV, forme: 3 + NV, div: 4 + NV };
+  var N = 5 + NV;
+  loadS({ i: 0, c: {}, l: {}, sc: {}, dist: null, f: {}, t: {}, sub: false, ok: null });
+
+  function render() {
+    clear(); app.appendChild(header());
+    if (S.sub) return renderReview();
+    var c = el("div", "card");
+    var bar = el("div", "bar"); var fill = el("i"); fill.style.width = Math.round(S.i / (N - 1) * 100) + "%"; bar.appendChild(fill);
+    var back = el("button", "btn sec", "Indietro"); back.type = "button";
+    var next = el("button", "btn", S.i === N - 1 ? "Consegna" : "Avanti"); next.type = "button";
+    var err = el("div", "err");
+    back.disabled = S.i === 0;
+    function can(v) { next.disabled = !v; }
+
+    if (S.i === IDX.intro) {
+      c.appendChild(el("h2", null, "Prima di cominciare"));
+      c.appendChild(el("p", null, "Lavori da solo sulle etichette e sulla scala. Poi confronti la scala con un compagno. Alla consegna vedrai la correzione."));
+      c.appendChild(el("h3", null, "Le idee secondo Cartesio"));
+      c.appendChild(tab(D.richiamoC));
+      c.appendChild(el("h3", null, "Le idee secondo Locke"));
+      c.appendChild(tab(D.richiamoL));
+      c.appendChild(el("p", "note", D.rimando));
+    } else if (S.i < IDX.scala) {
+      var n = S.i - IDX.voce, v = D.voci[n];
+      c.appendChild(el("div", "pill", "Fase 1 · da solo · idea " + (n + 1) + " di " + NV));
+      c.appendChild(bar);
+      c.appendChild(el("h2", null, v.nome));
+      choice(c, "Per Cartesio è un'idea…", OPZ_C, S.c[v.id], function (k) { S.c[v.id] = k; persist(); render(); });
+      if (v.l !== null) {
+        choice(c, "Per Locke è un'idea…", OPZ_L, S.l[v.id], function (k) { S.l[v.id] = k; persist(); render(); });
+        can(S.c[v.id] != null && S.l[v.id] != null);
+      } else {
+        function upd() { can(S.c[v.id] != null && filled("dio")); }
+        area(c, D.domandaDio, "dio", upd);
+        c.appendChild(el("p", "note", "Scrivi almeno " + MINC + " caratteri. Questa risposta si riprende in plenaria."));
+        upd();
+      }
+    } else if (S.i === IDX.scala) {
+      c.appendChild(el("div", "pill", "Fase 2 · da solo")); c.appendChild(bar);
+      c.appendChild(el("h2", null, "Quanto sei certo?"));
+      c.appendChild(el("p", null, "Colloca ogni affermazione da 1 a 5. Non c'è un numero giusto: conta quanto sei certo tu."));
+      D.affermazioni.forEach(function (a) {
+        var g = el("div", "grp"); g.appendChild(el("div", "lb", "«" + a.testo + "»"));
+        var s = el("div", "scale"); s.setAttribute("role", "group"); s.setAttribute("aria-label", a.testo);
+        [1, 2, 3, 4, 5].forEach(function (x) {
+          var b = el("button", "opt", String(x)); b.type = "button"; b.setAttribute("aria-pressed", S.sc[a.id] === x ? "true" : "false");
+          b.setAttribute("aria-label", x + " su 5"); b.onclick = function () { S.sc[a.id] = x; persist(); var y = window.scrollY; render(); window.scrollTo(0, y); };
+          s.appendChild(b);
+        });
+        g.appendChild(s);
+        var e = el("div", "ends"); e.appendChild(el("span", null, "1 per niente")); e.appendChild(el("span", null, "5 del tutto")); g.appendChild(e);
+        c.appendChild(g);
+      });
+      can(D.affermazioni.every(function (a) { return S.sc[a.id] != null; }));
+    } else if (S.i === IDX.dist) {
+      c.appendChild(el("div", "pill", "Fase 3 · a coppie, ognuno sul proprio telefono")); c.appendChild(bar);
+      c.appendChild(el("h2", null, "Dove siete più distanti?"));
+      c.appendChild(el("p", null, "Mostratevi le scale e scegliete l'affermazione su cui siete più lontani."));
+      choice(c, null, D.affermazioni.map(function (a) { return a.testo; }), S.dist, function (k) { S.dist = k; persist(); render(); });
+      function upd2() { can(S.dist != null && filled("dist")); }
+      area(c, D.domandaDistanza, "dist", upd2); upd2();
+    } else if (S.i === IDX.forme) {
+      c.appendChild(el("div", "pill", "Fase 3 · a coppie")); c.appendChild(bar);
+      c.appendChild(el("h2", null, D.domandaForme));
+      D.affermazioni.forEach(function (a) {
+        choice(c, "«" + a.testo + "»", FORME, S.f[a.id], function (k) { S.f[a.id] = k; persist(); var y = window.scrollY; render(); window.scrollTo(0, y); });
+      });
+      can(D.affermazioni.every(function (a) { return S.f[a.id] != null; }));
+    } else {
+      c.appendChild(el("div", "pill", "Fase 3 · a coppie")); c.appendChild(bar);
+      c.appendChild(el("h2", null, "Cartesio e Locke"));
+      c.appendChild(el("div", "note", "Le risposte a scelta sono chiuse: da qui non si torna indietro."));
+      back.disabled = true;
+      function upd3() { can(filled("div")); }
+      area(c, D.domandaDivergenza, "div", upd3); upd3();
+      c.appendChild(el("p", "note", "Scrivi almeno " + MINC + " caratteri, ognuno con le proprie parole."));
+    }
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(back); row.appendChild(next); c.appendChild(row);
+    back.onclick = function () { if (!back.disabled) { S.i--; persist(); render(); top(); } };
+    next.onclick = function () { if (S.i < N - 1) { S.i++; persist(); render(); top(); } else consegna(next, err); };
+    app.appendChild(c);
+  }
+  function tab(rows) {
+    var t = el("table", "mini");
+    rows.forEach(function (r) { var tr = el("tr"); tr.appendChild(el("td", null, r[0])); tr.appendChild(el("td", null, r[1])); t.appendChild(tr); });
+    return t;
+  }
+  function buildAnswers() {
+    var list = [], right = 0, tot = 0;
+    D.voci.forEach(function (v) {
+      var k = S.c[v.id];
+      if (k != null) { tot++; var g = k === v.c; if (g) right++; list.push({ id: "c_" + v.id, prompt: "Cartesio: " + v.nome, type: "mc", answer: OPZ_C[k], correct: g }); }
+      if (v.l !== null) {
+        var q = S.l[v.id];
+        if (q != null) { tot++; var h = q === v.l; if (h) right++; list.push({ id: "l_" + v.id, prompt: "Locke: " + v.nome, type: "mc", answer: OPZ_L[q], correct: h }); }
+      }
+    });
+    if ((S.t.dio || "").trim()) list.push({ id: "dio", prompt: D.domandaDio, type: "essay", answer: S.t.dio.trim(), correct: null });
+    D.affermazioni.forEach(function (a) {
+      if (S.sc[a.id] != null) list.push({ id: "sc_" + a.id, prompt: "Certezza da 1 a 5: " + a.testo, type: "essay", answer: String(S.sc[a.id]), correct: null });
+    });
+    if (S.dist != null) list.push({ id: "dist_scelta", prompt: "Affermazione su cui la coppia è più distante", type: "essay", answer: D.affermazioni[S.dist].testo, correct: null });
+    if ((S.t.dist || "").trim()) list.push({ id: "dist_perche", prompt: D.domandaDistanza, type: "essay", answer: S.t.dist.trim(), correct: null });
+    D.affermazioni.forEach(function (a) {
+      var k = S.f[a.id];
+      if (k != null) { tot++; var g = k === a.f; if (g) right++; list.push({ id: "f_" + a.id, prompt: "Forma di conoscenza per Locke: " + a.testo, type: "mc", answer: FORME[k], correct: g }); }
+    });
+    if ((S.t.div || "").trim()) list.push({ id: "div", prompt: D.domandaDivergenza, type: "essay", answer: S.t.div.trim(), correct: null });
+    return { list: list, right: right, tot: tot, score: tot ? Math.round(right / tot * 100) : null };
+  }
+  function renderReview() {
+    var r = buildAnswers(); reviewHead(r.right, r.tot);
+    var f1 = el("div", "card"); f1.appendChild(el("h2", null, "Le otto idee"));
+    D.voci.forEach(function (v) {
+      f1.appendChild(el("h3", null, v.nome));
+      f1.appendChild(el("div", "lbl", "Cartesio"));
+      esito(f1, S.c[v.id] === v.c, S.c[v.id] == null ? "(nessuna)" : OPZ_C[S.c[v.id]], OPZ_C[v.c]);
+      f1.appendChild(el("p", null, v.whyC));
+      f1.appendChild(el("div", "lbl", "Locke"));
+      if (v.l !== null) {
+        esito(f1, S.l[v.id] === v.l, S.l[v.id] == null ? "(nessuna)" : OPZ_L[S.l[v.id]], OPZ_L[v.l]);
+        f1.appendChild(el("p", null, v.whyL));
+      } else {
+        mine(f1, S.t.dio);
+        var nd = el("div", "res neu"); nd.textContent = "Questa risposta non si corregge qui: portala in plenaria. Si discuterà se Locke può davvero ricavare questa idea dall'esperienza e che cosa gli risponderebbe Cartesio."; f1.appendChild(nd);
+      }
+    });
+    app.appendChild(f1);
+    var f2 = el("div", "card"); f2.appendChild(el("h2", null, "La scala della certezza"));
+    D.affermazioni.forEach(function (a) {
+      f2.appendChild(el("h3", null, "«" + a.testo + "»"));
+      f2.appendChild(el("p", null, "La tua certezza: " + (S.sc[a.id] || "-") + " su 5"));
+      esito(f2, S.f[a.id] === a.f, S.f[a.id] == null ? "(nessuna)" : FORME[S.f[a.id]], FORME[a.f]);
+      f2.appendChild(el("p", null, a.why));
+    });
+    app.appendChild(f2);
+    var d = el("div", "card"); d.appendChild(el("h2", null, "Dove eravate distanti"));
+    d.appendChild(el("p", null, "Affermazione scelta: «" + (S.dist == null ? "-" : D.affermazioni[S.dist].testo) + "»"));
+    mine(d, S.t.dist); checklist(d, D.modelloDistanza); app.appendChild(d);
+    var e = el("div", "card"); e.appendChild(el("h2", null, D.domandaDivergenza));
+    mine(e, S.t.div); checklist(e, D.modelloDivergenza);
+    e.appendChild(el("p", "note", "Confronta: che cosa avevate già scritto? Che cosa vi è sfuggito?")); app.appendChild(e);
+  }
+  avvia({ tempo: 1500, car: 450 });
+
+})();
+</script>
+</body>
+</html>
