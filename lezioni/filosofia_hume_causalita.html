@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Domani sorgerà il sole? Hume e la causalità</title>
+<meta name="portale:titolo" content="Domani sorgerà il sole? Hume e la causalità">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Filosofia IV): relazioni di idee e materie di fatto, la critica del principio di causalità, l'abitudine, lo scetticismo di Hume.">
+<meta name="portale:uso" content="lezione">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* colori della presentazione «Il problema gnoseologico» (solo per le mappe di questa lezione) */
+  .mappa.pg{--freccia:#22506F;--rosso:#22506F}
+  .mappa.pg .box{border-radius:6px}
+  .box.scuro{background:#23262D;color:#fff}
+  .box.notte{background:#22506F;color:#fff}
+  .box.azzurro{background:#E6EDF4;border:2px solid #22506F;color:#22506F}
+  .box.contorno-notte{background:#fff;border:2px solid #22506F;color:#22506F}
+  .pg .tit{font-size:32px;font-weight:700;display:block}
+  .pg .sot{font-size:23px;display:block;margin-top:6px;opacity:.85}
+  .pg .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:#22506F;text-transform:uppercase;justify-content:flex-start}
+  .pg .chiosa{font-family:var(--serif);font-style:italic;font-size:26px;color:#33475B}
+  .pg .etich{font-size:22px;font-weight:700;color:#23262D}
+  /* slide 13: fondo scuro come nella presentazione */
+  .mappa.impasse{--freccia:#D4A93C;--rosso:#D4A93C}
+  .box.fondo-scuro{background:#23262D;border-radius:10px}
+  .box.scuro-bordo{background:#33363E;border:2px solid #3E5C70;color:#fff}
+  .box.oro{background:#1C1E23;border:2px solid #D4A93C;color:#fff}
+  .box.oro .sot{color:#D4A93C;opacity:1}
+  .box.pillola{background:#A3252F;color:#fff;border-radius:40px}
+  .impasse .occhiello{color:#D4A93C}
+  .impasse .chiosa{color:#C9CCD2}
+
+  /* il biliardo */
+  .biliardo{position:relative;height:150px;background:#1E6B45;border:10px solid #6B3E1E;border-radius:14px;margin:4px 0 14px;overflow:hidden}
+  .biliardo .palla{position:absolute;top:43px;width:48px;height:48px;border-radius:50%;box-shadow:inset -6px -6px 10px rgba(0,0,0,.35)}
+  .biliardo .a{left:40px;background:#F4F1E8}
+  .biliardo .b{left:760px;background:#C8281E}
+  .biliardo.sospeso .a{animation:bil-a-sospeso 1.6s ease-out .4s forwards}
+  .biliardo.urto .a{animation:bil-a-urto 1.2s linear .4s forwards}
+  .biliardo.urto .b{animation:bil-b-urto 1.6s ease-out 1.6s forwards}
+  @keyframes bil-a-sospeso{to{left:640px}}
+  @keyframes bil-a-urto{to{left:712px}}
+  @keyframes bil-b-urto{to{left:1380px}}
+  .biliardo .pausa{position:absolute;left:600px;top:96px;color:#fff;font-size:20px;opacity:0;animation:bil-compari .3s 2.1s forwards}
+  @keyframes bil-compari{to{opacity:.9}}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = Aula.disegno;
+  var TITOLO = 'Domani sorgerà il sole?';
+
+  function t(tit, sot) { return '<div><span class="tit">' + tit + '</span>' + (sot ? '<span class="sot">' + sot + '</span>' : '') + '</div>'; }
+  function occhiello(s) { return D.testo(66, 6, 1200, 26, 'occhiello', s); }
+
+  // ------------------------------------------------------------ slide 10 (etichette riformulate)
+  function slideConoscenze() {
+    var h = occhiello('Mossa 3 · La dissoluzione empirista · Hume');
+    h += D.box(250, 40, 1100, 116, 'azzurro', t('Principio di associazione', 'somiglianza · contiguità · causa-effetto<br>come l’immaginazione passa da un’idea all’altra'));
+    h += D.testo(66, 176, 1468, 40, 'etich', '<div>Due tipi di conoscenza · il contrario è contraddittorio?</div>', ' data-f="1"');
+    h += D.testo(66, 232, 700, 34, 'etich', '<div style="color:#22506F">Conoscenze necessarie: sì</div>', ' data-f="1"');
+    h += D.testo(834, 232, 700, 34, 'etich', '<div style="color:#22506F">Conoscenze contingenti: no</div>', ' data-f="1"');
+    h += D.box(66, 276, 700, 190, 'azzurro', t('Relazioni di idee', 'intuizione e dimostrazione → MATEMATICA<br>certe, ma non parlano del mondo'), ' data-f="1"');
+    h += D.box(834, 276, 700, 190, 'contorno-notte', t('Materie di fatto', 'esperienza → FISICA<br>sul mondo, ma non certe'), ' data-f="1"');
+    h += D.testo(66, 510, 1468, 60, 'chiosa', '<div>O certezza senza mondo, o mondo senza certezza: la tenaglia che stringe la scienza.</div>', ' data-f="2"');
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 11, a livelli
+  function slideCausa(liv) {
+    var h = occhiello('Mossa 3 · La dissoluzione empirista · Hume');
+    h += D.box(450, 44, 700, 90, 'scuro', t('Causa–effetto non si può fondare'));
+    h += D.freccia('giu', 391, 150, 50, 50);
+    h += D.box(66, 214, 700, 130, 'contorno-notte' + (liv === 1 ? ' nuovo' : ''), t('né sulla LOGICA', 'l’effetto non si deduce dalla causa'));
+    if (liv >= 2) {
+      h += D.freccia('giu', 1159, 150, 50, 50);
+      h += D.box(834, 214, 700, 130, 'contorno-notte' + (liv === 2 ? ' nuovo' : ''), t('né sull’ESPERIENZA', 'semplice successione: congiunzione costante,<br>non connessione necessaria'));
+    }
+    if (liv >= 3) {
+      h += D.freccia('giu', 775, 370, 50, 50);
+      h += D.box(500, 432, 600, 120, 'notte' + (liv === 3 ? ' nuovo' : ''), t('ABITUDINE', '<i>aspettativa, non legge del reale</i>'));
+    }
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 13 (riformulata)
+  function slideImpasse() {
+    var h = D.box(0, 0, 1600, 726, 'fondo-scuro', '');
+    h += D.testo(66, 10, 1200, 26, 'occhiello', 'Mossa 4 · L’impasse · Hume');
+    h += D.box(66, 50, 700, 80, 'scuro-bordo', t('Critica della causalità'));
+    h += D.box(834, 50, 700, 80, 'scuro-bordo', t('Critica della sostanza'));
+    h += D.freccia('giu', 391, 142, 50, 44); h += D.freccia('giu', 1159, 142, 50, 44);
+    h += D.box(300, 196, 1000, 110, 'oro', t('Nessuna conoscenza certa del mondo', 'il sapere sulle materie di fatto si fonda sulla CREDENZA · la matematica resta certa'), ' data-f="1"');
+    h += D.freccia('giu', 775, 318, 50, 44, ' data-f="1"');
+    h += D.box(600, 374, 400, 70, 'pillola', t('SCETTICISMO'), ' data-f="1"');
+    h += D.testo(200, 466, 1200, 90, 'chiosa', '<div>… mitigato: la natura e l’abitudine ci fanno credere e agire comunque.</div>', ' data-f="2"');
+    h += D.testo(200, 570, 1200, 50, 'chiosa', '<div>Il vicolo cieco da cui Kant deve ripartire.</div>', ' data-f="3"');
+    return '<div class="mappa pg impasse">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ biliardo
+  function biliardo(modo) {
+    return '<div class="biliardo ' + modo + '"><div class="palla a"></div><div class="palla b"></div>' +
+      (modo === 'sospeso' ? '<div class="pausa">… e adesso?</div>' : '') + '</div>';
+  }
+
+  // ------------------------------------------------------------ brani (traduzioni di lavoro dall'inglese)
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  var TRAD = ' <span class="etichetta trad">traduzione di lavoro</span>';
+  function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
+  function fonte(rif, extra) {
+    return '<div class="fonte"><b>' + rif + '</b>. Traduzione di lavoro dall’inglese, da controllare.' + (extra || '') + '</div>';
+  }
+
+  var SOLE = '<span class="etichetta autore">Hume</span>' + TRAD +
+    '<div class="brano"><p>Il contrario di ogni materia di fatto è sempre possibile, perché non può mai implicare una contraddizione, ed è concepito dalla mente con la stessa facilità e chiarezza, come se fosse perfettamente conforme alla realtà. <u>Che il sole domani non sorgerà</u> non è una proposizione meno intelligibile, e non implica maggiore contraddizione, dell’affermazione che sorgerà.</p></div>' +
+    fonte('D. Hume, <i>Ricerca sull’intelletto umano</i>, sez. IV, parte 1, § 2', ' Sottolineatura per la lezione.');
+
+  var CENTO = '<span class="etichetta autore">Hume</span>' + TRAD +
+    '<div class="brano"><p>' + MIO + ' Non posso forse concepire che cento eventi diversi potrebbero seguire altrettanto bene da quella causa? Non potrebbero entrambe le palle restare in quiete assoluta? Non potrebbe la prima palla tornare indietro in linea retta, o rimbalzare via dalla seconda in qualunque linea o direzione? Tutte queste supposizioni sono coerenti e concepibili.</p></div>' +
+    fonte('D. Hume, <i>Ricerca sull’intelletto umano</i>, sez. IV, parte 1, § 10', ' <span class="taglio taglio-mio">[…]</span> = taglio per la lezione.');
+
+  var ADAMO = '<span class="etichetta autore">Hume</span>' + TRAD +
+    '<div class="brano"><p>Adamo, anche supponendo che le sue facoltà razionali fossero fin dal primo istante del tutto perfette, non avrebbe potuto inferire dalla fluidità e dalla trasparenza dell’acqua che essa lo avrebbe soffocato, né dalla luce e dal calore del fuoco che lo avrebbe consumato. Nessun oggetto rivela mai, attraverso le qualità che appaiono ai sensi, né le cause che lo hanno prodotto né gli effetti che ne deriveranno; né la nostra ragione, <u>senza l’aiuto dell’esperienza</u>, può mai trarre alcuna inferenza sull’esistenza reale e sulle materie di fatto.</p></div>' +
+    fonte('D. Hume, <i>Ricerca sull’intelletto umano</i>, sez. IV, parte 1, § 6', ' Sottolineatura per la lezione.');
+
+  var ABITUDINE = '<span class="etichetta autore">Hume</span>' + TRAD +
+    '<div class="brano piccolo"><p><u>L’abitudine, dunque, è la grande guida della vita umana.</u> È il solo principio che rende utile la nostra esperienza e ci fa aspettare, per il futuro, una serie di eventi simile a quella che è apparsa nel passato. Senza l’influenza dell’abitudine ignoreremmo del tutto ogni materia di fatto al di là di ciò che è immediatamente presente alla memoria e ai sensi. Non sapremmo mai come adattare i mezzi ai fini, né come impiegare le nostre forze naturali per produrre un qualche effetto. Finirebbe d’un tratto ogni azione, come pure la parte principale della speculazione.</p></div>' +
+    fonte('D. Hume, <i>Ricerca sull’intelletto umano</i>, sez. V, parte 1, § 6', ' Sottolineatura per la lezione.');
+
+  var BACKGAMMON = '<span class="etichetta autore">Hume</span>' + TRAD +
+    '<div class="brano piccolo"><p>Per fortuna accade che, poiché la ragione è incapace di dissipare queste nubi, la natura stessa basti allo scopo, e mi guarisca da questa malinconia e da questo delirio filosofico, o allentando questa tensione della mente, o con qualche distrazione e con una viva impressione dei sensi, che cancellano tutte queste chimere. <u>Pranzo, gioco una partita a backgammon, converso e mi diverto con i miei amici</u>; e quando, dopo tre o quattro ore di svago, vorrei tornare a queste speculazioni, mi appaiono così fredde, forzate e ridicole che non ho il cuore di addentrarmici oltre.</p></div>' +
+    fonte('D. Hume, <i>Trattato sulla natura umana</i>, libro I, parte IV, sez. 7, § 9', ' Il backgammon è un gioco da tavolo con dadi e pedine. Sottolineatura per la lezione.');
+
+  var DOMANDA = 'Domani sorgerà il sole. Quanto ne sei certo?';
+  var OPZIONI = [
+    'Certo come di 2 + 2 = 4',
+    'Quasi certo, ma non come di 2 + 2 = 4',
+    'È molto probabile',
+    'Non posso saperlo'
+  ];
+  var DOMANDA_BIL = 'La palla bianca sta per colpire la rossa. Che cosa succederà?';
+
+  // ------------------------------------------------------------ i passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO,
+      note: '<p>Lascia il QR sullo schermo mentre la classe entra. Q lo riapre in qualsiasi momento.</p><p><b>Seconda quarta</b>: «Nuova sessione (altra classe)» apre un codice nuovo; le risposte delle due classi restano separate.</p>' },
+
+    { titolo: 'Dalla lezione scorsa', minuti: 3,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'sole_prima', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI },
+      note: '<p><b>Ponte</b>: la lezione scorsa si è chiusa così. Hume ha sciolto la sostanza con il test dell’impressione: che cosa succede alla causa e all’effetto?</p><p><b>Sondaggio d’apertura</b> (1 min). Mostra il risultato senza commentarlo: torna alla fine.</p>' },
+
+    { titolo: 'Associazione e due tipi di conoscenza', html: slideConoscenze(), minuti: 4,
+      note: '<p><b>Spieghi</b> i tre principi di associazione: sono il modo in cui l’immaginazione passa da un’idea all’altra (un ritratto fa pensare alla persona, una stanza a quella accanto, una ferita al dolore).</p><p>Clic 1: la distinzione tra relazioni di idee e materie di fatto (<i>Ricerca</i>, IV, 1), con il criterio: il contrario è contraddittorio? Clic 2: la tenaglia.</p><p>Etichette riformulate rispetto alla slide («Associazioni necessarie / contingenti»): le relazioni di idee non sono associazioni, si conoscono per intuizione o dimostrazione.</p>' },
+
+    { titolo: 'Il test del contrario', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: relazione di idee o materia di fatto? Prova a pensare il contrario.</p>',
+      attivita: { id: 'contrario', tipo: 'abbinamento', minuti: 3,
+        consegna: 'Per ogni frase prova a pensare il contrario. Se è contraddittorio, è una relazione di idee; se è pensabile, è una materia di fatto.',
+        categorie: ['Relazione di idee', 'Materia di fatto'],
+        voci: [
+          { testo: '7 + 5 = 12', atteso: 0 },
+          { testo: 'Il fuoco brucia', atteso: 1 },
+          { testo: 'Nessuno scapolo è sposato', atteso: 0 },
+          { testo: 'Il sole sorgerà domani', atteso: 1 },
+          { testo: 'Il triangolo ha tre lati', atteso: 0 },
+          { testo: 'L’acqua bolle a 100 °C', atteso: 1 }
+        ] },
+      note: '<p><b>Abbinamento</b> (3 min).</p><p><b>Ripresa</b>: mostra le collocazioni attese. <b>Punta il commento</b> sulle frasi più contese, di solito il sole e l’acqua: sono certissime, ma il loro contrario non è contraddittorio. «Il fuoco brucia» richiama il test del bambino del laboratorio. Segue il passo di Hume sul sole.</p>' },
+
+    { titolo: 'Il sole potrebbe non sorgere', html: lettura(SOLE), dispositivo: SOLE, minuti: 1,
+      note: '<p><b>Leggi tu</b> (circa 60 parole). Il contrario si pensa senza contraddizione: la certezza che abbiamo non viene dalla logica.</p>' },
+
+    { titolo: 'La critica del principio di causalità', html: slideCausa(1), minuti: 2,
+      note: '<p><b>Spieghi</b>: tutti i ragionamenti sulle materie di fatto poggiano sulla relazione di causa ed effetto (<i>Ricerca</i>, IV, 1, § 4). Allora: come conosciamo la causalità? Prima risposta esclusa: per deduzione.</p>' },
+
+    { titolo: 'Il biliardo', minuti: 3,
+      html: biliardo('sospeso') + '<p class="att-consegna">' + DOMANDA_BIL + '</p>',
+      attivita: { id: 'biliardo', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA_BIL,
+        opzioni: ['La rossa parte in avanti', 'La bianca torna indietro', 'Si fermano tutte e due', 'Un’altra cosa'] },
+      note: '<p><b>Sondaggio</b> (1 min). L’animazione parte da sola e si ferma prima dell’urto.</p><p><b>Ripresa</b>: chiedi a chi ha scelto la prima opzione <i>come</i> lo sa. Lo sa perché l’ha visto mille volte, non perché lo ha dedotto: nell’idea della palla bianca che si muove non c’è il movimento della rossa (<i>Ricerca</i>, IV, 1, §§ 8-9). Poi mostra l’urto.</p>' },
+
+    { titolo: 'Il biliardo: cento eventi possibili', html: biliardo('urto') + lettura(CENTO), dispositivo: CENTO, minuti: 1,
+      note: '<p>L’urto, poi <b>leggi tu</b> (circa 55 parole). Le alternative di Hume sono le opzioni del sondaggio: tutte concepibili senza contraddizione.</p><p>Per rivedere l’animazione: ← e → .</p>' },
+
+    { titolo: 'Adamo davanti all’acqua e al fuoco', html: lettura(ADAMO), dispositivo: ADAMO, minuti: 1,
+      note: '<p><b>Leggi tu</b> (circa 85 parole).</p>' },
+
+    { titolo: 'Adamo davanti all’acqua e al fuoco', minuti: 3,
+      html: '<p class="att-consegna">Sul telefono: che cosa manca ad Adamo?</p>',
+      attivita: { id: 'adamo', tipo: 'breve', minuti: 2, max: 160,
+        domanda: 'Adamo ha una ragione perfetta. Che cosa gli manca per sapere che il fuoco brucia?',
+        segnaposto: 'Una frase', testo: ADAMO },
+      note: '<p><b>Risposta breve</b> (2 min). Clic per evidenziare, Maiusc+clic per nascondere (solo qui).</p><p><b>Ripresa</b>: evidenzia le risposte che dicono «esperienza». <b>Punta il commento</b> sul fatto che ad Adamo non manca la ragione: gli manca l’esperienza. Domanda di passaggio: e l’esperienza basta?</p>' },
+
+    { titolo: 'La critica del principio di causalità', html: slideCausa(2), minuti: 1,
+      note: '<p><b>Spieghi</b>: l’esperienza mostra contiguità, priorità e congiunzione costante (questo segue sempre a quello), non la connessione necessaria. E dal passato non si ricava il futuro senza supporre che la natura sia uniforme, cioè proprio ciò che andrebbe dimostrato (<i>Ricerca</i>, IV, 2).</p><p>Nella casella ho aggiunto «congiunzione costante» a «semplice successione».</p>' },
+
+    { titolo: 'Cerca l’impressione: il «deve»', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: guardi mille volte il biliardo. Che cosa trovi?</p>',
+      attivita: { id: 'deve', tipo: 'schema', libero: true, max: 70, minuti: 4, colonne: 3,
+        consegna: 'Fai il test di Hume, come per la sostanza: hai visto mille volte una palla colpirne un’altra. Poche parole per casella.',
+        caselle: [
+          { titolo: 'Che cosa vedi', sotto: 'impressioni dei sensi' },
+          { titolo: 'Che cosa ti aspetti', sotto: 'la prossima volta' },
+          { titolo: 'Da dove viene il «deve»?', sotto: 'da quale impressione?' }
+        ] },
+      note: '<p><b>Schema in fieri</b> (4 min), lo stesso test della lezione sulla sostanza.</p><p><b>Ripresa</b>: nella prima casella ci sono contiguità, successione, ripetizione; nessuno ha visto la «forza» o il legame. <b>Punta il commento</b> sulla terza: l’impressione da cui nasce l’idea di connessione necessaria è interna, è la transizione abituale della mente da un oggetto a quello che di solito lo accompagna (<i>Ricerca</i>, VII, 2, § 28). La necessità sta nella mente, non nelle palle.</p>' },
+
+    { titolo: 'La critica del principio di causalità', html: slideCausa(3), minuti: 0,
+      note: '<p><b>Clic di passaggio</b>: l’abitudine. Segue il brano.</p>' },
+
+    { titolo: 'L’abitudine', html: lettura(ABITUDINE), dispositivo: ABITUDINE, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 100 parole). Fermati su «aspettare»: l’abitudine produce un’aspettativa, non una conoscenza del reale. Però senza di essa non potremmo né agire né fare scienza.</p>' },
+
+    { titolo: 'Empirismo e scetticismo', html: slideImpasse(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Clic 1: nessuna conoscenza certa <i>del mondo</i>; la matematica resta certa (titolo riformulato rispetto alla slide, «Nessuna conoscenza certa»). Clic 2: lo scetticismo di Hume è mitigato. Clic 3: Kant.</p>' },
+
+    { titolo: 'Pranzo, gioco a backgammon', html: lettura(BACKGAMMON), dispositivo: BACKGAMMON, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 100 parole). Lo scetticismo radicale non si può vivere: la ragione non lo vince, ma la natura lo spegne. Hume non è un pirroniano.</p>' },
+
+    { titolo: 'Di nuovo: domani sorgerà il sole?', minuti: 3,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'sole_dopo', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI,
+        confronta: 'sole_prima', etichette: ['All’inizio', 'Adesso'] },
+      note: '<p><b>Lo stesso sondaggio dell’inizio</b> (1 min); le barre chiare sono quelle dell’inizio.</p><p><b>Ripresa</b>: chi si è spostato da «certo come 2+2» ha capito la differenza tra relazioni di idee e materie di fatto. Chi è rimasto certo: da dove viene la tua certezza? Per Hume dall’abitudine, ed è la risposta giusta per vivere.</p><p><b>Chiudi</b>: se la fisica di Newton poggia sull’abitudine, la scienza è solo credenza? È il problema da cui riparte Kant.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quarta · Hume: conoscenza, causalità, scetticismo',
+    percorso: 'lezioni_filosofia_hume_causalita',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>
