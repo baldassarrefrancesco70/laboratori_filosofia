@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Che cosa resta della mela? Da Locke a Hume</title>
+<meta name="portale:titolo" content="Che cosa resta della mela? Da Locke a Hume">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Filosofia IV): ripresa del laboratorio «Che cosa resta della mela?», il substratum di Locke, impressioni e idee in Hume, la sostanza materiale e l'io come fasci di percezioni.">
+<meta name="portale:uso" content="lezione">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* colori della presentazione «Il problema gnoseologico» (solo per le mappe di questa lezione) */
+  .mappa.pg{--freccia:#137A8A;--rosso:#137A8A}
+  .mappa.pg .box{border-radius:6px}
+  .box.teal{background:#137A8A;color:#fff}
+  .box.scuro{background:#23262D;color:#fff}
+  .box.chiaro{background:#E3F1F4;border:2px solid #137A8A;color:#0E5E6B}
+  .box.contorno{background:#fff;border:2px solid #D5D8DC}
+  .box.notte{background:#22506F;color:#fff}
+  .box.contorno-notte{background:#fff;border:2px solid #22506F;color:#22506F}
+  .pg .tit{font-size:32px;font-weight:700;display:block}
+  .pg .sot{font-size:23px;display:block;margin-top:6px;opacity:.85}
+  .pg .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:#137A8A;text-transform:uppercase;justify-content:flex-start}
+  .pg .chiosa{font-family:var(--serif);font-style:italic;font-size:26px;color:#33475B}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = Aula.disegno;
+  var TITOLO = 'Che cosa resta della mela?';
+
+  function t(tit, sot) { return '<div><span class="tit">' + tit + '</span>' + (sot ? '<span class="sot">' + sot + '</span>' : '') + '</div>'; }
+  function occhiello(s) { return D.testo(66, 6, 1200, 26, 'occhiello', s); }
+  function mappa(h) { return '<div class="mappa pg">' + h + '</div>'; }
+
+  // ------------------------------------------------------------ slide 7 · Locke: idee complesse e substrato
+  function slideLocke() {
+    var h = occhiello('Mossa 3 · La dissoluzione empirista · Locke');
+    h += D.box(66, 46, 1468, 96, 'teal', t('Idee complesse', 'dalla combinazione di idee semplici'));
+    [286, 800, 1314].forEach(function (x) { h += D.freccia('giu', x - 25, 152, 50, 46); });
+    h += D.box(66, 208, 440, 116, 'contorno', t('Idee di modo', 'come agiscono le sostanze'));
+    h += D.box(580, 208, 440, 116, 'chiaro nuovo', t('Idee di sostanza', 'oggetti di per sé'));
+    h += D.box(1094, 208, 440, 116, 'contorno', t('Idee di relazione', 'rapporti fra idee'));
+    h += D.freccia('giu', 775, 334, 50, 46, ' data-f="1"');
+    h += D.box(600, 390, 400, 96, 'scuro', t('Substrato inconoscibile'), ' data-f="1"');
+    h += D.testo(266, 520, 1068, 110, 'chiosa', '<div>supposto, non percepito:<br>«qualcosa, non sapeva che cosa»</div>', ' data-f="2"');
+    return mappa(h);
+  }
+
+  // ------------------------------------------------------------ slide 8 · Locke: che cosa salva
+  function slideLockeSalva() {
+    var h = occhiello('Mossa 3 · La dissoluzione empirista · Locke');
+    h += D.box(66, 46, 700, 72, 'teal', t('La certezza è possibile'));
+    h += D.freccia('giu', 391, 126, 50, 40);
+    h += D.box(66, 176, 700, 96, 'chiaro', t('Intuizione', 'diretta → l’io'));
+    h += D.box(66, 284, 700, 96, 'chiaro', t('Dimostrazione', 'passaggi concatenati → matematica, Dio'));
+    h += D.box(66, 392, 700, 96, 'chiaro', t('Sensazione', 'percezione della corrispondenza idea–cosa'));
+    h += D.box(834, 46, 700, 72, 'scuro', t('Ma la ragione ha limiti'), ' data-f="1"');
+    h += D.freccia('giu', 1159, 126, 50, 40, ' data-f="1"');
+    h += D.box(834, 176, 700, 120, 'contorno', t('La ragione umana', 'limitata dall’esperienza · fallibile'), ' data-f="1"');
+    h += D.freccia('giu', 1159, 304, 50, 40, ' data-f="1"');
+    h += D.box(834, 354, 700, 110, 'chiaro', t('Gran parte del sapere è solo probabile'), ' data-f="1"');
+    h += D.testo(66, 540, 1468, 60, 'chiosa', '<div><b>Locke non è scettico</b>: apre la crepa, ma salva la certezza di io, matematica e Dio.</div>', ' data-f="2"');
+    return mappa(h);
+  }
+
+  // ------------------------------------------------------------ slide 9 · Hume: impressioni e idee
+  function slideHume() {
+    var h = occhiello('Mossa 3 · La dissoluzione empirista · Hume');
+    h += D.testo(66, 40, 1468, 30, 'chiosa', '<div style="font-size:22px">«Trattato sulla natura umana» (1739) · «Ricerca sull’intelletto umano» (1748)</div>');
+    h += D.box(66, 100, 600, 190, 'notte', t('IMPRESSIONI', '<i>le sensazioni, vivide</i>'));
+    h += D.freccia('dx', 704, 165, 130, 60);
+    h += D.box(870, 100, 664, 190, 'contorno-notte', t('IDEE', '<i>copie sbiadite</i>'));
+    h += D.box(66, 330, 1468, 130, 'scuro', t('Nessuna impressione, nessuna idea', '<i>non esistono idee universali</i>'), ' data-f="1"');
+    h += D.box(66, 500, 1468, 130, 'tratteggio',
+      '<div style="font-size:26px;line-height:1.35"><b style="color:#22506F">Idee complesse</b>: l’immaginazione ricombina impressioni.<br>' +
+      '<span class="t-corsivo">Una montagna d’oro</span> = l’impressione dell’oro + l’impressione di una montagna.</div>', ' data-f="2"');
+    return mappa(h);
+  }
+
+  // ------------------------------------------------------------ slide 12 (riformulata) · Hume: la critica della sostanza
+  function slideSostanza(liv) {
+    var h = occhiello('Mossa 3 · La dissoluzione empirista · Hume');
+    h += D.box(400, 46, 800, 110, 'scuro', t('La sostanza: una parola senza impressione'));
+    h += D.testo(266, 166, 1068, 70, 'chiosa', '<div>non ne abbiamo alcuna idea distinta da una collezione di qualità:<br>il termine non ha altro significato</div>');
+    h += D.freccia('giu', 425, 252, 50, 48);
+    h += D.box(150, 312, 600, 150, 'contorno-notte' + (liv === 1 ? ' nuovo' : ''), t('Sostanza materiale', 'oggetto = fascio di sensazioni'));
+    if (liv > 1) {
+      h += D.freccia('giu', 1125, 252, 50, 48);
+      h += D.box(850, 312, 600, 150, 'contorno-notte' + (liv === 2 ? ' nuovo' : ''), t('Sostanza spirituale', 'io = fascio di percezioni'));
+    }
+    if (liv > 2) {
+      h += D.testo(150, 510, 1300, 110, 'chiosa', '<div><b>Locke</b>: la sostanza c’è, ma non sappiamo che cosa sia.<br><b>Hume</b>: «sostanza» non nomina nulla oltre il fascio.</div>', ' data-f="1"');
+    }
+    return mappa(h);
+  }
+
+  // ------------------------------------------------------------ brani
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
+
+  // stesso testo e stessa traduzione di lavoro del laboratorio «Che cosa resta della mela?»
+  var LOCKE = '<span class="etichetta autore">Locke</span> <span class="etichetta trad">traduzione di lavoro</span>' +
+    '<div class="brano"><p>Se a qualcuno si chiedesse in che cosa si trovino il colore o il peso, non saprebbe dire altro che: nelle parti solide ed estese. E se gli si chiedesse in che cosa si trovino la solidità e l’estensione, non starebbe molto meglio di quell’indiano che diceva che il mondo era sostenuto da un grande elefante. Gli chiesero su che cosa poggiasse l’elefante, e rispose: su una grande tartaruga. Incalzato a dire che cosa sostenesse la tartaruga dal largo dorso, rispose: <u>qualcosa, non sapeva che cosa</u>.</p></div>' +
+    '<div class="fonte"><b>J. Locke, <i>Saggio sull’intelletto umano</i>, II, 23, 2</b>. Traduzione di lavoro dall’inglese, la stessa del laboratorio. Sottolineatura per la lezione.</div>';
+
+  var HUME_SOST = '<span class="etichetta autore">Hume</span> <span class="etichetta trad">traduzione di lavoro</span>' +
+    '<div class="brano piccolo"><p>Vorrei chiedere a quei filosofi ' + MIO + ' se l’idea di sostanza derivi dalle impressioni di sensazione o da quelle di riflessione. Se ci è trasmessa dai sensi, chiedo: da quale di essi, e in che modo? Se è percepita dagli occhi, deve essere un colore; se dalle orecchie, un suono; se dal palato, un sapore; e così per gli altri sensi. Ma credo che nessuno sosterrà che la sostanza sia un colore, un suono o un sapore. ' + MIO + '</p>' +
+    '<p>Non abbiamo dunque nessuna idea di sostanza distinta da quella di una collezione di qualità particolari, né abbiamo <u>alcun altro significato</u> quando ne parliamo o ragioniamo. L’idea di una sostanza ' + MIO + ' non è altro che una collezione di idee semplici, unite dall’immaginazione, alle quali è assegnato <u>un nome particolare</u>.</p></div>' +
+    '<div class="fonte"><b>D. Hume, <i>Trattato sulla natura umana</i>, I, 1, 6</b> («Dei modi e delle sostanze»), §§ 1-2. Traduzione di lavoro dall’inglese, da controllare. <span class="taglio taglio-mio">[…]</span> = taglio per la lezione. Sottolineature per la lezione.</div>';
+
+  var HUME_IO = '<span class="etichetta autore">Hume</span> <span class="etichetta trad">traduzione di lavoro</span>' +
+    '<div class="brano piccolo"><p>Per parte mia, quando entro più intimamente in ciò che chiamo <i>me stesso</i>, inciampo sempre in qualche percezione particolare, di caldo o di freddo, di luce o d’ombra, di amore o di odio, di dolore o di piacere. Non riesco mai a cogliere <i>me stesso</i>, in nessun momento, senza una percezione, e non riesco mai a osservare nulla se non la percezione. Quando le mie percezioni sono sospese per qualche tempo, come nel sonno profondo, per tutto quel tempo non ho coscienza di <i>me stesso</i>, e si può dire davvero che non esisto. ' + MIO + '</p>' +
+    '<p>' + MIO + ' Mi arrischio ad affermare del resto dell’umanità che non sono altro che <u>un fascio o collezione di percezioni diverse</u>, che si succedono l’una all’altra con una rapidità inconcepibile e sono in un perpetuo flusso e movimento.</p></div>' +
+    '<div class="fonte"><b>D. Hume, <i>Trattato sulla natura umana</i>, I, 4, 6</b> («Dell’identità personale»), §§ 3-4. Traduzione di lavoro dall’inglese, da controllare. <span class="taglio taglio-mio">[…]</span> = taglio per la lezione.</div>';
+
+  var DOMANDA = 'Tolte tutte le qualità che percepisci, che cosa resta della mela?';
+  var OPZIONI = [
+    'Qualcosa di esteso e solido: la materia',
+    'Un sostegno che c’è, ma non so che cosa sia',
+    'Niente: «mela» è il nome di un insieme di qualità',
+    'Non so rispondere'
+  ];
+  var DOMANDA_IO = 'Chiudi gli occhi per dieci secondi e cerca il tuo io. Che cosa trovi?';
+
+  // ------------------------------------------------------------ i passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO,
+      note: '<p>Lascia il QR sullo schermo mentre la classe entra. Q lo riapre in qualsiasi momento.</p><p><b>Seconda quarta</b>: «Nuova sessione (altra classe)» apre un codice nuovo; le risposte della prima classe restano separate.</p>' },
+
+    { titolo: 'Dal laboratorio', minuti: 3,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'mela_prima', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI },
+      note: '<p><b>Sondaggio d’apertura</b> (1 min). È la domanda finale del laboratorio. Mostra il risultato senza commentarlo nel merito: lo stesso sondaggio torna alla fine.</p><p>Le prime tre opzioni sono, nell’ordine, una risposta di tipo cartesiano (la cera: resta l’esteso), quella di Locke e quella di Hume. Non dirlo adesso.</p>' },
+
+    { titolo: 'I casi dubbi', minuti: 4,
+      html: '<p class="att-consegna">Sul telefono: che cosa sono, per te, queste tre idee della mela?</p>',
+      attivita: { id: 'casi_dubbi', tipo: 'abbinamento', minuti: 2,
+        consegna: 'Nel laboratorio erano i tre casi dubbi. Per ciascuno scegli la collocazione che sapresti difendere.',
+        categorie: ['Qualità primaria', 'Qualità secondaria', 'Viene anche dalla riflessione', 'Relazione, non qualità'],
+        voci: [{ testo: 'La mela pesa' }, { testo: 'La mela è buona' }, { testo: 'La mela è mia' }] },
+      note: '<p><b>Abbinamento</b> (2 min). Nessuna risposta unica: la ripresa non mostra soluzioni.</p><p><b>Ripresa</b>: dove la barra è più divisa, fai difendere due scelte diverse. <b>Punta il commento</b> sul criterio, non sull’etichetta.</p><p><i>Pesa</i>: viene dalla sensazione ma non è nell’elenco lockiano delle primarie; in II, 23, 2 Locke nomina il peso accanto al colore; si può leggerlo come un potere del corpo. <i>Buona</i>: sapore (vicino alle secondarie), piacere (sensazione e riflessione), «fa bene» (relazione). <i>Mia</i>: nessun senso lo mostra, è un rapporto con me.</p>' },
+
+    { titolo: 'Locke: idee complesse e substrato', html: slideLocke(), minuti: 2,
+      note: '<p><b>Spieghi</b>: le idee di sostanza sono insiemi di idee semplici che si presentano sempre insieme, riuniti da un nome. Clic 1: il substrato. Clic 2: supposto, non percepito.</p><p>Aggancio al laboratorio: è il riquadro vuoto della fase 2, che solo dopo ha ricevuto il nome <i>substratum</i>.</p>' },
+
+    { titolo: 'L’elefante e la tartaruga', html: lettura(LOCKE), dispositivo: LOCKE, minuti: 1,
+      note: '<p><b>Rilettura</b> (circa 90 parole). La classe l’ha già letto nel laboratorio: fallo leggere a uno studente.</p>' },
+
+    { titolo: 'L’elefante e la tartaruga', minuti: 3,
+      html: '<p class="att-consegna">Sul telefono: che cosa aggiunge la parola «qualcosa»?</p>',
+      attivita: { id: 'qualcosa', tipo: 'breve', minuti: 2, max: 160,
+        domanda: 'Che cosa aggiunge la parola «qualcosa» alla risposta dell’indiano?',
+        segnaposto: 'Una frase',
+        testo: LOCKE },
+      note: '<p><b>Risposta breve</b> (2 min). Le risposte compaiono sul muro senza nomi: clic per evidenziare, Maiusc+clic per nascondere (solo qui).</p><p><b>Ripresa</b>: evidenzia tre o quattro risposte diverse. <b>Punta il commento</b> su «supposto, non percepito»: la parola dice che <i>c’è</i> un sostegno, non che cosa sia. Lascia aperta l’ironia di Locke: la sua «sostanza» non sta meglio della tartaruga?</p>' },
+
+    { titolo: 'Sconosciuta o inesistente?', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: che differenza c’è?</p>',
+      attivita: { id: 'sconosciuta', tipo: 'schema', libero: true, max: 80, minuti: 4, colonne: 2,
+        consegna: 'Che differenza c’è tra dire che la sostanza è sconosciuta e dire che non esiste? Poche parole per casella.',
+        caselle: [
+          { titolo: 'La sostanza è sconosciuta', sotto: 'che cosa sto dicendo?' },
+          { titolo: 'La sostanza non esiste', sotto: 'che cosa sto dicendo?' }
+        ] },
+      note: '<p><b>Schema in fieri a due colonne</b> (4 min). Le risposte uguali si raggruppano e crescono.</p><p><b>Ripresa</b>: «sconosciuta» riguarda ciò che sappiamo, «non esiste» ciò che c’è. Locke sostiene la prima: dice di non sapere che cosa sia, non che manchi. Errore tipico da segnalare: «per Locke la sostanza non esiste».</p><p><b>Chiudi con l’obiezione</b>, scritta alla lavagna e lasciata aperta: <i>se non ho alcuna idea di una cosa, di che cosa sto parlando?</i> È la domanda da cui parte Hume.</p>' },
+
+    { titolo: 'Locke: che cosa salva, che cosa concede', html: slideLockeSalva(), minuti: 2,
+      note: '<p><b>Sintesi rapida.</b> Clic 1: i limiti. Clic 2: Locke non è scettico.</p>' },
+
+    { titolo: 'Hume: impressioni e idee', html: slideHume(), minuti: 4,
+      note: '<p><b>Spieghi</b>: impressioni vivide, idee copie sbiadite. Clic 1: il principio della copia, usato come test (di ogni idea si chiede da quale impressione viene). Clic 2: le idee complesse come ricombinazioni; la montagna d’oro è l’esempio della <i>Ricerca</i>, sez. II (riquadro tratteggiato: aggiunto per la lezione, non è nella slide).</p>' },
+
+    { titolo: 'Cerca l’impressione', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: da quale impressione viene ciascuna idea? Se non la trovi, scrivi «nessuna».</p>',
+      attivita: { id: 'impressione', tipo: 'schema', libero: true, max: 60, minuti: 4, colonne: 5,
+        consegna: 'Fai il test di Hume: per ogni idea scrivi da quale impressione viene. Se non la trovi, scrivi «nessuna».',
+        caselle: [
+          { titolo: 'il rosso' },
+          { titolo: 'la mela' },
+          { titolo: 'una montagna d’oro' },
+          { titolo: 'la sostanza della mela' },
+          { titolo: 'l’io' }
+        ] },
+      note: '<p><b>Schema in fieri a cinque caselle</b> (4 min).</p><p><b>Ripresa</b>, casella per casella: il rosso viene da una impressione; la mela da molte impressioni insieme (colore, figura, sapore…); la montagna d’oro da impressioni ricombinate. <b>Punta il commento</b> sulle ultime due caselle, che restano vuote, confuse o piene di «nessuna». Per Hume questo è già il risultato.</p>' },
+
+    { titolo: 'La critica della sostanza', html: slideSostanza(1), minuti: 1,
+      note: '<p><b>Spieghi</b>: il test applicato alla sostanza materiale. L’oggetto è un fascio di sensazioni; «sostanza» non ha un’impressione da cui venga.</p><p>Titolo riformulato rispetto alla slide («La sostanza non esiste»): Hume non afferma l’inesistenza, nega che la parola abbia un significato oltre la collezione di qualità.</p>' },
+
+    { titolo: 'Hume: la sostanza è un nome', html: lettura(HUME_SOST), dispositivo: HUME_SOST, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 125 parole). Fermati sulla sequenza colore / suono / sapore: è la sottrazione del laboratorio fatta senso per senso.</p><p>Il primo taglio omette la descrizione dei filosofi che «immaginano di avere idee chiare» di sostanza e accidente; il secondo omette la riflessione (le sue impressioni sono passioni ed emozioni, nessuna delle quali può rappresentare una sostanza).</p>' },
+
+    { titolo: 'Hume: la sostanza è un nome', minuti: 2,
+      html: '<p class="att-consegna">Sul telefono: che cosa resta della mela per Hume?</p>',
+      attivita: { id: 'mela_hume', tipo: 'breve', minuti: 2, max: 160,
+        domanda: 'Che cosa resta della mela per Hume?',
+        segnaposto: 'Una frase',
+        testo: HUME_SOST },
+      note: '<p><b>Risposta breve</b> (2 min).</p><p><b>Ripresa</b>: confronta con la frase di Locke scelta nel laboratorio. Hume rifà la sottrazione, ma alla fine non suppone il sostegno: restano le qualità, l’immaginazione che le unisce e un nome. Molti studenti, nel laboratorio, avevano già scritto che «mela» riunisce idee sotto un nome: fallo notare.</p>' },
+
+    { titolo: 'E l’io?', minuti: 2,
+      html: '<p class="att-consegna">' + DOMANDA_IO + '</p>',
+      attivita: { id: 'io', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA_IO,
+        opzioni: ['Un io, anche senza nessuna percezione', 'Solo percezioni: suoni, pensieri, sensazioni…', 'Non saprei dirlo'] },
+      note: '<p><b>Esperimento e sondaggio</b> (1 min). Fai chiudere gli occhi a tutti per dieci secondi <i>prima</i> di aprire il telefono.</p><p><b>Ripresa</b>: non commentare; chiedi a chi ha scelto la prima opzione che cosa ha trovato. Poi leggi Hume, che ha fatto lo stesso esperimento.</p>' },
+
+    { titolo: 'Hume: un fascio di percezioni', html: lettura(HUME_IO), dispositivo: HUME_IO, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 130 parole). Il primo taglio omette il sonno senza sogni prolungato fino alla morte; il secondo la frase con cui Hume si congeda da chi, «dopo seria riflessione», crede di avere una diversa nozione di sé.</p><p><b>Punta</b> sul bersaglio: la <i>res cogitans</i> di Cartesio. Il cogito diventa un fascio.</p>' },
+
+    { titolo: 'La critica della sostanza', html: slideSostanza(3), minuti: 1,
+      note: '<p><b>La slide intera.</b> Clic 1: il confronto Locke / Hume, cioè la risposta all’obiezione lasciata alla lavagna: per Locke la sostanza è sconosciuta, per Hume la parola non nomina nulla oltre il fascio.</p>' },
+
+    { titolo: 'Di nuovo: che cosa resta della mela?', minuti: 2,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'mela_dopo', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI,
+        confronta: 'mela_prima', etichette: ['All’inizio', 'Adesso'] },
+      note: '<p><b>Lo stesso sondaggio dell’inizio</b> (1 min); le barre chiare sono quelle dell’inizio.</p><p><b>Ripresa</b>: ora dai i nomi alle opzioni. La prima è la risposta di Cartesio (la cera: resta l’esteso), la seconda quella di Locke, la terza quella di Hume. <b>Chiudi</b>: se Hume dissolve la sostanza con il test dell’impressione, che cosa succede alla causa e all’effetto? È la prossima lezione.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quarta · da Locke a Hume: la sostanza',
+    percorso: 'lezioni_filosofia_hume_sostanza',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>

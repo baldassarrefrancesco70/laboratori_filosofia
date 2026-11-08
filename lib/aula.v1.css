@@ -82,6 +82,9 @@ body.aula-proiezione{background:#000;overflow:hidden;height:100vh;font-family:va
 .barra .bar{height:46px;background:#F2F3F5;border-radius:6px;overflow:hidden;position:relative}
 .barra .bar i{display:block;height:100%;background:var(--blu);transition:width .4s ease}
 .barra .bar.prima i{background:#9FB7CE}
+/* confronto prima/dopo: due barre per opzione, più basse, perché stiano anche quattro opzioni */
+.barre.confronto{gap:8px}
+.barre.confronto .barra .bar{height:34px}
 .barra .num{font-variant-numeric:tabular-nums;font-weight:700}
 .barra .num small{font-weight:400;color:var(--tenue)}
 .legenda{display:flex;gap:26px;font-size:20px;color:var(--tenue);margin-top:12px}
