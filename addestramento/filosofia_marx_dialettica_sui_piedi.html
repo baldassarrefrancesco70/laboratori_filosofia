@@ -161,7 +161,26 @@ svg.schema .head{fill:var(--fg);stroke:none}
     [renderVerbi, renderFrasi, renderPausa1, renderCarte, renderPausa2, renderBiglietto][S.s]();
     window.scrollTo(0, 0);
   }
-  function avanti() { S.s++; persist(); render(); }
+  // Vista classe: istantanea anonima della fase, per la proiezione in classe.
+  // Non è una consegna e non blocca nulla: se la funzione non esiste (adattatore
+  // vecchio) o l'invio fallisce, l'esercitazione prosegue normalmente.
+  var FASE_LIVE = { 0: "fase1", 1: "fase2", 3: "fase3" };
+  function idsFase(fase) {
+    if (fase === "fase1") return [D.verbi.id];
+    if (fase === "fase2") return D.ordineFrasi.slice();
+    if (fase === "fase3") return D.carte.map(function (k) { return k.id; }).concat([D.casella.id]);
+    return [D.biglietto.id];
+  }
+  function condividiFase(fase) {
+    try {
+      if (!window.Addestramento || typeof window.Addestramento.condividi !== "function") return;
+      var ids = idsFase(fase);
+      var list = buildAnswers().list.filter(function (a) { return ids.indexOf(a.id) >= 0; });
+      if (fase === "fase1") list.forEach(function (a) { a.answer = a.answer.split(" + ").sort().join(" + "); });
+      Promise.resolve(window.Addestramento.condividi(fase, list)).catch(function () {});
+    } catch (e) {}
+  }
+  function avanti() { if (FASE_LIVE[S.s]) condividiFase(FASE_LIVE[S.s]); S.s++; persist(); render(); }
 
   function renderVerbi() {
     var c = el("div", "card"); progress(c);
@@ -287,6 +306,7 @@ svg.schema .head{fill:var(--fg);stroke:none}
   function consegna(btn, err) {
     if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
     var r = buildAnswers();
+    condividiFase("biglietto");
     var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }) : Promise.resolve(null);
     invio.then(function (ok) {
       if (ok === false && ++tentativi < 2) { sending = false; btn.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e premi di nuovo «Consegna»."; return; }
