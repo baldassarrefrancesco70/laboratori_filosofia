@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marx · la critica del liberalismo</title>
+<meta name="portale:titolo" content="Marx · la critica del liberalismo">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Filosofia V): democrazia formale e sostanziale, diritto come volontà di classe, uguaglianza giuridica e disuguaglianza reale, Gotha e il passaggio verso Rawls.">
+<meta name="portale:uso" content="lezione">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = Aula.disegno;
+  var TITOLO = 'Marx · la critica del liberalismo';
+
+  // ------------------------------------------------------------ la mappa della slide, a livelli
+  // 1: critica + democrazia formale · 2: diritto · 3: uguaglianza · 4: verso Rawls
+  function mappa(liv, evidenzia) {
+    var h = '', n = function (l) { return evidenzia && l === liv ? ' nuovo' : ''; };
+    h += D.box(396, 26, 804, 82, 'giallo t-forte', '<span style="font-size:30px">CRITICA DEL LIBERALISMO</span>');
+    h += D.freccia('giu', 768, 116, 60, 48);
+    h += D.box(396, 172, 804, 86, 'grigio t-cond t-rosso' + n(1), '<span style="font-size:31px;font-weight:600">La democrazia borghese è formale, non sostanziale</span>');
+    if (liv < 2) return '<div class="mappa">' + h + '</div>';
+    h += D.freccia('giu', 768, 266, 60, 48);
+    h += D.box(396, 322, 804, 136, 'verde t-cond' + n(2), '<span style="font-size:26px;font-weight:600;line-height:1.3">Il diritto è la volontà della classe dominante elevata a legge.<br>Le idee di libertà e diritto sono prodotti dei rapporti di proprietà.</span>');
+    if (liv < 3) return '<div class="mappa">' + h + '</div>';
+    h += D.freccia('giu', 768, 466, 60, 48);
+    h += D.box(396, 522, 804, 86, 'grigio t-cond t-rosso' + n(3), '<span style="font-size:31px;font-weight:600">L’uguaglianza giuridica copre la disuguaglianza reale</span>');
+    if (liv < 4) return '<div class="mappa">' + h + '</div>';
+    h += D.box(1250, 172, 330, 310, 'tratteggio' + n(4),
+      '<div style="font-size:30px;font-weight:700;color:var(--blu);margin-bottom:14px">→ verso Rawls</div>' +
+      '<div class="t-cond t-corsivo" style="font-size:22px">«A ciascuno secondo i propri bisogni»</div>' +
+      '<div class="t-cond" style="font-size:20px;color:#888;margin-bottom:16px">(Gotha, 1875)</div>' +
+      '<div class="t-cond" style="font-size:22px;line-height:1.3">La domanda che Rawls riprenderà: che cosa rende giusta una disuguaglianza?</div>');
+    return '<div class="mappa">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ brani
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  var MAN = '<span class="taglio" title="taglio del manuale">[…]</span>';
+  function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
+
+  var B6A = '<span class="etichetta autore">Testo della Dichiarazione</span>' +
+    '<div class="brano piccolo"><p><b>Art. 1</b> – Gli uomini nascono e rimangono liberi e uguali nei diritti. Le distinzioni sociali non possono essere fondate che sull’utilità comune.</p>' +
+    '<p><b>Art. 2</b> – Il fine di ogni associazione politica è la conservazione dei diritti naturali e imprescrittibili dell’uomo. Questi diritti sono la libertà, la proprietà, la sicurezza e la resistenza all’oppressione.</p>' +
+    '<p>' + MAN + '</p>' +
+    '<p><b>Art. 4</b> – La libertà consiste nel poter fare tutto ciò che non nuoce ad altri: così, l’esercizio dei diritti naturali di ciascun uomo <u>ha come limiti</u> solo quelli che assicurano agli altri membri della società il godimento di questi stessi diritti. Questi limiti possono essere determinati solo dalla Legge.</p></div>' +
+    '<div class="fonte"><b>Dichiarazione dei diritti dell’uomo e del cittadino (1789)</b>, trad. in A. Saitta, <i>Costituenti e costituzioni della Francia moderna</i>, Einaudi, Torino 1952 · in Abbagnano, vol. 3A, «Laboratorio delle idee», p. 150. Sottolineatura per la lezione.</div>';
+
+  var B6B = '<span class="etichetta manuale">Manuale</span> <span class="etichetta autore">con parole di Marx</span>' +
+    '<div class="brano"><p><span class="voce-manuale">E gli stessi “diritti dell’uomo e del cittadino”, pietra di fondazione del moderno stato liberale e della Rivoluzione francese, sono in realtà nient’altro che i diritti dell’uomo</span> <span class="voce-autore">«egoistico, chiuso in sé e nel proprio interesse privato»</span><span class="voce-manuale">, che trova</span> <span class="voce-autore">«nell’altro uomo non l’attuazione, bensì <u>il limite</u> della propria libertà»</span>.</p></div>' +
+    '<div class="fonte"><b>Cioffi, vol. 3, Unità 14, p. 492</b>: testo del manuale (su fondo azzurro) con citazioni da K. Marx, <i>Sulla questione ebraica</i> (in corsivo, tra virgolette).</div>';
+
+  var B4A = '<span class="etichetta autore">Marx ed Engels</span>' +
+    '<div class="brano piccolo"><p>Ma non discutete con noi misurando l’abolizione della proprietà borghese sul modello delle vostre idee borghesi di libertà, cultura, diritto e così via. Le vostre idee stesse sono prodotti dei rapporti borghesi di produzione e di proprietà, come il vostro diritto è soltanto la volontà della vostra classe elevata a legge, volontà il cui contenuto è dato nelle condizioni materiali di esistenza della vostra classe.</p>' +
+    '<p>Voi condividete con tutte le classi dominanti tramontate quell’idea interessata mediante la quale trasformate in eterne leggi della natura e della ragione, da rapporti storici quali sono, transeunti nel corso della produzione, i vostri rapporti di produzione e di proprietà.</p></div>' +
+    '<div class="fonte"><b>K. Marx, F. Engels, <i>Manifesto del partito comunista</i></b> (1848) · Antologia del percorso, testo 1, terzo e quarto passo.</div>';
+
+  var B7A = '<span class="etichetta autore">Marx</span> <span class="etichetta trad">traduzione di lavoro · da controllare</span>' +
+    '<div class="brano"><p>La sfera della circolazione, o dello scambio di merci, entro i cui limiti si svolge la compravendita della forza-lavoro, era in realtà un vero Eden dei diritti innati dell’uomo. Qui regnano soltanto libertà, uguaglianza, proprietà e Bentham. ' + MIO + '</p>' +
+    '<p>Nel lasciare questa sfera della circolazione semplice ' + MIO + ' la fisionomia dei nostri personaggi sembra già cambiare un poco. <span class="evid-f" data-f="1" style="background:#E8F0F8">L’ex possessore di denaro avanza come capitalista,</span> <span class="evid-f" data-f="2" style="background:#FDE7E8">il possessore di forza-lavoro lo segue come suo operaio;</span> <span class="evid-f" data-f="1" style="background:#E8F0F8">l’uno sorridendo con aria d’importanza e tutto preso dagli affari,</span> <span class="evid-f" data-f="2" style="background:#FDE7E8">l’altro timido, riluttante, come chi ha portato al mercato la propria pelle e ora non ha altro da aspettarsi che la conciatura.</span></p></div>' +
+    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro I, cap. 4, § 3, ultimo capoverso</b> (MEW 23, pp. 181-191). Traduzione di lavoro dal tedesco, da confrontare con un’edizione italiana. ' +
+    '<span class="taglio taglio-mio">[…]</span> = taglio per la lezione. Jeremy Bentham: il filosofo dell’utilitarismo; qui sta per «ognuno pensa al proprio interesse».</div>';
+
+  var B8 = '<span class="etichetta manuale">Manuale</span> <span class="etichetta autore">con parole di Marx</span>' +
+    '<div class="brano piccolo"><p><span class="voce-manuale">Tuttavia, questo «uguale diritto» si rivela ancora di tipo borghese, in quanto non tiene conto delle differenze individuali e si limita a livellare astrattamente le persone, dimenticando che</span> <span class="voce-autore">«l’uno è fisicamente o moralmente superiore all’altro, e fornisce quindi nello stesso tempo più lavoro, oppure può lavorare durante un tempo più lungo ' + MAN + '. Inoltre un operaio è ammogliato, l’altro no; uno ha più figli dell’altro ' + MAN + ' l’uno riceve più dell’altro, l’uno è più ricco dell’altro e così via»</span>.</p></div>' +
+    '<div class="fonte" style="margin-top:8px"><b>Abbagnano, vol. 3A, p. 125</b>: testo del manuale (su fondo azzurro) con citazione da K. Marx, <i>Critica del programma di Gotha</i> (1875). <span class="taglio">[…]</span> = taglio del manuale.</div>' +
+    '<div data-f="1" style="margin-top:18px"><span class="etichetta autore">Marx</span>' +
+    '<div class="brano piccolo"><p>' + MIO + ' solo allora l’angusto orizzonte giuridico borghese può essere superato, e la società può scrivere sulle sue bandiere: ognuno secondo le sue capacità; a ognuno secondo i suoi bisogni.</p></div>' +
+    '<div class="fonte" style="margin-top:6px;padding-top:6px"><b>K. Marx, <i>Critica del programma di Gotha</i></b> · in Abbagnano, vol. 3A, p. 125 (ultima riga del passo).</div></div>';
+
+  var DOMANDA = 'Un contratto firmato liberamente da due parti è, per ciò stesso, giusto?';
+  var OPZIONI = ['Sì: se entrambi sono liberi, è giusto', 'No: la libertà di firmare non basta', 'Non saprei'];
+
+  // ------------------------------------------------------------ i passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO, minuti: 1,
+      note: '<p>Lascia il QR sullo schermo mentre la classe entra. Q lo riapre in qualsiasi momento.</p>' },
+
+    { titolo: 'Prima di cominciare', minuti: 3,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'contratto_prima', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI },
+      note: '<p><b>Sondaggio d’apertura</b> (1 min). Mostra il risultato senza commentarlo nel merito: lo stesso sondaggio torna alla fine. Puoi chiedere a voce a uno per opzione perché ha scelto così.</p>' },
+
+    { titolo: TITOLO, html: mappa(1, true), minuti: 3,
+      note: '<p><b>Spieghi</b>: democrazia formale (diritti uguali sulla carta) e sostanziale (condizioni reali per esercitarli). Annuncia il confronto: la Dichiarazione del 1789 e come la legge Marx.</p>' },
+
+    { titolo: 'La Dichiarazione del 1789', html: lettura(B6A), dispositivo: B6A, minuti: 1,
+      note: '<p><b>Lettura</b> (105 parole; art. 3 tagliato dal manuale). Fai notare la sottolineatura: «ha come limiti».</p>' },
+
+    { titolo: 'La Dichiarazione letta da Marx', html: lettura(B6B), dispositivo: B6B, minuti: 1,
+      note: '<p><b>Lettura</b> (53 parole). Fai notare la differenza grafica: su fondo azzurro il manuale, in corsivo tra virgolette Marx.</p>' },
+
+    { titolo: 'Due modi di leggere il limite', minuti: 6,
+      html: '<p class="att-consegna">Sul telefono: che cosa vuol dire «limite» nei due testi?</p>',
+      attivita: { id: 'limite', tipo: 'schema', libero: true, max: 80, minuti: 5, colonne: 2,
+        consegna: 'Che cosa vuol dire «limite» nei due testi? Poche parole per casella.',
+        caselle: [
+          { titolo: 'Il limite nella Dichiarazione (art. 4)', sotto: 'che cosa fa il limite alla mia libertà?' },
+          { titolo: 'Il limite secondo Marx', sotto: 'che cosa diventa l’altro uomo?' }
+        ],
+        testo: B6A + '<hr style="border:none;border-top:1px solid #ddd;margin:14px 0">' + B6B },
+      note: '<p><b>Schema in fieri a due colonne</b> (5 min). Le risposte uguali si raggruppano e crescono.</p><p><b>Ripresa</b>: affianca le due colonne. <b>Punta il commento</b> sulla stessa parola letta in due modi: nella Dichiarazione il limite è un confine reciproco che garantisce a tutti gli stessi diritti; per Marx quel confine trasforma l’altro in un ostacolo, e la libertà diventa quella dell’individuo isolato, «chiuso in sé». Da qui: democrazia formale.</p>' },
+
+    { titolo: TITOLO, html: mappa(2, true), minuti: 2,
+      note: '<p><b>Spieghi</b>: il diritto come volontà della classe dominante; le idee di libertà e diritto come prodotti dei rapporti di proprietà. Richiama «eternizza» della lezione precedente.</p>' },
+
+    { titolo: 'Il Manifesto: idee eterne o storiche?', html: lettura(B4A), dispositivo: B4A, minuti: 3,
+      note: '<p><b>Leggi tu</b> (107 parole), nessuna attività. Fermati su «eterne leggi della natura e della ragione» contro «rapporti storici… transeunti».</p><p>Fonte: l’Antologia non riporta il numero di pagina nel materiale che ho; se serve, va aggiunto.</p>' },
+
+    { titolo: TITOLO, html: mappa(3, true), minuti: 3,
+      note: '<p><b>Spieghi</b>: l’uguaglianza giuridica copre la disuguaglianza reale. Il contratto di lavoro è tra uguali sul piano del diritto; dopo la firma, dentro la fabbrica, non più (plusvalore, lezione precedente).</p>' },
+
+    { titolo: 'Marx: l’Eden dei diritti innati', html: lettura(B7A), dispositivo: B7A, minuti: 2,
+      note: '<p><b>Lettura a due voci</b> (circa 110 parole). Leggi tu il primo capoverso; nell’ultima frase un clic evidenzia in azzurro il capitalista, un secondo clic in rosa l’operaio: affidali a due studenti.</p><p><b>Attenzione:</b> traduzione di lavoro non collazionata. Se l’hai sostituita, togli l’etichetta gialla e aggiorna la fonte.</p>' },
+
+    { titolo: 'Libertà, uguaglianza, proprietà e Bentham', minuti: 6,
+      html: '<p class="att-consegna">Sul telefono: a quale parola corrisponde ogni ragione?</p>',
+      attivita: { id: 'eden', tipo: 'abbinamento', minuti: 4,
+        consegna: 'Marx spiega perché nello scambio regnano libertà, uguaglianza, proprietà e Bentham. Abbina ogni ragione alla parola.',
+        categorie: ['Libertà!', 'Uguaglianza!', 'Proprietà!', 'Bentham!'],
+        voci: [
+          { testo: 'Compratore e venditore sono determinati soltanto dalla loro libera volontà.', atteso: 0 },
+          { testo: 'Si rapportano l’uno all’altro soltanto come possessori di merci, e scambiano equivalente con equivalente.', atteso: 1 },
+          { testo: 'Ciascuno dispone soltanto di ciò che è suo.', atteso: 2 },
+          { testo: 'A ciascuno dei due importa soltanto di sé.', atteso: 3 }
+        ],
+        testo: B7A },
+      note: '<p><b>Abbinamento</b> (4 min). Le quattro ragioni sono le frasi del capoverso che il brano letto taglia (stessa traduzione di lavoro).</p><p><b>Ripresa</b>: mostra le collocazioni attese. <b>Punta il commento</b> sul fatto che dentro lo scambio è tutto vero: nessuno è costretto, si scambiano equivalenti. Il cambio di scena viene dopo, quando i personaggi entrano nel luogo della produzione: lì si genera il plusvalore. È l’uguaglianza giuridica che copre la disuguaglianza reale.</p>' },
+
+    { titolo: TITOLO, html: mappa(4, true), minuti: 2,
+      note: '<p><b>Spieghi</b> la <i>Critica del programma di Gotha</i> (1875): anche il «diritto uguale» della prima fase del comunismo è ancora borghese. Il manuale non riporta la frase «un diritto disuguale per lavoro disuguale»: puoi dirla tu.</p><p>Nella slide la formula è «A ciascuno secondo i propri bisogni»; nel brano di Abbagnano «a ognuno secondo i suoi bisogni».</p>' },
+
+    { titolo: 'Gotha: diritto uguale, risultati disuguali', html: lettura(B8), dispositivo: B8, minuti: 2,
+      note: '<p><b>Lettura</b> (83 parole, poi un clic per l’ultima riga del passo successivo). Fermati sull’esempio dei due operai: stesso diritto, risultati diversi.</p>' },
+
+    { titolo: 'Di nuovo: il contratto', minuti: 3,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'contratto_dopo', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI,
+        confronta: 'contratto_prima', etichette: ['All’inizio', 'Adesso'] },
+      note: '<p><b>Lo stesso sondaggio</b> (1 min); le barre chiare sono quelle dell’inizio.</p><p><b>Ripresa</b>: confronta le due distribuzioni. <b>Punta il commento</b> sulla domanda della slide: se la libertà del contratto non basta, che cosa rende giusta una disuguaglianza? È la domanda che riprenderà Rawls.</p>' },
+
+    { titolo: TITOLO, html: mappa(4, false), minuti: 1,
+      note: '<p><b>Chiusura</b>: la mappa intera.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quinta · lezione con attività dal telefono',
+    percorso: 'lezioni_filosofia_marx_liberalismo',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>
