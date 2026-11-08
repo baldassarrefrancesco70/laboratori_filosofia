@@ -46,7 +46,7 @@
     h += D.freccia('sx', 322, 334, 72, 58);
     h += D.box(30, 300, 282, 114, 'verde t-forte' + n(3), '<span style="font-size:29px">Critica del «Feticismo delle merci»</span>');
     h += D.freccia('giu', 141, 424, 60, 48);
-    h += D.testo(20, 480, 302, 230, 'testo-libero t-cond t-corsivo' + n(3), '<span style="font-size:24px;line-height:1.45;color:#555">Le merci non hanno valore in sé: il valore è il lavoro che contengono. I rapporti economici sono rapporti fra uomini, non fra cose.</span>');
+    h += D.testo(20, 480, 302, 230, 'testo-libero t-cond t-corsivo' + n(3), '<span style="font-size:24px;line-height:1.35;color:#555"><b>Feticcio</b>: oggetto a cui si attribuiscono poteri propri. Per Marx le merci sembrano avere un valore e un potere propri, mentre esprimono rapporti fra uomini: il valore è il lavoro che contengono.</span>');
     if (liv < 4) return '<div class="mappa">' + h + '</div>';
     // 4
     h += D.freccia('giu', 768, 412, 60, 44);
@@ -64,32 +64,32 @@
 
   // ------------------------------------------------------------ brani
   var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
-  var MAN = '<span class="taglio" title="taglio del manuale">[…]</span>';
+  var MAN = '<span class="taglio" title="taglio">[…]</span>';
 
-  var B1A = '<span class="etichetta autore">Marx</span> <span class="etichetta trad">traduzione di lavoro · da controllare</span>' +
+  var B1A = '<span class="etichetta autore">Marx</span> <span class="etichetta trad">traduzione di lavoro</span>' +
     '<div class="brano piccolo"><p>La forma immediata della circolazione delle merci è M-D-M: trasformazione di merce in denaro e ritrasformazione di denaro in merce, vendere per comprare. Accanto a questa forma ne troviamo però una seconda, specificamente diversa: la forma D-M-D, trasformazione di denaro in merce e ritrasformazione di merce in denaro, comprare per vendere. Il denaro che nel suo movimento descrive quest’ultima circolazione si trasforma in capitale, diventa capitale. ' + MIO + '</p>' +
     '<p>' + MIO + ' Alla fine si ritira dalla circolazione più denaro di quanto vi se ne fosse gettato all’inizio. Il cotone comprato, per esempio, a 100 sterline viene rivenduto a 100 + 10 sterline, cioè a 110. La forma completa di questo processo è dunque D-M-D′, dove D′ = D + ΔD, cioè la somma di denaro anticipata all’inizio più un incremento. Questo incremento, o eccedenza sul valore originario, io lo chiamo plusvalore (<i>surplus value</i>).</p></div>' +
     '<div class="chiusa" data-f="1">«Il movimento del capitale è quindi senza misura.»</div>' +
-    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro I, cap. 4, § 1 «La formula generale del capitale»</b> (MEW 23, pp. 161-170). Traduzione di lavoro dal tedesco, da confrontare con un’edizione italiana. ' +
+    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro I, cap. 4, § 1 «La formula generale del capitale»</b> (MEW 23, pp. 161-170). Traduzione di lavoro dal tedesco. ' +
     '<span class="taglio taglio-mio">[…]</span> = taglio per la lezione.</div>';
 
   var B2A = '<span class="etichetta autore">Marx</span>' +
     '<div class="brano"><p>quel che qui assume per gli uomini la forma fantasmagorica di un rapporto fra cose è soltanto il rapporto sociale determinato che esiste fra gli uomini stessi. Quindi, per trovare un’analogia, dobbiamo involarci nella regione nebulosa del mondo religioso. Quivi, i prodotti del cervello umano paiono figure indipendenti, dotate di vita propria ' + MAN + '. Così, nel mondo delle merci, fanno i prodotti della mano umana. Questo io chiamo il feticismo che s’appiccica ai prodotti del lavoro appena vengono prodotti come merci</p></div>' +
-    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro I</b> · citato in Abbagnano, vol. 3A, Unità 2, cap. 2, glossario, p. 127. ' +
-    '<span class="taglio">[…]</span> = taglio del manuale.</div>';
+    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro I, cap. 1, § 4 «Il carattere di feticcio della merce e il suo arcano»</b>. ' +
+    '<span class="taglio">[…]</span> = taglio.</div>';
 
   var GANCIO = '<div class="lettura" style="margin-bottom:6px"><span class="etichetta autore">Marx</span>' +
     '<div class="brano piccolo"><p>«Il suo potere sociale, così come il suo nesso con la società, egli lo porta con sé nella tasca.»</p></div>' +
-    '<div class="fonte" style="margin-top:6px;padding-top:6px"><b>K. Marx, <i>Lineamenti fondamentali della critica dell’economia politica</i></b> · in Cioffi, vol. 3, Unità 14, testo 5, pp. 531-532.</div></div>';
+    '<div class="fonte" style="margin-top:6px;padding-top:6px"><b>K. Marx, <i>Lineamenti fondamentali della critica dell’economia politica</i></b> (<i>Grundrisse</i>).</div></div>';
 
   var B3A = '<span class="etichetta autore">Marx</span>' +
     '<div class="brano piccolo"><p>Chiamo dunque <i>tempo di lavoro necessario</i> la parte della giornata lavorativa nella quale si svolge questa riproduzione, e chiamo <i>lavoro necessario</i> il lavoro speso durante di essa. Necessario per l’operaio, perché indipendente dalla forma sociale del suo lavoro. Necessario per il capitale e per il mondo del capitale, perché la loro base è l’esistenza costante dell’operaio.</p>' +
     '<p>Il secondo periodo del processo lavorativo, nel quale l’operaio sgobba oltre i limiti del lavoro necessario, gli costa certo lavoro, dispendio di forza-lavoro, ma per lui non crea <i>nessun valore</i>. Esso crea <i>plusvalore</i>, che sorride al capitalista con tutto il fascino d’una creazione dal nulla. Chiamo <i>tempo di lavoro soverchio</i> questa parte della giornata lavorativa, e <i>pluslavoro</i> [<i>surplus labour</i>] il lavoro speso in esso.</p></div>' +
-    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro I</b> (Edizioni Rinascita, Roma 1956, vol. 1, pp. 235-237) · in Abbagnano, vol. 3A, «I testi – Il plusvalore», pp. 144-145, righe 19-28.</div>';
+    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro I</b> (Edizioni Rinascita, Roma 1956, vol. 1, pp. 235-237).</div>';
 
   var B5B = '<span class="etichetta autore">Marx</span>' +
     '<div class="brano"><p>Poiché il capitale non ha come fine la soddisfazione dei bisogni ma la produzione del profitto, e poiché può realizzare questo fine solo usando dei metodi che regolano la massa dei prodotti secondo la scala della produzione e non inversamente, si deve necessariamente venire a creare un continuo conflitto fra le dimensioni limitate del consumo su basi capitalistiche ed una produzione che tende continuamente a superare questo limite che le è assegnato.</p></div>' +
-    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro III</b> · in Cioffi, vol. 3, Unità 14, testo 6, p. 535.</div>';
+    '<div class="fonte"><b>K. Marx, <i>Il capitale</i>, libro III</b>.</div>';
 
   function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
 
@@ -104,47 +104,47 @@
     { titolo: TITOLO, html: mappa(2, true), minuti: 1,
       note: '<p><b>Spieghi.</b> Il capitalismo produce merci per il profitto. Annuncia le due formule a destra.</p>' },
 
-    { titolo: 'Due cicli: M-D-M e D-M-D′', minuti: 2,
-      html: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;height:100%;align-items:center">' +
-        '<div class="box giallo-chiaro" style="position:static;flex-direction:column;height:430px;padding:30px"><div style="font-size:84px;font-weight:700;letter-spacing:4px">M – D – M</div><div style="font-size:32px;margin-top:20px">merce · denaro · merce</div><div style="font-size:34px;font-weight:700;margin-top:26px">vendere per comprare</div></div>' +
-        '<div class="box grigio" style="position:static;flex-direction:column;height:430px;padding:30px" data-f="1"><div style="font-size:84px;font-weight:700;letter-spacing:4px;color:var(--rosso-testo)">D – M – D′</div><div style="font-size:32px;margin-top:20px">denaro · merce · più denaro</div><div style="font-size:34px;font-weight:700;margin-top:26px">comprare per vendere</div><div style="font-size:30px;margin-top:20px;font-family:var(--serif)">D′ = D + ΔD</div></div>' +
-        '</div>',
-      note: '<p><b>Spieghi</b> le due formule (un clic per D-M-D′). Non dire ancora quale sia lo scopo di ciascun ciclo: lo scoprono nell’abbinamento e nel brano.</p>' },
-
     { titolo: 'Quale ciclo?', minuti: 5,
       html: '<p class="att-consegna">Sul telefono: per ogni esempio, scegli il ciclo.</p>',
       attivita: { id: 'cicli', tipo: 'abbinamento', minuti: 4,
         consegna: 'Per ogni esempio: M-D-M o D-M-D′?',
         categorie: ['M-D-M · vendere per comprare', 'D-M-D′ · comprare per vendere'],
         voci: [
-          { testo: 'Un contadino vende il grano per comprarsi un vestito.', fonte: 'Abbagnano, p. 118', atteso: 0 },
+          { testo: 'Un contadino vende il grano per comprarsi un vestito.', atteso: 0 },
           { testo: 'Un mercante compra cotone a 100 sterline e lo rivende a 110.', fonte: 'Marx, Il capitale', atteso: 1 },
           { testo: 'Una studentessa vende i libri dell’anno scorso per comprare quelli nuovi.', atteso: 0 },
           { testo: 'Una società compra appartamenti per rivenderli tra due anni.', atteso: 1 },
           { testo: 'Un’artigiana vende i suoi vasi al mercato e con il ricavato fa la spesa.', atteso: 0 },
           { testo: 'Un’impresa compra macchine, materie prime e lavoro, vende il prodotto e reinveste il ricavato.', atteso: 1 }
         ] },
-      note: '<p><b>Attività</b> (4 min, timer in alto; T ferma, + aggiunge un minuto). Gli esempi 3-6 sono scritti per la lezione.</p><p><b>Ripresa</b> (→): compare la collocazione attesa sotto ogni barra. Mostra dove la classe si è divisa. <b>Punta il commento sullo scopo</b>: nel primo ciclo si esce dallo scambio con un oggetto da usare (valore d’uso); nel secondo si torna al punto di partenza, il denaro, e conta solo che sia di più (valore di scambio). L’esempio 6 è il più discutibile: si reinveste, il ciclo ricomincia.</p>' },
+      note: '<p><b>Attività</b> (4 min, timer in alto; T ferma, + aggiunge un minuto). Gli esempi 3-6 sono scritti per la lezione.</p><p><b>Prima dell’attività</b>: la mappa precedente ha già mostrato le due sigle e le etichette del telefono le spiegano (vendere per comprare / comprare per vendere); non servono altre spiegazioni. <b>Ripresa</b> (→): compare la collocazione attesa sotto ogni barra. Mostra dove la classe si è divisa. <b>Punta il commento sullo scopo</b>: nel primo ciclo si esce dallo scambio con un oggetto da usare (valore d’uso); nel secondo si torna al punto di partenza, il denaro, e conta solo che sia di più (valore di scambio). L’esempio 6 è il più discutibile: si reinveste, il ciclo ricomincia.</p>' },
+
+    { titolo: 'Due cicli: M-D-M e D-M-D′', minuti: 2,
+      html: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;height:100%;align-items:center">' +
+        '<div class="box giallo-chiaro" style="position:static;flex-direction:column;height:430px;padding:30px"><div style="font-size:84px;font-weight:700;letter-spacing:4px">M – D – M</div><div style="font-size:32px;margin-top:20px">merce · denaro · merce</div><div style="font-size:34px;font-weight:700;margin-top:26px">vendere per comprare</div></div>' +
+        '<div class="box grigio" style="position:static;flex-direction:column;height:430px;padding:30px" data-f="1"><div style="font-size:84px;font-weight:700;letter-spacing:4px;color:var(--rosso-testo)">D – M – D′</div><div style="font-size:32px;margin-top:20px">denaro · merce · più denaro</div><div style="font-size:34px;font-weight:700;margin-top:26px">comprare per vendere</div><div style="font-size:30px;margin-top:20px;font-family:var(--serif)">D′ = D + ΔD</div></div>' +
+        '</div>',
+      note: '<p><b>Spieghi</b> le due formule (un clic per D-M-D′), dando il nome a ciò che la classe ha appena riconosciuto negli esempi: nel primo ciclo il denaro è un mezzo, nel secondo è il punto di partenza e di arrivo. Il resto lo dice il brano successivo.</p>' },
 
     { titolo: 'Marx: la formula generale del capitale', html: lettura(B1A), dispositivo: B1A, minuti: 2,
       note: '<p><b>Lettura</b> (circa 135 parole). Un clic fa comparire la chiusa (dallo stesso paragrafo, traduzione di lavoro).</p><p>Punto da fissare: il denaro «diventa capitale» quando circola in D-M-D′; l’incremento si chiama plusvalore. Da dove venga, lo vediamo tra poco.</p><p><b>Attenzione:</b> traduzione di lavoro non collazionata, tranne tre frasi. Se l’hai sostituita con un’edizione italiana, togli l’etichetta gialla e aggiorna la fonte.</p>' },
 
     { titolo: TITOLO, html: mappa(3, true), minuti: 3,
-      note: '<p><b>Spieghi</b> il feticismo delle merci: le merci sembrano avere valore in sé; in realtà il valore è il lavoro che contengono, e i rapporti economici sono rapporti fra uomini.</p>' },
+      note: '<p><b>Spieghi</b> il termine. «Feticcio» viene dal portoghese <i>feitiço</i>: l’oggetto venerato come se avesse poteri propri (l’analogia religiosa è quella del brano successivo). Marx lo applica alle merci: prezzo, valore e potere d’acquisto sembrano qualità naturali delle cose, mentre sono il modo in cui si presentano i rapporti sociali fra i produttori, e il valore è il lavoro che contengono. Il feticismo non è un errore ingenuo: è l’apparenza che il sistema stesso produce.</p>' },
 
     { titolo: 'Il feticcio della merce', html: lettura(B2A), dispositivo: B2A, minuti: 1,
-      note: '<p><b>Lettura</b> (81 parole). Il manuale attribuisce il passo al libro III: è del libro I, cap. 1, § 4 «Il carattere di feticcio della merce e il suo arcano». In proiezione c’è «libro I».</p>' },
+      note: '<p><b>Lettura</b> (81 parole). Il passo è del libro I, cap. 1, § 4 «Il carattere di feticcio della merce e il suo arcano».</p>' },
 
     { titolo: 'Che cosa ho in tasca?', minuti: 5,
       html: GANCIO + '<p class="att-consegna">Sul telefono: che cosa porto in tasca, quando ho del denaro?</p>',
       attivita: { id: 'tasca', tipo: 'breve', minuti: 3, max: 160,
         domanda: 'Che cosa porto in tasca, quando ho del denaro?',
         segnaposto: 'Rispondi con una frase',
-        testo: '<div class="brano"><p>«Il suo potere sociale, così come il suo nesso con la società, egli lo porta con sé nella tasca.»</p></div><div class="fonte">K. Marx, <i>Lineamenti fondamentali</i> · in Cioffi, vol. 3, testo 5, pp. 531-532.</div>' },
+        testo: '<div class="brano"><p>«Il suo potere sociale, così come il suo nesso con la società, egli lo porta con sé nella tasca.»</p></div><div class="fonte">K. Marx, <i>Lineamenti fondamentali</i> (<i>Grundrisse</i>).</div>' },
       note: '<p><b>Risposta breve</b> (3 min). Le risposte compaiono sul muro: un clic ne evidenzia una, Maiusc+clic la nasconde (solo su questo computer, nulla viene cancellato).</p><p><b>Ripresa</b>: evidenzia le risposte che vanno oltre «soldi» (potere di comprare, lavoro di altri, rapporti con persone che non conosco). <b>Punta il commento</b> su un rapporto tra persone che si presenta come una cosa: è il feticismo appena letto.</p>' },
 
     { titolo: TITOLO, html: mappa(4, true), minuti: 4,
-      note: '<p><b>Spieghi</b>, riassumendo a voce il contesto del brano (Abbagnano, pp. 144-145, righe 1-18): per una parte della giornata, ad esempio sei ore, l’operaio produce il valore del proprio salario; il resto della giornata lavora senza essere pagato. Il plusvalore è pluslavoro.</p>' },
+      note: '<p><b>Spieghi</b>, riassumendo a voce il contesto del brano: per una parte della giornata, ad esempio sei ore, l’operaio produce il valore del proprio salario; il resto della giornata lavora senza essere pagato. Il plusvalore è pluslavoro.</p>' },
 
     { titolo: 'Marx: lavoro necessario e pluslavoro', html: lettura(B3A), dispositivo: B3A, minuti: 1,
       note: '<p><b>Lettura</b> (126 parole). «Questa riproduzione» rimanda al contesto riassunto prima: la riproduzione del valore della forza-lavoro, cioè del salario.</p>' },
@@ -169,21 +169,26 @@
       note: '<p><b>Schema in fieri</b> (4 min): i termini si accumulano nelle due metà mentre la classe risponde; il numero è quante volte è stato messo lì.</p><p><b>Ripresa</b> (→): in verde la collocazione del testo, sbiaditi gli spostamenti. <b>Punta il commento</b> sulla «creazione dal nulla»: per il capitalista il plusvalore sembra nascere dal nulla, in realtà è lavoro non pagato. Collega al feticismo: anche qui un rapporto tra persone appare come una proprietà delle cose (il denaro che «rende»).</p>' },
 
     { titolo: TITOLO, html: mappa(5, true), minuti: 2,
-      note: '<p><b>Spieghi</b> le contraddizioni del sistema. Non nominare ancora la sovrapproduzione: prima il sondaggio. Se sei in ritardo, salta il sondaggio (vai al brano con due →) e leggi tu.</p>' },
+      note: '<p><b>Spieghi</b> le contraddizioni del sistema: la crisi di sovrapproduzione l’avete già incontrata; ora la classe ricostruisce come nasce. Se sei in ritardo, salta l’attività (vai al brano con due →) e leggi tu.</p>' },
 
-    { titolo: 'Crisi: da dove?', minuti: 1,
-      html: '<p class="att-consegna">Sul telefono: le crisi nascono dal troppo poco o dal troppo?</p>',
-      attivita: { id: 'crisi', tipo: 'sondaggio', minuti: 1,
-        domanda: 'Le crisi economiche nascono dal troppo poco o dal troppo?',
-        opzioni: ['Dal troppo poco: mancano beni e risorse', 'Dal troppo: si produce più di quanto si vende', 'Non saprei'] },
-      note: '<p><b>Sondaggio lampo</b> (1 min). Non commentare il risultato ora: lo riprendi dopo il brano.</p>' },
+    { titolo: 'La spirale della crisi', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: completa la catena. Che cosa succede dopo che il capitalista taglia i salari?</p>',
+      attivita: { id: 'spirale', tipo: 'schema', libero: true, max: 80, minuti: 4, colonne: 2,
+        consegna: 'Il capitalista taglia i salari per aumentare il profitto. Completa la catena: poche parole per casella.',
+        caselle: [
+          { titolo: '1 · Il capitalista taglia i salari', sotto: 'che cosa vuole ottenere?' },
+          { titolo: '2 · I lavoratori guadagnano meno', sotto: 'che cosa possono comprare?' },
+          { titolo: '3 · La domanda di merci cala', sotto: 'che cosa succede alle merci prodotte?' },
+          { titolo: '4 · Le merci restano invendute', sotto: 'che cosa fanno le imprese? E i salari?' }
+        ] },
+      note: '<p><b>Schema in fieri a due colonne</b> (4 min; T ferma, + aggiunge un minuto). Non servono risposte «giuste»: le parole uguali si raggruppano e crescono.</p><p><b>Ripresa</b> (→): leggi le quattro caselle in ordine e chiudi il cerchio: le imprese, con le merci invendute, licenziano o tagliano ancora i salari, e si riparte dalla casella 1. Ogni capitalista, tagliando il costo del lavoro, fa il proprio interesse; tutti insieme riducono il consumo che serve a vendere le merci. È la crisi di sovrapproduzione.</p>' },
 
     { titolo: 'Marx: il conflitto tra produzione e consumo', html: lettura(B5B), dispositivo: B5B, minuti: 1,
       note: '<p><b>Lettura</b> (72 parole).</p>' },
 
-    { titolo: 'Crisi da abbondanza', risultatiDi: 'crisi', minuti: 2,
-      html: '<p class="att-consegna">Il sondaggio, riletto dopo il testo.</p>',
-      note: '<p><b>Ripresa del sondaggio</b>. <b>Punta il commento</b> sul paradosso: le crisi precapitalistiche sono carestie (troppo poco); quella capitalistica è una crisi da abbondanza, perché la produzione segue il profitto e non i bisogni. Ricollega a D-M-D′: un movimento «senza misura».</p>' },
+    { titolo: 'Crisi da abbondanza', risultatiDi: 'spirale', minuti: 2,
+      html: '<p class="att-consegna">La catena, riletta dopo il testo.</p>',
+      note: '<p><b>Ripresa della catena</b>. <b>Punta il commento</b> sul paradosso: le crisi precapitalistiche sono carestie (troppo poco); quella capitalistica è una crisi da abbondanza, perché la produzione segue il profitto e non i bisogni. Ricollega a D-M-D′: un movimento «senza misura».</p>' },
 
     { titolo: TITOLO, html: mappa(5, false), minuti: 2,
       note: '<p><b>Chiusura</b>: la mappa intera. Anticipa la lezione sul liberalismo: se il contratto di lavoro è libero, come può nascondere lavoro non pagato?</p>' }
