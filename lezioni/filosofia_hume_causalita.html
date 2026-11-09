@@ -12,6 +12,11 @@
 <meta name="portale:classe" content="quarta">
 <link rel="stylesheet" href="../lib/aula.v1.css">
 <style>
+  /* palette blu scuro per le lezioni su Hume (banda, accenti e titoli al posto del rosso); restano rossi gli avvisi di errore e i colori delle serie nei grafici */
+  :root{--rosso:#22506F;--rosso-scuro:#22506F;--rosso-testo:#22506F}
+  .etichetta.autore,.muro .bigl.evid{background:#E6EDF4}
+  .aula-piede .punto.ko{background:#C40000}
+  .disp-esito.ko,.scelta-classe .avviso-codice{color:#C40000}
   /* colori della presentazione «Il problema gnoseologico» (solo per le mappe di questa lezione) */
   .mappa.pg{--freccia:#22506F;--rosso:#22506F}
   .mappa.pg .box{border-radius:6px}
@@ -59,6 +64,13 @@
   @keyframes bil-b-diagonale{to{left:1150px;top:-80px}}
   .biliardo .pausa{position:absolute;left:600px;top:96px;color:#fff;font-size:20px;opacity:0;animation:bil-compari .3s 2.1s forwards}
   @keyframes bil-compari{to{opacity:.9}}
+  /* spunti per il giardino filosofico */
+  .spunti{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px;margin-top:6px}
+  .spunto{background:var(--grigio);border-radius:12px;padding:18px 24px;display:grid;grid-template-columns:54px 1fr;gap:16px;align-items:start}
+  .spunto .n{width:46px;height:46px;border-radius:50%;background:#22506F;color:#fff;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .spunto .tit-s{font-size:27px;font-weight:700;color:#22506F;margin:0 0 4px}
+  .spunto p{font-size:23px;line-height:1.3;margin:0}
+  .spunto.ultimo{grid-column:1 / -1;background:var(--giallo)}
 </style>
 </head>
 <body>
@@ -280,8 +292,27 @@
       html: '<p class="att-consegna">' + DOMANDA + '</p>',
       attivita: { id: 'sole_dopo', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI,
         confronta: 'sole_prima', etichette: ['All’inizio', 'Adesso'] },
-      note: '<p><b>Lo stesso sondaggio dell’inizio</b> (1 min); le barre chiare sono quelle dell’inizio.</p><p><b>Ripresa</b>: chi si è spostato da «certo come 2+2» ha capito la differenza tra relazioni di idee e materie di fatto. Chi è rimasto certo: da dove viene la tua certezza? Per Hume dall’abitudine, ed è la risposta giusta per vivere.</p><p><b>Chiudi</b>: se la fisica di Newton poggia sull’abitudine, la scienza è solo credenza? È il problema da cui riparte Kant.</p>' }
+      note: '<p><b>Lo stesso sondaggio dell’inizio</b> (1 min); le barre chiare sono quelle dell’inizio.</p><p><b>Ripresa</b>: chi si è spostato da «certo come 2+2» ha capito la differenza tra relazioni di idee e materie di fatto. Chi è rimasto certo: da dove viene la tua certezza? Per Hume dall’abitudine, ed è la risposta giusta per vivere.</p><p><b>Chiudi</b>: se la fisica di Newton poggia sull’abitudine, la scienza è solo credenza? È il problema da cui riparte Kant.</p>' },
+
+    { titolo: 'Per il tuo giardino filosofico', html: spunti(), minuti: 2,
+      note: '<p><b>Nessuna attività sul telefono.</b> Presenta i cinque spunti in un minuto e invita ogni studente a sceglierne uno e svilupparlo nel proprio giardino filosofico: una riflessione personale, con un esempio tratto dalla propria esperienza.</p><p>I primi quattro riprendono i passi della lezione (abitudine, causa e successione, scienza, backgammon); il quinto anticipa Kant.</p>' }
   ];
+
+  // ------------------------------------------------------------ spunti per il giardino filosofico
+  function spunti() {
+    var v = [
+      ['Le tue abitudini','Che cosa credi di sapere solo perché è sempre andata così? Prendi una certezza della tua giornata e cerca che cosa la sostiene: la logica, un’esperienza, o soltanto l’abitudine.'],
+      ['Causa o successione?','Ricorda un caso in cui eri sicuro che una cosa ne causasse un’altra (una superstizione, un rito, un’abitudine) e poi hai cambiato idea. Che cosa avevi visto davvero?'],
+      ['Scienza e oroscopo','Se anche la scienza poggia sull’abitudine, perché ti fidi più di un esperimento che di un oroscopo? Che differenza c’è tra le due abitudini?'],
+      ['Il backgammon','Hume, uscito dallo studio, non riesce a restare scettico. Ti è mai successo di non poter vivere ciò che pensi? Quali dubbi si possono davvero praticare?'],
+      ['Dopo Hume','Se la necessità sta nella mente e non nelle cose, che cosa resta della scienza? Prova a immaginare una risposta, prima di sapere quella di Kant.']
+    ];
+    var h = '<div class="spunti">';
+    v.forEach(function (x, i) {
+      h += '<div class="spunto' + (i === 4 ? ' ultimo' : '') + '"><div class="n">' + (i + 1) + '</div><div><div class="tit-s">' + x[0] + '</div><p>' + x[1] + '</p></div></div>';
+    });
+    return h + '</div>';
+  }
 
   Aula.avvia({
     titolo: TITOLO,
