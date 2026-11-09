@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rimetti la dialettica sui piedi</title>
+<meta name="portale:titolo" content="Rimetti la dialettica sui piedi">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Marx, Prefazione del 1859: quattro esercizi a casa per ricostruire lo schema del materialismo storico, applicarlo alla prima rivoluzione industriale e trovarne il limite. Circa 35 minuti.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--acc:#2b6cb0;--accbg:#e6eef8;--mid:#8a5a00;--midbg:#fbf1dc}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--acc:#7fb2f0;--accbg:#1b2a3d;--mid:#f0c46a;--midbg:#3a2f15}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:720px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.3rem 0 .1rem}
+h2{font-size:1.2rem;margin:.2rem 0 .6rem}
+h3{font-size:1.05rem;margin:.8rem 0 .3rem}
+.sub{color:var(--muted);margin:0 0 .6rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.fase{display:inline-block;font-size:.85rem;font-weight:700;color:var(--pri);margin-bottom:.2rem}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 10px}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,textarea:focus-visible,.tk:focus-visible,summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+textarea{width:100%;min-height:140px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+select{width:100%;min-height:48px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit}
+select.done{border-color:var(--pri)}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.92rem;border-left:4px solid var(--mid);background:var(--midbg);padding:8px 12px;border-radius:6px;margin:10px 0}
+.err{color:var(--ko);font-size:.92rem;min-height:1.3em}
+ul.r{margin:.3rem 0 0 1.1rem;padding:0}
+.brano{font-family:Georgia,serif;font-size:1.05rem;line-height:2.5}
+.brano .n{font-family:system-ui,sans-serif;font-size:.75rem;font-weight:700;color:var(--muted);vertical-align:super;margin:0 2px 0 6px}
+.tk{font:inherit;color:inherit;background:transparent;border:1px dashed var(--muted);border-radius:6px;padding:6px 4px;margin:0 1px;cursor:pointer;line-height:1.2}
+.tk[aria-pressed=true]{background:var(--accbg);border:2px solid var(--acc);font-weight:700}
+.tk[aria-pressed=true]::after{content:" ✓";font-size:.8em}
+.item{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0}
+.item .q{font-family:Georgia,serif;margin:0 0 8px}
+.item .q b{font-family:system-ui,sans-serif}
+.carta h3{margin-top:0}
+.pause{text-align:center}
+.pause .big{font-family:Georgia,serif;font-size:1.3rem;margin:.6rem 0}
+.res{border-radius:10px;padding:8px 12px;margin:6px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.lbl{font-weight:700}
+.score{font-family:Georgia,serif;font-size:1.5rem;margin:.2rem 0}
+details{margin:8px 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+svg.schema{width:100%;max-width:420px;margin:6px auto;height:auto;display:block;margin:6px 0}
+svg.schema rect{fill:var(--card);stroke:var(--pri);stroke-width:2}
+svg.schema rect.cx{stroke:var(--mid);stroke-dasharray:6 4}
+svg.schema text{fill:var(--fg);font:15px system-ui,sans-serif}
+svg.schema text.num{font-weight:700;fill:var(--pri)}
+svg.schema line,svg.schema path{stroke:var(--fg);stroke-width:2;fill:none}
+svg.schema .head{fill:var(--fg);stroke:none}
+svg.schema .ttl{font-weight:700;font-family:Georgia,serif;font-size:16px}
+svg.schema .sm{font-size:13px;fill:var(--muted)}
+svg.schema polygon{fill:var(--card);stroke:var(--pri);stroke-width:2}
+svg.schema rect.lab{fill:var(--bg);stroke:none}
+.locked select{opacity:.85}
+.eser{font-size:.85rem;font-weight:700;letter-spacing:.04em;color:var(--pri);text-transform:uppercase}
+.src{font-size:.85rem;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var D = {"labId": "filosofia_marx_dialettica_casa", "titolo": "Rimetti la dialettica sui piedi", "sottotitolo": "Marx, il materialismo storico e la prima rivoluzione industriale", "fonte": "K. Marx, Per la critica dell'economia politica, Prefazione (1859). Traduzione di lavoro dal tedesco.", "richiamo": ["Per Marx la storia non è mossa dalle idee ma dal modo in cui gli uomini producono ciò che serve a vivere.", "Forze produttive: tutto ciò che serve a produrre (lavoro umano, terra, strumenti, macchine, conoscenze tecniche).", "Rapporti di produzione: i rapporti tra gli uomini nella produzione (chi possiede i mezzi, chi lavora, come si divide il prodotto).", "Struttura: l'insieme dei rapporti di produzione, la base economica della società. Sovrastruttura: diritto, Stato, morale, religione, filosofia.", "Se non ricordi questi concetti, rileggi la Sintesi 1.2, parte G («Il materialismo storico»)."], "frasi": [{"id": "f1", "n": "1", "seg": ["Nella produzione sociale della loro vita gli uomini entrano in rapporti ", {"t": "determinati", "k": "determinati"}, ", necessari, indipendenti dalla loro volontà:"], "pos": 1, "alt": [], "why": "Nella produzione gli uomini stanno in rapporti precisi e non scelti: sono i rapporti di produzione, cioè la base."}, {"id": "f2", "n": "2", "seg": ["rapporti di produzione che ", {"t": "corrispondono", "k": "corrispondono2"}, " a un ", {"t": "determinato", "k": "determinato"}, " grado di sviluppo delle loro forze produttive materiali."], "pos": 1, "alt": [], "why": "A un certo livello delle forze produttive corrispondono certi rapporti di produzione: è la base, con i suoi due elementi."}, {"id": "f3", "n": "3", "seg": ["L'insieme di questi rapporti di produzione ", {"t": "forma", "k": "forma"}, " la struttura economica della società, la base reale,"], "pos": 1, "alt": [], "why": "Qui Marx dà il nome alla base: l'insieme dei rapporti di produzione è la «struttura economica», la «base reale»."}, {"id": "f4", "n": "4", "seg": ["sulla quale ", {"t": "si eleva", "k": "eleva"}, " una sovrastruttura giuridica e politica e alla quale ", {"t": "corrispondono", "k": "corrispondono4"}, " ", {"t": "determinate", "k": "determinate"}, " forme sociali della coscienza."], "pos": 2, "alt": [], "why": "Sulla base «si eleva» il piano di sopra: diritto e politica, e le forme della coscienza (morale, religione, filosofia)."}, {"id": "f5", "n": "5", "seg": ["Il modo di produzione della vita materiale ", {"t": "condiziona", "k": "condiziona"}, " in generale il processo sociale, politico e spirituale della vita."], "pos": 3, "alt": [], "why": "La frase non descrive un piano ma il legame tra i due: l'economia «condiziona» la vita politica e spirituale."}, {"id": "f6", "n": "6", "seg": ["Non è la coscienza degli uomini che ", {"t": "determina", "k": "determina"}, " il loro essere, ma è, al contrario, il loro essere sociale che ", {"t": "determina", "k": "determina"}, " la loro coscienza."], "pos": 3, "alt": [], "why": "Anche questa descrive il legame, ma con un verbo diverso: «determina». Due frasi di seguito, due verbi diversi per lo stesso legame."}, {"id": "f7", "n": "7", "seg": ["A un certo grado del loro sviluppo le forze produttive materiali della società ", {"t": "entrano", "k": "entrano"}, " in contraddizione con i rapporti di produzione esistenti, cioè con i rapporti di proprietà (che ne sono soltanto l'espressione giuridica) entro i quali si erano mosse fino ad allora."], "pos": 4, "alt": [], "why": "Le forze produttive crescono, i rapporti di proprietà restano fermi: è il conflitto."}, {"id": "f8a", "n": "8", "seg": ["Da forme di sviluppo delle forze produttive, questi rapporti ", {"t": "si rovesciano", "k": "rovesciano"}, " in loro catene."], "pos": 4, "alt": [], "why": "I rapporti che prima favorivano lo sviluppo ora lo frenano: è ancora il conflitto, detto con un'immagine (le catene)."}, {"id": "f8b", "n": "9", "seg": ["Subentra allora un'epoca di rivoluzione sociale."], "pos": 5, "alt": [], "why": "Dal conflitto nasce la rivoluzione sociale."}, {"id": "f9", "n": "10", "seg": ["Con il cambiamento della base economica ", {"t": "si sconvolge", "k": "sconvolge"}, ", più o meno rapidamente, tutta l'immensa sovrastruttura."], "pos": 5, "alt": [3], "why": "La rivoluzione cambia la base e, con essa, tutto il piano di sopra. Va bene anche «il legame», perché la frase mostra di nuovo che il piano di sopra dipende dalla base."}], "ordineFrasi": ["f6", "f3", "f8b", "f1", "f9", "f4", "f7", "f2", "f5", "f8a"], "posizioni": [{"n": 1, "t": "La base: forze produttive e rapporti di produzione", "b": "Com'è fatta una società"}, {"n": 2, "t": "Il piano di sopra: diritto, politica, idee", "b": "Com'è fatta una società"}, {"n": 3, "t": "Il legame: che cosa fa la base al piano di sopra", "b": "Com'è fatta una società"}, {"n": 4, "t": "Il conflitto: le forze produttive crescono, i rapporti frenano", "b": "Come cambia"}, {"n": 5, "t": "Il crollo: la rivoluzione cambia la base e il piano di sopra", "b": "Come cambia"}], "verbi": {"id": "v1", "prompt": "Chi agisce su chi? In due frasi del brano Marx dice che cosa fa l'economia alla vita politica e alle idee degli uomini. Tocca il verbo che indica questa azione: uno per ciascuna delle due frasi.", "giusti": ["condiziona", "determina"], "why": "I due verbi sono «condiziona» (frase 5) e «determina» (frase 6), a una riga di distanza. «Determinati», «determinato» e «determinate» sono aggettivi: vogliono dire «precisi, definiti», non indicano un'azione dell'economia. «Corrispondono» ha come soggetto i rapporti di produzione o le forme della coscienza, non l'economia. Tieni a mente la differenza tra i due verbi: ti servirà nell'esercizio 4."}, "anelli": [{"k": "A", "t": "La base: forze produttive nuove"}, {"k": "B", "t": "La base: nuovi rapporti di produzione"}, {"k": "C", "t": "Il conflitto con i vecchi rapporti"}, {"k": "D", "t": "Il piano di sopra cambia (sovrastruttura)"}, {"k": "E", "t": "Intruso: qui sono la politica o le idee ad agire sull'economia"}], "carte": [{"id": "c1", "titolo": "Il vapore di Watt", "testo": "Tra il 1769 e il 1784 James Watt perfeziona la macchina a vapore: con il condensatore separato consuma molto meno carbone e produce un moto rotatorio continuo, capace di far girare qualunque macchinario. L'energia non dipende più da un fiume o dal vento: la fabbrica può sorgere accanto alla miniera o in città.", "ok": "A", "why": "Macchina, carbone, energia inanimata: sono mezzi di produzione nuovi, cioè forze produttive."}, {"id": "c2", "titolo": "La stessa legge per tutti", "testo": "Cadono i privilegi di nascita: la legge è la stessa per tutti, non ci sono più tasse e tribunali diversi per nobili, clero e terzo stato. L'uguaglianza scritta nella legge convive però con una disuguaglianza di fatto tra chi possiede le fabbriche e chi ci lavora.", "ok": "D", "why": "È un cambiamento del diritto: sovrastruttura giuridica. Per Marx l'uguaglianza davanti alla legge lascia intatta la disuguaglianza dei rapporti di produzione."}, {"id": "c3", "titolo": "Troppo poco filo", "testo": "1733: la navetta volante di John Kay rende molto più veloce il telaio a mano. Un tessitore consuma ora più filo di quanto la filatura a domicilio, lenta e dispersa nelle campagne, riesca a produrre. Il contadino-operaio, che possiede il suo filatoio e lavora in casa propria, non riesce a stare al passo.", "ok": "C", "why": "Uno strumento nuovo (forza produttiva) si scontra con il vecchio modo di organizzare il lavoro, a domicilio e con strumenti propri: i vecchi rapporti diventano un freno."}, {"id": "c4", "titolo": "Una cornice di regole", "testo": "1688-89: con la Gloriosa Rivoluzione il Parlamento inglese limita il potere del re. Ne derivano la tutela della proprietà, una disciplina dei brevetti che premia chi inventa, la fine di molti vincoli corporativi. Ottant'anni prima delle grandi invenzioni, l'Inghilterra ha già una «cornice di regole» entro cui la ricchezza può muoversi.", "ok": "E", "why": "Qui una trasformazione politica e giuridica viene prima della meccanizzazione e ne crea le condizioni: la freccia sembra andare dalla sovrastruttura alla struttura. È l'intruso, ma un marxista avrebbe una risposta: vedi il modello della casella."}, {"id": "c5", "titolo": "La campana della fabbrica", "testo": "Le nuove macchine sono troppo grandi e costose per un lavoratore: appartengono a chi ha i capitali. A chi lavora resta una sola cosa da vendere, la propria forza-lavoro, in cambio di un salario. In fabbrica si entra, ci si ferma e si esce tutti insieme, al suono della campana.", "ok": "B", "why": "Chi possiede i mezzi e chi vende la forza-lavoro: sono i nuovi rapporti di produzione, capitalista e salariato. Anche l'orario imposto dalla campana è un rapporto di produzione, non una legge dello Stato."}, {"id": "c6", "titolo": "La povertà come colpa", "testo": "Per la borghesia il successo economico è la giusta ricompensa del talento, del lavoro e del risparmio. Il rovescio: se la ricchezza premia la virtù, la povertà diventa una colpa. Il povero non è più un infelice da soccorrere con la carità, ma un individuo privo di disciplina, responsabile della propria condizione.", "ok": "D", "why": "È un modo di pensare (una morale) che giustifica i nuovi rapporti: per Marx è una forma della coscienza, cioè sovrastruttura, anzi ideologia."}], "fonteCarte": "Le carte riassumono il manuale di storia del IV anno, sezione «Come nasce l'economia del mondo moderno», paragrafi 2.1-2.6.", "casella": {"id": "casella", "prompt": "Dove lo schema non funziona. Spiega perché la carta che hai scelto come intruso non entra nello schema di Marx. Poi chiediti: che cosa potrebbe rispondere un marxista?", "model": "Una buona risposta contiene almeno tre di questi punti:", "chk": ["indica la carta sulla Gloriosa Rivoluzione e spiega che lì è una decisione politica (Parlamento, tutela della proprietà, brevetti) a creare le condizioni per le nuove forze produttive", "usa la cronologia: 1688-89, decenni prima delle invenzioni tessili e del vapore (1733-1784)", "conclude che in questo caso la freccia va dalla sovrastruttura alla struttura, o almeno in tutte e due le direzioni", "prova a rispondere come un marxista: la Gloriosa Rivoluzione esprimeva già gli interessi di proprietari e mercanti legati al mercato, cioè rapporti economici in trasformazione; oppure, con Engels, l'economia decide solo «in ultima istanza»"], "anche": "Va bene anche chi sceglie la carta sulla povertà come colpa e sostiene che una morale del lavoro e del risparmio spinge a investire, quindi agisce sull'economia (è, in sostanza, la tesi di Max Weber), purché lo argomenti."}, "biglietto": {"id": "biglietto", "prompt": "Biglietto d'uscita. Per Marx la struttura determina o condiziona la sovrastruttura? Rispondi in tre righe, citando una frase del brano e una carta del caso.", "model": "Va bene sia «determina» sia «condiziona», se motivato. Una buona risposta contiene almeno tre di questi punti:", "chk": ["cita la frase 5 («condiziona in generale») o la frase 6 («determina»), meglio se tutte e due", "nota che Marx usa i due verbi a una riga di distanza, quindi la risposta non è scontata", "distingue i due verbi: «determina» indica una dipendenza stretta e necessaria; «condiziona» indica che l'economia pone le condizioni ma lascia spazio ad altri fattori", "usa una carta come prova: per esempio le macchine di Watt, i nuovi rapporti e la morale della povertà come colpa (a favore di «determina»), oppure la Gloriosa Rivoluzione (a favore di «condiziona»)"]}, "esercizi": [{"n": 1, "t": "I due verbi", "min": 5, "cosa": "Leggi il brano di Marx e trova i due verbi che dicono che cosa fa l'economia alle idee."}, {"n": 2, "t": "Le frasi sullo schema", "min": 10, "cosa": "Colloca le dieci frasi del brano sullo schema dell'edificio."}, {"n": 3, "t": "Il caso: la prima rivoluzione industriale", "min": 12, "cosa": "Colloca sei fatti sullo schema, trova l'intruso e spiega dove lo schema non funziona."}, {"n": 4, "t": "Determina o condiziona?", "min": 8, "cosa": "Rispondi in tre righe, con una frase del brano e un fatto del caso."}]};
+  var LAB_ID = D.labId;
+  var KEY = "addestr_state_" + LAB_ID;
+  var MINC = 20, MAX_CASELLA = 1500, MAX_BIGLIETTO = 600;
+  var FRASI = {}; D.frasi.forEach(function (f) { FRASI[f.id] = f; });
+  var POS = {}; D.posizioni.forEach(function (p) { POS[p.n] = p.t; });
+  var ANELLI = {}; D.anelli.forEach(function (a) { ANELLI[a.k] = a.t; });
+  var NSCHERMI = 5;
+
+  // schermo: 0 introduzione, 1 verbi, 2 schema, 3 carte + casella, 4 biglietto
+  var S = { s: 0, verbi: [], vLock: false, frasi: {}, fLock: false, carte: {}, cLock: false, casella: "", biglietto: "", sub: false, ok: null };
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  var app;
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function testo(f) { return f.seg.map(function (s) { return typeof s === "string" ? s : s.t; }).join(""); }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Analizzare testi"));
+    h.appendChild(el("h1", null, D.titolo));
+    h.appendChild(el("p", "sub", D.sottotitolo));
+    return h;
+  }
+  function progress(c) { var bar = el("div", "bar"); var fill = el("i"); fill.style.width = Math.round(S.s / NSCHERMI * 100) + "%"; bar.appendChild(fill); c.appendChild(bar); }
+  function eser(c, n) { var e = D.esercizi[n - 1]; c.appendChild(el("div", "eser", "Esercizio " + n + " di 4 · circa " + e.min + " minuti")); c.appendChild(el("h2", null, e.t)); }
+
+  function brano(interattivo) {
+    var b = el("div", "brano");
+    D.frasi.forEach(function (f) {
+      b.appendChild(el("span", "n", f.n));
+      f.seg.forEach(function (s) {
+        if (typeof s === "string") { b.appendChild(document.createTextNode(s)); return; }
+        if (!interattivo) { b.appendChild(document.createTextNode(s.t)); return; }
+        var t = el("button", "tk", s.t); t.type = "button";
+        t.setAttribute("aria-pressed", S.verbi.indexOf(s.k) >= 0 ? "true" : "false");
+        t.disabled = S.vLock;
+        t.onclick = function () {
+          var i = S.verbi.indexOf(s.k);
+          if (i >= 0) S.verbi.splice(i, 1); else { if (S.verbi.length >= 2) S.verbi.shift(); S.verbi.push(s.k); }
+          persist(); render();
+        };
+        b.appendChild(t);
+      });
+      b.appendChild(document.createTextNode(" "));
+    });
+    return b;
+  }
+  function branoChiuso() { var d = el("details"); d.appendChild(el("summary", null, "Rileggi il brano")); d.appendChild(brano(false)); d.appendChild(el("p", "src", D.fonte)); return d; }
+
+  // Schema a edificio
+  var NS = "http://www.w3.org/2000/svg";
+  function sv(tag, attrs, txt) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (txt != null) e.textContent = txt; return e; }
+  function schema() {
+    var s = sv("svg", { viewBox: "0 0 340 440", class: "schema", role: "img", "aria-label": "Lo schema come un edificio. Com'è fatta una società: in basso la base, cioè forze produttive e rapporti di produzione; sopra il piano di sopra, cioè diritto, politica, idee; tra i due il legame, frecce che salgono dalla base. Come cambia: il conflitto tra forze produttive e rapporti porta al crollo, la rivoluzione che cambia tutto l'edificio." });
+    var defs = sv("defs", {}); var m = sv("marker", { id: "ah", viewBox: "0 0 10 10", refX: "9", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto-start-reverse" });
+    m.appendChild(sv("path", { d: "M0 0L10 5L0 10z", class: "head" })); defs.appendChild(m); s.appendChild(defs);
+    function t(x, y, txt, cls, anchor) { s.appendChild(sv("text", { x: x, y: y, class: cls || "", "text-anchor": anchor || "middle" }, txt)); }
+    t(170, 16, "Com'è fatta una società", "sm");
+    s.appendChild(sv("polygon", { points: "10,72 170,26 330,72" }));
+    s.appendChild(sv("rect", { x: 10, y: 72, width: 320, height: 58, rx: 4 }));
+    t(170, 96, "Il piano di sopra", "ttl"); t(170, 118, "diritto, politica, idee");
+    [70, 270].forEach(function (x) { s.appendChild(sv("line", { x1: x, y1: 196, x2: x, y2: 136, "marker-end": "url(#ah)" })); });
+    s.appendChild(sv("rect", { x: 105, y: 148, width: 130, height: 30, class: "lab" }));
+    t(170, 168, "Il legame", "ttl");
+    s.appendChild(sv("rect", { x: 10, y: 200, width: 320, height: 96, rx: 4 }));
+    t(170, 222, "La base", "ttl");
+    s.appendChild(sv("rect", { x: 20, y: 234, width: 135, height: 50, rx: 8 }));
+    t(87, 255, "Forze"); t(87, 274, "produttive");
+    s.appendChild(sv("rect", { x: 185, y: 234, width: 135, height: 50, rx: 8 }));
+    t(252, 255, "Rapporti di"); t(252, 274, "produzione");
+    s.appendChild(sv("line", { x1: 158, y1: 259, x2: 182, y2: 259, "marker-end": "url(#ah)", "marker-start": "url(#ah)" }));
+    s.appendChild(sv("line", { x1: 0, y1: 300, x2: 340, y2: 300 }));
+    t(170, 330, "Come cambia", "sm");
+    s.appendChild(sv("rect", { x: 10, y: 342, width: 150, height: 84, rx: 8, class: "cx" }));
+    t(85, 366, "Il conflitto", "ttl"); t(85, 388, "le forze crescono,", "sm"); t(85, 406, "i rapporti frenano", "sm");
+    s.appendChild(sv("line", { x1: 163, y1: 384, x2: 185, y2: 384, "marker-end": "url(#ah)" }));
+    s.appendChild(sv("rect", { x: 190, y: 342, width: 140, height: 84, rx: 8 }));
+    t(260, 366, "Il crollo", "ttl"); t(260, 388, "la rivoluzione cambia", "sm"); t(260, 406, "tutto l'edificio", "sm");
+    return s;
+  }
+
+  function render() {
+    clear(); app.appendChild(header());
+    if (S.sub) return renderReview();
+    [renderIntro, renderVerbi, renderFrasi, renderCarte, renderBiglietto][S.s]();
+    window.scrollTo(0, 0);
+  }
+  function avanti() { S.s++; persist(); render(); }
+  function row(c, label, disabled, fn) { var r = el("div", "row"); var b = el("button", "btn", label); b.type = "button"; b.disabled = disabled; b.onclick = fn; r.appendChild(b); c.appendChild(r); return b; }
+
+  function renderIntro() {
+    var c = el("div", "card"); progress(c);
+    c.appendChild(el("h2", null, "Prima di cominciare"));
+    c.appendChild(el("p", null, "Quattro esercizi sul brano più famoso di Marx sul materialismo storico. In tutto circa 35 minuti."));
+    var ol = el("ol", "r"); D.esercizi.forEach(function (e) { var li = el("li"); li.appendChild(el("b", null, e.t)); li.appendChild(document.createTextNode(" — " + e.cosa)); ol.appendChild(li); }); c.appendChild(ol);
+    c.appendChild(el("p", "note", "Negli esercizi 1, 2 e 3 premi «Verifica» e vedi subito la correzione: dopo la verifica le risposte non si cambiano più. Le due risposte scritte le confronti con un modello dopo la consegna."));
+    var r = el("details"); r.appendChild(el("summary", null, "I concetti in breve"));
+    var ul = el("ul", "r"); D.richiamo.forEach(function (t) { ul.appendChild(el("li", null, t)); }); r.appendChild(ul); c.appendChild(r);
+    row(c, "Comincia", false, avanti);
+    app.appendChild(c);
+  }
+
+  function esito(ok, testoRisposta, giusta) {
+    var f = document.createDocumentFragment();
+    var m = el("div", "res " + (ok ? "ok" : "ko")); m.appendChild(el("span", "lbl", ok ? "Corretto — " : "Non corretto — "));
+    m.appendChild(document.createTextNode("la tua risposta: " + testoRisposta)); f.appendChild(m);
+    if (!ok && giusta) { var g = el("div", "res ok"); g.appendChild(el("span", "lbl", "Risposta attesa: ")); g.appendChild(document.createTextNode(giusta)); f.appendChild(g); }
+    return f;
+  }
+
+  function verbiOk() { return S.verbi.slice().sort().join("|") === D.verbi.giusti.slice().sort().join("|"); }
+  function nomeVerbo(k) { for (var i = 0; i < D.frasi.length; i++) for (var j = 0; j < D.frasi[i].seg.length; j++) { var s = D.frasi[i].seg[j]; if (typeof s !== "string" && s.k === k) return s.t + " (frase " + D.frasi[i].n + ")"; } return k; }
+  function verbiRisposta() { return S.verbi.slice().sort().map(nomeVerbo).join(" + "); }
+  function fbVerbi(c) { c.appendChild(esito(verbiOk(), verbiRisposta() || "(nessuna)", "condiziona (frase 5) + determina (frase 6)")); c.appendChild(el("p", null, D.verbi.why)); }
+
+  function renderVerbi() {
+    var c = el("div", "card"); progress(c); eser(c, 1);
+    c.appendChild(el("p", "note", D.verbi.prompt));
+    c.appendChild(el("p", "sub", "Le parole che puoi toccare sono incorniciate."));
+    c.appendChild(brano(true));
+    c.appendChild(el("p", "src", D.fonte));
+    if (!S.vLock) {
+      c.appendChild(el("p", "sub", "Parole scelte: " + S.verbi.length + " di 2"));
+      row(c, "Verifica", S.verbi.length !== 2, function () { S.vLock = true; persist(); condividi("fase1"); render(); });
+    } else { fbVerbi(c); row(c, "Vai all'esercizio 2", false, avanti); }
+    app.appendChild(c);
+  }
+
+  function frasiOk(id) { var f = FRASI[id], a = S.frasi[id]; return a === f.pos || f.alt.indexOf(a) >= 0; }
+  function giustaFrase(f) { return POS[f.pos] + (f.alt.length ? " (va bene anche: " + f.alt.map(function (n) { return POS[n]; }).join("; ") + ")" : ""); }
+
+  function renderFrasi() {
+    var c = el("div", "card" + (S.fLock ? " locked" : "")); progress(c); eser(c, 2);
+    c.appendChild(el("p", null, "Marx descrive la società come un edificio: una base economica e, sopra, un piano fatto di leggi, Stato e idee. Poi spiega come l'edificio cambia. Per ogni frase del brano scegli dal menu la parte dello schema di cui parla. Più frasi possono andare nella stessa parte."));
+    c.appendChild(schema());
+    var tot = 0;
+    D.ordineFrasi.forEach(function (id, i) {
+      var f = FRASI[id]; var it = el("div", "item");
+      var q = el("p", "q"); q.appendChild(el("b", null, "Frase " + String.fromCharCode(65 + i) + ". ")); q.appendChild(document.createTextNode("«" + testo(f) + "»")); it.appendChild(q);
+      var sel = el("select"); sel.setAttribute("aria-label", "Parte dello schema per la frase " + String.fromCharCode(65 + i)); sel.disabled = S.fLock;
+      sel.appendChild(el("option", null, "Di quale parte parla?")).value = "";
+      var gr = {}; D.posizioni.forEach(function (p) { if (!gr[p.b]) { gr[p.b] = el("optgroup"); gr[p.b].label = p.b; sel.appendChild(gr[p.b]); } var o = el("option", null, p.t); o.value = String(p.n); gr[p.b].appendChild(o); });
+      if (S.frasi[id]) { sel.value = String(S.frasi[id]); sel.className = "done"; tot++; }
+      sel.onchange = function () { if (sel.value) S.frasi[id] = Number(sel.value); else delete S.frasi[id]; persist(); render(); };
+      it.appendChild(sel);
+      if (S.fLock) { it.appendChild(esito(frasiOk(id), S.frasi[id] ? POS[S.frasi[id]] : "(nessuna)", giustaFrase(f))); it.appendChild(el("p", null, f.why)); }
+      c.appendChild(it);
+    });
+    if (!S.fLock) {
+      c.appendChild(el("p", "sub", "Frasi collocate: " + tot + " di " + D.ordineFrasi.length));
+      row(c, "Verifica", tot !== D.ordineFrasi.length, function () { S.fLock = true; persist(); condividi("fase2"); render(); });
+    } else {
+      var n = D.ordineFrasi.filter(frasiOk).length;
+      c.appendChild(el("p", "note", n + " frasi su " + D.ordineFrasi.length + " collocate come atteso. Guarda il legame: le frasi 5 e 6 descrivono la stessa freccia con due verbi diversi."));
+      row(c, "Vai all'esercizio 3", false, avanti);
+    }
+    app.appendChild(c);
+  }
+
+  function renderCarte() {
+    var c = el("div", "card" + (S.cLock ? " locked" : "")); progress(c); eser(c, 3);
+    c.appendChild(el("p", null, "Sei fatti che conosci dal programma di storia dell'anno scorso. Cinque si collocano sullo schema di Marx. Uno è un intruso: un fatto in cui sono la politica o le idee ad agire sull'economia, e non il contrario."));
+    var ds = el("details"); ds.appendChild(el("summary", null, "Rivedi lo schema")); ds.appendChild(schema()); c.appendChild(ds);
+    var tot = 0;
+    D.carte.forEach(function (k, i) {
+      var it = el("div", "item carta");
+      it.appendChild(el("h3", null, "Carta " + (i + 1) + " · " + k.titolo));
+      it.appendChild(el("p", null, k.testo));
+      var sel = el("select"); sel.setAttribute("aria-label", "Dove va la carta " + (i + 1)); sel.disabled = S.cLock;
+      sel.appendChild(el("option", null, "Dove va?")).value = "";
+      D.anelli.forEach(function (a) { var o = el("option", null, a.t); o.value = a.k; sel.appendChild(o); });
+      if (S.carte[k.id]) { sel.value = S.carte[k.id]; sel.className = "done"; tot++; }
+      sel.onchange = function () { if (sel.value) S.carte[k.id] = sel.value; else delete S.carte[k.id]; persist(); render(); };
+      it.appendChild(sel);
+      if (S.cLock) { var a = S.carte[k.id]; it.appendChild(esito(a === k.ok, a ? ANELLI[a] : "(nessuna)", ANELLI[k.ok])); it.appendChild(el("p", null, k.why)); }
+      c.appendChild(it);
+    });
+    c.appendChild(el("p", "src", D.fonteCarte));
+    if (!S.cLock) {
+      c.appendChild(el("p", "sub", "Carte collocate: " + tot + " di " + D.carte.length));
+      row(c, "Verifica", tot !== D.carte.length, function () { S.cLock = true; persist(); render(); });
+    } else {
+      c.appendChild(el("h3", null, "Dove lo schema non funziona"));
+      c.appendChild(el("p", "note", D.casella.prompt.replace(/^Dove lo schema non funziona\. /, "")));
+      var ta = el("textarea"); ta.maxLength = MAX_CASELLA; ta.value = S.casella; ta.setAttribute("aria-label", "Dove lo schema non funziona");
+      var cnt = el("div", "cnt"); c.appendChild(ta); c.appendChild(cnt);
+      c.appendChild(el("p", "sub", "Il modello di risposta lo vedi dopo la consegna."));
+      var b = row(c, "Vai all'esercizio 4", true, function () { condividi("fase3"); avanti(); });
+      function upd() { cnt.textContent = ta.value.length + " / " + MAX_CASELLA + " (almeno " + MINC + ")"; b.disabled = ta.value.trim().length < MINC; }
+      ta.oninput = function () { S.casella = ta.value; persist(); upd(); }; upd();
+    }
+    app.appendChild(c);
+  }
+
+  function renderBiglietto() {
+    var c = el("div", "card"); progress(c); eser(c, 4);
+    c.appendChild(el("p", "note", D.biglietto.prompt.replace(/^Biglietto d'uscita\. /, "")));
+    c.appendChild(branoChiuso());
+    var ta = el("textarea"); ta.maxLength = MAX_BIGLIETTO; ta.value = S.biglietto; ta.setAttribute("aria-label", "Determina o condiziona?");
+    var cnt = el("div", "cnt"); c.appendChild(ta); c.appendChild(cnt);
+    c.appendChild(el("p", "sub", "Dopo la consegna vedrai la correzione completa e i modelli delle due risposte scritte."));
+    var err = el("div", "err"); c.appendChild(err);
+    var b = row(c, "Consegna", true, function () { consegna(b, err); });
+    function upd() { cnt.textContent = ta.value.length + " / " + MAX_BIGLIETTO + " (almeno " + MINC + ")"; b.disabled = ta.value.trim().length < MINC; }
+    ta.oninput = function () { S.biglietto = ta.value; persist(); upd(); }; upd();
+    app.appendChild(c);
+  }
+
+  function buildAnswers() {
+    var list = [], right = 0, tot = 0;
+    if (S.verbi.length) { tot++; var vo = verbiOk(); if (vo) right++;
+      list.push({ id: D.verbi.id, prompt: "Esercizio 1. I due verbi con cui l'economia agisce sulla vita politica e sulle idee", type: "mc", answer: verbiRisposta(), correct: vo }); }
+    D.ordineFrasi.forEach(function (id) {
+      if (!S.frasi[id]) return; tot++; var ok = frasiOk(id); if (ok) right++;
+      list.push({ id: id, prompt: ("Esercizio 2. Frase " + FRASI[id].n + ": «" + testo(FRASI[id])).slice(0, 290) + "»", type: "mc", answer: POS[S.frasi[id]], correct: ok });
+    });
+    D.carte.forEach(function (k) {
+      if (!S.carte[k.id]) return; tot++; var ok = S.carte[k.id] === k.ok; if (ok) right++;
+      list.push({ id: k.id, prompt: "Esercizio 3. Carta «" + k.titolo + "»", type: "mc", answer: ANELLI[S.carte[k.id]], correct: ok });
+    });
+    if (S.casella.trim()) list.push({ id: D.casella.id, prompt: "Esercizio 3. Dove lo schema non funziona", type: "essay", answer: S.casella.trim(), correct: null });
+    if (S.biglietto.trim()) list.push({ id: D.biglietto.id, prompt: "Esercizio 4. Determina o condiziona?", type: "essay", answer: S.biglietto.trim(), correct: null });
+    return { list: list, right: right, tot: tot, score: tot ? Math.round(right / tot * 100) : null };
+  }
+
+  // Vista classe dal vivo (SPEC §4): istantanea anonima alla verifica di ogni esercizio. Mai bloccante.
+  function condividi(fase) {
+    try {
+      if (!window.Addestramento || typeof window.Addestramento.condividi !== "function") return;
+      var ids = { fase1: [D.verbi.id], fase2: D.ordineFrasi, fase3: D.carte.map(function (k) { return k.id; }).concat([D.casella.id]), biglietto: [D.biglietto.id] }[fase];
+      var list = buildAnswers().list.filter(function (a) { return ids.indexOf(a.id) >= 0; });
+      Promise.resolve(window.Addestramento.condividi(fase, list)).catch(function () {});
+    } catch (e) {}
+  }
+
+  var sending = false, tentativi = 0;
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    if (tentativi === 0) condividi("biglietto");
+    var r = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }) : Promise.resolve(null);
+    invio.then(function (ok) {
+      if (ok === false && ++tentativi < 2) { sending = false; btn.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e premi di nuovo «Consegna»."; return; }
+      S.sub = true; S.ok = ok; persist(); sending = false; render();
+    });
+  }
+
+  function modello(o, mia) {
+    var d = el("div", "card");
+    d.appendChild(el("h2", null, o.titolo));
+    d.appendChild(el("div", "lbl", "Che cosa hai scritto"));
+    d.appendChild(el("p", null, mia || "(nessuna risposta)"));
+    d.appendChild(el("div", "lbl", o.model));
+    var ul = el("ul", "r"); o.chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul);
+    if (o.anche) d.appendChild(el("p", "note", o.anche));
+    d.appendChild(el("p", "sub", "Confronta: che cosa avevi già? Che cosa ti è sfuggito?"));
+    return d;
+  }
+
+  function renderReview() {
+    var r = buildAnswers();
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    c.appendChild(el("div", "score", r.right + " risposte su " + r.tot + " come atteso"));
+    c.appendChild(el("p", null, "Serve a capire che cosa ti manca, non a prendere un voto. Qui sotto trovi prima i modelli delle due risposte scritte, poi il riepilogo degli esercizi."));
+    var stato = S.ok === true ? "Risultato registrato." : S.ok === false ? "Attenzione: il risultato NON è stato registrato. Avvisa il docente." : "Il sistema di registrazione non era raggiungibile: il risultato NON è stato registrato. Avvisa il docente.";
+    c.appendChild(el("p", S.ok === true ? "note" : "warn", stato));
+    app.appendChild(c);
+    app.appendChild(modello({ titolo: "Esercizio 3 · Dove lo schema non funziona", model: D.casella.model, chk: D.casella.chk, anche: D.casella.anche }, S.casella));
+    app.appendChild(modello({ titolo: "Esercizio 4 · Determina o condiziona?", model: D.biglietto.model, chk: D.biglietto.chk }, S.biglietto));
+    var d1 = el("div", "card"); d1.appendChild(el("h2", null, "Esercizio 1 · I due verbi")); fbVerbi(d1); app.appendChild(d1);
+    var d2 = el("div", "card"); d2.appendChild(el("h2", null, "Esercizio 2 · Le frasi sullo schema")); d2.appendChild(schema());
+    D.frasi.forEach(function (f) { var it = el("div", "item"); it.appendChild(el("p", "q", f.n + ". «" + testo(f) + "»")); it.appendChild(esito(frasiOk(f.id), S.frasi[f.id] ? POS[S.frasi[f.id]] : "(nessuna)", giustaFrase(f))); it.appendChild(el("p", null, f.why)); d2.appendChild(it); });
+    app.appendChild(d2);
+    var d3 = el("div", "card"); d3.appendChild(el("h2", null, "Esercizio 3 · Le carte"));
+    D.carte.forEach(function (k, i) { var it = el("div", "item"); it.appendChild(el("h3", null, "Carta " + (i + 1) + " · " + k.titolo)); var a = S.carte[k.id]; it.appendChild(esito(a === k.ok, a ? ANELLI[a] : "(nessuna)", ANELLI[k.ok])); it.appendChild(el("p", null, k.why)); d3.appendChild(it); });
+    app.appendChild(d3);
+  }
+
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: LAB_ID,
+      title: D.titolo,
+      salvaRisposte: true,      // decisione del docente: le risposte finali arrivano al registro
+      tempoAtteso: 1500,        // circa 25 minuti di lavoro attivo sui 35 previsti
+      caratteriAttesi: 450,     // casella + risposta finale
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
