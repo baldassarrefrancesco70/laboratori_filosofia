@@ -117,19 +117,20 @@
     '<span class="fonte-c"><b>K.R. Popper, <i>La società aperta e i suoi nemici</i></b>, vol. 2, p. 211 · punto 7</span></div>';
 
   // ------------------------------------------------------------ attività
-  var DOMANDA1 = 'Quando qualcuno dice «stiamo dalla parte giusta della storia», sta dando un argomento?';
+  var DOMANDA1 = 'Un partito è sicuro di stare «dalla parte giusta della storia». Che cosa ne segue per chi non è d’accordo?';
   var OPZIONI1 = [
-    'Sì: se si sa dove va la storia, è una buona ragione',
-    'Dipende da chi lo dice e da che cosa sa',
-    'No: dove va la storia non giustifica una scelta'
+    'Sta solo sbagliando: ha diritto di dirlo e di essere ascoltato',
+    'Sta ostacolando il progresso: è giusto fermarlo',
+    'Niente: nessuno può sapere dove va la storia, quindi quella sicurezza non conta'
   ];
 
   var CASI = [
     { testo: 'Un sovrano illuminato governa bene e abbassa le tasse, ma si può sostituire solo con una rivolta.', atteso: 1 },
-    { testo: 'Un governo vince le elezioni con il 70% e approva una legge che rinvia le elezioni successive di dieci anni.', atteso: 1 },
     { testo: 'Un governo impopolare perde le elezioni e lascia il posto all’opposizione.', atteso: 0 },
-    { testo: 'La maggioranza fa pagare tutte le tasse a chi è più alto di un metro e ottanta; stampa, partiti ed elezioni restano liberi.', atteso: 0 },
-    { testo: 'Il partito al governo chiude i giornali che lo criticano, ma le elezioni si tengono regolarmente.', atteso: 1 }
+    { testo: '1933: il Parlamento tedesco vota i pieni poteri al governo Hitler; poi partiti e opposizioni vengono sciolti.', atteso: 1 },
+    { testo: 'Fino al 1965, negli Stati del Sud degli USA si vota regolarmente, ma la maggioranza bianca tiene i neri lontani dalle urne.', atteso: 1 },
+    { testo: 'Unione Sovietica: elezioni regolari, ma con un solo partito e un solo candidato.', atteso: 1 },
+    { testo: 'La maggioranza fa pagare tutte le tasse a chi è più alto di un metro e ottanta; stampa, partiti ed elezioni restano liberi, e la minoranza può criticare la legge e provare a cambiarla.', atteso: 0 }
   ];
 
   var testoRiformismo =
@@ -167,7 +168,7 @@
       html: '<p class="att-consegna">' + DOMANDA1 + '</p>',
       attivita: { id: 'parte_giusta', tipo: 'sondaggio', minuti: 2, domanda: DOMANDA1, opzioni: OPZIONI1 },
       note: '<p><b>Sondaggio</b> (2 min). Lo spunto è nelle Citazioni della dispensa (domanda di discussione 2).</p>' +
-        '<p><b>Ripresa</b>: mostra le barre. <b>Punta il commento</b> sui «sì» e sui «dipende»: che cosa dovremmo sapere per poter dire che la storia va in una direzione? Chiedi un esempio a voce («il futuro è già scritto», «non si può fermare il progresso»). Non risolvere: la risposta di Popper arriva nei due passi successivi.</p>' },
+        '<p><b>Ripresa</b>: mostra le barre. <b>Punta il commento</b> sulla seconda opzione: se so dove va la storia, chi dissente non è solo uno che sbaglia, è uno che si oppone a ciò che comunque accadrà, e allora «fermarlo» sembra giusto. È la conseguenza politica di quella sicurezza. Chiedi a chi ha scelto la prima o la terza che cosa cambia. Non risolvere: la risposta di Popper arriva nei passi successivi.</p>' },
 
     { titolo: TITOLO, html: mappa(1, true), minuti: 1,
       note: '<p><b>Spieghi</b>: per «storicismo» Popper non intende una corrente precisa, ma un modello polemico: ogni filosofia che pretende di cogliere il senso globale e oggettivo della storia, un destino a cui gli individui dovrebbero adeguarsi. La «filosofia oracolare»: Platone, Hegel, Marx (ma anche Comte e Mill).</p>' },
@@ -186,7 +187,23 @@
         '</div>',
       note: '<p><b>Spieghi</b> l’errore teorico principale dello storicismo: confondere leggi e tendenze. Clic 1: la profezia. Clic 2: la conclusione.</p>' +
         '<p>Se c’è tempo, gli altri errori: presuppone un senso già dato della storia (Popper: «né la natura né la storia possono dirci che cosa dobbiamo fare», citazione della Sintesi, senza pagina: dilla a voce); confonde fatti e valori; pretende di parlare della storia come totalità (olismo).</p>' +
-        '<p>Torna al sondaggio: chi diceva «sì» presupponeva una legge della storia.</p>' },
+        '<p>Torna al sondaggio: chi sceglieva «è giusto fermarlo» presupponeva una legge della storia. Segue l’esercizio: legge o profezia?</p>' },
+
+    { titolo: 'Legge o profezia?', minuti: 4,
+      html: '<p class="att-consegna">Sul telefono: una previsione che poggia su una legge, o una profezia che prolunga una tendenza?</p>',
+      attivita: { id: 'legge_profezia', tipo: 'abbinamento', minuti: 3,
+        consegna: 'Per ogni affermazione: è una legge (da cui si può prevedere, e che una previsione sbagliata smentirebbe) o una profezia (una tendenza prolungata nel futuro)?',
+        categorie: ['Legge', 'Profezia'],
+        voci: [
+          { testo: 'Domani, in questo luogo, ci sarà un’eclissi di sole totale.', atteso: 0 },
+          { testo: 'Il capitale si concentrerà in sempre meno mani.', atteso: 1 },
+          { testo: 'Un corpo lasciato cadere nel vuoto accelera di 9,8 m/s² ogni secondo.', atteso: 0 },
+          { testo: 'Le civiltà, dopo un periodo di splendore, vanno inevitabilmente in decadenza.', atteso: 1 },
+          { testo: 'L’acqua riscaldata a 100 °C, a livello del mare, bolle.', atteso: 0 },
+          { testo: 'La storia procede per stadi necessari: schiavismo, feudalesimo, capitalismo, socialismo.', atteso: 1 }
+        ] },
+      note: '<p><b>Abbinamento</b> (3 min). Le affermazioni 1, 3 e 5 sono scritte per la lezione; la 2 è l’esempio di Popper (già sulla slide precedente), la 4 e la 6 sono profezie classiche dello storicismo.</p>' +
+        '<p><b>Ripresa</b>: mostra le collocazioni attese. <b>Punta il commento</b> su un criterio: una legge dice a quali condizioni accade qualcosa e può essere smentita da un caso; una profezia prolunga ciò che è accaduto finora e non indica a quali condizioni smetterebbe di valere. Fai notare che l’eclissi è una previsione precisa e datata, la concentrazione dei capitali no. La sesta è la più contestata (è la sintesi dello schema marxista di una storia per stadi): se la classe si divide, chiedi quale caso la smentirebbe.</p>' },
 
     { titolo: TITOLO, html: mappa(2, true) , minuti: 2,
       note: '<p><b>Spieghi</b> il versante politico: se la storia ha una direzione necessaria, i suoi «interpreti ufficiali» si sentono autorizzati a eliminare chi vi si oppone. Chi resiste all’inevitabile diventa un criminale contro la Storia, come un tempo il peccatore contro Dio.</p>' +
@@ -230,9 +247,10 @@
         voci: CASI,
         testo: B_DEMOCRAZIA },
       note: '<p><b>Abbinamento</b> (3 min). Il testo resta rileggibile sul telefono.</p>' +
-        '<p><b>Ripresa</b>: mostra le collocazioni attese. <b>Punta il commento</b> su due casi.</p>' +
+        '<p><b>Ripresa</b>: mostra le collocazioni attese. Il criterio è uno solo: si può cambiare chi governa senza violenza, e la minoranza ha istituzioni per lavorare a un cambiamento pacifico? <b>Punta il commento</b> su tre confronti.</p>' +
         '<p>Il <b>sovrano illuminato</b>: governa bene, ma non si può licenziare. Per Popper conta come si rimuove chi governa, non quanto governa bene.</p>' +
-        '<p>Le <b>tasse ai più alti</b> (il trabocchetto, dall’esempio di Popper): è una legge ingiusta, una maggioranza che «governa in maniera tirannica», ma resta una democrazia finché la minoranza può lavorare per un cambiamento pacifico. La democrazia non garantisce leggi giuste: garantisce di poterle cambiare senza violenza. Confrontalo con i <b>giornali chiusi</b>: lì le elezioni ci sono, ma manca un’istituzione che permette il cambiamento pacifico.</p>' +
+        '<p>Il <b>1933</b>: il Parlamento vota in modo legale, ma con quel voto distrugge le istituzioni che permettono il cambiamento pacifico. Votare non basta: conta che resti possibile cambiare governo. Lo stesso vale per l’<b>URSS</b>: elezioni sì, ma nessuna alternativa.</p>' +
+        '<p>Le <b>tasse ai più alti</b> (l’esempio di Popper) contro il <b>Sud degli USA</b>: la prima è una legge ingiusta, ma i più alti possono ancora criticarla e cercare di cambiarla; per questo, secondo il criterio, resta una democrazia. Nel Sud degli USA la minoranza è privata proprio del voto, cioè dello strumento per cambiare le cose: lì il criterio non è soddisfatto. La democrazia non garantisce leggi giuste: garantisce di poterle cambiare senza violenza. È il caso più discusso: Popper lo introduce come maggioranza che «governa in maniera tirannica», quindi qualcuno risponderà «tirannide»; chiedi che cosa la minoranza può ancora fare.</p>' +
         '<p>Se la classe si divide, sottolinea il punto 2: le colonne sono due perché per Popper non c’è una scala di democraticità.</p>' },
 
     { titolo: TITOLO, html: mappa(5, true), minuti: 1,
