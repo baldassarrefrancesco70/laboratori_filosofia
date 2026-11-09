@@ -1,0 +1,24 @@
+# Rigenera lezioni/indice.json (l'elenco letto dal portale) quando cambia una lezione.
+name: indice-lezioni
+on:
+  push:
+    branches: [main]
+    paths: ['lezioni/*.html', 'strumenti/indice_lezioni.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  indice:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 strumenti/indice_lezioni.py
+      - name: Salva l'indice se è cambiato
+        run: |
+          if ! git diff --quiet lezioni/indice.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add lezioni/indice.json
+            git commit -m "Portale lezioni: indice aggiornato"
+            git push
+          fi

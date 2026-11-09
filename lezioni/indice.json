@@ -1,0 +1,36 @@
+{
+  "lezioni": [
+    {
+      "file": "filosofia_hume_causalita.html",
+      "titolo": "Domani sorgerà il sole? Hume e la causalità",
+      "materia": "filosofia",
+      "classe": "quarta",
+      "descrizione": "Lezione interattiva (Filosofia IV): relazioni di idee e materie di fatto, la critica del principio di causalità, l'abitudine, lo scetticismo di Hume.",
+      "percorso": "lezioni_filosofia_hume_causalita"
+    },
+    {
+      "file": "filosofia_hume_sostanza.html",
+      "titolo": "Che cosa resta della mela? Da Locke a Hume",
+      "materia": "filosofia",
+      "classe": "quarta",
+      "descrizione": "Lezione interattiva (Filosofia IV): ripresa del laboratorio «Che cosa resta della mela?», il substratum di Locke, impressioni e idee in Hume, la sostanza materiale e l'io come fasci di percezioni.",
+      "percorso": "lezioni_filosofia_hume_sostanza"
+    },
+    {
+      "file": "filosofia_marx_capitale.html",
+      "titolo": "Marx · la critica dell'economia politica classica",
+      "materia": "filosofia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Filosofia V): Il Capitale, M-D-M e D-M-D′, feticismo delle merci, plusvalore, crisi di sovrapproduzione.",
+      "percorso": "lezioni_filosofia_marx_capitale"
+    },
+    {
+      "file": "filosofia_marx_liberalismo.html",
+      "titolo": "Marx · la critica del liberalismo",
+      "materia": "filosofia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Filosofia V): democrazia formale e sostanziale, diritto come volontà di classe, uguaglianza giuridica e disuguaglianza reale, Gotha e il passaggio verso Rawls.",
+      "percorso": "lezioni_filosofia_marx_liberalismo"
+    }
+  ]
+}

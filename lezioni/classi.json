@@ -1,0 +1,6 @@
+{
+  "_nota": "Classi per anno di corso. Si aggiorna a inizio anno scolastico. Il portale genera per ogni classe il codice di sessione CLASSE + anno scolastico (es. 4D2627).",
+  "terza": [],
+  "quarta": ["4A", "4D"],
+  "quinta": []
+}
