@@ -31,6 +31,14 @@
       "classe": "quinta",
       "descrizione": "Lezione interattiva (Filosofia V): democrazia formale e sostanziale, diritto come volontà di classe, uguaglianza giuridica e disuguaglianza reale, Gotha e il passaggio verso Rawls.",
       "percorso": "lezioni_filosofia_marx_liberalismo"
+    },
+    {
+      "file": "filosofia_popper_societa_aperta.html",
+      "titolo": "Popper · la società aperta",
+      "materia": "filosofia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Filosofia V): la critica dello storicismo, leggi e tendenze, società chiusa e società aperta, il criterio della democrazia, tutela delle minoranze e riformismo gradualista.",
+      "percorso": "lezioni_filosofia_popper_societa_aperta"
     }
   ]
 }
