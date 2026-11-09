@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Popper · la società aperta</title>
+<meta name="portale:titolo" content="Popper · la società aperta">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Filosofia V): la critica dello storicismo, leggi e tendenze, società chiusa e società aperta, il criterio della democrazia, tutela delle minoranze e riformismo gradualista.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quinta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* rami curvi della mappa (tutela delle minoranze, riformismo) */
+  .rami{position:absolute;left:0;top:0;width:1600px;height:726px;pointer-events:none;overflow:visible}
+  .rami path{fill:none;stroke:var(--rosso);stroke-width:4}
+  .ramo-etichetta{font-family:var(--cond);font-size:31px;font-weight:700;line-height:1.15;justify-content:flex-start;text-align:left;padding-left:8px!important}
+  .chiusa-mappa{font-size:31px;font-style:italic;color:#6B6B6B;line-height:1.3}
+  /* due colonne di confronto */
+  .confronto2{display:grid;grid-template-columns:1fr 1fr;gap:40px;height:100%;align-content:start}
+  .confronto2 .col{border-radius:12px;padding:22px 28px}
+  .confronto2 .col h3{margin:0 0 6px;font-size:34px}
+  .confronto2 .col .chiave{font-size:22px;color:var(--tenue);margin:0 0 18px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+  .confronto2 .col p{font-size:27px;line-height:1.35;margin:0 0 14px}
+  .confronto2 .si{background:var(--verde)}
+  .confronto2 .no{background:var(--grigio)}
+  .confronto2 .esito{font-family:var(--cond);font-weight:700;font-size:30px;margin-top:8px}
+  .sotto-conf{grid-column:1 / -1;font-size:28px;text-align:center;margin-top:6px}
+  /* tabella società chiusa / aperta */
+  .tab-sc{width:100%;border-collapse:collapse;font-size:27px;line-height:1.3}
+  .tab-sc th{font-size:30px;padding:10px 16px;text-align:left}
+  .tab-sc th.ch{background:var(--grigio)}.tab-sc th.ap{background:var(--verde)}
+  .tab-sc td{padding:13px 16px;border-bottom:1px solid var(--bordo);vertical-align:top}
+  .tab-sc td:first-child{font-weight:700;color:var(--blu);width:220px}
+  /* contesto */
+  .tappe{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:20px}
+  .tappa{background:var(--grigio);border-radius:12px;padding:20px 22px;min-height:300px}
+  .tappa .anno{font-size:42px;font-weight:700;color:var(--rosso-testo);margin-bottom:10px}
+  .tappa p{font-size:25px;line-height:1.35;margin:0}
+  .tappa.forte{background:var(--giallo)}
+  .contesto-chiusa{font-size:29px;margin-top:34px;text-align:center}
+  /* la domanda sbagliata e quella giusta */
+  .domande{text-align:center;padding-top:30px}
+  .domande .vecchia{font-size:50px;font-weight:700;color:#999;text-decoration:line-through;text-decoration-color:var(--rosso);text-decoration-thickness:5px}
+  .domande .esempi{font-size:26px;color:var(--tenue);margin:12px 0 40px}
+  .domande .nuova{font-size:44px;font-weight:700;line-height:1.25;background:var(--giallo);padding:24px 40px;border-radius:12px;display:inline-block;max-width:1300px}
+  .citazione-breve{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1.45;background:#FAFAFA;border-left:6px solid var(--rosso);padding:14px 22px;margin-top:22px}
+  .citazione-breve .fonte-c{display:block;font-family:var(--sans);font-style:normal;font-size:19px;color:var(--tenue);margin-top:8px}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = Aula.disegno;
+  var TITOLO = 'Popper · la società aperta';
+
+  // ------------------------------------------------------------ la mappa della slide, a livelli
+  // 1: critica dello storicismo · 2: + riquadro verde · 3: + liberalismo · 4: + teoria della democrazia
+  // 5: + criterio · 6: + rami · 7: + chiusa
+  function mappa(liv, evidenzia) {
+    var h = '', n = function (l) { return evidenzia && l === liv ? ' nuovo' : ''; };
+    h += D.box(28, 52, 336, 104, 'bordo' + n(1),
+      '<div><div class="t-corsivo" style="font-size:28px;font-weight:700;color:#555">Critica dello storicismo</div>' +
+      '<div class="t-corsivo" style="font-size:23px;color:#555;margin-top:4px">(Platone · Hegel · Marx)</div></div>');
+    if (liv >= 2) {
+      h += D.freccia('su', 163, 166, 62, 56);
+      h += D.box(28, 232, 336, 220, 'verde t-cond' + n(2),
+        '<span style="font-size:24px;line-height:1.28">Chi crede di conoscere il senso necessario della storia apre la via all’oppressione: nessuna obiezione ferma chi agisce in nome dell’inevitabile.</span>');
+    }
+    if (liv >= 3) {
+      h += D.freccia('dx', 381, 76, 59, 56);
+      h += D.box(446, 62, 706, 92, 'grigio' + n(3), '<span style="font-size:38px;font-weight:700;color:var(--blu)">LIBERALISMO</span>');
+    }
+    if (liv >= 4) {
+      h += D.freccia('giu', 769, 160, 59, 56);
+      h += D.box(446, 226, 706, 98, 'grigio' + n(4), '<span style="font-size:38px;font-weight:700">TEORIA DELLA DEMOCRAZIA</span>');
+    }
+    if (liv >= 5) {
+      h += D.freccia('giu', 769, 332, 59, 56);
+      h += D.box(446, 396, 706, 120, 'giallo t-cond' + n(5),
+        '<span style="font-size:36px;font-weight:700;line-height:1.2">Possibilità di cambiare governo senza uso della violenza</span>');
+    }
+    if (liv >= 6) {
+      h += '<svg class="rami" viewBox="0 0 1600 726" aria-hidden="true">' +
+        '<path d="M1152 456 C1200 456 1205 392 1252 390"/><polygon points="1270,390 1248,380 1248,400" fill="var(--rosso)"/>' +
+        '<path d="M1152 456 C1200 456 1205 516 1252 518"/><polygon points="1270,518 1248,508 1248,528" fill="var(--rosso)"/></svg>';
+      h += D.testo(1280, 348, 300, 84, 'testo-libero ramo-etichetta' + n(6), '<span class="t-corsivo">Tutela delle<br>minoranze</span>');
+      h += D.testo(1280, 476, 300, 84, 'testo-libero ramo-etichetta' + n(6), 'Riformismo<br>gradualista');
+    }
+    if (liv >= 7) {
+      h += D.freccia('giu', 769, 522, 59, 56);
+      h += D.testo(300, 590, 1000, 100, 'testo-libero chiusa-mappa' + n(7),
+        'Alla società chiusa Popper oppone la società aperta:<br>fallibile, riformabile, correggibile.');
+    }
+    return '<div class="mappa">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ brani
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
+
+  var B_DEMOCRAZIA = '<span class="etichetta autore">Popper</span>' +
+    '<div class="brano piccolo"><p>1. La democrazia non può compiutamente caratterizzarsi solo come governo della maggioranza, ' + MIO + ' Infatti una maggioranza può governare in maniera tirannica. (La maggioranza di coloro che hanno una statura inferiore a sei piedi può decidere che sia la minoranza di coloro che hanno statura superiore a sei piedi a pagare tutte le tasse.) In una democrazia, i poteri dei governanti devono essere limitati ed il criterio di una democrazia è questo: in una democrazia i governanti – cioè il governo – possono essere licenziati dai governati senza spargimenti di sangue. Quindi se gli uomini al potere non salvaguardano quelle istituzioni che assicurano alla minoranza la possibilità di lavorare per un cambiamento pacifico, il loro governo è una tirannia.</p>' +
+    '<p>2. Dobbiamo distinguere soltanto fra due forme di governo, cioè quello che possiede istituzioni di questo genere e tutti gli altri; vale a dire fra democrazia e tirannide.</p></div>' +
+    '<div class="fonte"><b>K.R. Popper, <i>La società aperta e i suoi nemici</i></b> (1945), Armando, Roma 1973-1974, vol. 2, pp. 210-211 · punti 1 e 2. ' +
+    'Sei piedi: circa un metro e ottanta. <span class="taglio taglio-mio">[…]</span> = taglio per la lezione.</div>';
+
+  var DEDICA = '<div class="citazione-breve" data-f="1">In memoria degli innumerevoli uomini e donne di ogni credo, nazione o razza che caddero vittime della fede fascista e comunista nelle Leggi Inesorabili del Destino Storico.' +
+    '<span class="fonte-c"><b>K.R. Popper, <i>Miseria dello storicismo</i></b> (1957), dedica · <span class="etichetta trad" style="margin:0 0 0 6px;font-size:14px">traduzione di lavoro</span></span></div>';
+
+  var B_RIFORME = '<div class="citazione-breve">La democrazia offre un prezioso campo di battaglia per qualsiasi riforma ragionevole dato che essa permette l’attuazione di riforme senza violenza.' +
+    '<span class="fonte-c"><b>K.R. Popper, <i>La società aperta e i suoi nemici</i></b>, vol. 2, p. 211 · punto 7</span></div>';
+
+  // ------------------------------------------------------------ attività
+  var DOMANDA1 = 'Quando qualcuno dice «stiamo dalla parte giusta della storia», sta dando un argomento?';
+  var OPZIONI1 = [
+    'Sì: se si sa dove va la storia, è una buona ragione',
+    'Dipende da chi lo dice e da che cosa sa',
+    'No: dove va la storia non giustifica una scelta'
+  ];
+
+  var CASI = [
+    { testo: 'Un sovrano illuminato governa bene e abbassa le tasse, ma si può sostituire solo con una rivolta.', atteso: 1 },
+    { testo: 'Un governo vince le elezioni con il 70% e approva una legge che rinvia le elezioni successive di dieci anni.', atteso: 1 },
+    { testo: 'Un governo impopolare perde le elezioni e lascia il posto all’opposizione.', atteso: 0 },
+    { testo: 'La maggioranza fa pagare tutte le tasse a chi è più alto di un metro e ottanta; stampa, partiti ed elezioni restano liberi.', atteso: 0 },
+    { testo: 'Il partito al governo chiude i giornali che lo criticano, ma le elezioni si tengono regolarmente.', atteso: 1 }
+  ];
+
+  var testoRiformismo =
+    '<div class="confronto2">' +
+      '<div class="col no" data-f="1"><h3>Ingegneria utopistica</h3><div class="chiave">la rivoluzione</div>' +
+        '<p>Un progetto totale: la società bella come un’opera d’arte</p>' +
+        '<p>Il fine assoluto giustifica i mezzi; chi non si adatta va «ripulito»</p>' +
+        '<p>Gli errori non si possono correggere</p>' +
+        '<div class="esito t-rosso">Cromwell · Robespierre e Napoleone · Stalin</div></div>' +
+      '<div class="col si" data-f="2"><h3>Ingegneria «a spizzico»</h3><div class="chiave">il riformismo gradualista</div>' +
+        '<p>Interventi limitati, un passo alla volta</p>' +
+        '<p>Si confrontano i risultati attesi con quelli ottenuti</p>' +
+        '<p>Si correggono gli errori e le conseguenze non volute</p>' +
+        '<div class="esito t-verde">conserva la libertà</div></div>' +
+      '<div class="sotto-conf" data-f="3">' + B_RIFORME + '</div>' +
+    '</div>';
+
+  // ------------------------------------------------------------ i passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO, minuti: 2,
+      note: '<p>Lascia il QR sullo schermo mentre la classe entra. Q lo riapre in qualsiasi momento.</p>' },
+
+    { titolo: 'Karl R. Popper (1902-1994)', minuti: 2,
+      html: '<div class="tappe">' +
+        '<div class="tappa"><div class="anno">1902</div><p>Nasce a Vienna; studia filosofia, matematica e fisica</p></div>' +
+        '<div class="tappa"><div class="anno">1934</div><p><i>Logica della ricerca</i>: la filosofia della scienza (la falsificabilità)</p></div>' +
+        '<div class="tappa forte" data-f="1"><div class="anno">1937-1945</div><p>Esilio in Nuova Zelanda. Scrive <i>Miseria dello storicismo</i> e <i>La società aperta e i suoi nemici</i> (1945)</p></div>' +
+        '<div class="tappa"><div class="anno">1946-1994</div><p>Insegna alla London School of Economics; muore a Londra</p></div>' +
+        '</div>' +
+        '<div class="contesto-chiusa" data-f="1">Due opere politiche scritte <b>durante la guerra</b>, contro i totalitarismi</div>',
+      note: '<p><b>Spieghi</b> in un minuto o due. Clic 1: l’esilio e le due opere politiche. Racconta che la decisione di scrivere <i>La società aperta</i> nacque, dice Popper, dalla notizia dell’invasione nazista dell’Austria (1938). La falsificabilità si studia nel percorso sulla scienza: qui basta nominarla, perché tornerà nel parallelo tra democrazia e metodo critico.</p>' +
+        '<p>Se sei in ritardo, salta questo passo e dai il contesto a voce sulla mappa.</p>' },
+
+    { titolo: 'Prima di cominciare', minuti: 4,
+      html: '<p class="att-consegna">' + DOMANDA1 + '</p>',
+      attivita: { id: 'parte_giusta', tipo: 'sondaggio', minuti: 2, domanda: DOMANDA1, opzioni: OPZIONI1 },
+      note: '<p><b>Sondaggio</b> (2 min). Lo spunto è nelle Citazioni della dispensa (domanda di discussione 2).</p>' +
+        '<p><b>Ripresa</b>: mostra le barre. <b>Punta il commento</b> sui «sì» e sui «dipende»: che cosa dovremmo sapere per poter dire che la storia va in una direzione? Chiedi un esempio a voce («il futuro è già scritto», «non si può fermare il progresso»). Non risolvere: la risposta di Popper arriva nei due passi successivi.</p>' },
+
+    { titolo: TITOLO, html: mappa(1, true), minuti: 1,
+      note: '<p><b>Spieghi</b>: per «storicismo» Popper non intende una corrente precisa, ma un modello polemico: ogni filosofia che pretende di cogliere il senso globale e oggettivo della storia, un destino a cui gli individui dovrebbero adeguarsi. La «filosofia oracolare»: Platone, Hegel, Marx (ma anche Comte e Mill).</p>' },
+
+    { titolo: 'Leggi e tendenze', minuti: 3,
+      html: '<div class="confronto2">' +
+        '<div class="col si"><h3>Previsione</h3><div class="chiave">l’eclissi</div>' +
+          '<p>Si fonda su una <b>legge</b> universale e su condizioni iniziali</p>' +
+          '<p>Se la previsione fallisce, la legge è smentita</p>' +
+          '<div class="esito t-verde">scienza</div></div>' +
+        '<div class="col no" data-f="1"><h3>Profezia</h3><div class="chiave">la concentrazione dei capitali</div>' +
+          '<p>Prolunga nel futuro una <b>tendenza</b> osservata</p>' +
+          '<p>Una tendenza può durare secoli o rovesciarsi in pochi anni</p>' +
+          '<div class="esito t-rosso">storicismo</div></div>' +
+        '<div class="sotto-conf" data-f="2">La storia è un processo unico: vi si osservano tendenze, <b>mai leggi</b></div>' +
+        '</div>',
+      note: '<p><b>Spieghi</b> l’errore teorico principale dello storicismo: confondere leggi e tendenze. Clic 1: la profezia. Clic 2: la conclusione.</p>' +
+        '<p>Se c’è tempo, gli altri errori: presuppone un senso già dato della storia (Popper: «né la natura né la storia possono dirci che cosa dobbiamo fare», citazione della Sintesi, senza pagina: dilla a voce); confonde fatti e valori; pretende di parlare della storia come totalità (olismo).</p>' +
+        '<p>Torna al sondaggio: chi diceva «sì» presupponeva una legge della storia.</p>' },
+
+    { titolo: TITOLO, html: mappa(2, true) , minuti: 2,
+      note: '<p><b>Spieghi</b> il versante politico: se la storia ha una direzione necessaria, i suoi «interpreti ufficiali» si sentono autorizzati a eliminare chi vi si oppone. Chi resiste all’inevitabile diventa un criminale contro la Storia, come un tempo il peccatore contro Dio.</p>' +
+        '<p>Passo successivo: la dedica di <i>Miseria dello storicismo</i>.</p>' },
+
+    { titolo: 'Una dedica', minuti: 1,
+      html: '<div class="lettura" style="padding-top:60px"><p style="font-size:30px;margin:0 0 10px">Il libro contro lo storicismo si apre così:</p>' + DEDICA.replace(' data-f="1"', '') + '</div>',
+      note: '<p><b>Leggi</b> (29 parole). Fai notare le maiuscole di «Leggi Inesorabili del Destino Storico»: sono di Popper, ironiche.</p>' +
+        '<p><b>Attenzione:</b> traduzione di lavoro dalla dedica inglese di <i>The Poverty of Historicism</i>, non collazionata con l’edizione italiana. Se hai il volume, sostituiscila e togli l’etichetta.</p>' },
+
+    { titolo: TITOLO, html: mappa(3, true), minuti: 1,
+      note: '<p><b>Spieghi</b>: contro lo storicismo, il liberalismo. Popper riprende da Bergson la distinzione tra società chiusa e società aperta (passo successivo).</p>' },
+
+    { titolo: 'Società chiusa e società aperta', minuti: 3,
+      html: '<table class="tab-sc"><thead><tr><th></th><th class="ch">Società chiusa</th><th class="ap">Società aperta</th></tr></thead><tbody>' +
+        '<tr><td>Verità</td><td>Pretende di possederla e la impone</td><td>Ammette di poter sbagliare (fallibilismo)</td></tr>' +
+        '<tr data-f="1"><td>Individuo</td><td>Parte di un tutto, sottoposto a norme rigide</td><td>Chiamato a decidere personalmente</td></tr>' +
+        '<tr data-f="2"><td>Critica</td><td>Repressa</td><td>Accolta e istituzionalizzata</td></tr>' +
+        '<tr data-f="3"><td>Cambiamento</td><td>Rivoluzione, progetto totale e irreversibile</td><td>Riforme graduali e correggibili</td></tr>' +
+        '<tr data-f="4"><td>Governo</td><td>Chi governa non può essere rimosso senza violenza</td><td>I governanti si licenziano senza spargimento di sangue</td></tr>' +
+        '</tbody></table>',
+      note: '<p><b>Spieghi</b> una riga per clic (4 clic). La società chiusa è tribale, magica, collettivista; ha i suoi teorici in Platone, Hegel, Marx. Fai notare che la prima riga è la stessa idea della scienza: la democrazia è l’equivalente politico del metodo critico.</p>' +
+        '<p>L’ultima riga anticipa il criterio della democrazia.</p>' },
+
+    { titolo: 'La domanda sbagliata', minuti: 2,
+      html: '<div class="domande"><div class="vecchia">Chi deve governare?</div>' +
+        '<div class="esempi">il popolo · i migliori · i lavoratori · i capitalisti</div>' +
+        '<div class="nuova" data-f="1">Come organizzare le istituzioni perché i governanti cattivi o incompetenti facciano il minor danno possibile?</div></div>',
+      note: '<p><b>Spieghi</b>: la domanda tradizionale della politica è per Popper mal posta. Platone rispondeva «i migliori», Marx «i lavoratori». Clic 1: la domanda giusta.</p>' +
+        '<p>Annuncia la lettura: come si riconosce, allora, una democrazia?</p>' },
+
+    { titolo: 'Come si riconosce una democrazia', html: lettura(B_DEMOCRAZIA), dispositivo: B_DEMOCRAZIA, minuti: 2,
+      note: '<p><b>Leggi</b> (circa 140 parole). Fermati su «licenziati» e su «soltanto fra due forme di governo».</p>' +
+        '<p>Il brano è il Testo 2 dell’Antologia della dispensa (punti 1 e 2, con un taglio nel punto 1: «benché l’istituzione delle elezioni generali sia della massima importanza»). Riferimento ripreso dall’Antologia, non confrontato con il volume.</p>' },
+
+    { titolo: 'Democrazia o tirannide?', minuti: 4,
+      html: '<p class="att-consegna">Sul telefono: democrazia o tirannide, secondo il criterio di Popper?</p>',
+      attivita: { id: 'democrazia_tirannide', tipo: 'abbinamento', minuti: 3,
+        consegna: 'Secondo il criterio di Popper, ognuno di questi casi è una democrazia o una tirannide?',
+        categorie: ['Democrazia', 'Tirannide'],
+        voci: CASI,
+        testo: B_DEMOCRAZIA },
+      note: '<p><b>Abbinamento</b> (3 min). Il testo resta rileggibile sul telefono.</p>' +
+        '<p><b>Ripresa</b>: mostra le collocazioni attese. <b>Punta il commento</b> su due casi.</p>' +
+        '<p>Il <b>sovrano illuminato</b>: governa bene, ma non si può licenziare. Per Popper conta come si rimuove chi governa, non quanto governa bene.</p>' +
+        '<p>Le <b>tasse ai più alti</b> (il trabocchetto, dall’esempio di Popper): è una legge ingiusta, una maggioranza che «governa in maniera tirannica», ma resta una democrazia finché la minoranza può lavorare per un cambiamento pacifico. La democrazia non garantisce leggi giuste: garantisce di poterle cambiare senza violenza. Confrontalo con i <b>giornali chiusi</b>: lì le elezioni ci sono, ma manca un’istituzione che permette il cambiamento pacifico.</p>' +
+        '<p>Se la classe si divide, sottolinea il punto 2: le colonne sono due perché per Popper non c’è una scala di democraticità.</p>' },
+
+    { titolo: TITOLO, html: mappa(5, true), minuti: 1,
+      note: '<p><b>Spieghi</b>: il criterio sulla mappa. Esistono soltanto due tipi di governo; se la democrazia è distrutta, dice Popper al punto 6, tutti i diritti sono distrutti.</p>' },
+
+    { titolo: TITOLO, html: mappa(6, true), minuti: 1,
+      note: '<p><b>Spieghi</b> le due conseguenze. <b>Tutela delle minoranze</b>: chi governa deve salvaguardare le istituzioni che permettono alla minoranza di lavorare per un cambiamento pacifico; la tutela non si estende però a chi incita al rovesciamento violento della democrazia. <b>Riformismo gradualista</b>: passo successivo.</p>' },
+
+    { titolo: 'Rivoluzione o riforme?', html: testoRiformismo, minuti: 2,
+      note: '<p><b>Spieghi</b>. Clic 1: la mentalità rivoluzionaria nasce da un sogno estetico di perfezione, la società bella come un’opera d’arte che il «politico-artista» deve ripulire e «liquidare» (la citazione è nelle Citazioni della dispensa, senza pagina: dilla a voce). Le rivoluzioni sono spesso finite in dittature. Clic 2: l’ingegneria sociale «a spizzico» (piecemeal). Clic 3: il punto 7 del brano letto.</p>' +
+        '<p>Se c’è tempo: i marxisti lo accusarono di conservatorismo; Cotroneo risponde che Popper pone all’azione riformatrice un solo limite, le libertà. Popper ammette l’intervento dello Stato nell’economia, ma «se per pianificare si perde la libertà, tutto è perduto».</p>' },
+
+    { titolo: 'Le due conseguenze, oggi', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: un esempio di oggi per ciascuna conseguenza</p>',
+      attivita: { id: 'conseguenze_oggi', tipo: 'schema', libero: true, max: 80, minuti: 4, colonne: 2,
+        consegna: 'Un esempio concreto di oggi per ciascuna conseguenza. Poche parole per casella.',
+        caselle: [
+          { titolo: 'Tutela delle minoranze', sotto: 'un’istituzione che permette alla minoranza di diventare maggioranza' },
+          { titolo: 'Riformismo gradualista', sotto: 'una riforma fatta un passo alla volta, che si può correggere' }
+        ] },
+      note: '<p><b>Schema in fieri a due colonne</b> (4 min). Le risposte uguali si raggruppano e crescono.</p>' +
+        '<p><b>Ripresa</b>: scegli un esempio per colonna e chiedi alla classe se regge il criterio di Popper. Per le minoranze: l’esempio protegge davvero la possibilità di un cambiamento pacifico, o solo un interesse? Per il riformismo: si può confrontare il risultato atteso con quello ottenuto, e tornare indietro?</p>' },
+
+    { titolo: TITOLO, html: mappa(7, true), minuti: 1,
+      note: '<p><b>Chiusura</b>: la mappa intera. Rileggi la frase finale: fallibile, riformabile, correggibile. Come la scienza.</p>' },
+
+    { titolo: 'Prima pensavo… ora penso…', minuti: 3,
+      html: '<p class="att-consegna">Sul telefono: completa la frase</p>' +
+        '<p style="font-size:36px;line-height:1.4;margin-top:30px">«Prima pensavo che una democrazia fosse…<br>ora penso che…»</p>',
+      attivita: { id: 'prima_ora', tipo: 'breve', minuti: 3, max: 200,
+        domanda: 'Prima pensavo che una democrazia fosse… ora penso che…',
+        segnaposto: 'Prima pensavo che… ora penso che…' },
+      note: '<p><b>Thinking routine</b> «I used to think… Now I think…» (Project Zero), 3 min. Si fa solo se resta tempo: altrimenti chiudi sulla mappa.</p>' +
+        '<p><b>Ripresa</b>: il muro delle risposte. Clic per evidenziarne due o tre: cerca chi è passato da «governo della maggioranza» a «poter licenziare il governo» o «tutelare le minoranze». Maiusc+clic nasconde una risposta solo su questo computer.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quinta · lezione con attività dal telefono',
+    percorso: 'lezioni_filosofia_popper_societa_aperta',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>
