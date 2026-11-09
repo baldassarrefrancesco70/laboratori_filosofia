@@ -44,6 +44,18 @@
   @keyframes bil-a-sospeso{to{left:640px}}
   @keyframes bil-a-urto{to{left:712px}}
   @keyframes bil-b-urto{to{left:1380px}}
+  /* esiti alternativi: ogni clic mostra un esito diverso, sovrapposto al precedente; l'animazione parte quando compare */
+  .bw{position:relative;height:170px;margin:4px 0 8px}
+  .bw .biliardo{position:absolute;left:0;right:0;top:0;margin:0}
+  .bc{position:relative;height:56px;margin-bottom:10px}
+  .bc>div{position:absolute;left:0;right:0;top:0;font-size:34px;font-weight:700;color:#22506F}
+  .bv:has(+ .bv:not(.aula-f-off)){display:none}
+  .bv.v1:not(.aula-f-off) .a,.bv.v3:not(.aula-f-off) .a,.bv.v4:not(.aula-f-off) .a{animation:bil-a-urto 1.2s linear .4s forwards}
+  .bv.v1:not(.aula-f-off) .b{animation:bil-b-urto 1.6s ease-out 1.6s forwards}
+  .bv.v2:not(.aula-f-off) .a{animation:bil-a-rimbalzo 2.4s linear .4s forwards}
+  .bv.v4:not(.aula-f-off) .b{animation:bil-b-diagonale 1.5s ease-out 1.6s forwards}
+  @keyframes bil-a-rimbalzo{0%{left:40px}50%{left:712px}100%{left:300px}}
+  @keyframes bil-b-diagonale{to{left:1150px;top:-80px}}
   .biliardo .pausa{position:absolute;left:600px;top:96px;color:#fff;font-size:20px;opacity:0;animation:bil-compari .3s 2.1s forwards}
   @keyframes bil-compari{to{opacity:.9}}
 </style>
@@ -135,6 +147,19 @@
       (modo === 'sospeso' ? '<div class="pausa">… e adesso?</div>' : '') + '</div>';
   }
 
+  // ------------------------------------------------------------ esiti alternativi dell'urto (un clic per esito)
+  function esitiAlternativi() {
+    var tav = function (n) { return '<div class="biliardo bv v' + n + '"' + (n ? ' data-f="' + n + '"' : '') + '><div class="palla a"></div><div class="palla b"></div></div>'; };
+    var cap = function (n, txt) { return '<div class="bv"' + (n ? ' data-f="' + n + '"' : '') + '>' + txt + '</div>'; };
+    return '<div class="bw">' + tav(0) + tav(1) + tav(2) + tav(3) + tav(4) + '</div>' +
+      '<div class="bc">' + cap(0, 'Stessa spinta, stesse palle: che cosa potrebbe succedere?') +
+        cap(1, 'Come sempre: la rossa parte in avanti.') +
+        cap(2, 'La bianca rimbalza e torna indietro.') +
+        cap(3, 'Le due palle restano immobili.') +
+        cap(4, 'La rossa parte in diagonale.') + '</div>' +
+      '<p class="att-consegna" style="font-weight:400;font-family:var(--serif);font-style:italic">Nessuna di queste scene è contraddittoria. Sappiamo quale accade solo perché l’abbiamo vista accadere, molte volte.</p>';
+  }
+
   // ------------------------------------------------------------ brani (traduzioni di lavoro dall'inglese)
   var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
   var TRAD = ' <span class="etichetta trad">traduzione di lavoro</span>';
@@ -217,6 +242,9 @@
 
     { titolo: 'Il biliardo: cento eventi possibili', html: biliardo('urto') + lettura(CENTO), dispositivo: CENTO, minuti: 1,
       note: '<p>L’urto, poi <b>leggi tu</b> (circa 55 parole). Le alternative di Hume sono le opzioni del sondaggio: tutte concepibili senza contraddizione.</p><p>Per rivedere l’animazione: ← e → .</p>' },
+
+    { titolo: 'E se andasse diversamente?', html: esitiAlternativi(), minuti: 2,
+      note: '<p><b>Spieghi</b>: la prima volta l’urto è come lo conosciamo. Un clic per ogni esito: la bianca rimbalza, le due palle restano ferme, la rossa parte in diagonale. Sono quelli del sondaggio e di Hume («cento eventi diversi»).</p><p><b>Attenzione</b>: Hume non dice che siano probabili o che possano accadere davvero. Dice che il loro contrario non è contraddittorio: nessuna di queste scene è impensabile come lo è 2 + 2 = 5. Quello che ci fa aspettare l’esito consueto è l’abitudine, non la logica: lo riprendi con «il deve» e con l’abitudine.</p><p>← e → rivedono l’animazione di ogni esito.</p>' },
 
     { titolo: 'Adamo davanti all’acqua e al fuoco', html: lettura(ADAMO), dispositivo: ADAMO, minuti: 1,
       note: '<p><b>Leggi tu</b> (circa 85 parole). Ad Adamo non manca la ragione: gli manca l’esperienza. Domanda di passaggio: e l’esperienza basta?</p>' },
