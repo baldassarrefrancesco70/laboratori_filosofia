@@ -74,6 +74,29 @@
     return '<div class="mappa pg">' + h + '</div>';
   }
 
+  // ------------------------------------------------------------ il principio di associazione (tre criteri, a clic)
+  function slideAssociazione() {
+    var h = occhiello('Mossa 3 · La dissoluzione empirista · Hume');
+    h += D.box(450, 40, 700, 84, 'scuro', t('L’immaginazione collega le idee', 'ma non procede a caso'));
+    h += D.freccia('giu', 775, 130, 50, 40);
+    h += D.box(300, 176, 1000, 118, 'azzurro', t('Principio di associazione', 'una «dolce forza»: per la mente ciò che la gravità è per la natura'));
+    var colonne = [
+      { x: 66,   nome: 'SOMIGLIANZA',                    a: 'un ritratto',  b: 'l’originale',      did: 'ciò che somiglia si richiama' },
+      { x: 565,  nome: 'CONTIGUITÀ',                     a: 'una stanza',   b: 'le altre stanze',  did: 'vicino nel tempo e nello spazio' },
+      { x: 1064, nome: 'CAUSALITÀ',                      a: 'una ferita',   b: 'il dolore',        did: 'causa ed effetto' }
+    ];
+    colonne.forEach(function (c, i) {
+      var f = ' data-f="' + (i + 1) + '"', cx = c.x + 235;
+      h += D.freccia('giu', cx - 25, 302, 50, 40, f);
+      h += D.box(c.x, 350, 470, 80, 'notte', '<span class="tit" style="font-size:30px;letter-spacing:1px">' + c.nome + '</span>', f);
+      h += D.box(c.x, 470, 190, 86, 'azzurro', '<span style="font-size:27px;font-weight:600">' + c.a + '</span>', f);
+      h += D.freccia('dx', c.x + 205, 490, 60, 46, f);
+      h += D.box(c.x + 280, 470, 190, 86, 'contorno-notte', '<span style="font-size:27px;font-weight:600">' + c.b + '</span>', f);
+      h += D.testo(c.x, 584, 470, 40, 'chiosa', '<div style="font-size:24px">' + c.did + '</div>', f);
+    });
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
   // ------------------------------------------------------------ slide 11, a livelli
   function slideCausa(liv) {
     var h = occhiello('Mossa 3 · La dissoluzione empirista · Hume');
@@ -159,8 +182,11 @@
       attivita: { id: 'sole_prima', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI },
       note: '<p><b>Ponte</b>: la lezione scorsa si è chiusa così. Hume ha sciolto la sostanza con il test dell’impressione: che cosa succede alla causa e all’effetto?</p><p><b>Sondaggio d’apertura</b> (1 min). Mostra il risultato senza commentarlo: torna alla fine.</p>' },
 
+    { titolo: 'Il principio di associazione', html: slideAssociazione(), minuti: 3,
+      note: '<p><b>Spieghi</b>: le idee non si collegano a caso; l’immaginazione è guidata dal principio di associazione, una «dolce forza» che è per la mente ciò che la gravità è per la natura (Newton spiega come i corpi si attraggono, Hume come le idee si attraggono). Un clic per ogni criterio: <b>somiglianza</b> (un ritratto richiama l’originale), <b>contiguità</b> nel tempo e nello spazio (una stanza richiama le altre della stessa casa), <b>causalità</b> (una ferita fa pensare al dolore).</p><p>Il terzo criterio è quello che la lezione mette in discussione: è l’unico che ci porta oltre ciò che vediamo.</p>' },
+
     { titolo: 'Associazione e due tipi di conoscenza', html: slideConoscenze(), minuti: 4,
-      note: '<p><b>Spieghi</b> i tre principi di associazione: sono il modo in cui l’immaginazione passa da un’idea all’altra (un ritratto fa pensare alla persona, una stanza a quella accanto, una ferita al dolore).</p><p>Clic 1: la distinzione tra relazioni di idee e materie di fatto (<i>Ricerca</i>, IV, 1), con il criterio: il contrario è contraddittorio? Clic 2: la tenaglia.</p><p>Etichette riformulate rispetto alla slide («Associazioni necessarie / contingenti»): le relazioni di idee non sono associazioni, si conoscono per intuizione o dimostrazione.</p>' },
+      note: '<p><b>Richiama</b> i tre principi di associazione appena visti (somiglianza, contiguità, causa-effetto).</p><p>Clic 1: la distinzione tra relazioni di idee e materie di fatto (<i>Ricerca</i>, IV, 1), con il criterio: il contrario è contraddittorio? Clic 2: la tenaglia.</p><p>Etichette riformulate rispetto alla slide («Associazioni necessarie / contingenti»): le relazioni di idee non sono associazioni, si conoscono per intuizione o dimostrazione.</p>' },
 
     { titolo: 'Il test del contrario', minuti: 5,
       html: '<p class="att-consegna">Sul telefono: relazione di idee o materia di fatto? Prova a pensare il contrario.</p>',
@@ -193,14 +219,7 @@
       note: '<p>L’urto, poi <b>leggi tu</b> (circa 55 parole). Le alternative di Hume sono le opzioni del sondaggio: tutte concepibili senza contraddizione.</p><p>Per rivedere l’animazione: ← e → .</p>' },
 
     { titolo: 'Adamo davanti all’acqua e al fuoco', html: lettura(ADAMO), dispositivo: ADAMO, minuti: 1,
-      note: '<p><b>Leggi tu</b> (circa 85 parole).</p>' },
-
-    { titolo: 'Adamo davanti all’acqua e al fuoco', minuti: 3,
-      html: '<p class="att-consegna">Sul telefono: che cosa manca ad Adamo?</p>',
-      attivita: { id: 'adamo', tipo: 'breve', minuti: 2, max: 160,
-        domanda: 'Adamo ha una ragione perfetta. Che cosa gli manca per sapere che il fuoco brucia?',
-        segnaposto: 'Una frase', testo: ADAMO },
-      note: '<p><b>Risposta breve</b> (2 min). Clic per evidenziare, Maiusc+clic per nascondere (solo qui).</p><p><b>Ripresa</b>: evidenzia le risposte che dicono «esperienza». <b>Punta il commento</b> sul fatto che ad Adamo non manca la ragione: gli manca l’esperienza. Domanda di passaggio: e l’esperienza basta?</p>' },
+      note: '<p><b>Leggi tu</b> (circa 85 parole). Ad Adamo non manca la ragione: gli manca l’esperienza. Domanda di passaggio: e l’esperienza basta?</p>' },
 
     { titolo: 'La critica del principio di causalità', html: slideCausa(2), minuti: 1,
       note: '<p><b>Spieghi</b>: l’esperienza mostra contiguità, priorità e congiunzione costante (questo segue sempre a quello), non la connessione necessaria. E dal passato non si ricava il futuro senza supporre che la natura sia uniforme, cioè proprio ciò che andrebbe dimostrato (<i>Ricerca</i>, IV, 2).</p><p>Nella casella ho aggiunto «congiunzione costante» a «semplice successione».</p>' },
