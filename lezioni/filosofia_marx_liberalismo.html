@@ -43,6 +43,28 @@
     return '<div class="mappa">' + h + '</div>';
   }
 
+  // ------------------------------------------------------------ bourgeois e citoyen: la doppia vita (a clic)
+  function doppiaVita() {
+    var h = '';
+    var tit = function (a, b, c) {
+      return '<div style="text-align:center"><div style="font-size:29px;font-weight:700;letter-spacing:1px">' + a + '</div>' +
+        '<div style="font-size:26px;margin-top:8px"><b>' + b + '</b></div><div style="font-size:24px;margin-top:4px;line-height:1.3">' + c + '</div></div>';
+    };
+    h += D.testo(10, 100, 200, 60, 'testo-libero', '<div style="font-size:28px;font-style:italic;font-weight:700;color:var(--verde-testo)">«in cielo»</div>');
+    h += D.testo(10, 520, 200, 60, 'testo-libero', '<div style="font-size:28px;font-style:italic;font-weight:700;color:#555">«in terra»</div>');
+    h += D.box(230, 20, 880, 225, 'verde', tit('STATO', 'citoyen', 'membro di una comunità di eguali<br>persegue il bene comune'));
+    h += D.freccia('su', 645, 248, 50, 38);
+    h += D.box(420, 290, 500, 86, 'giallo t-forte', '<span style="font-size:30px">Uno stesso uomo, due vite</span>');
+    h += D.freccia('giu', 645, 379, 50, 38);
+    h += D.box(230, 420, 880, 225, 'grigio', tit('SOCIETÀ CIVILE', 'bourgeois', 'un privato che persegue il proprio interesse<br>vede negli altri un limite o uno strumento'));
+    h += D.box(1220, 20, 370, 225, 'tratteggio', '<div style="text-align:center"><div style="font-size:26px;font-weight:700;color:var(--rosso-testo)">Per Marx il «cielo» è illusorio</div>' +
+      '<div style="font-size:22px;margin-top:10px;line-height:1.3">Lo Stato pretende di stare al di sopra degli interessi particolari, ma ne è lo strumento</div></div>', ' data-f="1"');
+    h += D.freccia('su', 1130, 262, 60, 150, ' data-f="2"');
+    h += D.box(1220, 275, 370, 200, 'grigio t-rosso', '<div style="text-align:center"><div style="font-size:26px;font-weight:700">La società civile abbassa lo Stato a proprio servitore</div>' +
+      '<div style="font-size:21px;margin-top:10px;line-height:1.3;font-weight:400;color:#444"><s>non è lo Stato a innalzare la società civile al bene comune</s></div></div>', ' data-f="2"');
+    return '<div class="mappa">' + h + '</div>';
+  }
+
   // ------------------------------------------------------------ brani
   var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
   var MAN = '<span class="taglio" title="taglio">[…]</span>';
@@ -109,6 +131,9 @@
         ],
         testo: B6A + '<hr style="border:none;border-top:1px solid #ddd;margin:14px 0">' + B6B },
       note: '<p><b>Schema in fieri a due colonne</b> (5 min). Le risposte uguali si raggruppano e crescono.</p><p><b>Ripresa</b>: affianca le due colonne. <b>Punta il commento</b> sulla stessa parola letta in due modi: nella Dichiarazione il limite è un confine reciproco che garantisce a tutti gli stessi diritti; per Marx quel confine trasforma l’altro in un ostacolo, e la libertà diventa quella dell’individuo isolato, «chiuso in sé». Da qui: democrazia formale.</p>' },
+
+    { titolo: 'Bourgeois e citoyen', html: doppiaVita(), minuti: 3,
+      note: '<p><b>Spieghi</b> (<i>Sulla questione ebraica</i>): nello Stato moderno l’uomo vive una doppia vita. Nella <b>società civile</b> è un <i>bourgeois</i>, un privato che persegue il proprio interesse e vede negli altri un limite o uno strumento: la vita «in terra». Nello <b>Stato</b> è un <i>citoyen</i>, membro di una comunità di eguali che persegue il bene comune: la vita «in cielo». Ricollega alla slide precedente: il «limite» è quello dell’uomo borghese.</p><p><b>Clic 1</b>: per Marx il «cielo» è illusorio. Lo Stato pretende di stare al di sopra degli interessi particolari, ma in realtà ne è lo strumento.</p><p><b>Clic 2</b>: non è lo Stato a innalzare la società civile al bene comune; è la società civile, con i suoi interessi di classe, ad abbassare lo Stato a proprio servitore. Anticipa la slide successiva: il diritto come volontà della classe dominante.</p>' },
 
     { titolo: TITOLO, html: mappa(2, true), minuti: 2,
       note: '<p><b>Spieghi</b>: il diritto come volontà della classe dominante; le idee di libertà e diritto come prodotti dei rapporti di proprietà. Richiama «eternizza» della lezione precedente.</p>' },
