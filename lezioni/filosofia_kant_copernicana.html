@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chi gira intorno a chi? Kant e la rivoluzione copernicana</title>
+<meta name="portale:titolo" content="Chi gira intorno a chi? Kant e la rivoluzione copernicana">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Filosofia IV): il criticismo, la ragione come giudice, la rivoluzione copernicana, giudizi analitici e sintetici, i giudizi sintetici a priori come risposta a Hume.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quarta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* palette blu scuro del percorso «Il problema gnoseologico» (come nelle lezioni su Hume); restano rossi gli avvisi di errore */
+  :root{--rosso:#22506F;--rosso-scuro:#22506F;--rosso-testo:#22506F}
+  .etichetta.autore,.muro .bigl.evid{background:#E6EDF4}
+  .aula-piede .punto.ko{background:#C40000}
+  .disp-esito.ko,.scelta-classe .avviso-codice{color:#C40000}
+  .mappa.pg{--freccia:#22506F;--rosso:#22506F}
+  .mappa.pg .box{border-radius:6px}
+  .box.scuro{background:#23262D;color:#fff}
+  .box.notte{background:#22506F;color:#fff}
+  .box.azzurro{background:#E6EDF4;border:2px solid #22506F;color:#22506F}
+  .box.contorno-notte{background:#fff;border:2px solid #22506F;color:#22506F}
+  .box.oro{background:#1C1E23;border:2px solid #D4A93C;color:#fff}
+  .box.oro .sot{color:#D4A93C;opacity:1}
+  .mappa.pg .nuovo{box-shadow:0 0 0 5px rgba(212,169,60,.75)}
+  .pg .tit{font-size:32px;font-weight:700;display:block}
+  .pg .sot{font-size:23px;display:block;margin-top:6px;opacity:.85}
+  .pg .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:#22506F;text-transform:uppercase;justify-content:flex-start}
+  .pg .chiosa{font-family:var(--serif);font-style:italic;font-size:26px;color:#33475B}
+  .pg .etich{font-size:22px;font-weight:700;color:#23262D}
+  .pg .cit{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1.3;color:#23262D}
+  .pg .cit small,.pg .rif{font-family:var(--sans);font-style:normal;font-size:18px;color:#6B6B6B;display:block;margin-top:6px}
+  .box.oro .cit{color:#fff}.box.oro .rif{color:#C9CCD2}
+
+  /* la domanda lunga non finisce sotto il timer */
+  .att-consegna.stretta{max-width:1320px}
+
+  /* chi gira intorno a chi: due cieli */
+  .box.cielo{background:#12202C;color:#fff;border-radius:10px;flex-direction:column;justify-content:flex-start;padding:14px 18px}
+  .cielo .quando{font-size:19px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#D4A93C}
+  .cielo .tesi{font-size:27px;font-weight:700;margin-top:4px;line-height:1.15}
+  .cielo .scena{position:relative;width:190px;height:190px;margin:10px auto 0}
+  .cielo .orbita{position:absolute;inset:0;border:1.5px dashed rgba(255,255,255,.35);border-radius:50%}
+  .cielo .astro{position:absolute;width:16px;height:16px;margin:-8px;border-radius:50%;background:#F4E7B0;box-shadow:0 0 10px 2px rgba(244,231,176,.6)}
+  .cielo .astro:nth-child(1){left:50%;top:0}
+  .cielo .astro:nth-child(2){left:97.5%;top:34.5%}
+  .cielo .astro:nth-child(3){left:79.4%;top:90.5%}
+  .cielo .astro:nth-child(4){left:20.6%;top:90.5%}
+  .cielo .astro:nth-child(5){left:2.5%;top:34.5%}
+  .cielo .spett{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:#fff}
+  /* lo sguardo dello spettatore: un piccolo cuneo che indica dove guarda */
+  .cielo .spett::after{content:"";position:absolute;left:50%;top:-20px;margin-left:-11px;border:11px solid transparent;border-bottom:22px solid #D4A93C;border-top:0}
+  .cielo .spett b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:#12202C;letter-spacing:.5px}
+  .cielo.tolemaico .orbita{animation:cielo-gira 9s linear infinite}
+  .cielo.copernicano:not(.aula-f-off) .spett{animation:cielo-gira 9s linear infinite reverse}
+  .cielo.copernicano:not(.aula-f-off) .spett b{animation:cielo-gira 9s linear infinite}
+  .cielo .dida{font-size:20px;margin-top:8px;color:#C9CCD2}
+  @keyframes cielo-gira{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.cielo .orbita,.cielo .spett,.cielo .spett b{animation:none!important}}
+
+  /* tabella dei giudizi */
+  .box.giud{flex-direction:column;justify-content:flex-start;padding:16px 18px}
+  .giud .nome{font-size:29px;font-weight:700;letter-spacing:.5px}
+  .giud .es{font-family:var(--serif);font-style:italic;font-size:25px;margin:8px 0 10px}
+  .giud ul{list-style:none;margin:0;padding:0;font-size:22px;line-height:1.3}
+  .giud li.no{opacity:.75}
+  .giud li::before{content:"✓ ";font-weight:700}
+  .giud li.no::before{content:"✗ "}
+  .giud .eco{margin-top:auto;font-size:18px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.8}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = Aula.disegno;
+  var TITOLO = 'Chi gira intorno a chi?';
+  var OCC = 'Mossa 5 · La rifondazione · Kant';
+
+  function t(tit, sot) { return '<div><span class="tit">' + tit + '</span>' + (sot ? '<span class="sot">' + sot + '</span>' : '') + '</div>'; }
+  function occhiello(s) { return D.testo(66, 6, 1200, 26, 'occhiello', s); }
+  function F(n) { return ' data-f="' + n + '"'; }
+
+  // ------------------------------------------------------------ Kant e il criticismo (dalla Sintesi; slide nuova)
+  function slideCriticismo() {
+    var h = occhiello(OCC);
+    h += D.box(350, 40, 900, 96, 'scuro', t('Immanuel Kant (1724-1804)', 'Königsberg · <i>Critica della ragion pura</i>, 1781 · seconda edizione 1787'));
+    h += D.box(66, 166, 700, 124, 'azzurro', t('La scienza', 'matematica e fisica: un cammino sicuro,<br>in progresso (Galilei, Newton)'), F(1));
+    h += D.box(834, 166, 700, 124, 'contorno-notte', t('La metafisica', 'anima, mondo, Dio: dispute senza fine,<br>nessun passo avanti'), F(1));
+    h += D.box(200, 318, 1200, 122, 'oro', '<div><span class="cit">«L’avvertimento di David Hume fu ciò che, molti anni fa, interruppe per la prima volta il mio sonno dogmatico»</span><span class="rif">Kant, <i>Prolegomeni a ogni futura metafisica</i> (1783), Prefazione · traduzione di lavoro</span></div>', F(2));
+    h += D.freccia('giu', 775, 448, 50, 40, F(3));
+    h += D.box(350, 496, 900, 100, 'notte', t('CRITICA: la ragione in tribunale', 'giudica se stessa: possibilità, validità, limiti'), F(3));
+    h += D.testo(66, 612, 1468, 50, 'chiosa', '<div>Non «la scienza è possibile?», ma «<b>come</b> è possibile?»</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 14: prima e dopo, con i due cieli
+  function cielo(classe, quando, tesi, dida, extra) {
+    var astri = '<div class="astro"></div><div class="astro"></div><div class="astro"></div><div class="astro"></div><div class="astro"></div>';
+    return function (x) {
+      return D.box(x, 40, 700, 356, 'cielo ' + classe,
+        '<div class="quando">' + quando + '</div><div class="tesi">' + tesi + '</div>' +
+        '<div class="scena"><div class="orbita">' + astri + '</div><div class="spett"><b>IO</b></div></div>' +
+        '<div class="dida">' + dida + '</div>', extra || '');
+    };
+  }
+  function slideCopernicana() {
+    var h = occhiello(OCC);
+    h += cielo('tolemaico', 'Prima', 'La conoscenza si regola sugli oggetti', 'gli astri girano, lo spettatore sta fermo e riceve')(66);
+    h += cielo('copernicano', 'Con Kant', 'Gli oggetti si regolano sulla nostra conoscenza', 'ciò che vedo dipende anche da come sono fatto io', F(1))(834);
+    h += D.box(200, 420, 1200, 96, 'azzurro', t('Non una risposta alla vecchia domanda: un cambio di domanda', '«Che cosa conosco delle cose?» → «A quali condizioni è possibile conoscere?»'), F(2));
+    h += D.testo(66, 532, 1468, 84, 'cit', '<div>«delle cose conosciamo a priori soltanto ciò che noi stessi vi mettiamo»<span class="rif">Kant, <i>Critica della ragion pura</i>, Prefazione alla seconda edizione, B XVIII · traduzione di lavoro</span></div>', F(3));
+    h += D.testo(66, 624, 1468, 40, 'chiosa', '<div>Il soggetto dà forma all’oggetto della conoscenza: un altro modo di guardare il rapporto soggetto–oggetto.</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ materia e forma (dalla Sintesi; slide nuova)
+  function slideMateriaForma() {
+    var h = occhiello(OCC);
+    h += D.testo(120, 40, 1360, 110, 'cit', '<div>«Ma benché ogni nostra conoscenza cominci <b>con</b> l’esperienza, non per questo essa deriva tutta <b>dall’</b>esperienza.»<span class="rif">Kant, <i>Critica della ragion pura</i>, Introduzione, I, B 1 · traduzione di lavoro</span></div>');
+    h += D.box(66, 190, 700, 170, 'contorno-notte', t('MATERIA', 'le impressioni dei sensi: molte, mutevoli<br><b>a posteriori</b> · viene dall’esperienza'), F(1));
+    h += D.box(834, 190, 700, 170, 'azzurro', t('FORMA', 'i modi fissi con cui la mente le ordina<br><b>a priori</b> · uguale in tutti i soggetti'), F(2));
+    h += D.freccia('giu', 391, 372, 50, 44, F(3)); h += D.freccia('giu', 1159, 372, 50, 44, F(3));
+    h += D.box(400, 428, 800, 96, 'notte', t('CONOSCENZA', 'sintesi di materia e forma'), F(3));
+    h += D.testo(66, 548, 1468, 80, 'chiosa', '<div>Come lenti che non possiamo togliere: tutto ciò che vediamo ne prende il colore.<br>A priori non vuol dire «innato»: vuol dire universale e necessario.</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 15: i giudizi, in due tempi
+  function giudizio(x, w, cls, nome, es, righe, eco, extra) {
+    var li = righe.map(function (r) { return '<li' + (r[0] ? '' : ' class="no"') + '>' + r[1] + '</li>'; }).join('');
+    return D.box(x, 130, w, 300, 'giud ' + cls, '<div class="nome">' + nome + '</div><div class="es">' + es + '</div><ul>' + li + '</ul><div class="eco">' + eco + '</div>', extra || '');
+  }
+  function slideGiudizi(liv) {
+    var h = occhiello(OCC);
+    h += D.box(350, 40, 900, 70, 'scuro', t('Giudicare: unire un predicato a un soggetto'));
+    if (liv === 1) {
+      h += giudizio(66, 700, 'azzurro', 'ANALITICI', '«Tutti i corpi sono estesi»',
+        [[1, 'il predicato è già nel soggetto'], [1, 'a priori: universali e necessari'], [0, 'non ampliano la conoscenza']], 'le relazioni di idee di Hume · razionalismo', F(1));
+      h += giudizio(834, 700, 'contorno-notte', 'SINTETICI A POSTERIORI', '«Tutti i corpi sono pesanti»',
+        [[1, 'il predicato aggiunge qualcosa di nuovo'], [1, 'ampliano la conoscenza'], [0, 'non sono universali né necessari']], 'le materie di fatto di Hume · empirismo', F(2));
+      h += D.testo(66, 460, 1468, 50, 'chiosa', '<div>È ancora la tenaglia: o certezza senza novità, o novità senza certezza.</div>', F(3));
+      h += D.box(350, 530, 900, 84, 'notte', t('E la scienza, di quali giudizi è fatta?'), F(4));
+    } else {
+      h += giudizio(66, 440, 'azzurro', 'ANALITICI', '«I corpi sono estesi»',
+        [[1, 'universali e necessari'], [0, 'non ampliano la conoscenza']], 'a priori');
+      h += giudizio(526, 500, 'contorno-notte', 'SINTETICI A POSTERIORI', '«I corpi sono pesanti»',
+        [[1, 'ampliano la conoscenza'], [0, 'non universali né necessari']], 'dall’esperienza');
+      h += giudizio(1046, 488, 'notte nuovo', 'SINTETICI A PRIORI', '«7 + 5 = 12» · «Tutto ciò che accade ha una causa»',
+        [[1, 'ampliano la conoscenza'], [1, 'universali e necessari']], 'la scienza è fatta di questi');
+      h += D.box(66, 452, 700, 110, 'oro', t('Risposta a Hume', 'causalità e matematica non sono abitudine:<br>sono condizioni a priori del soggetto'), F(1));
+      h += D.testo(834, 452, 700, 110, 'chiosa', '<div>Lo scienziato non sa a priori <b>quale</b> sia la causa: lo chiede all’esperienza. Sa <b>che</b> una causa c’è.</div>', F(2));
+      h += D.box(250, 584, 1100, 70, 'azzurro', t('Come sono possibili i giudizi sintetici a priori?'), F(3));
+    }
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ verso la prossima lezione
+  function slideProssima() {
+    var h = occhiello(OCC);
+    h += D.box(250, 50, 1100, 96, 'scuro', t('Quali sono le forme che il soggetto mette nelle cose?', 'la <i>Critica</i> le cerca facoltà per facoltà'));
+    var col = [
+      [66, 'SENSIBILITÀ', 'riceve i dati', 'Estetica trascendentale'],
+      [565, 'INTELLETTO', 'li pensa', 'Analitica trascendentale'],
+      [1064, 'RAGIONE', 'cerca la totalità', 'Dialettica trascendentale']
+    ];
+    col.forEach(function (c, i) {
+      h += D.box(c[0], 200, 470, 130, i === 2 ? 'contorno-notte' : 'azzurro', t(c[1], c[2]), F(i + 1));
+      h += D.testo(c[0], 344, 470, 36, 'etich', '<div>' + c[3] + '</div>', F(i + 1));
+      if (i < 2) h += D.freccia('dx', c[0] + 474, 244, 22, 42, F(i + 2));
+    });
+    h += D.testo(120, 430, 1360, 110, 'cit', '<div>«Ogni nostra conoscenza comincia dai sensi, di qui passa all’intelletto e finisce nella ragione.»<span class="rif">Kant, <i>Critica della ragion pura</i>, Dialettica trascendentale, Introduzione, B 355 · traduzione di lavoro</span></div>', F(3));
+    h += D.testo(66, 570, 1468, 50, 'chiosa', '<div>La prossima volta: spazio e tempo, categorie, «io penso».</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ brani (traduzioni di lavoro dal tedesco)
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  var TRAD = ' <span class="etichetta trad">traduzione di lavoro</span>';
+  var KANT = '<span class="etichetta autore">Kant</span>' + TRAD;
+  var CRP = 'I. Kant, <i>Critica della ragion pura</i>, ';
+  function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
+  function fonte(rif, extra) {
+    return '<div class="fonte"><b>' + rif + '</b>. Traduzione di lavoro dal tedesco.' + (extra || '') + '</div>';
+  }
+  var TAGLI = ' <span class="taglio taglio-mio">[…]</span> = taglio per la lezione.';
+
+  var GIUDICE = KANT +
+    '<div class="brano piccolo"><p>Quando Galilei fece rotolare le sue sfere lungo un piano inclinato, con un peso scelto da lui stesso, ' + MIO + ' per tutti gli indagatori della natura si accese una luce. Compresero che la ragione vede soltanto ciò che essa stessa produce secondo il proprio progetto ' + MIO + ' e che deve costringere la natura a rispondere alle sue domande, senza lasciarsi condurre da lei, per così dire, con le dande. ' + MIO + ' La ragione deve andare alla natura tenendo in una mano i suoi princìpi ' + MIO + ' e nell’altra l’esperimento che ha ideato secondo quei princìpi: per farsi istruire da lei, certo, ma <u>non come uno scolaro</u> che si lascia dire tutto ciò che vuole il maestro, bensì <u>come un giudice</u> in carica, che costringe i testimoni a rispondere alle domande che egli pone loro.</p></div>' +
+    fonte(CRP + 'Prefazione alla seconda edizione (1787), B XII-XIII', ' Le dande sono le strisce con cui si reggevano i bambini che imparavano a camminare. Sottolineature per la lezione.' + TAGLI);
+
+  var COPERNICO = KANT +
+    '<div class="brano piccolo"><p>Finora si è ammesso che ogni nostra conoscenza debba regolarsi sugli oggetti; ma tutti i tentativi di stabilire su di essi qualcosa a priori, mediante concetti, così da ampliare la nostra conoscenza, con questo presupposto sono falliti. Si provi dunque, una buona volta, se nei compiti della metafisica non procediamo meglio ammettendo che <u>gli oggetti debbano regolarsi sulla nostra conoscenza</u> ' + MIO + '. Accade qui come per il primo pensiero di Copernico: poiché la spiegazione dei moti celesti non riusciva bene finché ammetteva che l’intero esercito degli astri ruotasse intorno allo spettatore, egli provò se non riuscisse meglio facendo ruotare lo spettatore e lasciando invece fermi gli astri.</p></div>' +
+    fonte(CRP + 'Prefazione alla seconda edizione (1787), B XVI', ' Sottolineatura per la lezione.' + TAGLI);
+
+  var CORPI = KANT +
+    '<div class="brano"><p>Per esempio, se dico: <u>tutti i corpi sono estesi</u>, questo è un giudizio analitico. Infatti non ho bisogno di uscire dal concetto che collego alla parola «corpo» per trovare l’estensione come connessa con esso; mi basta scomporre quel concetto ' + MIO + ' per incontrarvi questo predicato. ' + MIO + ' Invece, se dico: <u>tutti i corpi sono pesanti</u>, il predicato è qualcosa di completamente diverso da ciò che penso nel semplice concetto di un corpo in generale. L’aggiunta di un tale predicato dà dunque un giudizio sintetico.</p></div>' +
+    fonte(CRP + 'Introduzione, IV, B 11', ' Sottolineature per la lezione.' + TAGLI);
+
+  // ------------------------------------------------------------ attività
+  var DOMANDA = '«Ogni evento ha una causa»: lo diciamo di tutti gli eventi, anche di quelli che nessuno ha mai visto. Da dove viene quel «tutti»?';
+  var OPZIONI = [
+    'Dall’esperienza: finora è sempre andata così',
+    'Dalla logica: negarlo sarebbe una contraddizione',
+    'Dall’abitudine: ce lo aspettiamo, niente di più',
+    'Dalla nostra mente: è il modo in cui ordina ciò che accade'
+  ];
+  var DOMANDA_GIUDICE = 'Scolaro e giudice imparano tutti e due da chi parla. Che cosa fa il giudice che lo scolaro non fa?';
+
+  // ------------------------------------------------------------ i passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO,
+      note: '<p>Lascia il QR sullo schermo mentre la classe entra. Q lo riapre in qualsiasi momento.</p><p><b>Altra classe</b>: «Cambia classe» e il suo codice. Per riprendere un’altra volta, anche da un altro computer, basta riscrivere lo stesso codice; G apre l’elenco dei passi.</p><p><b>Traduzioni</b>: tutti i passi di Kant di questa lezione sono traduzioni di lavoro dal tedesco, non collazionate con un’edizione a stampa. La paginazione B è indicata a memoria delle edizioni correnti: va controllata sul testo.</p>' },
+
+    { titolo: 'Dalla lezione scorsa', minuti: 3,
+      html: '<p class="att-consegna stretta">' + DOMANDA + '</p>',
+      attivita: { id: 'tutti_prima', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI },
+      note: '<p><b>Ponte</b>: Hume ci ha lasciati nella tenaglia. Dove il sapere è certo (matematica) non parla del mondo; dove parla del mondo (fisica) poggia sull’abitudine. Ma la fisica di Newton pretende leggi che valgono sempre e dovunque.</p><p><b>Sondaggio d’apertura</b> (1 min). Le prime tre opzioni sono quelle discusse con Hume; la quarta è nuova. Mostra il risultato senza commentarlo: torna alla fine.</p>' },
+
+    { titolo: 'Kant e il criticismo', html: slideCriticismo(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Clic 1: il fatto da cui Kant parte, cioè la scienza cammina e la metafisica no. Clic 2: Hume ha scosso entrambe; il «sonno dogmatico» è la fiducia che la ragione possa conoscere le cose senza prima esaminare se stessa. Clic 3: «critica» viene da <i>krínein</i>, giudicare; l’Illuminismo porta tutto davanti al tribunale della ragione, Kant ci porta la ragione stessa. È una filosofia del limite, non uno scetticismo: tracciare un confine garantisce ciò che sta dentro. Clic 4: Kant non dubita della scienza, chiede come sia possibile.</p><p>Slide nuova, ricavata dalla Sintesi (1.13).</p>' },
+
+    { titolo: 'Galilei, lo scolaro e il giudice', html: lettura(GIUDICE), dispositivo: GIUDICE, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 125 parole). Prima di leggere: Kant si chiede che cosa abbia fatto diventare scienza la fisica. Fermati su «ciò che essa stessa produce secondo il proprio progetto»: Galilei non guarda cadere i corpi, costruisce il piano inclinato e sceglie i pesi.</p><p>Ho tagliato Torricelli e Stahl e alcune subordinate. Segue la domanda sul telefono.</p>' },
+
+    { titolo: 'Scolaro o giudice?', minuti: 4,
+      html: '<p class="att-consegna">Sul telefono: che cosa fa il giudice che lo scolaro non fa?</p>',
+      attivita: { id: 'giudice', tipo: 'breve', minuti: 2, max: 160,
+        domanda: DOMANDA_GIUDICE, segnaposto: 'Una frase', testo: GIUDICE },
+      note: '<p><b>Risposta breve</b> (2 min). Clic per evidenziare, Maiusc+clic per nascondere (solo qui).</p><p><b>Ripresa</b>: evidenzia le risposte che dicono «fa lui le domande», «decide che cosa chiedere», «costringe a rispondere». <b>Punta il commento</b> su questo: il giudice arriva con qualcosa che non ha preso dal testimone, cioè le domande e i princìpi con cui valuta le risposte. Nella conoscenza c’è dunque qualcosa che viene dal soggetto, prima dell’esperienza. Se qualcuno scrive «il giudice sa già la risposta», correggi: non la sa, per questo interroga; ma senza domanda non c’è risposta.</p>' },
+
+    { titolo: 'L’ipotesi di Copernico', html: lettura(COPERNICO), dispositivo: COPERNICO, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 105 parole). È un’ipotesi, un esperimento del pensiero: Kant dice «si provi». Dalla fisica passa alla metafisica.</p><p>Ho tagliato la frase su ciò che l’ipotesi spiega (la possibilità di una conoscenza a priori degli oggetti): la riprendi tu alla slide seguente.</p>' },
+
+    { titolo: 'La rivoluzione copernicana', html: slideCopernicana(), minuti: 3,
+      note: '<p><b>Spieghi</b>. A sinistra il cielo di prima: gli astri girano intorno allo spettatore fermo, cioè la mente riceve un ordine che sta già nelle cose. Clic 1: con Kant gira lo spettatore, e il moto che vedo dipende anche da me. Clic 2: non è una nuova risposta alla vecchia domanda, è un cambio di domanda. Clic 3: la frase di B XVIII. Clic 4: la chiosa.</p><p><b>Attenzione all’analogia</b>: Copernico toglie l’uomo dal centro, Kant mette il soggetto al centro. Il punto in comune è un altro: ciò che sembrava un moto degli oggetti si spiega con l’attività di chi osserva. Se uno studente nota la stranezza, ha ragione.</p><p>Riformulato rispetto alla slide: «Il soggetto costruisce la realtà» è diventato «dà forma all’oggetto della conoscenza». La realtà in sé non la costruisce: lo vedrete con fenomeno e noumeno.</p>' },
+
+    { titolo: 'Materia e forma', html: slideMateriaForma(), minuti: 2,
+      note: '<p><b>Spieghi</b>. La frase d’apertura dell’Introduzione dà ragione a Locke e Hume sull’inizio (nessuna conoscenza precede l’esperienza nel tempo) e torto sull’origine. Clic 1 e 2: materia e forma. Clic 3: la conoscenza è la loro sintesi. Clic 4: le lenti; e la precisazione che a priori non significa innato come le idee di Cartesio, ma universale e necessario.</p><p>Slide nuova, ricavata dalla Sintesi (1.13).</p>' },
+
+    { titolo: 'Corpi estesi, corpi pesanti', html: lettura(CORPI), dispositivo: CORPI, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 80 parole). Per vedere dove sta l’a priori nella scienza, Kant guarda i giudizi. Fai fare la prova a voce: provate a pensare un corpo senza estensione. E un corpo senza peso?</p>' },
+
+    { titolo: 'Due tipi di giudizio', html: slideGiudizi(1), minuti: 3,
+      note: '<p><b>Spieghi</b>. Clic 1: analitici, o esplicativi. Clic 2: sintetici a posteriori, o ampliativi. Clic 3: sono le relazioni di idee e le materie di fatto di Hume, cioè di nuovo la tenaglia. Clic 4: la domanda che apre l’attività.</p><p>Corretto rispetto alla presentazione su Kant: i sintetici a posteriori non danno conoscenza «certa ma non universale»; non sono né universali né necessari.</p>' },
+
+    { titolo: 'Il predicato è già nel soggetto?', minuti: 6,
+      html: '<p class="att-consegna">Sul telefono: analitico o sintetico?</p>',
+      attivita: { id: 'giudizi', tipo: 'abbinamento', minuti: 3,
+        consegna: 'Per ogni frase chiediti: il predicato è già contenuto nel concetto del soggetto? Se sì, il giudizio è analitico; se aggiunge qualcosa, è sintetico.',
+        categorie: ['Analitico', 'Sintetico'],
+        voci: [
+          { testo: 'Tutti i corpi sono estesi', atteso: 0 },
+          { testo: 'Tutti i corpi sono pesanti', atteso: 1 },
+          { testo: 'Il triangolo ha tre lati', atteso: 0 },
+          { testo: '7 + 5 = 12', atteso: 1 },
+          { testo: 'La retta è la linea più breve tra due punti', atteso: 1 },
+          { testo: 'Tutto ciò che accade ha una causa', atteso: 1 }
+        ] },
+      note: '<p><b>Abbinamento</b> (3 min). Sei frasi: di più non stanno sullo schermo. «7 + 5 = 12» e il triangolo vengono dal «test del contrario» della lezione su Hume.</p><p><b>Ripresa</b>: mostra le collocazioni attese. <b>Punta il commento</b> sulle ultime tre, che la classe metterà in buona parte tra gli analitici. Per Hume «7 + 5 = 12» era una relazione di idee; per Kant nel concetto di «somma di 7 e 5» non c’è ancora il 12: bisogna contare, cioè uscire dal concetto (B 15-16). Nel concetto di «retta» c’è una qualità, non una grandezza: «più breve» è aggiunto (B 16). Nel concetto di «ciò che accade» non c’è quello di causa (B 13).</p><p><b>Domanda di passaggio</b>: queste tre sono sintetiche, eppure nessuno di voi pensa che domani possano essere false. Da dove viene la loro necessità, se non dall’esperienza?</p>' },
+
+    { titolo: 'Il giudizio sintetico a priori', html: slideGiudizi(2), minuti: 3,
+      note: '<p><b>Spieghi</b>. Il terzo tipo, che Hume non aveva visto: giudizi che ampliano la conoscenza <i>e</i> sono universali e necessari. Matematica e fisica pura ne sono fatte. Clic 1: la risposta a Hume. Clic 2: la distinzione che Hume non aveva fatto, tra la singola legge («il calore dilata i metalli»), che si impara dall’esperienza, e il principio di causalità che essa presuppone. Clic 3: la domanda che regge tutta la <i>Critica</i> (B 19).</p><p><b>Non è «Kant vince»</b>: Kant dà ragione a Hume sul fatto che la necessità non si trova negli oggetti osservati. La sposta nel soggetto. Il prezzo lo vedrete nell’ultima lezione.</p>' },
+
+    { titolo: 'Di nuovo: da dove viene quel «tutti»?', minuti: 3,
+      html: '<p class="att-consegna stretta">' + DOMANDA + '</p>',
+      attivita: { id: 'tutti_dopo', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI,
+        confronta: 'tutti_prima', etichette: ['All’inizio', 'Adesso'] },
+      note: '<p><b>Lo stesso sondaggio dell’inizio</b> (1 min); le barre chiare sono quelle dell’inizio.</p><p><b>Ripresa</b>: chi si è spostato sulla quarta opzione ha fatto la rivoluzione copernicana. <b>Punta il commento</b> su chi resta sull’abitudine: è la risposta di Hume, ed è coerente; ma allora deve accettare che la fisica sia solo una credenza ben riuscita. Chi sceglie «la logica» tratta il principio come analitico: rimandalo all’abbinamento.</p><p>Non è un voto su chi ha ragione: sono due modi di guardare, e quello di Kant ha un costo che ancora non avete visto.</p>' },
+
+    { titolo: 'Verso la prossima lezione', html: slideProssima(), minuti: 1,
+      note: '<p><b>Chiudi</b>. Se la necessità viene dal soggetto, bisogna dire quali sono le sue forme. Un clic per facoltà: sensibilità, intelletto, ragione. Clic 3: la frase di Kant che dà l’ordine della <i>Critica</i>. Clic 4: il programma della prossima volta.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quarta · Kant: criticismo, rivoluzione copernicana, giudizi sintetici a priori',
+    percorso: 'lezioni_filosofia_kant_copernicana',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>
