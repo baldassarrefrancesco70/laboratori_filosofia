@@ -12,24 +12,24 @@
 <meta name="portale:classe" content="quarta">
 <link rel="stylesheet" href="../lib/aula.v1.css">
 <style>
-  /* palette blu scuro del percorso «Il problema gnoseologico» (come nelle lezioni su Hume); restano rossi gli avvisi di errore */
-  :root{--rosso:#22506F;--rosso-scuro:#22506F;--rosso-testo:#22506F}
-  .etichetta.autore,.muro .bigl.evid{background:#E6EDF4}
+  /* palette rosso mattone scuro; restano rossi gli avvisi di errore */
+  :root{--rosso:#5B1E15;--rosso-scuro:#5B1E15;--rosso-testo:#5B1E15}
+  .etichetta.autore,.muro .bigl.evid{background:#F4E9E6}
   .aula-piede .punto.ko{background:#C40000}
   .disp-esito.ko,.scelta-classe .avviso-codice{color:#C40000}
-  .mappa.pg{--freccia:#22506F;--rosso:#22506F}
+  .mappa.pg{--freccia:#5B1E15;--rosso:#5B1E15}
   .mappa.pg .box{border-radius:6px}
   .box.scuro{background:#23262D;color:#fff}
-  .box.notte{background:#22506F;color:#fff}
-  .box.azzurro{background:#E6EDF4;border:2px solid #22506F;color:#22506F}
-  .box.contorno-notte{background:#fff;border:2px solid #22506F;color:#22506F}
+  .box.notte{background:#5B1E15;color:#fff}
+  .box.azzurro{background:#F4E9E6;border:2px solid #5B1E15;color:#5B1E15}
+  .box.contorno-notte{background:#fff;border:2px solid #5B1E15;color:#5B1E15}
   .box.oro{background:#1C1E23;border:2px solid #D4A93C;color:#fff}
   .box.oro .sot{color:#D4A93C;opacity:1}
   .mappa.pg .nuovo{box-shadow:0 0 0 5px rgba(212,169,60,.75)}
   .pg .tit{font-size:32px;font-weight:700;display:block}
   .pg .sot{font-size:23px;display:block;margin-top:6px;opacity:.85}
-  .pg .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:#22506F;text-transform:uppercase;justify-content:flex-start}
-  .pg .chiosa{font-family:var(--serif);font-style:italic;font-size:26px;color:#33475B}
+  .pg .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:#5B1E15;text-transform:uppercase;justify-content:flex-start}
+  .pg .chiosa{font-family:var(--serif);font-style:italic;font-size:26px;color:#5A3A34}
   .pg .etich{font-size:22px;font-weight:700;color:#23262D}
   .pg .cit{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1.3;color:#23262D}
   .pg .cit small,.pg .rif{font-family:var(--sans);font-style:normal;font-size:18px;color:#6B6B6B;display:block;margin-top:6px}
@@ -50,16 +50,21 @@
   .cielo .astro:nth-child(3){left:79.4%;top:90.5%}
   .cielo .astro:nth-child(4){left:20.6%;top:90.5%}
   .cielo .astro:nth-child(5){left:2.5%;top:34.5%}
-  .cielo .spett{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:#fff}
-  /* lo sguardo dello spettatore: un piccolo cuneo che indica dove guarda */
-  .cielo .spett::after{content:"";position:absolute;left:50%;top:-20px;margin-left:-11px;border:11px solid transparent;border-bottom:22px solid #D4A93C;border-top:0}
-  .cielo .spett b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:#12202C;letter-spacing:.5px}
-  .cielo.tolemaico .orbita{animation:cielo-gira 9s linear infinite}
-  .cielo.copernicano:not(.aula-f-off) .spett{animation:cielo-gira 9s linear infinite reverse}
-  .cielo.copernicano:not(.aula-f-off) .spett b{animation:cielo-gira 9s linear infinite}
+  .cielo .sogg{position:absolute;width:20px;height:20px;margin:-10px;border-radius:50%;background:#fff;box-shadow:0 0 8px 1px rgba(255,255,255,.5)}
+  .cielo .sogg:nth-child(1){left:50%;top:0}
+  .cielo .sogg:nth-child(2){left:97.5%;top:34.5%}
+  .cielo .sogg:nth-child(3){left:79.4%;top:90.5%}
+  .cielo .sogg:nth-child(4){left:20.6%;top:90.5%}
+  .cielo .sogg:nth-child(5){left:2.5%;top:34.5%}
+  .cielo .centro{position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;letter-spacing:.5px}
+  .cielo .centro.ogg{background:#F4E7B0;color:#12202C;box-shadow:0 0 14px 3px rgba(244,231,176,.55)}
+  .cielo .centro.io{background:#fff;color:#12202C}
   .cielo .dida{font-size:20px;margin-top:8px;color:#C9CCD2}
+  .cielo .legenda{font-size:17px;margin-top:2px;color:#C9CCD2}
+  .cielo .legenda i{display:inline-block;width:11px;height:11px;border-radius:50%;margin:0 4px 0 12px;vertical-align:-1px}
+  .cielo:not(.aula-f-off) .orbita{animation:cielo-gira 12s linear infinite}
   @keyframes cielo-gira{to{transform:rotate(360deg)}}
-  @media (prefers-reduced-motion:reduce){.cielo .orbita,.cielo .spett,.cielo .spett b{animation:none!important}}
+  @media (prefers-reduced-motion:reduce){.cielo .orbita{animation:none!important}}
 
   /* tabella dei giudizi */
   .box.giud{flex-direction:column;justify-content:flex-start;padding:16px 18px}
@@ -101,19 +106,19 @@
   }
 
   // ------------------------------------------------------------ slide 14: prima e dopo, con i due cieli
-  function cielo(classe, quando, tesi, dida, extra) {
-    var astri = '<div class="astro"></div><div class="astro"></div><div class="astro"></div><div class="astro"></div><div class="astro"></div>';
+  function cielo(classe, quando, tesi, dida, centro, orbitanti, extra) {
+    var pt = '<div class="' + orbitanti + '"></div>';
     return function (x) {
       return D.box(x, 40, 700, 356, 'cielo ' + classe,
         '<div class="quando">' + quando + '</div><div class="tesi">' + tesi + '</div>' +
-        '<div class="scena"><div class="orbita">' + astri + '</div><div class="spett"><b>IO</b></div></div>' +
+        '<div class="scena"><div class="orbita">' + pt + pt + pt + pt + pt + '</div>' + centro + '</div>' +
         '<div class="dida">' + dida + '</div>', extra || '');
     };
   }
   function slideCopernicana() {
     var h = occhiello(OCC);
-    h += cielo('tolemaico', 'Prima', 'La conoscenza si regola sugli oggetti', 'gli astri girano, lo spettatore sta fermo e riceve')(66);
-    h += cielo('copernicano', 'Con Kant', 'Gli oggetti si regolano sulla nostra conoscenza', 'ciò che vedo dipende anche da come sono fatto io', F(1))(834);
+    h += cielo('tolemaico', 'Prima', 'La conoscenza si regola sugli oggetti', 'l’oggetto sta fermo, i soggetti si regolano su di lui', '<div class="centro ogg">OGGETTO</div>', 'sogg')(66);
+    h += cielo('copernicano', 'Con Kant', 'Gli oggetti si regolano sulla nostra conoscenza', 'il soggetto sta al centro, gli oggetti si regolano su di lui', '<div class="centro io">IO</div>', 'astro', F(1))(834);
     h += D.box(200, 420, 1200, 96, 'azzurro', t('Non una risposta alla vecchia domanda: un cambio di domanda', '«Che cosa conosco delle cose?» → «A quali condizioni è possibile conoscere?»'), F(2));
     h += D.testo(66, 532, 1468, 84, 'cit', '<div>«delle cose conosciamo a priori soltanto ciò che noi stessi vi mettiamo»<span class="rif">Kant, <i>Critica della ragion pura</i>, Prefazione alla seconda edizione, B XVIII · traduzione di lavoro</span></div>', F(3));
     h += D.testo(66, 624, 1468, 40, 'chiosa', '<div>Il soggetto dà forma all’oggetto della conoscenza: un altro modo di guardare il rapporto soggetto–oggetto.</div>', F(4));
@@ -239,7 +244,7 @@
       note: '<p><b>Leggi tu</b> (circa 105 parole). È un’ipotesi, un esperimento del pensiero: Kant dice «si provi». Dalla fisica passa alla metafisica.</p><p>Ho tagliato la frase su ciò che l’ipotesi spiega (la possibilità di una conoscenza a priori degli oggetti): la riprendi tu alla slide seguente.</p>' },
 
     { titolo: 'La rivoluzione copernicana', html: slideCopernicana(), minuti: 3,
-      note: '<p><b>Spieghi</b>. A sinistra il cielo di prima: gli astri girano intorno allo spettatore fermo, cioè la mente riceve un ordine che sta già nelle cose. Clic 1: con Kant gira lo spettatore, e il moto che vedo dipende anche da me. Clic 2: non è una nuova risposta alla vecchia domanda, è un cambio di domanda. Clic 3: la frase di B XVIII. Clic 4: la chiosa.</p><p><b>Attenzione all’analogia</b>: Copernico toglie l’uomo dal centro, Kant mette il soggetto al centro. Il punto in comune è un altro: ciò che sembrava un moto degli oggetti si spiega con l’attività di chi osserva. Se uno studente nota la stranezza, ha ragione.</p><p>Riformulato rispetto alla slide: «Il soggetto costruisce la realtà» è diventato «dà forma all’oggetto della conoscenza». La realtà in sé non la costruisce: lo vedrete con fenomeno e noumeno.</p>' },
+      note: '<p><b>Spieghi</b>. A sinistra la situazione di prima: al centro l’oggetto, e i soggetti (i punti bianchi) gli girano intorno, cioè la mente si regola su un ordine che sta già nelle cose. Clic 1: con Kant il centro è il soggetto e gli oggetti (i punti dorati) si regolano su di lui. Clic 2: non è una nuova risposta alla vecchia domanda, è un cambio di domanda. Clic 3: la frase di B XVIII. Clic 4: la chiosa.</p><p><b>Attenzione all’analogia</b>: lo schema è rovesciato rispetto al paragone letterale di Kant (in Tolomeo gli astri girano intorno allo spettatore), e Copernico toglie l’uomo dal centro mentre Kant mette il soggetto al centro. Il punto in comune è un altro: ciò che sembrava dipendere dagli oggetti si spiega con l’attività di chi osserva. Se uno studente nota la stranezza, ha ragione.</p><p>Riformulato rispetto alla slide: «Il soggetto costruisce la realtà» è diventato «dà forma all’oggetto della conoscenza». La realtà in sé non la costruisce: lo vedrete con fenomeno e noumeno.</p>' },
 
     { titolo: 'Materia e forma', html: slideMateriaForma(), minuti: 2,
       note: '<p><b>Spieghi</b>. La frase d’apertura dell’Introduzione dà ragione a Locke e Hume sull’inizio (nessuna conoscenza precede l’esperienza nel tempo) e torto sull’origine. Clic 1 e 2: materia e forma. Clic 3: la conoscenza è la loro sintesi. Clic 4: le lenti; e la precisazione che a priori non significa innato come le idee di Cartesio, ma universale e necessario.</p><p>Slide nuova, ricavata dalla Sintesi (1.13).</p>' },
