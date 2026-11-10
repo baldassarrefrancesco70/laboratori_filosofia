@@ -17,6 +17,14 @@
       "percorso": "lezioni_filosofia_hume_sostanza"
     },
     {
+      "file": "filosofia_kant_copernicana.html",
+      "titolo": "Chi gira intorno a chi? Kant e la rivoluzione copernicana",
+      "materia": "filosofia",
+      "classe": "quarta",
+      "descrizione": "Lezione interattiva (Filosofia IV): il criticismo, la ragione come giudice, la rivoluzione copernicana, giudizi analitici e sintetici, i giudizi sintetici a priori come risposta a Hume.",
+      "percorso": "lezioni_filosofia_kant_copernicana"
+    },
+    {
       "file": "filosofia_marx_capitale.html",
       "titolo": "Marx · la critica dell'economia politica classica",
       "materia": "filosofia",
