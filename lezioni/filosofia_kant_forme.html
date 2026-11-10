@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le lenti che non si tolgono. Kant: sensibilità, intelletto, Io penso</title>
+<meta name="portale:titolo" content="Le lenti che non si tolgono. Kant: sensibilità, intelletto, Io penso">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Filosofia IV): spazio e tempo come forme a priori della sensibilità, intuizioni e concetti, le dodici categorie, la causa dopo Hume, l'Io penso, lo schematismo.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quarta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* palette rosso mattone scuro (come nella prima lezione su Kant); restano rossi gli avvisi di errore */
+  :root{--rosso:#5B1E15;--rosso-scuro:#5B1E15;--rosso-testo:#5B1E15}
+  .etichetta.autore,.muro .bigl.evid{background:#F4E9E6}
+  .aula-piede .punto.ko{background:#C40000}
+  .disp-esito.ko,.scelta-classe .avviso-codice{color:#C40000}
+  .mappa.pg{--freccia:#5B1E15;--rosso:#5B1E15}
+  .mappa.pg .box{border-radius:6px}
+  .mappa.pg .nuovo{box-shadow:0 0 0 5px rgba(212,169,60,.75)}
+  .box.scuro{background:#23262D;color:#fff}
+  .box.notte{background:#5B1E15;color:#fff}
+  .box.azzurro{background:#F4E9E6;border:2px solid #5B1E15;color:#5B1E15}
+  .box.contorno-notte{background:#fff;border:2px solid #5B1E15;color:#5B1E15}
+  .box.dopo{background:#fff;border:2px dashed #B59A94;color:#8A6F69}
+  .box.oro{background:#1C1E23;border:2px solid #D4A93C;color:#fff}
+  .box.oro .sot{color:#D4A93C;opacity:1}
+  .pg .tit{font-size:32px;font-weight:700;display:block}
+  .pg .sot{font-size:23px;display:block;margin-top:6px;opacity:.85}
+  .pg .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:#5B1E15;text-transform:uppercase;justify-content:flex-start}
+  .pg .chiosa{font-family:var(--serif);font-style:italic;font-size:26px;color:#5A3A34}
+  .pg .etich{font-size:22px;font-weight:700;color:#23262D}
+  .pg .parte{font-size:19px;font-weight:700;letter-spacing:1px;color:#B59A94;text-transform:uppercase;justify-content:flex-end}
+  .pg .cit{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1.3;color:#23262D}
+  .pg .rif{font-family:var(--sans);font-style:normal;font-size:18px;color:#6B6B6B;display:block;margin-top:6px}
+  .box.oro .cit{color:#fff}.box.oro .rif{color:#C9CCD2}
+  /* tavola delle categorie */
+  .box.cat{flex-direction:column;justify-content:flex-start;padding:0;overflow:hidden}
+  .cat .testa{background:#5B1E15;color:#fff;font-size:27px;font-weight:700;letter-spacing:1px;padding:12px 0;width:100%}
+  .cat ul{list-style:none;margin:0;padding:14px 10px;font-size:25px;line-height:1.55;color:#5B1E15}
+  .cat li.evid{font-weight:700;background:#FDF4D6;border-radius:4px}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = Aula.disegno;
+  var TITOLO = 'Le lenti che non si tolgono';
+  var OCC = 'Mossa 5 · La rifondazione · Kant';
+
+  function t(tit, sot) { return '<div><span class="tit">' + tit + '</span>' + (sot ? '<span class="sot">' + sot + '</span>' : '') + '</div>'; }
+  function occhiello(s) { return D.testo(66, 6, 1200, 26, 'occhiello', s); }
+  function parte(s) { return D.testo(934, 6, 600, 26, 'parte', s); }
+  function F(n) { return ' data-f="' + n + '"'; }
+
+  // ------------------------------------------------------------ ripresa: le tre facoltà
+  function slideRipresa() {
+    var h = occhiello(OCC);
+    h += D.box(250, 40, 1100, 96, 'scuro', t('Come sono possibili i giudizi sintetici a priori?', 'quali forme mette il soggetto nelle cose?'));
+    h += D.box(66, 196, 470, 130, 'azzurro', t('SENSIBILITÀ', 'riceve i dati'), F(1));
+    h += D.testo(66, 340, 470, 36, 'etich', '<div>Estetica trascendentale · oggi</div>', F(1));
+    h += D.freccia('dx', 540, 240, 22, 42, F(2));
+    h += D.box(565, 196, 470, 130, 'azzurro', t('INTELLETTO', 'li pensa'), F(2));
+    h += D.testo(565, 340, 470, 36, 'etich', '<div>Analitica trascendentale · oggi</div>', F(2));
+    h += D.freccia('dx', 1039, 240, 22, 42, F(3));
+    h += D.box(1064, 196, 470, 130, 'dopo', t('RAGIONE', 'cerca la totalità'), F(3));
+    h += D.testo(1064, 340, 470, 36, 'etich', '<div style="color:#B59A94">Dialettica trascendentale · la prossima volta</div>', F(3));
+    h += D.testo(66, 440, 1468, 60, 'chiosa', '<div>Le forme a priori sono come lenti che non possiamo togliere. Oggi vediamo quali sono.</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 16: le forme a priori della sensibilità
+  function slideSensibilita() {
+    var h = occhiello(OCC) + parte('Estetica trascendentale');
+    h += D.box(250, 40, 1100, 84, 'scuro', t('La sensibilità non è passiva: impone le sue forme'));
+    h += D.box(66, 160, 700, 140, 'azzurro', t('SPAZIO', 'senso esterno: le cose l’una accanto all’altra<br>→ GEOMETRIA'), F(1));
+    h += D.box(834, 160, 700, 140, 'azzurro', t('TEMPO', 'senso interno: gli stati l’uno dopo l’altro<br>→ ARITMETICA'), F(2));
+    h += D.freccia('giu', 391, 312, 50, 40, F(3)); h += D.freccia('giu', 1159, 312, 50, 40, F(3));
+    h += D.box(350, 362, 900, 84, 'notte', t('Su spazio e tempo si fonda la matematica', 'per questo vale necessariamente per ogni fenomeno'), F(3));
+    var no = [['non ricavati', 'dall’esperienza: ogni esperienza li presuppone'], ['non contenitori reali', 'come per Newton'], ['non concetti', 'ma intuizioni pure: c’è un solo spazio']];
+    no.forEach(function (x, i) {
+      h += D.box(66 + i * 499, 480, 470, 110, 'contorno-notte', t(x[0], x[1]), F(4));
+    });
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 17 (prima parte) e tavola del PDF: le categorie
+  var TAVOLA = [
+    ['QUANTITÀ', ['Unità', 'Pluralità', 'Totalità']],
+    ['QUALITÀ', ['Realtà', 'Negazione', 'Limitazione']],
+    ['RELAZIONE', ['Sostanza e accidente', 'Causa ed effetto', 'Azione reciproca']],
+    ['MODALITÀ', ['Possibilità – impossibilità', 'Esistenza – inesistenza', 'Necessità – contingenza']]
+  ];
+  function slideCategorie() {
+    var h = occhiello(OCC) + parte('Analitica trascendentale');
+    h += D.box(250, 40, 1100, 96, 'scuro', t('Le categorie: i dodici concetti puri dell’intelletto', 'tanti quanti i modi fondamentali di giudicare: ricavate dalla tavola dei giudizi'));
+    TAVOLA.forEach(function (g, i) {
+      var li = g[1].map(function (c) { return '<li' + (c === 'Causa ed effetto' ? ' class="evid"' : '') + '>' + c + '</li>'; }).join('');
+      h += D.box(66 + i * 374, 170, 346, 250, 'cat azzurro', '<div class="testa">' + g[0] + '</div><ul>' + li + '</ul>', F(1));
+    });
+    h += D.box(200, 456, 1200, 100, 'notte', t('Diversamente da Aristotele', 'non sono forme dell’essere, ma modi di funzionare dell’intelletto: valgono per ciò che ci appare'), F(2));
+    h += D.testo(66, 580, 1468, 50, 'chiosa', '<div>Ogni giudizio ha insieme una quantità, una qualità, una relazione e una modalità.</div>', F(3));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ la causa dopo Hume
+  function slideCausa() {
+    var h = occhiello(OCC) + parte('Analitica trascendentale');
+    h += D.box(350, 40, 900, 84, 'scuro', t('Nell’esperienza la necessità non si vede', 'su questo Hume e Kant sono d’accordo'));
+    h += D.box(66, 160, 700, 150, 'contorno-notte', t('HUME', 'la mette l’abitudine:<br>un’aspettativa della mente'), F(1));
+    h += D.box(834, 160, 700, 150, 'notte', t('KANT', 'la mette l’intelletto:<br>la causa è una categoria a priori'), F(2));
+    h += D.box(66, 350, 700, 140, 'azzurro', t('Le leggi particolari', '«il calore dilata i metalli»<br>si imparano dall’esperienza'), F(3));
+    h += D.box(834, 350, 700, 140, 'azzurro', t('Il principio', '«ogni evento ha una causa»<br>è a priori: vale per ogni fenomeno'), F(3));
+    h += D.testo(66, 520, 1468, 80, 'chiosa', '<div>Lo scienziato non sa in anticipo <b>quale</b> sia la causa.<br>Sa in anticipo <b>che</b> ogni fenomeno ne avrà una.</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ l'Io penso (una slide)
+  function slideIoPenso() {
+    var h = occhiello(OCC) + parte('Analitica trascendentale');
+    h += D.testo(66, 34, 1468, 120, 'cit', '<div>«L’<b>Io penso</b> deve poter accompagnare tutte le mie rappresentazioni; altrimenti in me verrebbe rappresentato qualcosa che non potrebbe affatto essere pensato.»<span class="rif">Kant, <i>Critica della ragion pura</i>, Analitica trascendentale, § 16, B 131-132 · traduzione di lavoro</span></div>');
+    h += D.box(66, 178, 470, 150, 'notte', t('UNIFICA', 'tiene insieme tutte le rappresentazioni: sono <i>mie</i>'), F(1));
+    h += D.box(565, 178, 470, 150, 'azzurro', t('ATTIVITÀ, NON SOSTANZA', 'non l’io di una persona: la struttura comune a tutti'), F(2));
+    h += D.box(1064, 178, 470, 150, 'azzurro', t('PENSA CON LE CATEGORIE', 'ogni oggetto pensato passa per l’Io penso'), F(3));
+    h += D.box(150, 360, 1300, 130, 'oro', '<div><span class="tit">Il legislatore della natura</span><span class="cit" style="font-size:25px">«L’intelletto non attinge le sue leggi (a priori) dalla natura, ma le prescrive a essa.»</span><span class="rif">Kant, <i>Prolegomeni a ogni futura metafisica</i>, § 36 · traduzione di lavoro</span></div>', F(4));
+    h += D.box(66, 520, 1468, 120, 'contorno-notte', '<div><span class="cit" style="font-size:24px;color:#5B1E15">Hume: «non riesco mai a cogliere me stesso, in nessun momento, senza una percezione»</span><span class="rif">D. Hume, <i>Trattato sulla natura umana</i>, I, IV, 6 · traduzione di lavoro</span><span class="sot" style="margin-top:8px">Kant: l’io non si osserva come una cosa tra le cose. È ciò che rende possibile osservare.</span></div>', F(5));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ lo schematismo (solo schema: lo spiega il docente a voce)
+  function slideSchematismo() {
+    var h = occhiello(OCC) + parte('Analitica trascendentale');
+    h += D.box(66, 70, 440, 150, 'notte', t('CATEGORIE', 'intelletto'));
+    h += D.freccia('dx', 520, 120, 70, 50);
+    h += D.box(604, 70, 392, 150, 'oro', t('TEMPO', 'schemi trascendentali'));
+    h += D.freccia('dx', 1010, 120, 70, 50);
+    h += D.box(1094, 70, 440, 150, 'azzurro', t('INTUIZIONI', 'sensibilità'));
+    var es = [['sostanza', 'ciò che permane nel tempo'], ['causa', 'successione secondo una regola'], ['quantità', 'il numero']];
+    es.forEach(function (x, i) {
+      h += D.box(170, 276 + i * 110, 500, 86, 'contorno-notte', t(x[0]), F(1));
+      h += D.freccia('dx', 690, 296 + i * 110, 60, 46, F(1));
+      h += D.box(770, 276 + i * 110, 660, 86, 'azzurro', t(x[1]), F(1));
+    });
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ verso la prossima lezione
+  function slideProssima() {
+    var h = occhiello(OCC);
+    h += D.box(250, 50, 1100, 96, 'scuro', t('Le forme valgono per ciò che ci appare.', 'E le cose come sono in sé, fuori dalle nostre lenti?'));
+    h += D.box(66, 200, 700, 140, 'azzurro', t('FENOMENO', 'la cosa come ci appare'), F(1));
+    h += D.box(834, 200, 700, 140, 'dopo', t('?', 'la cosa in sé'), F(2));
+    h += D.testo(66, 400, 1468, 50, 'chiosa', '<div>La prossima volta: fenomeno e noumeno, l’isola e l’oceano.</div>', F(3));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ brani (traduzioni di lavoro dal tedesco)
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  var TRAD = ' <span class="etichetta trad">traduzione di lavoro</span>';
+  var KANT = '<span class="etichetta autore">Kant</span>' + TRAD;
+  var CRP = 'I. Kant, <i>Critica della ragion pura</i>, ';
+  var TAGLI = ' <span class="taglio taglio-mio">[…]</span> = taglio per la lezione.';
+  function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
+  function fonte(rif, extra) { return '<div class="fonte"><b>' + rif + '</b>. Traduzione di lavoro dal tedesco.' + (extra || '') + '</div>'; }
+
+  var SPAZIO = KANT +
+    '<div class="brano"><p>Lo spazio non è un concetto empirico, ricavato da esperienze esterne. ' + MIO + ' Lo spazio è una rappresentazione necessaria a priori, che sta a fondamento di tutte le intuizioni esterne. <u>Non ci si può mai rappresentare che non vi sia spazio, benché si possa benissimo pensare che in esso non si trovi alcun oggetto.</u> Esso viene dunque considerato come la condizione della possibilità dei fenomeni, e non come una determinazione che dipenda da essi.</p></div>' +
+    fonte(CRP + 'Estetica trascendentale, § 2, B 38-39', ' Sottolineatura per la lezione.' + TAGLI);
+
+  var FONTI = KANT +
+    '<div class="brano piccolo"><p>La nostra conoscenza scaturisce da due fonti fondamentali dell’animo: la prima è la capacità di ricevere le rappresentazioni (la recettività delle impressioni), la seconda è la facoltà di conoscere un oggetto per mezzo di queste rappresentazioni (la spontaneità dei concetti). Con la prima un oggetto ci è <i>dato</i>, con la seconda esso è <i>pensato</i>. ' + MIO + ' Intuizione e concetti costituiscono dunque gli elementi di ogni nostra conoscenza. ' + MIO + ' Nessuna di queste due facoltà va anteposta all’altra. Senza sensibilità nessun oggetto ci sarebbe dato, e senza intelletto nessun oggetto sarebbe pensato. <u>Pensieri senza contenuto sono vuoti, intuizioni senza concetti sono cieche.</u></p></div>' +
+    fonte(CRP + 'Logica trascendentale, Introduzione, I, B 74-75', ' Sottolineatura per la lezione.' + TAGLI);
+
+  var IOPENSO = KANT +
+    '<div class="brano"><p>L’<i>Io penso</i> deve poter accompagnare tutte le mie rappresentazioni; altrimenti in me verrebbe rappresentato qualcosa che non potrebbe affatto essere pensato, il che equivale a dire che la rappresentazione o sarebbe impossibile, o almeno per me non sarebbe nulla.</p></div>' +
+    fonte(CRP + 'Analitica trascendentale, § 16, B 131-132');
+
+  // ------------------------------------------------------------ attività
+  var DOMANDA_SPAZIO = 'Chiudi gli occhi e prova. Quale delle due riesci a immaginare?';
+  var DOMANDA_CIECO = 'Ti è capitato di vedere qualcosa senza capire che cosa fosse? Che cosa ti mancava?';
+
+  // ------------------------------------------------------------ i passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO,
+      note: '<p>Lascia il QR sullo schermo mentre la classe entra. Q lo riapre in qualsiasi momento.</p><p><b>Altra classe</b>: «Cambia classe» e il suo codice. Per riprendere un’altra volta, anche da un altro computer, basta riscrivere lo stesso codice; G apre l’elenco dei passi.</p><p><b>Traduzioni</b>: i passi di Kant e di Hume sono traduzioni di lavoro, non collazionate con un’edizione a stampa; anche la paginazione (B 38-39, B 74-75, B 131-132, <i>Prolegomeni</i> § 36, <i>Trattato</i> I, IV, 6) va controllata sul testo.</p>' },
+
+    { titolo: 'Dalla lezione scorsa', html: slideRipresa(), minuti: 2,
+      note: '<p><b>Ponte</b>: la scienza è fatta di giudizi sintetici a priori; se la necessità non viene dalle cose, la mette il soggetto. Ma con quali forme? Un clic per facoltà: oggi sensibilità e intelletto, la ragione la prossima volta. Clic 4: le lenti.</p>' },
+
+    { titolo: 'Uno spazio senza niente', minuti: 3,
+      html: '<p class="att-consegna">Sul telefono: chiudi gli occhi e prova. Quale delle due riesci a immaginare?</p>',
+      attivita: { id: 'spazio', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA_SPAZIO,
+        opzioni: ['Uno spazio vuoto, senza nessun oggetto', 'Un oggetto che non sta in nessuno spazio', 'Tutte e due', 'Nessuna delle due'] },
+      note: '<p><b>Sondaggio</b> (1 min). Lascia che ci provino davvero, a occhi chiusi.</p><p><b>Ripresa</b>: di solito vince la prima opzione. <b>Punta il commento</b> sull’asimmetria: gli oggetti si possono togliere dallo spazio, lo spazio dagli oggetti no. Chi sceglie «tutte e due» va interrogato: dove sta l’oggetto che immagini? Chi sceglie la seconda pensa forse a qualcosa che non si vede (un numero, un’idea): non è un oggetto dei sensi esterni. È l’argomento del brano che segue.</p>' },
+
+    { titolo: 'Lo spazio non viene dall’esperienza', html: lettura(SPAZIO), dispositivo: SPAZIO, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 70 parole). La frase sottolineata è il sondaggio appena fatto. Se lo spazio fosse ricavato dalle cose, potremmo pensarlo via insieme a loro; invece resta: è la condizione perché le cose ci appaiano, non una loro proprietà.</p>' },
+
+    { titolo: 'Le forme a priori della sensibilità', html: slideSensibilita(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Clic 1: lo spazio, forma del senso esterno, fonda la geometria. Clic 2: il tempo, forma del senso interno; indirettamente di tutti i fenomeni, perché tutto passa per il senso interno; fonda l’aritmetica (il numero nasce dalla successione: si conta uno dopo l’altro). Clic 3: perciò la matematica vale per la natura. Clic 4: che cosa spazio e tempo non sono.</p><p>Collegamento con la lezione scorsa: «7 + 5 = 12» è sintetico perché bisogna contare, cioè passare nel tempo.</p>' },
+
+    { titolo: 'Due fonti della conoscenza', html: lettura(FONTI), dispositivo: FONTI, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 95 parole). Recettività e spontaneità; dato e pensato. Fermati sull’ultima frase: è contro il razionalismo (pensieri senza contenuto) e contro l’empirismo (intuizioni senza concetti) insieme.</p>' },
+
+    { titolo: 'Vedere senza capire', minuti: 4,
+      html: '<p class="att-consegna">Sul telefono: ti è capitato di vedere qualcosa senza capire che cosa fosse? Che cosa ti mancava?</p>',
+      attivita: { id: 'cieco', tipo: 'breve', minuti: 2, max: 160,
+        domanda: DOMANDA_CIECO, segnaposto: 'Una frase', testo: FONTI },
+      note: '<p><b>Risposta breve</b> (2 min). Clic per evidenziare, Maiusc+clic per nascondere (solo qui).</p><p><b>Ripresa</b>: evidenzia le risposte che dicono «il nome», «sapere che cos’era», «un’idea», «a che cosa serviva». <b>Punta il commento</b> su questo: l’occhio vedeva tutto (l’intuizione c’era), mancava il concetto per pensarlo. È l’intuizione cieca. Esempi che spesso escono: un’ecografia, uno strumento sconosciuto, una scritta in un alfabeto straniero. Domanda di passaggio: e quali sono i concetti che l’intelletto non prende dall’esperienza?</p>' },
+
+    { titolo: 'Le categorie', html: slideCategorie(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Clic 1: la tavola. L’intelletto è la facoltà di giudicare: tanti modi fondamentali di giudicare, tante categorie. Evidenziata la causa: torna fra poco. Clic 2: la differenza da Aristotele. Clic 3: la precisazione che serve per l’attività: ogni giudizio ha tutte e quattro le dimensioni, per questo nell’attività si guarda una sola parola.</p><p>Corretto rispetto alla presentazione su Kant: sotto la Quantità c’era «Singolarità», la terza categoria è la Totalità.</p>' },
+
+    { titolo: 'Dov’è la categoria?', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: quale gruppo di categorie è all’opera nella parola in maiuscolo?</p>',
+      attivita: { id: 'categorie', tipo: 'abbinamento', minuti: 3,
+        consegna: 'Ogni giudizio usa tutti e quattro i gruppi di categorie. Guarda solo la parola in maiuscolo: quale gruppo è all’opera lì?',
+        categorie: ['Quantità', 'Qualità', 'Relazione', 'Modalità'],
+        voci: [
+          { testo: 'TUTTI i compagni sono in classe', atteso: 0 },
+          { testo: 'Questa NON è una mela', atteso: 1 },
+          { testo: 'Il vetro si è rotto PERCHÉ è caduto', atteso: 2 },
+          { testo: 'Le due squadre si spingono A VICENDA', atteso: 2 },
+          { testo: 'FORSE domani piove', atteso: 3 },
+          { testo: 'Due più due DEVE fare quattro', atteso: 3 }
+        ] },
+      note: '<p><b>Abbinamento</b> (3 min). Le frasi riprendono la spiegazione delle categorie del manuale.</p><p><b>Ripresa</b>: mostra le collocazioni attese. <b>Punta il commento</b> su «perché»: senza la categoria di causa vedremmo un vetro cadere e poi un vetro rotto, due fatti in fila. «A vicenda» è l’azione reciproca. «Forse» e «deve» sono la modalità: non dicono che cosa è la cosa, ma come la pensiamo (possibile, necessaria). L’errore più frequente è «NON» nella modalità: è la qualità (negazione).</p>' },
+
+    { titolo: 'La causa dopo Hume', html: slideCausa(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Clic 1 e 2: dove ciascuno mette la necessità. Clic 3: la distinzione che Hume non aveva fatto, tra la singola legge e il principio. Clic 4: la conseguenza per lo scienziato.</p><p>Il confronto sui testi (Hume sulla successione, Kant sulla nave e la casa, B 233-240) è il Laboratorio 3 della dispensa: qui non anticiparlo.</p>' },
+
+    { titolo: 'Chi mette ordine? L’Io penso', html: slideIoPenso(), dispositivo: IOPENSO, minuti: 4,
+      note: '<p><b>Spieghi</b>. Domanda d’ingresso: perché la natura dovrebbe obbedire a forme della nostra mente? (È il problema della deduzione trascendentale, termine giuridico: dimostrare un diritto.) Leggi tu la frase in alto (circa 30 parole; per intero sul telefono). Clic 1: l’Io penso unifica. Clic 2: non è l’io psicologico di una persona e non è una sostanza. Clic 3: pensa attraverso le categorie, quindi ogni oggetto pensato le rispetta. Clic 4: legislatore della natura; le leggi particolari restano dell’esperienza. Clic 5: confronto con Hume, che cercava l’io tra le percezioni e non lo trovava.</p>' },
+
+    { titolo: 'Lo schematismo', html: slideSchematismo(), minuti: 1,
+      note: '<p><b>Facoltativo</b>: lo spieghi a voce se c’è tempo; altrimenti scorri. Clic 1: tre esempi di schemi.</p>' },
+
+    { titolo: 'Che cosa mette la mente?', minuti: 5,
+      html: '<p class="att-consegna">Sul telefono: sensibilità o intelletto?</p>',
+      attivita: { id: 'facolta', tipo: 'schema', minuti: 3, colonne: 2,
+        consegna: 'Colloca ogni termine nella facoltà a cui appartiene.',
+        caselle: [
+          { titolo: 'Sensibilità', sotto: 'Estetica trascendentale', breve: 'Sensibilità' },
+          { titolo: 'Intelletto', sotto: 'Analitica trascendentale', breve: 'Intelletto' }
+        ],
+        termini: [
+          { testo: 'spazio', atteso: 0 },
+          { testo: 'tempo', atteso: 0 },
+          { testo: 'intuizioni', atteso: 0 },
+          { testo: 'geometria', atteso: 0 },
+          { testo: 'ricevere', atteso: 0 },
+          { testo: 'causa ed effetto', atteso: 1 },
+          { testo: 'sostanza', atteso: 1 },
+          { testo: 'concetti', atteso: 1 },
+          { testo: 'giudicare', atteso: 1 }
+        ] },
+      note: '<p><b>Schema a termini</b> (3 min).</p><p><b>Ripresa</b>: in verde la collocazione attesa. <b>Punta il commento</b> su «tempo» e su «causa ed effetto»: chi mette il tempo nell’intelletto e la causa nella sensibilità rifà, senza saperlo, l’errore che Kant rimprovera all’empirismo, cioè cercare la causa tra le cose viste. «Geometria» nella sensibilità sorprende: la matematica poggia su spazio e tempo, non sulle categorie.</p>' },
+
+    { titolo: 'Verso la prossima lezione', html: slideProssima(), minuti: 1,
+      note: '<p><b>Chiudi</b>. Clic 1: il fenomeno. Clic 2: la domanda sulla cosa in sé. Clic 3: il programma della prossima volta.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quarta · Kant: sensibilità, intelletto, Io penso',
+    percorso: 'lezioni_filosofia_kant_forme',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>
