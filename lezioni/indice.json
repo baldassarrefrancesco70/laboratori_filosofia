@@ -25,6 +25,14 @@
       "percorso": "lezioni_filosofia_kant_copernicana"
     },
     {
+      "file": "filosofia_kant_forme.html",
+      "titolo": "Le lenti che non si tolgono. Kant: sensibilità, intelletto, Io penso",
+      "materia": "filosofia",
+      "classe": "quarta",
+      "descrizione": "Lezione interattiva (Filosofia IV): spazio e tempo come forme a priori della sensibilità, intuizioni e concetti, le dodici categorie, la causa dopo Hume, l'Io penso, lo schematismo.",
+      "percorso": "lezioni_filosofia_kant_forme"
+    },
+    {
       "file": "filosofia_marx_capitale.html",
       "titolo": "Marx · la critica dell'economia politica classica",
       "materia": "filosofia",
