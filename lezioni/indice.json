@@ -33,6 +33,14 @@
       "percorso": "lezioni_filosofia_kant_forme"
     },
     {
+      "file": "filosofia_kant_isola.html",
+      "titolo": "L'isola e l'oceano. Kant: fenomeno, noumeno, idee della ragione",
+      "materia": "filosofia",
+      "classe": "quarta",
+      "descrizione": "Lezione interattiva (Filosofia IV): fenomeno e noumeno, la metafora dell'isola e quella della colomba, le idee della ragione e la loro funzione regolativa, il nuovo concetto di metafisica, tre modi di guardare il problema della conoscenza.",
+      "percorso": "lezioni_filosofia_kant_isola"
+    },
+    {
       "file": "filosofia_marx_capitale.html",
       "titolo": "Marx · la critica dell'economia politica classica",
       "materia": "filosofia",
