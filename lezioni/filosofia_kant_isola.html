@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'isola e l'oceano. Kant: fenomeno, noumeno, idee della ragione</title>
+<meta name="portale:titolo" content="L'isola e l'oceano. Kant: fenomeno, noumeno, idee della ragione">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Filosofia IV): fenomeno e noumeno, la metafora dell'isola e quella della colomba, le idee della ragione e la loro funzione regolativa, il nuovo concetto di metafisica, tre modi di guardare il problema della conoscenza.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quarta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* palette rosso mattone scuro (come nelle prime due lezioni su Kant); restano rossi gli avvisi di errore */
+  :root{--rosso:#5B1E15;--rosso-scuro:#5B1E15;--rosso-testo:#5B1E15}
+  .etichetta.autore,.muro .bigl.evid{background:#F4E9E6}
+  .aula-piede .punto.ko{background:#C40000}
+  .disp-esito.ko,.scelta-classe .avviso-codice{color:#C40000}
+  .att-consegna.stretta{max-width:1320px}
+  .mappa.pg{--freccia:#5B1E15;--rosso:#5B1E15}
+  .mappa.pg .box{border-radius:6px}
+  .box.scuro{background:#23262D;color:#fff}
+  .box.notte{background:#5B1E15;color:#fff}
+  .box.azzurro{background:#F4E9E6;border:2px solid #5B1E15;color:#5B1E15}
+  .box.contorno-notte{background:#fff;border:2px solid #5B1E15;color:#5B1E15}
+  .box.dopo{background:#fff;border:2px dashed #B59A94;color:#8A6F69}
+  .box.oro{background:#1C1E23;border:2px solid #D4A93C;color:#fff}
+  .box.oro .sot{color:#D4A93C;opacity:1}
+  .pg .tit{font-size:32px;font-weight:700;display:block}
+  .pg .sot{font-size:23px;display:block;margin-top:6px;opacity:.85}
+  .pg .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:#5B1E15;text-transform:uppercase;justify-content:flex-start}
+  .pg .parte{font-size:19px;font-weight:700;letter-spacing:1px;color:#B59A94;text-transform:uppercase;justify-content:flex-end}
+  .pg .chiosa{font-family:var(--serif);font-style:italic;font-size:26px;color:#5A3A34}
+  .pg .etich{font-size:22px;font-weight:700;color:#23262D}
+  /* colonne con righe (idee della ragione, tre modi di guardare) */
+  .box.col{flex-direction:column;justify-content:flex-start;padding:0;overflow:hidden}
+  .col .testa{width:100%;padding:12px 10px;font-size:28px;font-weight:700;letter-spacing:1px}
+  .col .testa small{display:block;font-size:20px;font-weight:400;letter-spacing:0;margin-top:2px;opacity:.9}
+  .col .riga{width:100%;padding:10px 16px;font-size:22px;line-height:1.28;border-top:1px solid rgba(91,30,21,.25)}
+  .col .riga b{display:block;font-size:16px;letter-spacing:1px;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+  .col.azzurro .testa{background:#5B1E15;color:#fff}
+  .col.contorno-notte .testa{background:#F4E9E6;color:#5B1E15}
+  /* l'isola (disegno della slide 18) */
+  .box.mare{background:radial-gradient(ellipse at 50% 55%,#2E5E7E 0%,#1B3A50 60%,#12202C 100%);border-radius:10px;overflow:hidden}
+  .mare .terra{position:absolute;left:50%;top:52%;width:300px;height:170px;margin:-85px 0 0 -150px;background:#D9C99A;border-radius:48% 52% 45% 55% / 55% 45% 55% 45%;box-shadow:0 0 0 10px rgba(217,201,154,.25);display:flex;align-items:center;justify-content:center;color:#3B3220;font-size:24px;font-weight:700;text-align:center;line-height:1.15}
+  .mare .nebbia{position:absolute;width:180px;height:60px;color:#fff;font-size:19px;display:flex;align-items:center;justify-content:center;font-style:italic}
+  .mare .nebbia::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(255,255,255,.2);filter:blur(6px);z-index:-1}
+  .mare .nebbia{z-index:0}
+  .mare .scritta{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#C9D6E0;font-size:20px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = Aula.disegno;
+  var TITOLO = 'L’isola e l’oceano';
+  var OCC = 'Mossa 5 · La rifondazione · Kant';
+
+  function t(tit, sot) { return '<div><span class="tit">' + tit + '</span>' + (sot ? '<span class="sot">' + sot + '</span>' : '') + '</div>'; }
+  function occhiello(s) { return D.testo(66, 6, 1200, 26, 'occhiello', s); }
+  function parte(s) { return D.testo(934, 6, 600, 26, 'parte', s); }
+  function F(n) { return ' data-f="' + n + '"'; }
+  function colonna(x, y, w, h, cls, testa, righe, extra) {
+    var r = righe.map(function (q) { return '<div class="riga">' + (q[0] ? '<b>' + q[0] + '</b>' : '') + q[1] + '</div>'; }).join('');
+    return D.box(x, y, w, h, 'col ' + cls, '<div class="testa">' + testa + '</div>' + r, extra || '');
+  }
+
+  // ------------------------------------------------------------ slide 18: fenomeno e noumeno, con l'isola
+  function slideFenomeno() {
+    var h = occhiello(OCC) + parte('Analitica trascendentale');
+    h += D.box(66, 40, 700, 168, 'azzurro', t('FENOMENO', 'la realtà come ci appare attraverso le forme a priori<br><b>soggettivo, ma universale</b>: non un’illusione'), F(1));
+    h += D.box(834, 40, 700, 168, 'dopo', t('NOUMENO', 'la «cosa in sé», fuori dalle nostre forme<br><b>pensabile, non conoscibile</b>: un concetto limite'), F(2));
+    h += D.box(350, 236, 900, 80, 'notte', t('Il conoscere non oltrepassa l’esperienza'), F(3));
+    h += D.box(66, 344, 1468, 270, 'mare',
+      '<div class="nebbia" style="left:120px;top:40px">nuove terre?</div>' +
+      '<div class="nebbia" style="left:1180px;top:60px">nuove terre?</div>' +
+      '<div class="nebbia" style="left:230px;top:170px;width:140px">ghiacci</div>' +
+      '<div class="terra">la terra<br>della verità</div>' +
+      '<div class="scritta">l’oceano dell’apparenza</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 19 (prima parte): le idee della ragione
+  function slideIdee() {
+    var h = occhiello(OCC) + parte('Dialettica trascendentale');
+    h += D.box(250, 40, 1100, 96, 'scuro', t('La ragione cerca l’incondizionato: la totalità', 'unifica i fenomeni con tre idee · senza dati sensibili'));
+    var c = [
+      ['ANIMA<small>totalità dei fenomeni interni</small>', [['psicologia razionale', 'tratta l’Io penso come una sostanza'], ['l’errore', '<i>paralogismo</i>: non possiamo conoscere un’anima immortale']]],
+      ['MONDO<small>totalità dei fenomeni esterni</small>', [['cosmologia razionale', 'il mondo intero non è mai dato nell’esperienza'], ['l’errore', '<i>antinomie</i>: «il mondo ha un inizio» e «non ce l’ha» si dimostrano entrambe']]],
+      ['DIO<small>totalità assoluta</small>', [['teologia razionale', 'le prove saltano dal concetto a ciò che sta oltre l’esperienza'], ['l’errore', '«l’esistenza non è un predicato»: cento talleri pensati e cento reali']]]
+    ];
+    c.forEach(function (x, i) { h += colonna(66 + i * 499, 166, 470, 350, 'azzurro', x[0], x[1], F(i + 1)); });
+    h += D.testo(66, 540, 1468, 70, 'chiosa', '<div>Un’illusione che non scompare quando la si riconosce:<br>come la luna, che all’orizzonte sembra più grande anche all’astronomo.</div>', F(4));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 19 (seconda parte): regolative, nuova metafisica
+  function slideRegolative() {
+    var h = occhiello(OCC) + parte('Dialettica trascendentale');
+    h += D.box(66, 40, 700, 150, 'dopo', t('Non costitutive', 'non danno oggetti da conoscere:<br>anima, mondo e Dio non sono fenomeni'));
+    h += D.box(834, 40, 700, 150, 'notte', t('Regolative', 'guidano la ricerca a cercare sempre più unità,<br><i>come se</i> tutto formasse un sistema'), F(1));
+    h += D.box(250, 226, 1100, 84, 'scuro', t('Un nuovo concetto di metafisica'), F(2));
+    var m = [['un bisogno', 'insopprimibile della ragione'], ['impossibile', 'come conoscenza di ciò che sta oltre l’esperienza'], ['possibile', 'come scienza dei principi a priori del conoscere e dell’agire']];
+    m.forEach(function (x, i) { h += D.box(66 + i * 499, 340, 470, 140, i === 1 ? 'contorno-notte' : 'azzurro', t(x[0], x[1]), F(i + 3)); });
+    h += D.testo(66, 520, 1468, 70, 'chiosa', '<div>Kant non è ateo: sul piano teorico la ragione non può dimostrare<br>né che Dio esiste né che non esiste.</div>', F(6));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ slide 20: tre modi di guardare
+  function slideTre() {
+    var h = '';
+    var c = [
+      ['RAZIONALISMO<small>Cartesio</small>', [['la certezza', 'è nella ragione: idee innate'], ['la garanzia', 'Dio, che non inganna'], ['l’esito', 'sapere certo, ma dogmatico']]],
+      ['EMPIRISMO<small>Locke · Hume</small>', [['la certezza', 'è nell’esperienza… finché resiste'], ['la garanzia', 'nessuna: in Hume, la credenza'], ['l’esito', 'scetticismo']]],
+      ['CRITICISMO<small>Kant</small>', [['la certezza', 'è nel soggetto, nelle sue forme a priori'], ['la garanzia', 'forme comuni a tutti i soggetti'], ['l’esito', 'sapere certo, ma solo del fenomeno']]]
+    ];
+    c.forEach(function (x, i) { h += colonna(66 + i * 499, 20, 470, 420, i === 2 ? 'azzurro' : 'contorno-notte', x[0], x[1], F(i + 1)); });
+    h += D.box(200, 470, 1200, 110, 'oro', t('Il prezzo di Kant', 'la scienza è salva, la cosa in sé è perduta'), F(4));
+    h += D.testo(66, 600, 1468, 50, 'chiosa', '<div>Non tre gradini di una scala: tre modi di guardare il rapporto tra soggetto e oggetto.</div>', F(5));
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ chiusura del percorso
+  function slideChiusura() {
+    var h = D.box(250, 30, 1100, 96, 'scuro', t('La domanda del percorso', 'da Cartesio a Kant'));
+    var r = [
+      ['Cartesio', 'Ciò che è chiaro e distinto: Dio garantisce che non mi inganna.'],
+      ['Hume', 'Le relazioni tra idee. Sul mondo, solo ciò in cui l’abitudine mi fa credere.'],
+      ['Kant', 'Ciò che mi appare, con certezza: perché le forme le metto io. Le cose in sé, mai.']
+    ];
+    r.forEach(function (x, i) {
+      h += D.box(150, 170 + i * 130, 260, 104, i === 2 ? 'notte' : 'azzurro', t(x[0]), F(i + 1));
+      h += D.testo(440, 170 + i * 130, 1010, 104, 'chiosa', '<div style="text-align:left;width:100%">' + x[1] + '</div>', F(i + 1));
+    });
+    return '<div class="mappa pg">' + h + '</div>';
+  }
+
+  // ------------------------------------------------------------ brani (traduzioni di lavoro dal tedesco)
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  var TRAD = ' <span class="etichetta trad">traduzione di lavoro</span>';
+  var KANT = '<span class="etichetta autore">Kant</span>' + TRAD;
+  var CRP = 'I. Kant, <i>Critica della ragion pura</i>, ';
+  var TAGLI = ' <span class="taglio taglio-mio">[…]</span> = taglio per la lezione.';
+  function lettura(html) { return '<div class="lettura">' + html + '</div>'; }
+  function fonte(rif, extra) { return '<div class="fonte"><b>' + rif + '</b>. Traduzione di lavoro dal tedesco.' + (extra || '') + '</div>'; }
+
+  var NOUMENO = KANT +
+    '<div class="brano"><p>Il concetto di noumeno è dunque soltanto un <u>concetto limite</u>, per circoscrivere le pretese della sensibilità, e quindi di uso soltanto negativo. Tuttavia non è inventato arbitrariamente: è legato alla limitazione della sensibilità, senza poter porre nulla di positivo al di fuori del suo ambito. ' + MIO + ' L’intelletto riceve così un ampliamento negativo: non è limitato dalla sensibilità, ma piuttosto la limita, chiamando noumeni le cose in sé. Ma subito pone limiti anche a se stesso: non può conoscerle con alcuna categoria, e può soltanto <u>pensarle</u> come un qualcosa di sconosciuto.</p></div>' +
+    fonte(CRP + 'Analitica trascendentale, Fenomeni e noumeni, B 310-312', ' Sottolineature per la lezione.' + TAGLI);
+
+  var ISOLA = KANT +
+    '<div class="brano"><p>Abbiamo ora non soltanto percorso la terra dell’intelletto puro, esaminandone con cura ogni parte, ma l’abbiamo anche misurata, e abbiamo assegnato a ogni cosa il suo posto. Questa terra però è <u>un’isola</u>, racchiusa dalla natura stessa entro confini immutabili. È la terra della verità (un nome seducente), circondata da un ampio e tempestoso <u>oceano</u>, la sede vera e propria dell’apparenza, dove più di un banco di nebbia e più di un ghiaccio che presto si scioglie fingono nuove terre, e ingannando senza sosta con vane speranze il navigante in cerca di scoperte, lo trascinano in avventure da cui non può mai desistere e che non può mai portare a termine.</p></div>' +
+    fonte(CRP + 'Analitica trascendentale, Fenomeni e noumeni, B 294-295', ' Sottolineature per la lezione.');
+
+  var COLOMBA = KANT +
+    '<div class="brano"><p>La colomba leggera, mentre nel libero volo fende l’aria di cui sente la resistenza, potrebbe immaginare che volerebbe molto meglio nello spazio vuoto d’aria. Allo stesso modo Platone abbandonò il mondo sensibile, perché pone all’intelletto limiti troppo stretti, e si avventurò al di là di esso, sulle ali delle idee, nello spazio vuoto dell’intelletto puro. Non si accorse che con i suoi sforzi non guadagnava strada: <u>non aveva alcun appoggio</u>, per così dire alcun sostegno su cui puntarsi e a cui applicare le sue forze per smuovere l’intelletto.</p></div>' +
+    fonte(CRP + 'Introduzione, III, B 8-9', ' Sottolineatura per la lezione.');
+
+  // ------------------------------------------------------------ attività
+  var DOMANDA = 'La scienza ci dice com’è il mondo in sé?';
+  var OPZIONI = [
+    'Sì, del tutto',
+    'Sì, ma solo in parte, per ora',
+    'No: ci dice come il mondo ci appare',
+    'Non possiamo saperlo'
+  ];
+  var DOMANDA_COLOMBA = 'La colomba pensa che senz’aria volerebbe meglio. Che cosa non ha capito?';
+
+  // ------------------------------------------------------------ i passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO,
+      note: '<p>Lascia il QR sullo schermo mentre la classe entra. Q lo riapre in qualsiasi momento.</p><p><b>Altra classe</b>: «Cambia classe» e il suo codice. Per riprendere un’altra volta, anche da un altro computer, basta riscrivere lo stesso codice; G apre l’elenco dei passi.</p><p><b>Traduzioni</b>: i tre passi di Kant (B 310-312, B 294-295, B 8-9) sono traduzioni di lavoro dal tedesco, non collazionate con un’edizione a stampa; anche la paginazione va controllata sul testo.</p>' },
+
+    { titolo: 'Dalla lezione scorsa', minuti: 3,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'mondo_prima', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI },
+      note: '<p><b>Ponte</b>: le forme a priori valgono per ciò che ci appare. E le cose come sono in sé, fuori dalle nostre lenti?</p><p><b>Sondaggio d’apertura</b> (1 min). Mostra il risultato senza commentarlo: torna alla fine.</p>' },
+
+    { titolo: 'Un concetto limite', html: lettura(NOUMENO), dispositivo: NOUMENO, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 100 parole). Fermati sulle due parole sottolineate: il noumeno segna un confine (concetto limite) e si può pensare, non conoscere.</p>' },
+
+    { titolo: 'Fenomeno e noumeno', html: slideFenomeno(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Clic 1: il fenomeno non è un’apparenza ingannevole; è la realtà come appare a qualunque soggetto fatto come noi, perciò è oggetto di scienza. Clic 2: il noumeno, la «x sconosciuta». Clic 3: pensare e conoscere non coincidono; conoscere richiede intuizione. Clic 4: l’immagine dell’isola, che introduce il brano.</p><p>Ritocco rispetto alla slide: sotto il fenomeno ho scritto esplicitamente «non un’illusione», l’equivoco più frequente.</p>' },
+
+    { titolo: 'L’isola', html: lettura(ISOLA), dispositivo: ISOLA, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 115 parole). L’isola è l’esperienza possibile: tutto ciò che appare nello spazio e nel tempo e si pensa con le categorie. L’oceano è dove la ragione si avventura senza intuizioni. Il navigante non smette mai: è un bisogno, non un capriccio.</p>' },
+
+    { titolo: 'Isola o oceano?', minuti: 6,
+      html: '<p class="att-consegna">Sul telefono: sta sull’isola o nell’oceano?</p>',
+      attivita: { id: 'isola', tipo: 'schema', minuti: 4, colonne: 2,
+        consegna: 'Per ogni affermazione chiediti: si può conoscere, cioè sta dentro l’esperienza possibile (isola)? Oppure pretende di conoscere ciò che sta oltre (oceano)?',
+        caselle: [
+          { titolo: 'Isola', sotto: 'si può conoscere', breve: 'Isola' },
+          { titolo: 'Oceano', sotto: 'pretende di conoscere oltre l’esperienza', breve: 'Oceano' }
+        ],
+        termini: [
+          { testo: '7 + 5 = 12', atteso: 0 },
+          { testo: 'ogni evento ha una causa', atteso: 0 },
+          { testo: 'il calore dilata i metalli', atteso: 0 },
+          { testo: 'questa mela è rossa', atteso: 0 },
+          { testo: 'l’anima è immortale', atteso: 1 },
+          { testo: 'il mondo ha avuto un inizio', atteso: 1 },
+          { testo: 'so che Dio esiste', atteso: 1 },
+          { testo: 'com’è la mela in sé', atteso: 1 }
+        ] },
+      note: '<p><b>Schema a termini</b> (4 min).</p><p><b>Ripresa</b>: in verde la collocazione attesa. <b>Punta il commento</b> su «so che Dio esiste» e «l’anima è immortale»: Kant non dice che sono false; dice che non si possono conoscere, perché non c’è intuizione che corrisponda. «Il mondo ha avuto un inizio» sembra fisica, ma riguarda il mondo come totalità, che non è mai dato: ci torni con le antinomie. «Questa mela è rossa» sta sull’isola: è un fenomeno, non un’illusione. «Com’è la mela in sé» richiama il laboratorio di Locke.</p>' },
+
+    { titolo: 'La colomba', html: lettura(COLOMBA), dispositivo: COLOMBA, minuti: 2,
+      note: '<p><b>Leggi tu</b> (circa 95 parole). Il brano è dell’Introduzione: lo leggiamo qui perché è l’immagine della metafisica che vuole volare oltre l’isola. Segue la domanda sul telefono.</p>' },
+
+    { titolo: 'Che cosa sbaglia la colomba?', minuti: 4,
+      html: '<p class="att-consegna">Sul telefono: che cosa non ha capito la colomba?</p>',
+      attivita: { id: 'colomba', tipo: 'breve', minuti: 2, max: 160,
+        domanda: DOMANDA_COLOMBA, segnaposto: 'Una frase', testo: COLOMBA },
+      note: '<p><b>Risposta breve</b> (2 min). Clic per evidenziare, Maiusc+clic per nascondere (solo qui).</p><p><b>Ripresa</b>: evidenzia le risposte che dicono «senz’aria cadrebbe», «l’aria la regge», «la resistenza è ciò che la fa volare». <b>Punta il commento</b> sul doppio volto dell’aria: è ciò che frena e ciò che sostiene. Così l’esperienza: è il limite della conoscenza e insieme il suo appoggio. Senza intuizioni i concetti sono vuoti (lezione scorsa): la ragione che vola oltre l’esperienza non guadagna strada.</p>' },
+
+    { titolo: 'Le idee della ragione', html: slideIdee(), minuti: 4,
+      note: '<p><b>Spieghi</b>. La ragione, a differenza dell’intelletto, non si accontenta del condizionato: cerca la totalità. Un clic per idea. Anima: il paralogismo applica la categoria di sostanza all’Io penso, che è solo un’unità formale (ricorda la lezione scorsa). Mondo: le antinomie; basta l’esempio dell’inizio nel tempo. Dio: le prove; i cento talleri in una frase, il confronto con Cartesio è il Laboratorio 4 della dispensa. Clic 4: l’illusione resta anche quando la si conosce.</p><p>Seguo la slide 19 («Dio: totalità assoluta»); nella presentazione su Kant c’era «totalità dei fenomeni», che non è corretto.</p>' },
+
+    { titolo: 'Regolative, non costitutive', html: slideRegolative(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Le idee non costituiscono oggetti, ma regolano la ricerca: lo scienziato cerca sempre una legge più generale, come se la natura formasse un sistema. Clic 2-5: il nuovo concetto di metafisica. Clic 6: Kant non è ateo.</p><p>Corretto rispetto alle slide: «impossibile come scienza della natura» è diventato «impossibile come conoscenza di ciò che sta oltre l’esperienza». La metafisica della natura, come scienza dei principi a priori, per Kant è possibile.</p>' },
+
+    { titolo: 'Non una scala, ma tre modi di guardare', html: slideTre(), minuti: 3,
+      note: '<p><b>Spieghi</b>. Un clic per risposta, dalla dispensa (Sintesi 1.14). Clic 4: il prezzo; senza l’oceano l’isola non si capisce. Clic 5: nessuna delle tre annulla le altre.</p>' },
+
+    { titolo: 'Di nuovo: la scienza ci dice com’è il mondo in sé?', minuti: 3,
+      html: '<p class="att-consegna">' + DOMANDA + '</p>',
+      attivita: { id: 'mondo_dopo', tipo: 'sondaggio', minuti: 1, domanda: DOMANDA, opzioni: OPZIONI,
+        confronta: 'mondo_prima', etichette: ['All’inizio', 'Adesso'] },
+      note: '<p><b>Lo stesso sondaggio dell’inizio</b> (1 min); le barre chiare sono quelle dell’inizio.</p><p><b>Ripresa</b>: chi si è spostato sulla terza opzione ha visto il prezzo di Kant. Chi resta su «sì, ma solo in parte» pensa la scienza come un’isola che si allarga fino a coprire l’oceano: per Kant l’isola si esplora sempre di più, ma i suoi confini non si spostano. «Non possiamo saperlo» è vicino a Hume.</p><p>Kant non «batte» Hume: cambia la domanda e paga qualcosa.</p>' },
+
+    { titolo: 'Che cosa posso conoscere con certezza?', html: slideChiusura(), minuti: 1,
+      note: '<p><b>Chiudi il percorso</b>: la domanda della prima lezione su Cartesio, un clic per risposta.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quarta · Kant: fenomeno, noumeno, idee della ragione',
+    percorso: 'lezioni_filosofia_kant_isola',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>
