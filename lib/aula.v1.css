@@ -208,3 +208,61 @@ body.aula-dispositivo{background:#F4F5F7;font-family:var(--sans);color:var(--tes
 .aula-elenco li.qui button{font-weight:700}
 .aula-elenco .fatta{color:#2E7D32;font-size:17px}
 .aula-elenco .dafare{color:var(--tenue);font-size:17px}
+
+/* ===================== QUIZ (a squadre) ===================== */
+.quiz{font-size:var(--fs,30px);display:flex;flex-direction:column;gap:.45em}
+.quiz-domanda{font-weight:700;line-height:1.28}
+.quiz-opz{display:flex;flex-direction:column;gap:.3em}
+.quiz-riga{display:grid;grid-template-columns:1fr 470px;gap:24px;align-items:center;padding:.2em .4em;border-radius:10px;border:3px solid transparent;line-height:1.25}
+.quiz.aperta .quiz-riga{grid-template-columns:1fr}
+.quiz-testo{display:flex;gap:.45em;align-items:baseline}
+.lettera{display:inline-flex;flex:none;align-items:center;justify-content:center;width:1.45em;height:1.45em;border-radius:50%;background:var(--blu);color:#fff;font-size:.85em;font-weight:700}
+.quiz-riga.giusta{border-color:var(--verde-testo);background:#EEF6EA}
+.quiz-riga.giusta .lettera{background:var(--verde-testo)}
+.quiz-riga.altra .quiz-testo{opacity:.6}
+.quiz-bar{display:flex;height:1.35em;background:#F2F3F5;border-radius:6px;overflow:hidden}
+.quiz-bar i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.68em;font-weight:700;color:#fff;min-width:0;overflow:hidden}
+.quiz-bar .s2,.quiz-legenda .q.s2::before{background:#1F4E79}
+.quiz-bar .s1,.quiz-legenda .q.s1::before{background:#5B83AD}
+.quiz-bar .s0,.quiz-legenda .q.s0::before{background:#A9BFD6}
+.quiz-bar .s0{color:#1F4E79}
+.quiz-num{font-size:.68em;color:var(--tenue);margin-top:.15em}
+.quiz-num b{color:var(--testo);font-size:1.25em}
+.quiz-legenda{display:flex;gap:1.3em;font-size:.68em;color:var(--tenue);align-items:center}
+.quiz-legenda b{color:var(--testo);font-size:1.3em}
+.quiz-legenda .q::before{content:"";display:inline-block;width:.9em;height:.9em;border-radius:3px;margin-right:.4em;vertical-align:-.1em}
+.quiz-spieg{background:#EEF6EA;border-left:7px solid var(--verde-testo);border-radius:6px;padding:.45em .8em;line-height:1.35;font-size:.86em}
+.rimando{color:var(--tenue);font-size:.85em}
+.att-sotto .modo.svelata{color:var(--verde-testo)}
+.att-sotto .saltabile{border:1px dashed #999;border-radius:6px;padding:0 8px;font-size:18px}
+
+/* quiz sul telefono */
+.disp-quiz .disp-lista .disp-btn{display:flex;gap:10px;align-items:flex-start;font-size:16px}
+.disp-quiz .lettera,.disp-riep .lettera{font-size:14px;margin-top:1px}
+.disp-quiz .disp-opz button{min-width:28%}
+.disp-riep ul{list-style:none;margin:0 0 10px;padding:0}
+.disp-riep li{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;border-radius:8px;margin-bottom:4px;font-size:15px;line-height:1.35;border:2px solid transparent}
+.disp-riep li .tx{flex:1;min-width:0}
+.disp-riep li.giusta{background:#EEF6EA;border-color:var(--verde-testo)}
+.disp-riep li.giusta .lettera{background:var(--verde-testo)}
+.disp-riep li.vostra{border-style:dashed;border-color:var(--blu)}
+.disp-riep li.giusta.vostra{border-style:solid;border-color:var(--verde-testo)}
+.disp-riep .et{display:inline-block;font-size:12px;font-weight:700;color:var(--blu);background:#E8F0F8;border-radius:4px;padding:0 6px;margin-left:4px}
+.disp-riep .spieg{font-size:15px;line-height:1.45;margin:0}
+
+/* vista docente */
+.aula-docente .disp-testata{background:#333}
+.doc-barra{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.doc-barra button{font:inherit;font-size:15px;min-width:40px;padding:7px 10px;border-radius:8px;border:2px solid var(--bordo);background:#fff;cursor:pointer}
+.doc-barra button.scelto{border-color:var(--blu);background:#E8F0F8;font-weight:700}
+.doc-barra button.salt{border-style:dashed}
+.doc-dom{font-weight:700;font-size:16px;line-height:1.35;margin:0 0 6px}
+.doc-giusta{font-size:14px;color:var(--tenue);margin:0 0 10px}
+.doc-tab{width:100%;border-collapse:collapse;font-size:15px}
+.doc-tab th{text-align:left;font-size:12px;color:var(--tenue);border-bottom:1px solid var(--bordo);padding:4px 6px}
+.doc-tab td{padding:7px 6px;border-bottom:1px solid #eee}
+.doc-tab td.cod{font-family:ui-monospace,Menlo,monospace;letter-spacing:1px}
+.doc-tab tr.allarme td,.doc-leg .allarme{background:#FDE7E8}
+.doc-tab tr.divisa td,.doc-leg .divisa{background:#FFF2CC}
+.doc-leg{font-size:12px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.doc-leg span{padding:2px 8px;border-radius:4px}
