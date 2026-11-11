@@ -1,0 +1,12 @@
+{
+  "quiz": [
+    {
+      "file": "filosofia_marx_quiz.html",
+      "titolo": "Marx · quiz di riepilogo a squadre",
+      "materia": "filosofia",
+      "classe": "quinta",
+      "descrizione": "Quiz a squadre (Filosofia V) su tutto Marx: dieci domande a difficoltà crescente, distribuzione, discussione, soluzione.",
+      "percorso": "lezioni_filosofia_marx_quiz"
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Quiz a squadre</title>
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  body.portale{margin:0;background:#F6F6F4;color:var(--testo);font-family:var(--sans);font-size:17px}
+  .p-testata{background:var(--rosso);color:#fff;padding:22px 32px}
+  .p-testata h1{margin:0;font-size:30px}
+  .p-testata p{margin:4px 0 0;opacity:.9}
+  main{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
+  .pin{max-width:360px;margin:60px auto;text-align:center}
+  .pin input{font-size:32px;width:180px;text-align:center;letter-spacing:10px;padding:8px;border:2px solid var(--bordo);border-radius:8px}
+  .pin .err{color:var(--rosso-scuro);min-height:1.4em;margin-top:10px;font-weight:700}
+  h2.materia{font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--tenue);margin:30px 0 8px}
+  h3.anno{font-size:22px;margin:18px 0 10px}
+  .lez{background:#fff;border:1px solid var(--bordo);border-radius:10px;padding:16px 18px;margin-bottom:12px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .lez .t{font-weight:700;font-size:19px}
+  .lez .d{color:var(--tenue);font-size:15px;margin-top:4px;max-width:640px}
+  .classi{display:flex;gap:10px;flex-wrap:wrap}
+  .classi a{display:inline-block;min-width:64px;text-align:center;font-weight:700;font-size:20px;padding:12px 16px;border-radius:8px;background:var(--rosso);color:#fff;text-decoration:none}
+  .classi a:hover,.classi a:focus{background:var(--rosso-scuro)}
+  .classi .vuoto{color:var(--tenue);font-size:14px}
+  .gestione{margin-top:40px;border-top:2px solid var(--bordo);padding-top:20px}
+  .gestione h2{font-size:22px;margin:0 0 6px}
+  .gestione .nota{color:var(--tenue);font-size:15px;margin:0 0 14px}
+  button.p{font:inherit;font-weight:700;padding:9px 16px;border-radius:8px;border:2px solid var(--rosso);background:#fff;color:var(--rosso-scuro);cursor:pointer}
+  button.p.pieno{background:var(--rosso);color:#fff}
+  button.p:disabled{opacity:.5;cursor:default}
+  .utente{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+  table.sess{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--bordo);border-radius:10px;overflow:hidden;margin:6px 0 18px}
+  table.sess th,table.sess td{padding:9px 12px;border-bottom:1px solid #EEE;text-align:left;font-size:15px;vertical-align:middle}
+  table.sess th{background:#FAFAFA;font-size:13px;color:var(--tenue);text-transform:uppercase;letter-spacing:.5px}
+  table.sess td.az{text-align:right;white-space:nowrap}
+  table.sess td.az button{margin-left:6px;font-size:14px;padding:6px 10px}
+  .conferma{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+  .conferma input{font-family:ui-monospace,Menlo,monospace;font-size:15px;width:120px;padding:5px 8px;text-transform:uppercase}
+  .msg{padding:10px 14px;border-radius:8px;margin:10px 0;font-size:15px}
+  .msg.err{background:#FDECEC;color:#8A1414}
+  .msg.ok{background:#EAF5EA;color:#1E5E22}
+  .lez-g{font-weight:700;margin-top:18px}
+  .tenue{color:var(--tenue)}
+  @media (max-width:640px){.p-testata{padding:16px}.lez{display:block}.classi{margin-top:12px}}
+</style>
+</head>
+<body class="portale">
+<header class="p-testata"><h1>Quiz a squadre</h1><p>Filosofia e storia · Liceo Classico «G.B. Vico»</p></header>
+<main id="main"><p class="tenue">Caricamento…</p></main>
+<script>
+(function () {
+  'use strict';
+  var PIN = '1973';
+  var param = function (n) { return new URLSearchParams(location.search).get(n); };
+  var PROVA = param('db') ? '&db=' + encodeURIComponent(param('db')) : '';
+  var main = document.getElementById('main');
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function leggiSS(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  function scriviSS(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* niente */ } }
+
+  // anno scolastico: da settembre a agosto → «2627» per il 2026/27 (come nel portale delle lezioni)
+  function annoScolastico(d) {
+    d = d || new Date();
+    var a = d.getMonth() >= 8 ? d.getFullYear() : d.getFullYear() - 1;
+    return String(a % 100).padStart(2, '0') + String((a + 1) % 100).padStart(2, '0');
+  }
+  var AS = annoScolastico();
+  var AS_LEGGIBILE = '20' + AS.slice(0, 2) + '/' + AS.slice(2);
+  function codiceSessione(classe) { return (classe + AS).toUpperCase().replace(/[^A-Z0-9]/g, ''); }
+
+  function chiediPin() {
+    main.innerHTML = '<form class="pin"><p>PIN del docente</p><input type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-label="PIN">' +
+      '<div class="err"></div><button class="p pieno" type="submit">Entra</button></form>';
+    var f = main.querySelector('form'), i = f.querySelector('input');
+    i.focus();
+    f.onsubmit = function (e) {
+      e.preventDefault();
+      if (i.value === PIN) { scriviSS('portale-lezioni:pin', '1'); carica(); }
+      else { f.querySelector('.err').textContent = 'PIN errato'; i.value = ''; i.focus(); }
+    };
+  }
+
+  var INDICE = [], CLASSI = {};
+  function carica() {
+    Promise.all([
+      fetch('../lezioni/indice_quiz.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('indice_quiz.json: HTTP ' + r.status); return r.json(); }),
+      fetch('../lezioni/classi.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('classi.json: HTTP ' + r.status); return r.json(); })
+    ]).then(function (x) {
+      INDICE = x[0].quiz || []; CLASSI = x[1] || {};
+      disegna();
+    }).catch(function (e) {
+      main.innerHTML = '<div class="msg err">Non riesco a leggere l’elenco dei quiz (' + esc(e.message) + ').</div>';
+    });
+  }
+
+  var ORDINE_ANNI = ['prima', 'seconda', 'terza', 'quarta', 'quinta'];
+  function disegna() {
+    main.innerHTML = '';
+    main.appendChild(el('p', 'tenue', 'Anno scolastico ' + AS_LEGGIBILE + '. Clicca la classe: il quiz si apre con il QR per le squadre. ' +
+      'Riaprendo la stessa classe, anche da un altro computer, il quiz riprende dalla domanda in cui ti eri fermato.'));
+    if (!INDICE.length) { main.appendChild(el('p', 'tenue', 'Nessun quiz disponibile.')); return; }
+    var perMateria = {};
+    INDICE.forEach(function (l) { (perMateria[l.materia || 'altro'] = perMateria[l.materia || 'altro'] || []).push(l); });
+    Object.keys(perMateria).sort().forEach(function (m) {
+      main.appendChild(el('h2', 'materia', esc(m)));
+      var perAnno = {};
+      perMateria[m].forEach(function (l) { (perAnno[l.classe || ''] = perAnno[l.classe || ''] || []).push(l); });
+      Object.keys(perAnno).sort(function (a, b) { return ORDINE_ANNI.indexOf(a) - ORDINE_ANNI.indexOf(b); }).forEach(function (anno) {
+        main.appendChild(el('h3', 'anno', anno ? 'Classe ' + esc(anno) : 'Senza classe'));
+        perAnno[anno].forEach(function (l) {
+          var box = el('div', 'lez');
+          box.appendChild(el('div', '', '<div class="t">' + esc(l.titolo) + '</div><div class="d">' + esc(l.descrizione) + '</div>'));
+          var cl = el('div', 'classi');
+          var elenco = CLASSI[anno] || [];
+          if (!elenco.length) cl.innerHTML = '<span class="vuoto">Nessuna classe per «' + esc(anno || '?') + '» in classi.json</span>';
+          elenco.forEach(function (c) {
+            var a = el('a', '', esc(c));
+            a.href = '../lezioni/' + l.file + '?s=' + encodeURIComponent(codiceSessione(c)) + PROVA;
+            a.target = '_blank'; a.rel = 'noopener';
+            a.title = 'Apri per la ' + c + ' (sessione ' + codiceSessione(c) + ')';
+            cl.appendChild(a);
+          });
+          box.appendChild(cl);
+          main.appendChild(box);
+        });
+      });
+    });
+  }
+
+  if (leggiSS('portale-lezioni:pin') === '1') carica(); else chiediPin();
+})();
+</script>
+</body>
+</html>
