@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marx · quiz di riepilogo a squadre</title>
+<meta name="portale:titolo" content="Marx · quiz di riepilogo a squadre">
+<meta name="portale:materia" content="filosofia">
+<!-- tipologia diversa da «lezione»: il quiz resta fuori dal portale (strumenti/indice_lezioni.py lo salta) -->
+<meta name="portale:tipologia" content="quiz">
+<meta name="portale:descrizione" content="Quiz a squadre (Filosofia V) su tutto Marx: dieci domande a difficoltà crescente, distribuzione, discussione, soluzione.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quinta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+</head>
+<body>
+<noscript>Questa attività richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  var TITOLO = 'Marx · quiz di riepilogo a squadre';
+  var SINTESI = 'Sintesi «Filosofia e politica», § 1.2, ';
+
+  var LIVELLI = { 1: 'Riconoscere', 2: 'Distinguere', 3: 'Applicare' };
+
+  // Domande, soluzioni e spiegazioni come nel file di istruzioni: non riscritte, ordine delle risposte invariato.
+  var DOMANDE = [
+    { livello: 1,
+      domanda: 'Qual è, per Marx, la «prima azione storica» degli uomini?',
+      opzioni: [
+        'La nascita della coscienza religiosa, con cui l’uomo si distingue dall’animale',
+        'La produzione dei mezzi per soddisfare i propri bisogni',
+        'La fondazione dello Stato, che pone fine ai conflitti tra individui',
+        'La divisione della società in classi contrapposte'],
+      giusta: 1,
+      spiegazione: 'Alla base della storia c’è il lavoro: gli uomini si distinguono dagli animali quando cominciano a produrre i propri mezzi di sussistenza, non per la coscienza o la religione.',
+      sezione: 'sezione G',
+      punta: 'su lavoro e produzione come base della storia, contro coscienza e religione (a): è il rovesciamento di Hegel e di Feuerbach.' },
+    { livello: 1,
+      domanda: 'Che cos’è, per Marx, un’ideologia?',
+      opzioni: [
+        'L’insieme delle idee politiche di un partito, esposte in un programma coerente',
+        'Una menzogna costruita di proposito dalla classe dominante per ingannare i lavoratori',
+        'Una teoria scientifica della società, fondata sull’analisi dei fatti economici',
+        'Una rappresentazione deformata della realtà, nata dagli interessi di classe, che fa apparire eterno ciò che è storico'],
+      giusta: 3,
+      spiegazione: 'La a è il significato corrente della parola, non quello di Marx. La b è l’errore più utile da discutere: l’ideologia non è un inganno deliberato; chi la produce ci crede, perché le idee sembrano indipendenti dalla vita materiale. La c descrive ciò che Marx contrappone all’ideologia.',
+      sezione: 'sezione G',
+      punta: 'sulla b, l’errore più utile: l’ideologia non è un inganno deliberato, chi la produce ci crede. Se nessuno ha scelto b, chiedi perché sarebbe sbagliata.' },
+    { livello: 2,
+      domanda: 'Che cosa distingue l’alienazione secondo Marx da quella secondo Feuerbach?',
+      opzioni: [
+        'Per Marx è una condizione reale dell’operaio salariato, che si supera abolendo la proprietà privata dei mezzi di produzione',
+        'Per Marx è un passaggio necessario e positivo, che si supera con il ritorno dello Spirito in se stesso',
+        'Per Marx riguarda ogni lavoro in ogni epoca, perché appartiene alla natura stessa del lavorare',
+        'Per Marx è un errore della coscienza, che si supera quando l’operaio capisce la propria situazione'],
+      giusta: 0,
+      spiegazione: 'La b è la posizione di Hegel. La d riporta l’alienazione a un fatto di coscienza, come in Feuerbach. La c cancella il carattere storico: è alienato il lavoro salariato nel capitalismo, non il lavoro in quanto tale.',
+      sezione: 'sezione E, tabella',
+      punta: 'su chi ha scelto d (Feuerbach) o c (alienazione senza storia): ognuna è una posizione vera di qualcuno o un mezzo errore, fai dire di chi.' },
+    { livello: 2, saltabile: true,
+      domanda: 'Che rapporto c’è tra la lotta di classe e la contraddizione tra forze produttive e rapporti di produzione?',
+      opzioni: [
+        'Sono due spiegazioni alternative della storia: la prima del Manifesto, la seconda delle opere mature',
+        'La lotta di classe riguarda la politica, la contraddizione riguarda l’economia: procedono in modo indipendente',
+        'Sono la stessa cosa: forze e rapporti sono incarnati da classi di individui viventi',
+        'La lotta di classe è la causa, la contraddizione tra forze e rapporti ne è l’effetto'],
+      giusta: 2,
+      spiegazione: 'La lotta di classe è la contraddizione «vista dalla parte degli uomini».',
+      sezione: 'sezione H',
+      punta: 'sulla formula «vista dalla parte degli uomini»: non due cause, ma la stessa contraddizione vista dall’economia e dalle classi.' },
+    { livello: 2,
+      domanda: 'Perché, per Marx, il proletariato non può limitarsi a conquistare lo Stato borghese e usarlo per i propri scopi?',
+      opzioni: [
+        'Perché ogni Stato va abolito subito, senza alcun periodo di transizione',
+        'Perché lo Stato non è uno strumento neutrale ma la forma del dominio di una classe: va spezzato, non passato di mano',
+        'Perché lo Stato si può conquistare solo con le elezioni, e il proletariato è una minoranza',
+        'Perché lo Stato si estingue da solo prima della rivoluzione, per effetto delle crisi'],
+      giusta: 1,
+      spiegazione: 'La a è la tentazione più forte, ma Marx prevede una transizione, la dittatura del proletariato; lo Stato si estingue solo dopo, scomparse le classi.',
+      sezione: 'sezione J',
+      punta: 'sulla a, la tentazione più forte: spezzare lo Stato borghese non vuol dire abolire subito ogni Stato (dittatura del proletariato, poi estinzione).' },
+    { livello: 3,
+      domanda: 'Nella Francia del Settecento si diffondono le idee dei philosophes; poi scoppia la rivoluzione. Come legge questa sequenza il materialismo storico?',
+      opzioni: [
+        'Le idee hanno trasformato la mentalità, e la nuova mentalità ha trasformato l’economia',
+        'Le idee non hanno avuto alcun peso: la rivoluzione sarebbe avvenuta nello stesso identico modo',
+        'La rivoluzione è stata opera di alcune grandi personalità, capaci di guidare le masse',
+        'Le idee hanno contato perché esprimevano una trasformazione già in corso nella struttura economica'],
+      giusta: 3,
+      spiegazione: 'La a è la lettura idealistica. La b è la lettura meccanica, che la Sintesi esclude: la sovrastruttura non è un’apparenza senza importanza.',
+      sezione: 'sezione G',
+      punta: 'sulle due letture sbagliate opposte: idealistica (a) e meccanica (b). La sovrastruttura conta, ma esprime la struttura.' },
+    { livello: 3,
+      domanda: 'Giornata di dieci ore; all’operaio ne bastano sei per produrre il valore del proprio salario. La fabbrica A porta la giornata a dodici ore. La fabbrica B introduce macchine con cui il valore del salario si produce in quattro ore, e lascia la giornata a dieci. Che cosa è corretto?',
+      opzioni: [
+        'Solo A aumenta il plusvalore, perché in B le ore di lavoro restano le stesse',
+        'In tutte e due il pluslavoro sale a sei ore: in A è plusvalore relativo, in B plusvalore assoluto',
+        'In tutte e due il pluslavoro sale a sei ore: in A è plusvalore assoluto, in B plusvalore relativo',
+        'In B il saggio del plusvalore non cambia, perché la giornata lavorativa è invariata'],
+      giusta: 2,
+      spiegazione: 'In A le ore di pluslavoro passano da quattro a sei allungando la giornata; in B passano da quattro a sei riducendo il lavoro necessario.',
+      sezione: 'sezione I, «Plusvalore assoluto e relativo»',
+      punta: 'sul conto delle ore: 6 + 4, poi 6 + 6 (A) e 4 + 6 (B). Chi ha scelto b ha i nomi invertiti, chi ha scelto a o d guarda solo la lunghezza della giornata.' },
+    { livello: 3,
+      domanda: 'In un paese tutti i cittadini votano e sono uguali davanti alla legge; un decimo della popolazione possiede quasi tutta la ricchezza. Come lo descriverebbe Marx?',
+      opzioni: [
+        'Emancipazione politica senza emancipazione umana: l’uguaglianza formale lascia operare la disuguaglianza reale',
+        'Né emancipazione politica né umana: dove c’è disuguaglianza i diritti politici sono soltanto finti',
+        'Emancipazione umana incompleta, che si completerà estendendo ancora i diritti politici',
+        'Democrazia sostanziale, perché il suffragio è universale e la legge è uguale per tutti'],
+      giusta: 0,
+      spiegazione: 'La b è l’errore più interessante da discutere: per Marx l’emancipazione politica è reale ed è un progresso, anche se non è quella definitiva. La c è la risposta liberale: per Marx la via non sono altri diritti, ma l’abolizione della proprietà privata.',
+      sezione: 'sezione D, tabella',
+      punta: 'sulla b, l’errore più interessante: per Marx l’emancipazione politica è reale ed è un progresso. Collega alla lezione sulla critica del liberalismo (democrazia formale).' },
+    { livello: 3, saltabile: true,
+      domanda: 'Magazzini pieni di merci invendute, fabbriche che chiudono, operai licenziati mentre a molti manca il necessario. Come spiega Marx una crisi di questo tipo?',
+      opzioni: [
+        'Come le crisi del passato: nasce dalla scarsità, dovuta a carestie o guerre',
+        'Con salari troppo alti, che riducono i profitti e scoraggiano gli investimenti',
+        'Con l’errore di singoli capitalisti, evitabile con migliori informazioni sul mercato',
+        'Con l’anarchia della produzione: si investe dove il profitto è più alto, finché si produce più di quanto il mercato assorbe'],
+      giusta: 3,
+      spiegazione: 'Le crisi capitalistiche nascono dall’abbondanza, non dalla scarsità. La c riduce a errore individuale ciò che per Marx è una contraddizione del sistema.',
+      sezione: 'sezione I, «Le contraddizioni del capitalismo»',
+      punta: 'sulla c: errore individuale contro contraddizione del sistema. Richiama «crisi da abbondanza» della lezione sul Capitale.' },
+    { livello: 3, saltabile: true,
+      domanda: 'Nella prima fase della società comunista due operai lavorano le stesse ore e ricevono lo stesso; uno dei due ha tre figli. Come giudica Marx questa distribuzione?',
+      opzioni: [
+        'È giusta e definitiva: a uguale lavoro deve corrispondere uguale compenso',
+        'È ancora un «uguale diritto» borghese: tratta allo stesso modo persone diverse, e così produce disuguaglianza',
+        'È ingiusta perché non premia il merito: chi lavora meglio dovrebbe ricevere di più',
+        'È già l’applicazione del principio «a ognuno secondo i suoi bisogni»'],
+      giusta: 1,
+      spiegazione: 'Il limite si supera solo nella fase superiore, con il principio «ognuno secondo le sue capacità; a ognuno secondo i suoi bisogni».',
+      sezione: 'sezione K, tabella',
+      punta: 'su prima e seconda fase (d confonde le due) e sulla domanda già vista con Gotha: che cosa rende giusta una disuguaglianza?' }
+  ];
+
+  var RIPRESA_COMUNE =
+    '<p><b>→ chiude gli invii</b>: compare la distribuzione, senza la soluzione. Guarda la vista docente: in rosso le squadre molto sicure, unanimi e in errore, in giallo le non unanimi.</p>' +
+    '<p><b>Discussione</b>: parola prima alle squadre non unanimi; chiedi a chi era in minoranza di spiegare la propria scelta.</p>';
+
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO, minuti: 3,
+      html: '<div class="avviso" style="background:#EEF2F5;border-color:#C9D3DC;font-size:21px;line-height:1.45">' +
+        '<b>Tre per squadra, un telefono per squadra.</b> A ogni domanda il telefono passa a un altro componente.<br>' +
+        'Per ogni domanda la squadra invia: la risposta, quanto è sicura, se ha scelto all’unanimità.<br>' +
+        'Nessuna classifica, nessun punteggio.</div>',
+      note: '<p>Forma le squadre da tre; un telefono per squadra entra dal QR. Il conteggio in copertina conta le squadre collegate.</p>' +
+        '<p><b>Vista docente</b>, sul tuo telefono o portatile, <i>non sul proiettore</i>: stesso indirizzo della pagina con <code>?v=docente</code>, poi il codice della classe. Segue la proiezione da sola.</p>' +
+        '<p>Comandi del quiz: → chiude gli invii, → svela, → domanda successiva; ← torna indietro di uno stato. <b>S</b> salta la domanda. Le domande 4, 9 e 10 sono saltabili.</p>' }
+  ];
+
+  DOMANDE.forEach(function (d, i) {
+    var n = i + 1;
+    passi.push({
+      titolo: 'Domanda ' + n + ' · ' + LIVELLI[d.livello],
+      minuti: d.livello === 1 ? 3.5 : 4,
+      attivita: {
+        id: 'q' + n, tipo: 'quiz', minuti: 1.5, saltabile: !!d.saltabile,
+        domanda: d.domanda, opzioni: d.opzioni, giusta: d.giusta,
+        spiegazione: d.spiegazione, rimando: '(' + SINTESI + d.sezione + ')'
+      },
+      note: '<p><b>Invii aperti</b> per 90 secondi (T ferma il timer, + un minuto). Puoi chiudere prima con →.' +
+        (d.saltabile ? ' <b>Saltabile</b>: se il tempo stringe, S.' : '') + '</p>' +
+        RIPRESA_COMUNE +
+        '<p><b>Punta il commento</b> ' + d.punta + '</p>' +
+        '<p><b>→ svela</b>: soluzione, spiegazione e rimando alla Sintesi. Giusta: <b>' + 'abcd'[d.giusta] + '</b>.</p>'
+    });
+  });
+
+  passi.push({
+    titolo: TITOLO, minuti: 2, riepilogo: true,
+    html: '<div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:28px">' +
+      '<div style="font-size:52px;font-weight:700">Fine del quiz</div>' +
+      '<div style="font-size:34px;line-height:1.4">Sul telefono trovate le dieci domande con le soluzioni e le spiegazioni.<br>Nessun punteggio: servono per rileggere.</div>' +
+      '<div style="font-size:26px;color:var(--tenue)">Rimandi: Sintesi «Filosofia e politica», § 1.2</div></div>',
+    note: '<p>Sui telefoni compare il riepilogo: per ogni domanda la soluzione, la spiegazione e la risposta data dalla squadra. Nessun conteggio.</p>'
+  });
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Filosofia · classe quinta · quiz a squadre dal telefono',
+    percorso: 'lezioni_filosofia_marx_quiz',
+    database: 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app',
+    squadre: true,
+    passi: passi
+  });
+})();
+</script>
+</body>
+</html>
