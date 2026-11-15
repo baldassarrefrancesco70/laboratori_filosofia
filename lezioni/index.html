@@ -15,7 +15,14 @@
   .pin{max-width:360px;margin:60px auto;text-align:center}
   .pin input{font-size:32px;width:180px;text-align:center;letter-spacing:10px;padding:8px;border:2px solid var(--bordo);border-radius:8px}
   .pin .err{color:var(--rosso-scuro);min-height:1.4em;margin-top:10px;font-weight:700}
-  h2.materia{font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--tenue);margin:30px 0 8px}
+  .salta{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+  .salta a{display:inline-block;padding:8px 16px;border:2px solid var(--rosso);border-radius:999px;color:var(--rosso-scuro);font-weight:700;text-decoration:none;background:#fff}
+  .salta a:hover,.salta a:focus{background:var(--rosso);color:#fff}
+  .salta small{font-weight:400;opacity:.8}
+  section.sez-materia{margin-top:36px;padding-top:6px;border-top:4px solid var(--rosso);scroll-margin-top:12px}
+  section.sez-materia:first-of-type{margin-top:22px}
+  h2.materia{font-size:30px;margin:12px 0 2px;color:var(--rosso-scuro);text-transform:capitalize}
+  h2.materia small{font-size:15px;font-weight:400;color:var(--tenue);margin-left:10px;text-transform:none}
   h3.anno{font-size:22px;margin:18px 0 10px}
   .lez{background:#fff;border:1px solid var(--bordo);border-radius:10px;padding:16px 18px;margin-bottom:12px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
   .lez .t{font-weight:700;font-size:19px}
@@ -115,12 +122,20 @@
       'Riaprendo la stessa classe, anche da un altro computer, la lezione riprende dal passo in cui ti eri fermato.'));
     var perMateria = {};
     INDICE.forEach(function (l) { (perMateria[l.materia || 'altro'] = perMateria[l.materia || 'altro'] || []).push(l); });
-    Object.keys(perMateria).sort().forEach(function (m) {
-      main.appendChild(el('h2', 'materia', esc(m)));
+    var materie = Object.keys(perMateria).sort();
+    var id = function (m) { return 'sez-' + m.replace(/[^a-z0-9]/gi, '-').toLowerCase(); };
+    var nome = function (m) { return m.charAt(0).toUpperCase() + m.slice(1); };
+    var salta = el('nav', 'salta');
+    salta.setAttribute('aria-label', 'Vai a una materia');
+    materie.forEach(function (m) { salta.appendChild(el('a', '', esc(nome(m)) + ' <small>(' + perMateria[m].length + ')</small>')).href = '#' + id(m); });
+    if (materie.length > 1) main.appendChild(salta);
+    materie.forEach(function (m) {
+      var sez = el('section', 'sez-materia'); sez.id = id(m);
+      sez.appendChild(el('h2', 'materia', esc(nome(m)) + '<small>' + perMateria[m].length + (perMateria[m].length === 1 ? ' lezione' : ' lezioni') + '</small>'));
       var perAnno = {};
       perMateria[m].forEach(function (l) { (perAnno[l.classe || ''] = perAnno[l.classe || ''] || []).push(l); });
       Object.keys(perAnno).sort(function (a, b) { return ORDINE_ANNI.indexOf(a) - ORDINE_ANNI.indexOf(b); }).forEach(function (anno) {
-        main.appendChild(el('h3', 'anno', anno ? 'Classe ' + esc(anno) : 'Senza classe'));
+        sez.appendChild(el('h3', 'anno', anno ? 'Classe ' + esc(anno) : 'Senza classe'));
         perAnno[anno].forEach(function (l) {
           var box = el('div', 'lez');
           box.appendChild(el('div', '', '<div class="t">' + esc(l.titolo) + '</div><div class="d">' + esc(l.descrizione) + '</div>'));
@@ -135,9 +150,10 @@
             cl.appendChild(a);
           });
           box.appendChild(cl);
-          main.appendChild(box);
+          sez.appendChild(box);
         });
       });
+      main.appendChild(sez);
     });
     disegnaGestione();
   }
