@@ -302,6 +302,11 @@
     else if (a.tipo === 'schema') Object.keys(r || {}).forEach(function (k) {
       out.push([a.termini && a.termini[k] ? a.termini[k].testo : 'termine ' + k, a.caselle && a.caselle[r[k]] ? a.caselle[r[k]].titolo : r[k]]);
     });
+    else if (a.tipo === 'punto' && r && typeof r.x === 'number') {
+      // punto sulla carta: coordinate 0-1000 e, se cade in una delle zone attese, il suo nome
+      var zona = (a.zone || []).filter(function (z) { var dx = r.x - z.x, dy = (r.y - z.y) / (a.rapporto || 1.6); return Math.sqrt(dx * dx + dy * dy) <= z.r; })[0];
+      out.push(['', 'x ' + r.x + ', y ' + r.y + (zona ? ' · ' + (zona.etichetta || 'zona attesa') : ' · fuori dalle zone')]);
+    }
     else out.push(['', typeof r === 'object' ? JSON.stringify(r) : r]);
     return out;
   }
