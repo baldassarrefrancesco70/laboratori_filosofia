@@ -63,6 +63,14 @@
       "classe": "quinta",
       "descrizione": "Lezione interattiva (Filosofia V): la critica dello storicismo, leggi e tendenze, società chiusa e società aperta, il criterio della democrazia, tutela delle minoranze e riformismo gradualista.",
       "percorso": "lezioni_filosofia_popper_societa_aperta"
+    },
+    {
+      "file": "storia_settecento.html",
+      "titolo": "L'Europa del Settecento",
+      "materia": "storia",
+      "classe": "quarta",
+      "descrizione": "Lezione interattiva (Storia IV, Percorso 2, Fase 0): guerra ed equilibrio, le cinque macchine di potere, l'Illuminismo come metodo, le riforme e i privilegi, perché in Francia la strada si chiude. Fonti minime, carte e una tabella.",
+      "percorso": "lezioni_storia_settecento"
     }
   ]
 }
