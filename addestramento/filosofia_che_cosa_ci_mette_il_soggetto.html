@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Che cosa ci mette il soggetto?</title>
+<meta name="portale:titolo" content="Che cosa ci mette il soggetto?">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="argomentare">
+<meta name="portale:descrizione" content="Kant, estetica e analitica trascendentale: classificare giudizi e applicare forme a priori e categorie a casi nuovi, con correzione immediata.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--acc:#6d28d9;--accbg:#f1ebfc}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--acc:#b59af0;--accbg:#241b38}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.3rem 0 .2rem}
+h2{font-size:1.2rem;margin:.2rem 0 .6rem}
+h3{font-size:1.05rem;margin:.8rem 0 .3rem}
+.sub{color:var(--muted);margin:0 0 .8rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.pill{display:inline-block;font-size:.8rem;font-weight:600;background:var(--accbg);color:var(--acc);border-radius:99px;padding:2px 10px;margin-bottom:6px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.stem{font-weight:600;margin:.2rem 0 .4rem}
+.q{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.q:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg)}
+.opt[aria-pressed=true]::before{content:"✓ ";font-weight:700}
+.grid3{display:flex;flex-wrap:wrap;gap:8px}
+.grid3 .opt{flex:1 1 160px;margin:0;text-align:center}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px;flex-wrap:wrap}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea{width:100%;min-height:140px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.92rem;border-left:4px solid var(--acc);background:var(--accbg);padding:8px 12px;margin:10px 0;border-radius:0 8px 8px 0}
+.caso{background:var(--accbg);border-radius:10px;padding:12px 14px;margin:8px 0 12px}
+details{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+details p{margin:.5rem 0}
+.res{border-radius:10px;padding:10px 14px;margin:8px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.lbl{font-weight:700}
+.mine{white-space:pre-wrap;border:1px dashed var(--line);border-radius:8px;padding:8px 10px;margin:6px 0 10px}
+ul.chk{margin:.4rem 0 0 1.1rem;padding:0}
+ul.chk li{margin:.25rem 0}
+.score{font-family:Georgia,serif;font-size:1.6rem;margin:.2rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var LAB_ID = "filosofia_che_cosa_ci_mette_il_soggetto";
+  var TITLE = "Che cosa ci mette il soggetto?";
+  var KEY = "addestr_state_" + LAB_ID;
+  var MAXC = 1500, MINC = 20;
+
+  /* ---------- RICHIAMO ---------- */
+  var RECAP = [
+    { h: "Materia e forma", b: "Ogni conoscenza comincia con l'esperienza, ma non deriva tutta dall'esperienza. È una sintesi di materia (le impressioni sensibili, molteplici e mutevoli: a posteriori) e forma (i modi fissi con cui la mente le ordina, comuni a tutti i soggetti: a priori). È la rivoluzione copernicana: gli oggetti si regolano sul soggetto." },
+    { h: "Tre tipi di giudizi", b: "Analitici a priori: il predicato è già nel soggetto; universali e necessari, ma non ampliano la conoscenza. Sintetici a posteriori: il predicato aggiunge qualcosa, ma solo l'esperienza lo garantisce; non sono universali né necessari. Sintetici a priori: aggiungono qualcosa e sono universali e necessari. Sono la base della scienza." },
+    { h: "Sensibilità: spazio e tempo", b: "La sensibilità riceve i dati e li ordina con due forme a priori. Lo spazio ordina il senso esterno (le cose l'una accanto all'altra) e fonda la geometria; il tempo ordina il senso interno (gli stati l'uno dopo l'altro) e fonda l'aritmetica. Non sono ricavati dall'esperienza, non sono contenitori reali, non sono concetti." },
+    { h: "Intelletto: categorie e io penso", b: "L'intelletto pensa le intuizioni con dodici categorie (per esempio sostanza, causa ed effetto, unità, pluralità). L'io penso unifica tutte le rappresentazioni: è un'attività di sintesi, non una sostanza. Le leggi generali della natura dipendono dal soggetto; le leggi particolari si ricavano dall'esperienza. «I pensieri senza contenuto sono vuoti, le intuizioni senza concetti sono cieche»." },
+    { h: "Fenomeno e noumeno", b: "Il fenomeno è la realtà come ci appare attraverso le forme a priori: soggettivo, ma universale, un oggetto reale per tutti i soggetti strutturati come noi. Il noumeno (cosa in sé) è pensabile, ma non conoscibile: un concetto-limite. Nella metafora di Kant la conoscenza è un'isola, la terraferma della verità; l'illusione sta nell'oceano che la circonda, dove nebbie e ghiacci fanno credere a nuove terre." }
+  ];
+
+  /* ---------- FASE 1: classificazione ---------- */
+  var CLS = ["Analitico a priori", "Sintetico a posteriori", "Sintetico a priori"];
+  var F1 = [
+    { id: "f1_1", t: "L'acqua del mare è salata.", ok: 1,
+      why: "Nel concetto di «acqua del mare» non c'è il sale: il predicato aggiunge qualcosa, e lo sappiamo solo perché qualcuno l'ha assaggiata. Un mare d'acqua dolce non è contraddittorio." },
+    { id: "f1_2", t: "Un quadrato ha quattro lati.", ok: 0,
+      why: "«Quattro lati» è già contenuto nel concetto di quadrato: basta analizzarlo. Il giudizio è certo, ma non ci dice nulla di nuovo (come «i corpi sono estesi»)." },
+    { id: "f1_3", t: "La linea retta è la linea più breve tra due punti.", ok: 2,
+      why: "Nel concetto di «retta» c'è una direzione, non una misura: «la più breve» aggiunge qualcosa. Eppure non serve misurare tutte le linee per saperlo: è necessario, perché si fonda sull'intuizione pura dello spazio. È geometria, quindi sintetico a priori." },
+    { id: "f1_4", t: "Tutti gli smartphone venduti quest'anno in Italia hanno una fotocamera.", ok: 1,
+      why: "La parola «tutti» inganna. Il giudizio vale per tutti i casi controllati, ma lo sappiamo dall'esperienza e potrebbe essere diverso: domani si potrebbe vendere uno smartphone senza fotocamera. Universale per i casi raccolti, ma non necessario." },
+    { id: "f1_5", t: "Un evento passato è accaduto prima di qualunque evento presente.", ok: 0,
+      why: "Sembra un giudizio sul tempo, e quindi sintetico. Ma «passato» significa già «accaduto prima di ora»: il predicato è contenuto nel soggetto. Attenzione a non classificare in base all'argomento, ma al rapporto tra soggetto e predicato." },
+    { id: "f1_6", t: "La somma degli angoli interni di un triangolo è uguale a due angoli retti.", ok: 2,
+      why: "Per Kant la geometria è sintetica a priori: il concetto di «figura con tre lati» non contiene la somma degli angoli, che si ricava costruendo la figura nello spazio. Ed è universale e necessario: non dipende da quanti triangoli abbiamo misurato." },
+    { id: "f1_7", t: "Il ferro lasciato all'aperto arrugginisce.", ok: 1,
+      why: "Che il ferro arrugginisca lo sappiamo dall'esperienza: è una legge particolare della natura, che va ricavata osservando. Il contrario non è contraddittorio." },
+    { id: "f1_8", t: "Lo spazio ha tre dimensioni.", ok: 2,
+      why: "È un esempio dello stesso Kant. Non lo ricaviamo misurando molti spazi: ogni spazio che possiamo intuire ha tre dimensioni. Aggiunge qualcosa al concetto di spazio ed è necessario, perché lo spazio è una forma a priori della nostra sensibilità." }
+  ];
+
+  /* ---------- FASE 2: casi ---------- */
+  var F2 = [
+    { id: "f2_c1", titolo: "Il visore",
+      caso: "Indossi un visore di realtà virtuale. In un gioco voli tra pianeti inventati, in un altro cammini sott'acqua: colori, forme e suoni cambiano da un mondo all'altro. Una cosa però non cambia mai: tutto ciò che vedi sta in uno spazio, una cosa accanto all'altra, e accade in un tempo, una cosa dopo l'altra.",
+      ripasso: 2,
+      q: "Con Kant, che cosa spiega meglio questo fatto?",
+      opts: [
+        "Spazio e tempo sono contenitori reali, esistenti fuori di noi, che anche i programmatori del visore devono riprodurre",
+        "Spazio e tempo non vengono dalle immagini: sono le forme con cui la sensibilità riceve qualsiasi dato",
+        "Spazio e tempo sono concetti che ricaviamo confrontando molte esperienze, comprese quelle fatte con il visore",
+        "Spazio e tempo sono categorie dell'intelletto, come la causalità, e servono a giudicare se un mondo è vero"
+      ], ok: 1,
+      why: "Le immagini (la materia) cambiano da un mondo all'altro; spazio e tempo no, perché non vengono dalle immagini: sono le forme a priori della sensibilità. Non sono contenitori reali (come per Newton), non sono concetti astratti dall'esperienza e non appartengono all'intelletto." },
+    { id: "f2_c2", titolo: "I colori",
+      caso: "Un tuo compagno è daltonico: dove tu vedi una mela rossa tra foglie verdi, lui vede due tonalità simili di giallo-marrone. Un altro compagno commenta: «Ecco la prova che Kant aveva ragione: ognuno guarda il mondo con le sue lenti a priori.»",
+      ripasso: 0,
+      q: "Il commento usa bene Kant?",
+      opts: [
+        "Sì: il daltonismo mostra che le forme a priori cambiano da persona a persona, proprio come lenti diverse",
+        "Sì: per Kant il colore è una categoria dell'intelletto, e chi è daltonico usa una categoria tutta diversa",
+        "No: il colore è materia della sensazione, a posteriori, e varia; le forme a priori sono comuni a tutti",
+        "No: per Kant il colore è una proprietà della cosa in sé, che chi è daltonico percepisce in modo sbagliato"
+      ], ok: 2,
+      why: "Il colore appartiene alla materia della conoscenza, che viene dall'esperienza ed è mutevole. Le forme a priori, invece, sono comuni a tutti i soggetti: per questo il fenomeno è soggettivo ma universale. L'immagine delle «lenti che non possiamo togliere» indica forme uguali per tutti, non occhiali diversi per ciascuno." },
+    { id: "f2_c3", titolo: "Il blackout",
+      caso: "Alle nove di sera salta la corrente in tutto il quartiere. Arriva il tecnico e dice: «Non so ancora che cosa l'abbia provocato: un guasto alla cabina, un sovraccarico, un cavo tranciato. Ma una causa c'è, e la troverò.»",
+      ripasso: 3,
+      q: "Che cosa, nella frase del tecnico, viene dall'esperienza e che cosa è a priori?",
+      opts: [
+        "Che una causa ci sia lo sa per abitudine, perché tutti i blackout che ha visto finora ne avevano una",
+        "Tutto è a priori: un buon tecnico può dedurre la causa del guasto dal solo concetto di blackout elettrico",
+        "Tutto viene dall'esperienza: finché non trova la causa, non può affermare con certezza che ci sia",
+        "Quale sia la causa lo dirà l'esperienza; che una causa ci sia è a priori, perché è una categoria"
+      ], ok: 3,
+      why: "È la distinzione che Hume non aveva fatto: il singolo giudizio di esperienza («è stato un sovraccarico») va cercato osservando; il principio che ogni evento ha una causa è a priori, perché la causalità è una categoria dell'intelletto. La prima risposta è la posizione di Hume, la seconda quella di un razionalismo che pretende di dedurre i fatti dai concetti.",
+      open: { id: "f2_c3b", prompt: "Spiega in poche righe perché, per Kant, il tecnico ha diritto alla sua certezza, mentre per Hume non l'avrebbe.",
+        model: "Una buona risposta contiene almeno tre di questi punti:",
+        chk: [
+          "per Kant la causalità è una categoria dell'intelletto (gruppo della relazione), quindi a priori: non viene dall'esperienza",
+          "per questo vale necessariamente per ogni fenomeno, anche per un blackout di cui non si sa ancora nulla",
+          "a priori è solo il principio («c'è una causa»); quale sia la causa è una legge particolare, che va cercata nell'esperienza",
+          "per Hume la connessione causale nasce dall'abitudine: è un'aspettativa, non una certezza, perché l'esperienza mostra solo successioni",
+          "Kant distingue il singolo giudizio di esperienza dal principio che quel giudizio presuppone; Hume no"
+        ] } },
+    { id: "f2_c4", titolo: "Il messaggio vocale",
+      caso: "Ascolti un messaggio vocale di tre minuti. Le parole arrivano una dopo l'altra e ognuna, appena passata, non c'è più. Eppure alla fine non hai in testa una fila di suoni staccati: hai capito un discorso, con un inizio, uno svolgimento e una conclusione.",
+      ripasso: 3,
+      q: "Con Kant, che cosa rende possibile capire il messaggio come un discorso unico?",
+      opts: [
+        "La memoria del telefono, che conserva il messaggio intero e lo trasmette alla mente già tutto unificato",
+        "L'io penso, che accompagna e unifica le rappresentazioni: non è una sostanza, ma un'attività di sintesi",
+        "L'io come sostanza pensante, una cosa che esiste in sé e di cui possiamo conoscere la natura immateriale",
+        "Il tempo da solo: le parole si dispongono in fila da sé, senza che l'intelletto debba collegarle tra loro"
+      ], ok: 1,
+      why: "Il tempo mette le parole l'una dopo l'altra, ma da solo non le unisce: senza l'intelletto avremmo una successione, non un discorso. Ciò che unifica è l'io penso, che «deve poter accompagnare tutte le mie rappresentazioni». Non è la res cogitans di Cartesio: non è una cosa, è un'attività, ed è la stessa struttura in tutti i soggetti." },
+    { id: "f2_c5", titolo: "Le macchie",
+      caso: "Ti mostrano un'immagine fatta solo di macchie bianche e nere sparse. Per un minuto vedi soltanto macchie. Poi qualcuno ti dice: «C'è un cane che annusa il terreno.» All'improvviso lo vedi, e da quel momento non riesci più a vedere solo macchie. Eppure nell'immagine non è cambiato nulla.",
+      ripasso: 3,
+      q: "Con Kant, che cosa è cambiato?",
+      opts: [
+        "Sono cambiati i dati dei sensi: la frase sul cane ha modificato le macchie che arrivano agli occhi",
+        "Nulla di importante: il cane era già nella cosa in sé, e la vista l'ha finalmente colto così com'è",
+        "I dati sono gli stessi; è cambiato il modo in cui l'intelletto li unifica con un concetto",
+        "È intervenuta l'abitudine: avendo visto molti cani, la mente si aspetta di trovarne uno ovunque"
+      ], ok: 2,
+      why: "La materia (le macchie) è rimasta identica. Prima c'erano intuizioni senza un concetto che le unificasse; poi l'intelletto le ha unificate e l'oggetto è comparso. Sensibilità e intelletto collaborano: l'oggetto conosciuto è sempre il fenomeno, non la cosa in sé.",
+      open: { id: "f2_c5b", prompt: "Usa la frase «I pensieri senza contenuto sono vuoti, le intuizioni senza concetti sono cieche» per spiegare questo caso. Che cosa, qui, sarebbe un «pensiero vuoto»?",
+        model: "Una buona risposta contiene almeno tre di questi punti:",
+        chk: [
+          "prima della frase ci sono intuizioni (le macchie) senza un concetto che le unifichi: sono «cieche», non mostrano ancora un oggetto",
+          "quando l'intelletto le unifica con un concetto, compare l'oggetto: la conoscenza è sintesi di dati sensibili e concetto",
+          "un pensiero vuoto è un concetto senza dati sensibili: per esempio pensare «cane» senza avere nulla davanti agli occhi; si pensa, ma non si conosce",
+          "sensibilità e intelletto da soli non bastano: collaborano",
+          "va bene anche notare che «cane» è un concetto empirico, mentre le categorie sono concetti puri, che rendono possibile ogni oggetto"
+        ] } }
+  ];
+
+  /* ---------- DOMANDA FINALE ---------- */
+  var FIN = { id: "fin", prompt: "Una compagna, finito lo studio di Kant, dice: «Allora conosciamo solo fenomeni. Quindi la scienza studia illusioni, e la realtà vera ci sfugge.» Rispondile con Kant: che cosa è giusto e che cosa è sbagliato nella sua conclusione?",
+    model: "Una buona risposta contiene almeno quattro di questi punti:",
+    chk: [
+      "è giusto che conosciamo solo fenomeni e che la cosa in sé (noumeno) non è conoscibile",
+      "è sbagliato che il fenomeno sia un'illusione: è soggettivo ma universale, un oggetto reale per tutti i soggetti strutturati come noi",
+      "proprio perché il fenomeno è costruito con forme comuni a tutti, la scienza (matematica e fisica) è certa: si regge su giudizi sintetici a priori",
+      "il noumeno si può pensare, ma non conoscere: è un concetto-limite che arresta le pretese della conoscenza",
+      "nella metafora dell'isola l'illusione non sta sulla terraferma (la conoscenza dei fenomeni), ma nell'oceano: nella pretesa di conoscere oltre l'esperienza",
+      "va bene anche dire che quella di Kant è una filosofia del limite, ma non scettica: tracciare un confine garantisce ciò che sta dentro"
+    ] };
+
+  var NMC = F1.length + F2.length;
+
+  /* ---------- STATO ---------- */
+  // step: "intro" | "f1" | "f2" | "fin" ; c = caso corrente in f2 ; lock1/lock2 = fasi confermate
+  var S = { step: "intro", c: 0, a: {}, t: {}, lock1: false, lock2: false, sub: false, ok: null };
+  var app;
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function btn(text, cls) { var b = el("button", cls || "btn", text); b.type = "button"; return b; }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Interpretare, confrontare, argomentare"));
+    h.appendChild(el("h1", null, TITLE));
+    h.appendChild(el("p", "sub", "Kant: estetica e analitica trascendentale applicate a casi nuovi"));
+    return h;
+  }
+  function progress(n) { var bar = el("div", "bar"); var f = el("i"); f.style.width = n + "%"; bar.appendChild(f); return bar; }
+  function recapBox(i, label) {
+    var d = el("details"); d.appendChild(el("summary", null, label || ("Ripassa: " + RECAP[i].h)));
+    d.appendChild(el("p", null, RECAP[i].b)); return d;
+  }
+  function textArea(id, onOk) {
+    var wrap = el("div");
+    var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.t[id] || ""; ta.setAttribute("aria-label", "La tua risposta");
+    var cnt = el("div", "cnt");
+    function upd() { cnt.textContent = ta.value.length + " / " + MAXC; onOk(ta.value.trim().length >= MINC); }
+    ta.oninput = function () { S.t[id] = ta.value; persist(); upd(); };
+    wrap.appendChild(ta); wrap.appendChild(cnt);
+    setTimeout(upd, 0);
+    return wrap;
+  }
+
+  function render() {
+    clear(); app.appendChild(header());
+    if (S.sub) return renderReview();
+    if (S.step === "intro") return renderIntro();
+    if (S.step === "f1") return renderF1();
+    if (S.step === "f2") return renderF2();
+    return renderFin();
+  }
+
+  function renderIntro() {
+    var c = el("div", "card");
+    c.appendChild(el("h2", null, "Come funziona"));
+    c.appendChild(el("p", null, "Hai studiato come Kant risponde a Hume: la conoscenza è una sintesi di materia, che viene dall'esperienza, e forma, che ci mette il soggetto. Qui provi ad applicare la teoria a situazioni che nel libro non ci sono."));
+    var ul = el("ul");
+    ["Fase 1 (circa 8 minuti): classifichi otto giudizi.",
+     "Fase 2 (circa 16 minuti): cinque casi; per ognuno scegli la spiegazione kantiana, e in due casi la motivi.",
+     "Domanda finale (circa 6 minuti): rispondi a un'obiezione.",
+     "Dopo la consegna vedi la correzione. Le risposte vengono salvate e le legge il docente; alcune verranno mostrate alla classe, senza nomi."].forEach(function (t) { ul.appendChild(el("li", null, t)); });
+    c.appendChild(ul);
+    c.appendChild(el("p", "note", "Ogni fase, una volta confermata, non si può più modificare. Lavora da solo, senza libro: se ti serve, apri il ripasso."));
+    app.appendChild(c);
+    var r = el("div", "card"); r.appendChild(el("h2", null, "Ripasso (facoltativo)"));
+    RECAP.forEach(function (x, i) { r.appendChild(recapBox(i, x.h)); });
+    app.appendChild(r);
+    var go = btn("Inizia la Fase 1"); go.onclick = function () { S.step = "f1"; persist(); render(); };
+    app.appendChild(go);
+  }
+
+  function renderF1() {
+    var c = el("div", "card");
+    c.appendChild(el("span", "pill", "Fase 1 · individuale"));
+    c.appendChild(progress(5));
+    c.appendChild(el("h2", null, "Che giudizio è?"));
+    c.appendChild(el("p", "sub", "Per ogni giudizio scegli il tipo. Guarda il rapporto tra soggetto e predicato, non l'argomento."));
+    c.appendChild(recapBox(1));
+    F1.forEach(function (q, n) {
+      var d = el("div", "q");
+      d.appendChild(el("p", "stem", (n + 1) + ". «" + q.t.replace(/\.$/, "") + "»"));
+      var g = el("div", "grid3"); g.setAttribute("role", "group"); g.setAttribute("aria-label", "Tipo di giudizio " + (n + 1));
+      CLS.forEach(function (lab, k) {
+        var b = btn(lab, "opt"); b.setAttribute("aria-pressed", S.a[q.id] === k ? "true" : "false");
+        b.onclick = function () { S.a[q.id] = k; persist(); render(); };
+        g.appendChild(b);
+      });
+      d.appendChild(g); c.appendChild(d);
+    });
+    var done = F1.every(function (q) { return S.a[q.id] != null; });
+    c.appendChild(el("p", "warn", "Quando confermi, la Fase 1 è chiusa: non potrai più tornare a cambiare le risposte. La correzione arriva alla fine."));
+    var row = el("div", "row");
+    var back = btn("Indietro", "btn sec"); back.onclick = function () { S.step = "intro"; persist(); render(); };
+    var next = btn("Conferma la Fase 1"); next.disabled = !done;
+    next.onclick = function () { S.lock1 = true; S.step = "f2"; S.c = 0; persist(); condividiFase("fase1", F1.map(function (q) { return q.id; })); render(); };
+    row.appendChild(back); row.appendChild(next); c.appendChild(row);
+    app.appendChild(c); window.scrollTo(0, 0);
+  }
+
+  function renderF2() {
+    var k = S.c, q = F2[k];
+    var c = el("div", "card");
+    c.appendChild(el("span", "pill", "Fase 2 · caso " + (k + 1) + " di " + F2.length));
+    c.appendChild(progress(20 + Math.round(k / F2.length * 55)));
+    c.appendChild(el("h2", null, q.titolo));
+    c.appendChild(el("div", "caso", q.caso));
+    c.appendChild(recapBox(q.ripasso));
+    c.appendChild(el("p", "stem", q.q));
+    q.opts.forEach(function (t, i) {
+      var b = btn(t, "opt"); b.setAttribute("aria-pressed", S.a[q.id] === i ? "true" : "false");
+      b.onclick = function () { S.a[q.id] = i; persist(); render(); };
+      c.appendChild(b);
+    });
+    var next = btn(k === F2.length - 1 ? "Conferma la Fase 2" : "Caso successivo");
+    var openOk = true;
+    function refresh() { next.disabled = S.a[q.id] == null || !openOk; }
+    if (q.open) {
+      openOk = false;
+      c.appendChild(el("p", "stem", q.open.prompt));
+      c.appendChild(textArea(q.open.id, function (ok) { openOk = ok; refresh(); }));
+      c.appendChild(el("p", "note", "Almeno " + MINC + " caratteri, con parole tue. Dopo la consegna vedrai che cosa dovrebbe contenere una buona risposta."));
+    }
+    if (k === F2.length - 1) c.appendChild(el("p", "warn", "Questa è l'ultima domanda a scelta multipla. Quando confermi, la Fase 2 è chiusa e non si torna più indietro."));
+    var row = el("div", "row");
+    var back = btn("Caso precedente", "btn sec"); back.disabled = k === 0;
+    back.onclick = function () { if (S.c > 0) { S.c--; persist(); render(); } };
+    if (k === 0) row.appendChild(el("span", "sub", "La Fase 1 è chiusa.")); else row.appendChild(back);
+    next.onclick = function () {
+      if (S.c < F2.length - 1) { S.c++; persist(); render(); return; }
+      S.lock2 = true; S.step = "fin"; persist();
+      var ids = []; F2.forEach(function (x) { ids.push(x.id); if (x.open) ids.push(x.open.id); });
+      condividiFase("fase2", ids);
+      render();
+    };
+    row.appendChild(next); c.appendChild(row);
+    refresh();
+    app.appendChild(c); window.scrollTo(0, 0);
+  }
+
+  function renderFin() {
+    var c = el("div", "card");
+    c.appendChild(el("span", "pill", "Domanda finale"));
+    c.appendChild(progress(85));
+    c.appendChild(el("p", "note", "Le fasi 1 e 2 sono chiuse: il tasto «Indietro» non è più disponibile."));
+    c.appendChild(el("h2", null, "Un'obiezione"));
+    c.appendChild(el("div", "caso", FIN.prompt));
+    c.appendChild(recapBox(4));
+    var next = btn("Consegna"); var err = el("div", "err");
+    c.appendChild(textArea(FIN.id, function (ok) { next.disabled = !ok || sending; }));
+    c.appendChild(el("p", "note", "Almeno " + MINC + " caratteri. Distingui che cosa è giusto e che cosa è sbagliato."));
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(el("span")); row.appendChild(next); c.appendChild(row);
+    next.onclick = function () { consegna(next, err); };
+    app.appendChild(c); window.scrollTo(0, 0);
+  }
+
+  function allMC() { return F1.map(function (q) { return { q: q, opts: CLS, prompt: "Che giudizio è: «" + q.t + "»" }; }).concat(F2.map(function (q) { return { q: q, opts: q.opts, prompt: q.titolo + " — " + q.q }; })); }
+
+  function buildAnswers() {
+    var list = [], right = 0;
+    allMC().forEach(function (m) {
+      var k = S.a[m.q.id]; if (k == null) return;
+      var good = k === m.q.ok; if (good) right++;
+      list.push({ id: m.q.id, prompt: m.prompt.slice(0, 300), type: "mc", answer: m.opts[k], correct: good });
+    });
+    var opens = F2.filter(function (q) { return q.open; }).map(function (q) { return q.open; }).concat([FIN]);
+    opens.forEach(function (o) {
+      var t = (S.t[o.id] || "").trim(); if (!t) return;
+      list.push({ id: o.id, prompt: o.prompt.slice(0, 300), type: "essay", answer: t.slice(0, 4000), correct: null });
+    });
+    return { list: list, right: right, score: Math.round(right / NMC * 100) };
+  }
+
+  // Vista classe dal vivo: fase1 (classificazione) e fase2 (casi + due motivazioni). Anonima, mai bloccante.
+  function condividiFase(fase, ids) {
+    try {
+      if (!window.Addestramento || typeof window.Addestramento.condividi !== "function") return;
+      var list = buildAnswers().list.filter(function (a) { return ids.indexOf(a.id) >= 0; });
+      Promise.resolve(window.Addestramento.condividi(fase, list)).catch(function () {});
+    } catch (e) {}
+  }
+
+  var sending = false, tentativi = 0;
+  function consegna(b, err) {
+    if (sending) return; sending = true; b.disabled = true; err.textContent = "Consegna in corso…";
+    var r = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && window.Addestramento && ++tentativi < 2) {
+        sending = false; b.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e riprova."; return;
+      }
+      S.sub = true; S.ok = window.Addestramento ? (ok !== false) : null; persist(); sending = false; render();
+    });
+  }
+
+  function mcReview(n, prompt, opts, k, ok, why) {
+    var good = k === ok, d = el("div", "card");
+    d.appendChild(el("p", "stem", n + ". " + prompt));
+    var m = el("div", "res " + (good ? "ok" : "ko"));
+    m.appendChild(el("span", "lbl", good ? "Corretto — " : "Non corretto — "));
+    m.appendChild(document.createTextNode("la tua risposta: " + (k == null ? "(nessuna)" : opts[k])));
+    d.appendChild(m);
+    if (!good) { var g = el("div", "res ok"); g.appendChild(el("span", "lbl", "Risposta giusta: ")); g.appendChild(document.createTextNode(opts[ok])); d.appendChild(g); }
+    d.appendChild(el("p", null, why));
+    return d;
+  }
+  function openReview(o) {
+    var d = el("div", "card");
+    d.appendChild(el("p", "stem", o.prompt));
+    d.appendChild(el("div", "lbl", "La tua risposta"));
+    d.appendChild(el("div", "mine", S.t[o.id] || "(nessuna)"));
+    d.appendChild(el("div", "lbl", o.model));
+    var ul = el("ul", "chk"); o.chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul);
+    d.appendChild(el("p", "note", "Confronta punto per punto: che cosa avevi già scritto? Che cosa ti è sfuggito? Non è «la» risposta giusta: sono gli elementi da cercare."));
+    return d;
+  }
+
+  function renderReview() {
+    var r = buildAnswers();
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    c.appendChild(el("div", "score", r.right + " su " + NMC + " scelte corrette"));
+    c.appendChild(el("p", null, "Ecco la correzione. Serve a capire dove ti sei fermato, non a prendere un voto: in classe ne discutiamo insieme."));
+    if (S.ok === false) c.appendChild(el("p", "warn", "Attenzione: il risultato NON è stato registrato (connessione assente o bloccata). Avvisa il docente."));
+    else if (S.ok === null) c.appendChild(el("p", "warn", "Il sistema di registrazione non si è caricato: il risultato NON è stato registrato. Avvisa il docente."));
+    else c.appendChild(el("p", "note", "Risultato registrato."));
+    app.appendChild(c);
+    app.appendChild(el("h2", null, "Fase 1 · Che giudizio è?"));
+    F1.forEach(function (q, n) { app.appendChild(mcReview(n + 1, "«" + q.t + "»", CLS, S.a[q.id], q.ok, q.why)); });
+    app.appendChild(el("h2", null, "Fase 2 · I casi"));
+    F2.forEach(function (q, n) {
+      app.appendChild(mcReview(n + 1, q.titolo + " — " + q.q, q.opts, S.a[q.id], q.ok, q.why));
+      if (q.open) app.appendChild(openReview(q.open));
+    });
+    app.appendChild(el("h2", null, "Domanda finale"));
+    app.appendChild(openReview(FIN));
+    window.scrollTo(0, 0);
+  }
+
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: LAB_ID,
+      title: TITLE,
+      salvaRisposte: true,      // decisione esplicita del docente
+      tempoAtteso: 1500,        // circa 25 minuti per uno studente concentrato
+      caratteriAttesi: 900,     // tre risposte aperte
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
