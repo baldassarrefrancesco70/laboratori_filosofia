@@ -123,6 +123,14 @@
     '<div class="d evid">1772 · 1793 · 1795</div><div class="evid">Spartizioni della Polonia <small>La Polonia sparisce dalla carta</small></div>' +
     '</div>');
 
+  var S_EQUILIBRIO = st('Guerra ed equilibrio',
+    '<p class="intro"><b>Principio di equilibrio</b>: nessuno Stato deve diventare così forte da poter dominare gli altri.</p>' +
+    '<div class="catena" style="grid-template-columns:1fr 70px 1fr 70px 1fr;font-size:28px">' +
+    '<div class="scheda bianca"><h3>1 · Una potenza cresce</h3>Per territori, alleanze o successioni dinastiche: il rapporto di forze si sposta.</div><div class="freccia-dx">→</div>' +
+    '<div class="scheda bianca"><h3>2 · Le altre reagiscono</h3>Alleanze contro la più forte, oppure compensazioni: ciascuno prende qualcosa.</div><div class="freccia-dx">→</div>' +
+    '<div class="scheda"><h3>3 · Si ripristina il rapporto</h3>Con la guerra e con la pace che la chiude: i trattati lo scrivono come scopo.</div></div>' +
+    '<p class="riga-fine" data-f="1">Equilibrio non vuol dire pace, né rispetto per tutti: vuol dire che nessuno vince abbastanza da dominare.</p>');
+
   var S_POLONIA_ATT = '<div style="display:flex;gap:28px;height:330px;align-items:stretch">' +
     '<img class="carta-fig" src="' + POLONIA_SRC + '" alt="Le tre spartizioni della Polonia">' +
     '<div style="display:flex;flex-direction:column;justify-content:space-between"><p class="att-consegna">Sul telefono: per le potenze del tempo, che cosa significa cancellare la Polonia dalla carta?</p>' +
@@ -257,6 +265,9 @@
     { titolo: 'Le guerre del secolo', html: S_GUERRE, minuti: 1.5,
       note: '<p>Le due righe evidenziate sono quelle che il percorso usa: i sette anni per la costruzione dell’argomento sulla guerra, la Polonia perché mostra che l’«equilibrio» funziona anche cancellando uno Stato.</p><p>Successione spagnola 1701-1714; tre spartizioni, ed è la terza (1795) che cancella lo Stato.</p>' },
 
+    { titolo: 'Il principio di equilibrio', html: S_EQUILIBRIO, minuti: 1,
+      note: '<p><b>Definizione</b>, da dire prima del sondaggio sulla Polonia: la domanda usa la parola «equilibrio» e chi non l’ha sentita risponderebbe a caso. Clic 1: l’avvertenza: equilibrio non è pace né giustizia, è un rapporto di forze.</p><p>La formulazione è mia, non è nel deck: il richiamo ai trattati si riferisce soprattutto a Utrecht (1713), dove la formula compare esplicitamente; da controllare sul testo se la citi.</p>' },
+
     { titolo: 'La Polonia sparisce dalla carta', html: S_POLONIA_ATT, minuti: 3,
       attivita: { id: 'polonia', tipo: 'sondaggio', minuti: 1.5,
         domanda: 'Per le potenze del tempo, cancellare la Polonia dalla carta è…',
@@ -302,9 +313,6 @@
     { titolo: 'Che cos’è l’Illuminismo? Kant, 1784', html: lettura(KANT), dispositivo: KANT, minuti: 1,
       note: '<p><b>Lettura</b> (circa 110 parole), anche sui telefoni. Falla leggere a uno studente. <b>Punta</b> sulla frase sottolineata: il metodo della slide precedente («discusse in pubblico») detto da uno dei protagonisti.</p><p><b>Traduzione di lavoro mia dal tedesco, non collazionata</b> con un’edizione italiana.</p>' },
 
-    { titolo: '«Gli illuministi pensavano che…»', html: S_DIVISI, minuti: 1,
-      note: '<p>Leggi la prima riga e passa subito all’attività: la riga sulla società diventa l’abbinamento.</p>' },
-
     { titolo: 'Voltaire o Rousseau?', minuti: 3,
       html: '<p class="att-consegna">Sul telefono: quattro frasi senza nome. Di chi è ciascuna, Voltaire o Rousseau? ' + TRAD + '</p>',
       attivita: { id: 'voltaire_rousseau', tipo: 'abbinamento', minuti: 2, fontiDopo: true,
@@ -316,7 +324,10 @@
           { testo: '«Ringrazio la natura saggia che, per il mio bene, mi ha fatto nascere in quest’età tanto denigrata dai nostri tristi censori. […] Il paradiso terrestre è dove sono io.»', fonte: 'Voltaire, Il mondano, 1736, vv. 1-3 e ultimo verso', atteso: 0 },
           { testo: '«Il primo che, recintato un terreno, pensò di dire “questo è mio” e trovò persone abbastanza ingenue da credergli, fu il vero fondatore della società civile.»', fonte: 'Rousseau, Discorso sull’origine della disuguaglianza, 1755, inizio della parte II', atteso: 1 }
         ] },
-      note: '<p><b>Abbinamento</b> (2 min). Le fonti compaiono solo nella ripresa.</p><p><b>Ripresa</b>: autori e opere in chiaro. <b>Punta il commento</b> sul criterio: non serve sapere chi ha scritto che cosa, basta leggere che cosa pensa la frase della civiltà e del commercio. Poi la regola della slide: al posto di «gli illuministi», un nome. Se c’è tempo: nel 1760 Rousseau scrive a Voltaire «non vi amo, signore» (lettera del 17 giugno).</p><p><b>Traduzioni di lavoro mie dal francese, non collazionate.</b></p>' },
+      note: '<p><b>Abbinamento</b> (2 min). Le fonti compaiono solo nella ripresa.</p><p><b>Ripresa</b>: autori e opere in chiaro. <b>Punta il commento</b> sul criterio: non serve sapere chi ha scritto che cosa, basta leggere che cosa pensa la frase della civiltà e del commercio. Poi passi alla slide successiva, che generalizza: al posto di «gli illuministi», un nome. Se c’è tempo: nel 1760 Rousseau scrive a Voltaire «non vi amo, signore» (lettera del 17 giugno).</p><p><b>Traduzioni di lavoro mie dal francese, non collazionate.</b></p>' },
+
+    { titolo: '«Gli illuministi pensavano che…»', html: S_DIVISI, minuti: 1,
+      note: '<p>Viene dopo l’abbinamento: la riga sulla società è l’esercizio appena fatto. Leggi la prima riga, poi le altre tre, e fissa la regola: al posto di «gli illuministi», un nome.</p>' },
 
     { titolo: 'Che cosa i governi provano a fare', html: S_RIFORME, minuti: 1.5,
       note: '<p>Il primo capoverso è la correzione anti-agiografica: le riforme nascono dalla pressione fiscale e militare, non da un’illuminazione morale dei sovrani. Tanucci e Pietro Leopoldo solo menzionati: la trattazione va nel Percorso 4.</p>' },
