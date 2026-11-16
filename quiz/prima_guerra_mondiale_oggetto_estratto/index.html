@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Prima guerra mondiale · L’oggetto estratto</title>
+<style>
+:root{--carta:#f6f2ea;--inchiostro:#22201c;--tenue:#6b655b;--linea:#d9d1c2;--accento:#8a2b1f;--n:#2f5d3a;--d:#7a6a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--carta);color:var(--inchiostro);font:16px/1.5 Georgia,"Times New Roman",serif}
+header{padding:24px 20px 8px;max-width:1300px;margin:0 auto}
+h1{font-size:1.7rem;margin:0 0 4px;font-weight:normal;letter-spacing:.01em}
+.sotto{color:var(--tenue);margin:0 0 14px;font-size:.95rem}
+.barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;max-width:1300px;margin:0 auto;padding:0 20px 16px;font-family:system-ui,-apple-system,sans-serif;font-size:.9rem}
+.gruppo{display:flex;border:1px solid var(--linea);border-radius:6px;overflow:hidden;background:#fff}
+.gruppo button{border:0;background:none;padding:7px 12px;cursor:pointer;font:inherit;color:var(--inchiostro)}
+.gruppo button+button{border-left:1px solid var(--linea)}
+.gruppo button[aria-pressed=true]{background:var(--inchiostro);color:#fff}
+select,.btn{font:inherit;padding:7px 12px;border:1px solid var(--linea);border-radius:6px;background:#fff;cursor:pointer;color:var(--inchiostro)}
+.btn.primario{background:var(--accento);border-color:var(--accento);color:#fff}
+.conta{color:var(--tenue);margin-left:auto}
+main{max-width:1300px;margin:0 auto;padding:0 20px 40px;columns:4 260px;column-gap:16px}
+.carta{break-inside:avoid;margin:0 0 16px;background:#fff;border:1px solid var(--linea);border-radius:6px;overflow:hidden;cursor:pointer;transition:box-shadow .15s,transform .15s;display:block;width:100%;text-align:left;padding:0;font:inherit;color:inherit}
+.carta:hover,.carta:focus-visible{box-shadow:0 4px 14px rgba(0,0,0,.12);transform:translateY(-1px);outline:none}
+.carta img{display:block;width:100%;height:auto;background:#eee}
+.carta p{margin:0;padding:9px 11px 11px;font-size:.88rem;line-height:1.35;color:var(--tenue)}
+body.senza-didascalie .carta p{display:none}
+.vuoto{color:var(--tenue);font-family:system-ui,sans-serif}
+/* finestra */
+.velo{position:fixed;inset:0;background:rgba(20,18,15,.82);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.velo.aperto{display:flex}
+.finestra{background:var(--carta);border-radius:8px;max-width:1150px;width:100%;max-height:94vh;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,1fr);overflow:hidden}
+.finestra .imm{background:#1d1b18;display:flex;align-items:center;justify-content:center;min-height:300px}
+.finestra .imm img{max-width:100%;max-height:94vh;object-fit:contain;display:block}
+.testo{padding:22px 24px;overflow:auto;max-height:94vh}
+.etichette{font-family:system-ui,sans-serif;font-size:.78rem;display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.et{padding:2px 8px;border-radius:10px;border:1px solid var(--linea);background:#fff}
+.et.n{border-color:var(--n);color:var(--n)} .et.d{border-color:var(--d);color:var(--d)}
+.didascalia{font-size:1.05rem;margin:0 0 14px}
+.nascosta{color:var(--tenue);font-style:italic}
+details{border-top:1px solid var(--linea);padding:10px 0}
+summary{cursor:pointer;font-family:system-ui,sans-serif;font-size:.9rem;font-weight:600}
+h3{font-family:system-ui,sans-serif;font-size:.9rem;margin:16px 0 6px;color:var(--accento);text-transform:uppercase;letter-spacing:.04em}
+ul{margin:0;padding-left:20px} li{margin:0 0 7px}
+.fonte{font-family:system-ui,sans-serif;font-size:.75rem;color:var(--tenue);margin-top:18px;border-top:1px solid var(--linea);padding-top:8px}
+.comandi{display:flex;gap:8px;margin-top:14px;font-family:system-ui,sans-serif;font-size:.85rem}
+.chiudi{position:fixed;top:12px;right:16px;background:none;border:0;color:#fff;font-size:2rem;cursor:pointer;z-index:11;display:none;line-height:1}
+.velo.aperto~.chiudi{display:block}
+@media (max-width:760px){.finestra{grid-template-columns:1fr;max-height:none;overflow:auto}.testo,.finestra .imm img{max-height:none}.velo{align-items:flex-start;overflow:auto}}
+</style>
+</head>
+<body>
+<header>
+<h1>La Prima guerra mondiale · L’oggetto estratto</h1>
+<p class="sotto">Guarda l’immagine: che cos’è, quando si colloca? Poi fai clic per i collegamenti (Percorso 2) e le questioni aperte (Percorso 3).</p>
+</header>
+<div class="barra">
+  <div class="gruppo" role="group" aria-label="Filtro">
+    <button data-filtro="tutte" aria-pressed="true">Tutte</button>
+    <button data-filtro="n" aria-pressed="false">Nuclei</button>
+    <button data-filtro="d" aria-pressed="false">Dettagli</button>
+  </div>
+  <select id="tappa" aria-label="Tappa">
+    <option value="0">Tutte le tappe</option>
+  </select>
+  <button class="btn" id="mescola">Mescola</button>
+  <button class="btn" id="didascalie" aria-pressed="false">Nascondi didascalie</button>
+  <button class="btn primario" id="estrai">Estrai una carta</button>
+  <span class="conta" id="conta"></span>
+</div>
+<main id="griglia"></main>
+<div class="velo" id="velo" role="dialog" aria-modal="true" aria-label="Carta">
+  <div class="finestra">
+    <div class="imm"><img id="f-img" alt=""></div>
+    <div class="testo">
+      <div class="etichette" id="f-et"></div>
+      <p class="didascalia" id="f-cap"></p>
+      <details id="f-p1"><summary>Che cos’è e quando (Percorso 1)</summary><p id="f-p1t"></p></details>
+      <div id="f-p2"></div>
+      <div id="f-p3"></div>
+      <div class="comandi">
+        <button class="btn" id="prec">← Precedente</button>
+        <button class="btn" id="succ">Successiva →</button>
+      </div>
+      <p class="fonte" id="f-src"></p>
+    </div>
+  </div>
+</div>
+<button class="chiudi" id="chiudi" aria-label="Chiudi">×</button>
+<script>
+const CARTE = [
+{f:"dc-1914-27-d-sarajevo",t:2,s:"n",cap:"Copertina della «Domenica del Corriere», disegno di Achille Beltrame",
+p1:"L’attentato di Sarajevo, 28 giugno 1914: Gavrilo Princip uccide l’arciduca Francesco Ferdinando, erede al trono asburgico, e la moglie Sofia. Di per sé è una crisi grave, ma non nuova.",
+p2:["Che cosa trasforma questa crisi in una guerra europea? Cerca la decisione presa a Berlino il 5-6 luglio: la «cambiale in bianco».","Guarda indietro: l’annessione della Bosnia-Erzegovina (1908), le guerre balcaniche, la Mano nera."],
+p3:["È un disegno, non una fotografia: dell’attentato non esiste un’immagine autentica. Che cosa ha scelto di mostrare l’illustratore?","Guerra voluta o catastrofe involontaria? È la questione che divide Fritz Fischer e Christopher Clark."],
+src:"Wikimedia Commons, pubblico dominio"},
+{f:"ultimatum",t:2,s:"n",cap:"Prima pagina di «Die Neue Zeitung», Vienna",
+p1:"Il 24 luglio 1914 il quotidiano viennese annuncia l’ultimatum dell’Austria-Ungheria alla Serbia, consegnato il 23 luglio: dieci punti, quarantotto ore di tempo.",
+p2:["Quale punto la Serbia rifiuta, e su chi conta per farlo? Segui il filo fino alla mobilitazione russa del 30 luglio.","Per diversi storici l’ultimatum era scritto perché fosse respinto. Che cosa cambia nella responsabilità di Vienna?"],
+p3:["Chi parla in questa pagina, a chi si rivolge e con quale scopo? Un giornale viennese racconta la crisi dal punto di vista della propria parte."],
+src:"Fonte da indicare"},
+{f:"balkan-troubles1",t:1,s:"d",cap:"Vignetta della rivista satirica britannica «Punch»",
+p1:"«The Boiling Point» (1912): le grandi potenze cercano di tenere chiuso il calderone dei «Balkan troubles», negli anni delle guerre balcaniche (1912-1913).",
+p2:["Perché proprio i Balcani? Pensa al vuoto lasciato dall’Impero ottomano e alla rivalità fra Austria-Ungheria e Russia.","Che cosa collega questa vignetta all’attentato del 28 giugno 1914?"],
+p3:["La vignetta fa pensare che l’esplosione sia inevitabile. La Sintesi dice che le tensioni rendevano la guerra possibile, non necessaria. Chi ha ragione, e con quali argomenti?"],
+src:"Wikimedia Commons, pubblico dominio"},
+{f:"map-europe-alliances-1914",t:2,s:"n",cap:"Carta delle alleanze militari in Europa nel 1914",
+p1:"I due blocchi: la Triplice Alleanza (Germania, Austria-Ungheria e, solo sulla carta, Italia) e la Triplice Intesa (Francia, Gran Bretagna, Russia). Sono impegni difensivi.",
+p2:["Una volta iniziate le mobilitazioni, quale margine di scelta resta ai governi?","Perché nell’agosto 1914 l’Italia resta neutrale?","Trova sulla carta le minoranze dell’Austria-Ungheria: che cosa accade loro dopo il 1918?"],
+p3:["«Le alleanze non hanno causato la guerra: hanno impedito che restasse locale». Sei d’accordo? Con quali argomenti?"],
+src:"Wikimedia Commons"},
+{f:"cartina-europa-1914-svg",t:1,s:"n",cap:"Carta politica dell’Europa nel 1914",
+p1:"L’Europa degli imperi alla vigilia della guerra: tedesco, austro-ungarico, russo, ottomano.",
+p2:["Confrontala con la carta dell’Europa dopo il 1919: quali imperi scompaiono, quali Stati nascono?","Trova Bosnia e Serbia: perché la crisi parte da lì?"],
+p3:["Il confronto fra le due carte mostra una rottura, ma non dice se quella rottura dovesse portare a una nuova guerra."],
+src:"Wikimedia Commons"},
+{f:"cartina-satirica-1914",t:2,s:"d",cap:"Carta satirica britannica del 1914, «Hark! Hark! The dogs do bark!»",
+p1:"L’Europa all’inizio della guerra vista da Londra: le nazioni come cani e altri animali, la Russia come un rullo compressore.",
+p2:["Riconosci Gran Bretagna, Francia, Germania, Austria-Ungheria e Russia? Come è rappresentata ciascuna?","Collega la carta al nazionalismo e alla propaganda che trasforma il nemico in un essere disumano."],
+p3:["È una fonte di propaganda: che cosa dice del punto di vista britannico, e che cosa tace?"],
+src:"Wikimedia Commons, pubblico dominio"},
+{f:"the-entente-cordiale",t:1,s:"d",cap:"Manifesto della Franco-British Exhibition di Londra",
+p1:"Britannia e Marianne si tengono per mano: l’Entente cordiale tra Gran Bretagna e Francia (1904), celebrata all’esposizione franco-britannica del 1908.",
+p2:["Perché Londra esce dall’isolamento? Pensa alla Germania di Guglielmo II e alla flotta di Tirpitz.","Dall’Entente cordiale all’accordo anglo-russo del 1907: nasce la Triplice Intesa."],
+p3:["La Sintesi dice che l’Intesa nasce per timore, non per aggredire. Che cosa lo mostra?"],
+src:"Fonte da indicare"},
+{f:"triple-entente",t:1,s:"n",cap:"Manifesto russo del 1914 «Soglasie» («Intesa»)",
+p1:"Francia, Russia e Gran Bretagna come tre figure femminili: la Triplice Intesa, completata nel 1907.",
+p2:["La Russia è al centro: perché in un manifesto russo?","L’alleanza franco-russa era difensiva e non obbligava la Francia a intervenire in una crisi balcanica. Allora perché la Francia entra in guerra?"],
+p3:["Chi ha prodotto questo manifesto, per quale pubblico e in quale momento? Che cosa voleva ottenere?"],
+src:"Wikimedia Commons"},
+{f:"triple-alliance",t:1,s:"n",cap:"Cartolina «L’Alleanza triplice e la Pace»",
+p1:"I sovrani della Triplice Alleanza: Umberto I d’Italia, Guglielmo II di Germania, Francesco Giuseppe d’Austria. La cartolina è anteriore al 1900, anno della morte di Umberto I.",
+p2:["Perché nel 1914 l’alleanza vale per l’Italia «solo sulla carta»?","Dalla Triplice al Patto di Londra (26 aprile 1915): come cambia la posizione dell’Italia?"],
+p3:["La cartolina associa l’alleanza alla pace. In che senso un’alleanza difensiva può presentarsi come una garanzia di pace?"],
+src:"Fonte da indicare"},
+{f:"corazzata-inglese",t:1,s:"n",cap:"Fotografia della corazzata britannica HMS Dreadnought",
+p1:"La HMS Dreadnought (1906) apre una nuova generazione di corazzate: è il simbolo della corsa agli armamenti navale fra Gran Bretagna e Germania.",
+p2:["Collega l’immagine alla Weltpolitik di Guglielmo II e alla flotta d’alto mare dell’ammiraglio Tirpitz.","Jutland (1916) e il blocco navale: a che cosa servono le flotte durante la guerra?"],
+p3:["La corsa agli armamenti era una forza che sfuggiva ai governi, o un circolo di scelte politiche?"],
+src:"Wikimedia Commons, pubblico dominio"},
+{f:"bettannier-la-tache-noire",t:1,s:"d",cap:"Albert Bettannier, «La tache noire», dipinto del 1887",
+p1:"In una scuola francese il maestro indica la carta: l’Alsazia-Lorena, perduta nel 1870, è la «macchia nera». È il revanscismo francese.",
+p2:["Versailles, 1919: che fine fa l’Alsazia-Lorena?","Che cosa vuole Clemenceau alla Conferenza di Parigi?"],
+p3:["La scuola come luogo in cui si forma il nazionalismo. Il nazionalismo porta da solo alla guerra?"],
+src:"Wikimedia Commons, pubblico dominio"},
+{f:"filippo-tommaso-marinetti-guerra-sola-igiene-del-m",t:1,s:"d",cap:"Copertina di F. T. Marinetti, «Guerra sola igiene del mondo», 1915",
+p1:"Il libro futurista esce nel 1915, quando l’Italia è ancora neutrale: è la guerra esaltata come «igiene del mondo».",
+p2:["Chi sono gli interventisti e con quali argomenti chiedono la guerra? Futuristi, D’Annunzio, nazionalisti, democratici irredentisti, sindacalisti rivoluzionari.","L’estetica della politica: il gesto teatrale contro la mediazione."],
+p3:["In copertina si legge che il testo è stato tradotto «a scopo di propaganda». A chi si rivolge, e per ottenere che cosa?"],
+src:"Wikimedia Commons"},
+{f:"giolitti-satira",t:1,s:"d",cap:"Copertina del settimanale satirico «L’Asino», 14 maggio 1911",
+p1:"«Giovanni Bifronte»: Giolitti con due facce, conservatore da un lato, democratico dall’altro. È l’età giolittiana.",
+p2:["Il metodo di Giolitti è la mediazione: un centro che assorbe le spinte moderate da destra e da sinistra.","Perché il giolittismo non convince né la destra né una parte della sinistra?"],
+p3:["La Sintesi usa l’immagine del «Giano bifronte» in un altro senso: riformatore al Nord, spregiudicato al Sud. Confronta le due accuse."],
+src:"«L’Asino», 1911; l’immagine porta il marchio Alinari"},
+{f:"guerra-libia",t:1,s:"n",cap:"Copertina della «Domenica del Corriere», dicembre 1911, disegno di Achille Beltrame",
+p1:"La guerra di Libia (1911-1912): soldati italiani issano la bandiera sulla punta di Tagiura.",
+p2:["La guerra rompe l’equilibrio giolittiano: a destra crescono i nazionalisti, a sinistra prevalgono i massimalisti (Mussolini dirige l’«Avanti!»).","Salvemini chiama la colonia uno «scatolone di sabbia»: perché?"],
+p3:["Chi ritroviamo, nel 1914-1915, fra neutralisti e interventisti?"],
+src:"Fonte da indicare"},
+{f:"two-german-soldiers-and-their-mule-wearing-gas-mas",t:3,s:"d",cap:"Fotografia: due soldati tedeschi e un mulo con maschere antigas, 1916",
+p1:"I gas tossici, usati per la prima volta dai tedeschi a Ypres nel 1915: è la guerra industriale.",
+p2:["La morte diventa impersonale: si muore per «un gas che non si vede arrivare». Che cosa cambia per i soldati?","I gas compaiono anche a Caporetto, nel 1917."],
+p3:["Anche gli animali sono mobilitati: che cosa dice questo della guerra totale?"],
+src:"Wikimedia Commons"},
+{f:"trincea-carso",t:3,s:"n",cap:"Fotografia di una trincea sul Carso",
+p1:"La guerra di posizione sul fronte italiano dell’Isonzo e del Carso (1915-1917).",
+p2:["Undici battaglie dell’Isonzo con guadagni minimi: perché? Mitragliatrice, filo spinato e la dottrina dell’attacco frontale di Cadorna.","Il «popolo della trincea»: contadini e operai di regioni diverse condividono per la prima volta lo stesso destino."],
+p3:["Disciplina della coercizione (Cadorna) e disciplina della persuasione (Diaz): che cosa cambia, e perché?"],
+src:"Fonte da indicare"},
+{f:"carro-armato",t:4,s:"d",cap:"Fotografia di un carro armato britannico",
+p1:"I primi carri armati britannici compaiono nel 1916, nella battaglia della Somme: è la guerra industriale.",
+p2:["Materialschlacht, «battaglia di materiali»: vince chi produce di più.","Perché le offensive del 1916 non riescono a sfondare?"],
+p3:[],
+src:"Fonte da indicare"},
+{f:"prestito-di-guerra",t:3,s:"n",cap:"Manifesto di Achille Mauzan per il prestito nazionale (Credito Italiano)",
+p1:"«Fate tutti il vostro dovere!»: lo Stato chiede ai civili di finanziare la guerra. È il fronte interno, con l’economia di guerra.",
+p2:["L’economia di guerra pianificata: lo Stato è il principale committente dell’industria, requisisce materie prime, fissa i prezzi.","Propaganda e censura: come si controlla l’opinione pubblica?"],
+p3:["Il soldato punta il dito su chi guarda: confronta il manifesto con l’americano «I Want You»."],
+src:"Wikimedia Commons"},
+{f:"german-u-boat-central-park-uc-5-submarine-war-boun",t:4,s:"n",cap:"Fotografia: un sommergibile tedesco esposto a New York",
+p1:"Il sommergibile tedesco UC-5, catturato dai britannici, esposto a Central Park nel 1917 per promuovere i prestiti di guerra americani.",
+p2:["1° febbraio 1917: la Germania riprende la guerra sottomarina illimitata. Il 6 aprile gli Stati Uniti dichiarano guerra.","Il precedente: l’affondamento del Lusitania (1915)."],
+p3:["Perché esporre un sommergibile nemico in un parco? Il fronte interno esiste anche negli Stati Uniti."],
+src:"Fonte da indicare"},
+{f:"spear-enlist",t:4,s:"d",cap:"Manifesto statunitense di Fred Spear, 1915",
+p1:"«Enlist»: una madre con il bambino sott’acqua. Richiama l’affondamento del Lusitania (7 maggio 1915), con 128 cittadini americani fra le vittime.",
+p2:["Dopo il Lusitania Berlino limita la guerra sottomarina per un periodo; la riprende nel 1917.","Dal Lusitania all’intervento americano: quali altri fattori pesano?"],
+p3:["Come lavora l’immagine sulle emozioni di chi la guarda? Che cosa la rende propaganda?"],
+src:"Library of Congress, pubblico dominio"},
+{f:"j-m-flagg-i-want-you-for-u-s-army-poster-1917",t:4,s:"n",cap:"Manifesto di James Montgomery Flagg, 1917",
+p1:"Lo Zio Sam chiama all’arruolamento: il 6 aprile 1917 gli Stati Uniti dichiarano guerra alla Germania.",
+p2:["Perché gli Stati Uniti entrano in guerra? Guerra sottomarina, prestiti all’Intesa, telegramma Zimmermann, caduta dello zar.","Il 1917 come anno-cerniera: che cosa succede, nello stesso anno, in Russia e in Italia?"],
+p3:["Wilson presenta l’intervento come una guerra fra democrazie e regimi autoritari: perché la caduta dello zar glielo permette?"],
+src:"Library of Congress, pubblico dominio"},
+{f:"pershing",t:4,s:"d",cap:"Fotografia: il generale Pershing sbarca a Boulogne",
+p1:"Nel 1917 arriva in Francia il comandante dell’American Expeditionary Force.",
+p2:["Le truppe americane hanno un ruolo decisivo nel respingere l’ultima offensiva tedesca sulla Marna, nel 1918.","Perché Ludendorff tenta le offensive di primavera del 1918?"],
+p3:["Come cambiano i rapporti di forza fra l’uscita della Russia e l’arrivo degli Stati Uniti?"],
+src:"Fonte da indicare"},
+{f:"wilson",t:4,s:"n",cap:"Ritratto fotografico di Woodrow Wilson",
+p1:"Presidente degli Stati Uniti: l’8 gennaio 1918 presenta i Quattordici punti.",
+p2:["Che cosa propongono i Quattordici punti? Diplomazia pubblica, libertà dei mari, disarmo, autodeterminazione, un’organizzazione internazionale permanente.","A Parigi la «pace senza vincitori» di Wilson si scontra con la linea di Clemenceau."],
+p3:["Il Senato americano non ratifica i trattati: il paese che ha proposto la Società delle Nazioni non vi aderisce. Che peso ha questa scelta?"],
+src:"Library of Congress, pubblico dominio"},
+{f:"battaglia-marna",t:4,s:"n",cap:"Tavola con i taxi della Marna e carta della prima battaglia della Marna",
+p1:"5-12 settembre 1914: francesi e britannici fermano l’avanzata tedesca verso Parigi. Fallisce il piano Schlieffen, e con lui la guerra breve.",
+p2:["Segui sulla carta l’avanzata tedesca attraverso il Belgio: perché passare di lì, e che cosa provoca a Londra?","Dopo la Marna comincia la guerra di posizione."],
+p3:["Il ruolo dei taxi è stato enfatizzato dalla memoria nazionale francese: perché un episodio diventa un simbolo?"],
+src:"Carta © Encyclopaedia Britannica; tavola: fonte da indicare"},
+{f:"pacifico",t:4,s:"d",cap:"Carta dei possedimenti coloniali in Asia orientale e nel Pacifico",
+p1:"I possedimenti delle potenze in Estremo Oriente e nel Pacifico, compresi quelli tedeschi.",
+p2:["Il 23 agosto 1914 il Giappone entra in guerra a fianco dell’Intesa per prendersi i possedimenti tedeschi; nel 1915 presenta alla Cina le «ventuno domande».","Una guerra mondiale anche fuori dall’Europa: Medio Oriente, Estremo Oriente, colonie."],
+p3:["Nel 1917 anche la Cina entra in guerra con l’Intesa: per ottenere che cosa?"],
+src:"Wikimedia Commons (carta in tedesco)"},
+{f:"map-sykes-picot-agreement",t:4,s:"d",cap:"Carta degli accordi Sykes-Picot, maggio 1916",
+p1:"Con accordi segreti Francia e Gran Bretagna si spartiscono in anticipo il Medio Oriente ottomano.",
+p2:["Che cosa era stato promesso agli arabi dell’emiro Faysal?","Dal 1916 al trattato di Sèvres: i territori diventano «mandati»."],
+p3:["Confini che alimentano tensioni ancora irrisolte un secolo dopo: autodeterminazione promessa e negata."],
+src:"© Encyclopaedia Britannica"},
+{f:"map-treaty-of-brest-litovsk-fr",t:4,s:"n",cap:"Carta del trattato di Brest-Litovsk (in francese)",
+p1:"La pace separata del 1918 fra la Russia bolscevica e gli Imperi Centrali: la Russia cede vasti territori a ovest.",
+p2:["Le due rivoluzioni del 1917: l’abdicazione dello zar e la presa del potere dei bolscevichi.","Che effetto ha l’uscita della Russia sugli Imperi Centrali, proprio mentre arrivano gli americani?"],
+p3:["Confronta con la carta dell’Europa dopo il 1919: quali di questi territori diventano Stati indipendenti?"],
+src:"Wikimedia Commons"},
+{f:"trattato-di-londra-scaled",t:5,s:"n",cap:"Carta dei territori promessi dal Patto di Londra (1915)",
+p1:"Il 26 aprile 1915 Salandra e Sonnino firmano in segreto il Patto di Londra: l’Italia entrerà in guerra entro un mese in cambio di Trentino, Alto Adige, Venezia Giulia, Istria (Fiume esclusa), parte della Dalmazia e altro.",
+p2:["Il patto è firmato all’insaputa di un Parlamento a maggioranza neutralista: che cosa succede a maggio?","Che cosa ottiene davvero l’Italia a Saint-Germain? Da qui nasce il mito della «vittoria mutilata»."],
+p3:["La carta mostra anche i territori promessi alla Serbia: due promesse sullo stesso Adriatico."],
+src:"Fonte da indicare"},
+{f:"radiose-giornate-di-maggio",t:5,s:"n",cap:"Copertina della «Domenica del Corriere», 23-30 maggio 1915, disegno di Achille Beltrame",
+p1:"«Le grandi manifestazioni contro il giolittismo»: D’Annunzio parla al popolo di Roma, al teatro Costanzi. Sono le «radiose giornate di maggio».",
+p2:["13 maggio: Salandra si dimette. Il re respinge le dimissioni. 20 maggio: la Camera vota i pieni poteri. Chi decide davvero?","Che cosa tiene insieme interventisti divisi da ideologie incompatibili?"],
+p3:["Volontà popolare o colpo di mano? «Radiose» esprime il punto di vista di chi?"],
+src:"Fonte da indicare"},
+{f:"italia-1915",t:5,s:"n",cap:"Copertina della «Domenica del Corriere», 30 maggio-6 giugno 1915",
+p1:"Folla con bandiere tricolori sotto un balcone, nei giorni dell’entrata in guerra dell’Italia (24 maggio 1915).",
+p2:["Il 24 maggio l’Italia dichiara guerra all’Austria-Ungheria. E alla Germania, quando?","Dal Patto di Londra alla dichiarazione di guerra: ricostruisci le tappe."],
+p3:["Il Paese era in maggioranza neutralista: che cosa mostra e che cosa nasconde questa immagine di entusiasmo?"],
+src:"Fonte da indicare"},
+{f:"caporetto",t:5,s:"n",cap:"Fotografia: una colonna in ritirata",
+p1:"Dopo lo sfondamento austro-tedesco di Caporetto (24 ottobre 1917) l’esercito italiano si ritira fino al Piave e al Monte Grappa. Centinaia di migliaia di civili diventano profughi.",
+p2:["Cadorna parla di «sciopero militare» e l’8 novembre è sostituito da Diaz: che cosa cambia nella strategia, nella disciplina, nella motivazione?","Il 1917 come anno-cerniera, anche per l’Italia."],
+p3:["«Caporetto» è diventata sinonimo di disfatta; il manuale la legge anche come premessa della tenuta. Come tengono insieme le due letture?"],
+src:"Fonte da indicare"},
+{f:"arditi",t:5,s:"d",cap:"Fotografia di un reparto di Arditi",
+p1:"Unità d’assalto specializzate nella guerra di infiltrazione, a cui Diaz dà impulso dopo Caporetto.",
+p2:["La riforma di Diaz: divisioni con meno fanti e più potenza di fuoco.","Il ritorno dal fronte: reduci, rancore verso gli «imboscati», l’aggressività degli Arditi."],
+p3:["Perché l’esperienza della trincea pesa sulla politica del dopoguerra?"],
+src:"Fonte da indicare"},
+{f:"bollettino-vittoria",t:5,s:"n",cap:"Il Bollettino della Vittoria del Comando Supremo, firmato da Diaz",
+p1:"4 novembre 1918: il bollettino annuncia la fine della guerra contro l’Austria-Ungheria, dopo Vittorio Veneto e l’armistizio di Villa Giusti.",
+p2:["Dalla tenuta del Piave (giugno 1918) all’offensiva di Vittorio Veneto: qual è la strategia di Diaz?","Che cosa ottiene l’Italia con il trattato di Saint-Germain?"],
+p3:["Leggi il testo: come presenta l’esercito italiano e il nemico? A chi è destinato?"],
+src:"Wikimedia Commons"},
+{f:"big-four",t:6,s:"n",cap:"Fotografia: i capi di governo alla Conferenza di pace di Parigi, 1919",
+p1:"Da sinistra: Lloyd George, Orlando, Clemenceau, Wilson.",
+p2:["Che cosa vuole ciascuno di loro? Chi decide davvero?","Orlando e Sonnino abbandonano i lavori per protesta: con quali conseguenze per l’Italia?"],
+p3:["I vinti non partecipano ai negoziati: la pace è un Diktat. Pace cartaginese o pace ragionevole mal gestita? È la discussione fra Keynes e MacMillan."],
+src:"Wikimedia Commons, pubblico dominio"},
+{f:"2019-06-28-europa-dopo-il-1919",t:6,s:"n",cap:"Carta politica dell’Europa dopo il 1919 (ISPI)",
+p1:"Gli imperi sono scomparsi e al loro posto ci sono Stati nuovi: Polonia, Cecoslovacchia, Austria, Ungheria, Regno dei serbi, croati e sloveni, i Paesi baltici. La Germania è tagliata in due dal corridoio polacco.",
+p2:["Confrontala con la carta del 1914: che cosa è cambiato?","Stati nuovi ma fragili, perché contengono minoranze; attorno alla Russia bolscevica nasce un «cordone sanitario»."],
+p3:["La carta non dice se quella rottura dovesse portare a una nuova guerra, o se a portarci siano state scelte che potevano essere diverse."],
+src:"© ISPI"},
+{f:"disssoluzione-austria-ungheria",t:6,s:"d",cap:"Schema della dissoluzione dell’Austria-Ungheria",
+p1:"Con i trattati di Saint-Germain e del Trianon l’Impero asburgico è cancellato: nascono Austria, Ungheria, Cecoslovacchia e il futuro Regno dei serbi, croati e sloveni.",
+p2:["Il principio di nazionalità e le minoranze rimaste nei nuovi Stati.","Che cosa ottiene l’Italia dall’Austria?"],
+p3:[],
+src:"Fonte da indicare"},
+{f:"the-treaty-of-sevres-1920-english",t:6,s:"d",cap:"Carta del trattato di Sèvres, 1920 (in inglese)",
+p1:"L’Impero ottomano è smembrato: Siria e Mesopotamia diventano mandati francesi e britannici; altre zone vanno alla Grecia, e all’Italia le isole del Dodecaneso.",
+p2:["Il legame con gli accordi Sykes-Picot del 1916.","I mandati della Società delle Nazioni: un colonialismo in forma nuova?"],
+p3:["Sulla carta c’è un’Armenia con il confine tracciato da Wilson: autodeterminazione sulla carta. Che cosa ne resterà?"],
+src:"Wikimedia Commons"},
+];
+const TAPPE={1:"Prima della faglia",2:"La crisi di luglio",3:"I caratteri della guerra",4:"Quattro anni di guerra",5:"L’Italia in guerra",6:"I trattati di pace"};
+const $=s=>document.querySelector(s);
+let filtro="tutte",tappa=0,ordine=[],visibili=[],corrente=-1,capMostrata=false;
+const sel=$("#tappa");
+for(const k in TAPPE){const o=document.createElement("option");o.value=k;o.textContent=k+". "+TAPPE[k];sel.appendChild(o)}
+function mescola(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function disegna(){
+  visibili=ordine.filter(c=>(filtro==="tutte"||c.s===filtro)&&(!tappa||c.t===tappa));
+  const g=$("#griglia");g.innerHTML="";
+  if(!visibili.length){g.innerHTML='<p class="vuoto">Nessuna carta con questi filtri.</p>'}
+  visibili.forEach((c,i)=>{
+    const b=document.createElement("button");b.className="carta";b.type="button";
+    b.innerHTML='<img loading="lazy" src="img/'+c.f+'.jpg" alt=""><p></p>';
+    b.querySelector("p").textContent=c.cap;
+    b.querySelector("img").alt=c.cap;
+    b.onclick=()=>apri(i);g.appendChild(b);
+  });
+  $("#conta").textContent=visibili.length+(visibili.length===1?" carta":" carte");
+}
+function lista(titolo,arr){if(!arr||!arr.length)return"";const d=document.createElement("div");const h=document.createElement("h3");h.textContent=titolo;d.appendChild(h);const u=document.createElement("ul");arr.forEach(t=>{const l=document.createElement("li");l.textContent=t;u.appendChild(l)});d.appendChild(u);return d}
+function apri(i){
+  corrente=i;const c=visibili[i];capMostrata=false;
+  $("#f-img").src="img/"+c.f+".jpg";$("#f-img").alt=c.cap;
+  $("#f-et").innerHTML="";
+  const e1=document.createElement("span");e1.className="et";e1.textContent="Tappa "+c.t+" · "+TAPPE[c.t];
+  const e2=document.createElement("span");e2.className="et "+c.s;e2.textContent=c.s==="n"?"Nucleo":"Dettaglio";
+  $("#f-et").append(e1,e2);
+  scriviCap();
+  $("#f-p1").open=false;$("#f-p1t").textContent=c.p1;
+  const p2=$("#f-p2"),p3=$("#f-p3");p2.innerHTML="";p3.innerHTML="";
+  const a=lista("Collegamenti · Percorso 2",c.p2),b=lista("Questioni aperte · Percorso 3",c.p3);
+  if(a)p2.appendChild(a);if(b)p3.appendChild(b);
+  $("#f-src").textContent="Immagine: "+c.src;
+  const nascondi=document.body.classList.contains("senza-didascalie");
+  $("#f-et").style.display=nascondi?"none":"flex";
+  $("#velo").classList.add("aperto");$("#chiudi").focus();
+}
+function scriviCap(){
+  const c=visibili[corrente],el=$("#f-cap");el.innerHTML="";
+  if(document.body.classList.contains("senza-didascalie")&&!capMostrata){
+    const b=document.createElement("button");b.className="btn";b.textContent="Mostra didascalia";
+    b.onclick=()=>{capMostrata=true;$("#f-et").style.display="flex";scriviCap()};el.appendChild(b);
+  }else{el.textContent=c.cap}
+}
+function chiudi(){$("#velo").classList.remove("aperto");corrente=-1}
+document.querySelectorAll("[data-filtro]").forEach(b=>b.onclick=()=>{filtro=b.dataset.filtro;document.querySelectorAll("[data-filtro]").forEach(x=>x.setAttribute("aria-pressed",x===b));disegna()});
+sel.onchange=()=>{tappa=+sel.value;disegna()};
+$("#mescola").onclick=()=>{ordine=mescola(CARTE);disegna()};
+$("#didascalie").onclick=e=>{const on=document.body.classList.toggle("senza-didascalie");e.target.setAttribute("aria-pressed",on);e.target.textContent=on?"Mostra didascalie":"Nascondi didascalie"};
+$("#estrai").onclick=()=>{if(visibili.length)apri(Math.floor(Math.random()*visibili.length))};
+$("#prec").onclick=()=>apri((corrente-1+visibili.length)%visibili.length);
+$("#succ").onclick=()=>apri((corrente+1)%visibili.length);
+$("#chiudi").onclick=chiudi;
+$("#velo").onclick=e=>{if(e.target.id==="velo")chiudi()};
+document.addEventListener("keydown",e=>{if(corrente<0)return;if(e.key==="Escape")chiudi();if(e.key==="ArrowRight")$("#succ").click();if(e.key==="ArrowLeft")$("#prec").click()});
+ordine=mescola(CARTE);disegna();
+</script>
+</body>
+</html>

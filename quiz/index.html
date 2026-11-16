@@ -88,9 +88,10 @@
   function carica() {
     Promise.all([
       fetch('../lezioni/indice_quiz.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('indice_quiz.json: HTTP ' + r.status); return r.json(); }),
-      fetch('../lezioni/classi.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('classi.json: HTTP ' + r.status); return r.json(); })
+      fetch('../lezioni/classi.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('classi.json: HTTP ' + r.status); return r.json(); }),
+      fetch('esterni.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : { quiz: [] }; }).catch(function () { return { quiz: [] }; })
     ]).then(function (x) {
-      INDICE = x[0].quiz || []; CLASSI = x[1] || {};
+      INDICE = (x[0].quiz || []).concat(x[2].quiz || []); CLASSI = x[1] || {};
       disegna();
     }).catch(function (e) {
       main.innerHTML = '<div class="msg err">Non riesco a leggere l’elenco dei quiz (' + esc(e.message) + ').</div>';
@@ -115,8 +116,13 @@
           var box = el('div', 'lez');
           box.appendChild(el('div', '', '<div class="t">' + esc(l.titolo) + '</div><div class="d">' + esc(l.descrizione) + '</div>'));
           var cl = el('div', 'classi');
-          var elenco = CLASSI[anno] || [];
-          if (!elenco.length) cl.innerHTML = '<span class="vuoto">Nessuna classe per «' + esc(anno || '?') + '» in classi.json</span>';
+          var elenco = l.url ? [] : (CLASSI[anno] || []);
+          if (l.url) {
+            var u = el('a', '', 'Apri');
+            u.href = l.url; u.target = '_blank'; u.rel = 'noopener';
+            u.title = 'Pagina semplice, uguale per tutte le classi';
+            cl.appendChild(u);
+          } else if (!elenco.length) cl.innerHTML = '<span class="vuoto">Nessuna classe per «' + esc(anno || '?') + '» in classi.json</span>';
           elenco.forEach(function (c) {
             var a = el('a', '', esc(c));
             a.href = '../lezioni/' + l.file + '?s=' + encodeURIComponent(codiceSessione(c)) + PROVA;
