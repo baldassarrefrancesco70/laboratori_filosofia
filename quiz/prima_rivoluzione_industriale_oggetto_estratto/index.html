@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La prima rivoluzione industriale · L’oggetto estratto</title>
+<style>
+:root{--carta:#f6f2ea;--inchiostro:#22201c;--tenue:#6b655b;--linea:#d9d1c2;--accento:#8a2b1f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--carta);color:var(--inchiostro);font:16px/1.5 Georgia,"Times New Roman",serif}
+header{padding:22px 20px 6px;max-width:1300px;margin:0 auto}
+h1{font-size:1.6rem;margin:0 0 4px;font-weight:normal}
+.sotto{color:var(--tenue);margin:0 0 12px;font-size:.95rem}
+.barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;max-width:1300px;margin:0 auto;padding:0 20px 14px;font-family:system-ui,-apple-system,sans-serif;font-size:.9rem}
+.gruppo{display:flex;border:1px solid var(--linea);border-radius:6px;overflow:hidden;background:#fff}
+.gruppo button{border:0;background:none;padding:7px 12px;cursor:pointer;font:inherit;color:var(--inchiostro)}
+.gruppo button+button{border-left:1px solid var(--linea)}
+.gruppo button[aria-pressed=true]{background:var(--inchiostro);color:#fff}
+.btn{font:inherit;font-family:system-ui,-apple-system,sans-serif;font-size:.9rem;padding:7px 12px;border:1px solid var(--linea);border-radius:6px;background:#fff;cursor:pointer;color:var(--inchiostro)}
+.btn.primario{background:var(--accento);border-color:var(--accento);color:#fff}
+.btn[aria-pressed=true]{background:var(--inchiostro);color:#fff;border-color:var(--inchiostro)}
+.conta{color:var(--tenue);margin-left:auto}
+main{max-width:1300px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;align-items:start}
+.carta{background:#fff;border:1px solid var(--linea);border-radius:6px;overflow:hidden;cursor:pointer;transition:box-shadow .15s,transform .15s;padding:0;font:inherit;color:inherit;text-align:left}
+.carta:hover,.carta:focus-visible{box-shadow:0 4px 12px rgba(0,0,0,.14);transform:translateY(-1px);outline:none}
+.carta .riq{height:140px;display:flex;align-items:center;justify-content:center;padding:6px;background:#fbfaf7}
+.carta img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.carta p{display:none;margin:0;padding:7px 9px 9px;font-size:.78rem;line-height:1.3;color:var(--tenue);border-top:1px solid var(--linea)}
+body.con-didascalie .carta p{display:block}
+.vuoto{color:var(--tenue);font-family:system-ui,sans-serif}
+/* carta estratta */
+.velo{position:fixed;inset:0;background:rgba(20,18,15,.95);display:none;z-index:10;padding:14px}
+.velo.aperto{display:flex;align-items:center;justify-content:center}
+.finestra{width:100%;height:100%;max-width:1500px;display:grid;grid-template-columns:1fr;gap:14px}
+.finestra.con-spunti{grid-template-columns:minmax(0,1fr) 380px}
+.scena{display:flex;flex-direction:column;min-height:0}
+.imm{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.imm img{max-width:100%;max-height:100%;object-fit:contain;display:block;box-shadow:0 6px 30px rgba(0,0,0,.4)}
+.sotto-imm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding-top:12px}
+.didascalia{color:#f2ede4;font-size:1.05rem;text-align:center;max-width:900px;margin:10px auto 0}
+.spunti{background:var(--carta);border-radius:8px;padding:46px 22px 20px;overflow:auto;display:none}
+.con-spunti .spunti{display:block}
+.spunti h3{font-family:system-ui,sans-serif;font-size:.85rem;margin:16px 0 6px;color:var(--accento);text-transform:uppercase;letter-spacing:.04em}
+.spunti h3:first-child{margin-top:0}
+.spunti p{margin:0}
+ul{margin:0;padding-left:20px} li{margin:0 0 7px}
+.fonte{font-family:system-ui,sans-serif;font-size:.75rem;color:var(--tenue);margin-top:18px;border-top:1px solid var(--linea);padding-top:8px}
+.chiudi{position:fixed;top:8px;right:14px;background:none;border:0;color:#fff;font-size:2.2rem;cursor:pointer;z-index:11;display:none;line-height:1}
+.velo.aperto~.chiudi{display:block}
+@media (max-width:800px){.finestra.con-spunti{grid-template-columns:1fr;grid-template-rows:60vh auto}.velo.aperto{overflow:auto;align-items:flex-start}.finestra{height:auto}.imm{height:60vh}}
+</style>
+</head>
+<body>
+<header>
+<h1>La prima rivoluzione industriale · L’oggetto estratto</h1>
+<p class="sotto">Guarda l’immagine: che cos’è? Quando si colloca? Con che cosa si collega? ◆ = parola contesa</p>
+</header>
+<div class="barra">
+  <button class="btn" id="mescola">Mescola</button>
+  <button class="btn" id="didascalie" aria-pressed="false">Mostra didascalie</button>
+  <button class="btn primario" id="estrai">Estrai una carta</button>
+  <span class="conta" id="conta"></span>
+</div>
+<main id="griglia"></main>
+<div class="velo" id="velo" role="dialog" aria-modal="true" aria-label="Carta estratta">
+  <div class="finestra" id="finestra">
+    <div class="scena">
+      <div class="imm"><img id="f-img" alt=""></div>
+      <p class="didascalia" id="f-cap" hidden></p>
+      <div class="sotto-imm">
+        <button class="btn" id="b-cap" aria-pressed="false">Mostra didascalia</button>
+        <button class="btn primario" id="b-spunti" aria-pressed="false">Spunti di approfondimento</button>
+        <button class="btn" id="prec" aria-label="Carta precedente">←</button>
+        <button class="btn" id="succ" aria-label="Carta successiva">→</button>
+      </div>
+    </div>
+    <aside class="spunti" id="spunti"></aside>
+  </div>
+</div>
+<button class="chiudi" id="chiudi" aria-label="Chiudi">×</button>
+<script>
+const CARTE=[{"f": "coalbrookdale", "cap": "Philip James de Loutherbourg, «Coalbrookdale by Night», dipinto, 1801: le fornaci accese nella notte", "p1": "Il fuoco delle fornaci illumina la valle: è il carbone fossile, energia solare accumulata in milioni di anni, che rompe il tetto energetico rimasto fisso per millenni.", "p2": ["Che cosa cambia quando l’energia non dipende più da muscoli, acqua, vento e legname?", "Coke (1709) e puddellaggio (1783-1784): quali due blocchi della produzione di ferro sciolgono?"], "p3": ["Il pittore mostra lo spettacolo del fuoco o il suo prezzo? La natura, nel quadro, è ancora un limite o già un serbatoio da consumare?"], "src": ""},
+{"f": "malthus", "cap": "Copertina di un’edizione moderna di Thomas Robert Malthus, «An Essay on the Principle of Population» (prima edizione 1798)", "p1": "Malthus descrive il tetto che tiene ferma la popolazione: cresce più in fretta del cibo, e prima o poi lo urta.", "p2": ["Come si passa dalla soglia malthusiana a una popolazione che cresce senza fermarsi? Pesa di più il calo delle morti o l’aumento delle nascite?", "Perché l’Inghilterra fa eccezione alla regola europea?"], "p3": ["Quando Malthus scrive, la crescita è già avviata da decenni: aveva torto, o descriveva bene il mondo che conosceva?"], "src": ""},
+{"f": "mr-mrs-andrews", "cap": "Thomas Gainsborough, «Mr and Mrs Andrews», dipinto, 1750 circa: due proprietari davanti ai loro campi", "p1": "Due proprietari terrieri in posa davanti alla loro terra: campi delimitati da siepi e staccionate, pecore dentro un recinto, il grano mietuto.", "p2": ["Che cosa erano i campi aperti e i diritti d’uso sulle terre comuni? Chi li perde con le enclosures, e dove va?", "Le enclosures sono un fenomeno o due? Confronta la recinzione lenta, per accordo o acquisto, con quella rapida per legge del Parlamento."], "p3": ["Chi recintava pensava alle fabbriche? Che cosa si perde a chiamare la rivoluzione agricola «presupposto» dell’industria?", "Chi parla di «accumulazione originaria» ◆ vede nelle enclosures una violenza fondativa: progresso o esproprio?"], "src": ""},
+{"f": "quadruplice-rotazione", "cap": "Illustrazione moderna: la quadruplice rotazione (frumento, rape, orzo, trifoglio)", "p1": "Quattro campi, quattro colture che si alternano: la quadruplice rotazione del Norfolk supera il maggese.", "p2": ["Perché proprio trifoglio e rape? Ricostruisci il circolo foraggio, bestiame, letame, rese.", "Che cosa ricava l’industria che verrà dal balzo produttivo delle campagne?"], "p3": ["È un’infografica di oggi, non un documento del Settecento: che cosa può mostrare, e che cosa no?"], "src": ""},
+{"f": "hincks-filatura", "cap": "William Hincks, «Spinning, Reeling with the Clock Reel, and Boiling the Yarn», incisione (tavola VI), 1791: filatura in una casa della contea di Down", "p1": "Una casa contadina: donne che filano, aspano e fanno bollire il filato accanto al focolare, con un bambino. È il lavoro che raggiunge le case.", "p2": ["Chi possiede gli strumenti, chi decide i tempi, chi lavora? Confronta con l’operaio di fabbrica.", "Chi porta la materia prima e ritira il filato? Ricostruisci il giro del mercante-imprenditore."], "p3": ["La tavola è dedicata a un aristocratico, il conte di Moira: è il lavoro come lo vedeva chi lo faceva?", "Questo sistema disperso preparò la fabbrica o era un mondo che poteva durare? Quale limite incontrò?"], "src": ""},
+{"f": "colbert", "cap": "Philippe de Champaigne, ritratto di Jean-Baptiste Colbert, dipinto, 1655", "p1": "Colbert, ministro di Luigi XIV: il mercantilismo.", "p2": ["Dove sta la ricchezza per un mercantilista? Perché il commercio è un gioco a somma zero?", "Dazi, manifatture reali, compagnie privilegiate: che cosa fa lo Stato?"], "p3": ["Ricchezza e potenza coincidono: perché per uno Stato del Seicento conta accumulare metalli preziosi?"], "src": ""},
+{"f": "quesnay", "cap": "Copertina di un’edizione italiana moderna del «Tableau économique» di François Quesnay (1758-1759)", "p1": "Quesnay e i fisiocratici: solo la terra produce un «prodotto netto».", "p2": ["Che cosa chiede la fisiocrazia allo Stato? Perché le riforme di Turgot (1774-1776) falliscono?", "Metalli, terra, lavoro: dove mette la ricchezza ciascuna delle tre dottrine?"], "p3": ["Il fallimento di Turgot mostra un limite della monarchia assoluta: quale?"], "src": ""},
+{"f": "wealth-of-nations", "cap": "Frontespizio della prima edizione di Adam Smith, «An Inquiry into the Nature and Causes of the Wealth of Nations», Londra, 1776", "p1": "L’opera che dà al nuovo ordine economico la sua giustificazione teorica più influente: la ricchezza nasce dal lavoro e dalla sua divisione.", "p2": ["Con quale oggetto si apre l’opera, e che cosa dimostra?", "Se il mercato si autoregola, che cosa resta allo Stato?"], "p3": ["Il libero scambio valeva per tutti allo stesso modo? Pensa all’India."], "src": ""},
+{"f": "epinglier", "cap": "Tavola «Épinglier» (fabbricante di spilli) dell’«Encyclopédie» di Diderot e d’Alembert, seconda metà del Settecento", "p1": "La bottega dello spillettaio: ogni figura compie un’operazione diversa.", "p2": ["Dieci operai, oltre quarantottomila spilli al giorno: perché la divisione del lavoro moltiplica la produzione?", "Perché a un gesto isolato e ripetuto è più facile applicare una macchina?"], "p3": ["La stessa bottega mostra il rovescio: l’operaio inchiodato a un gesto. Smith lo vide? Chi ne farà il centro della propria critica?"], "src": ""},
+{"f": "smith-kay", "cap": "John Kay, «The Author of the Wealth of Nations», incisione colorata, 1790: Adam Smith", "p1": "Adam Smith (1723-1790), fondatore dell’economia politica classica.", "p2": ["Che cosa intende Smith con la mano invisibile ◆? Come collega l’interesse di ciascuno e il benessere di tutti?", "Mercantilismo, fisiocrazia, liberismo: perché è il liberismo a imporsi?"], "p3": ["La mano invisibile ◆ descrive un meccanismo o fonda una conclusione politica? Che cosa ne segue per la disuguaglianza prodotta dal mercato?"], "src": ""},
+{"f": "navetta-volante", "cap": "Tavola colorata: il telaio a mano, la cassa battente di Kay («Mr. Kay’s Lathe») e la navetta", "p1": "La navetta volante di John Kay (1733) rende molto più rapido il telaio a mano.", "p2": ["Quale squilibrio apre fra tessitura e filatura?", "Jenny, water frame, mule: come ogni invenzione scioglie un intoppo e ne apre un altro?"], "p3": ["Le invenzioni sono il lampo di un singolo o la risposta di persone di mestiere a un problema concreto?"], "src": ""},
+{"f": "spinning-jenny", "cap": "Incisione: «Hargreaves’s Spinning Jenny», Ottocento", "p1": "La giannetta di Hargreaves (1764-1765): a mano, un solo lavoratore muove molti fusi.", "p2": ["Perché la jenny resta nelle case? Che cosa moltiplica e che cosa lascia com’era?", "Che limite ha il suo filo, e quale macchina lo supera?"], "p3": ["Hargreaves era un tessitore: che cosa dice questo degli inventori della rivoluzione industriale?"], "src": ""},
+{"f": "water-frame", "cap": "Fotografia: un water frame di Arkwright esposto in un museo", "p1": "Il filatoio idraulico di Arkwright (1769): filo robusto, buono anche per l’ordito, mosso dall’acqua.", "p2": ["Perché il water frame porta la filatura nei primi stabilimenti lungo i fiumi?", "«La fabbrica non fu un’idea, fu una conseguenza»: conseguenza di che cosa?"], "p3": ["Sulla paternità del water frame ci furono dispute: che cosa si deve ad Arkwright, oltre all’invenzione?"], "src": ""},
+{"f": "filanda-arkwright", "cap": "Joseph Wright of Derby, dipinto: una filanda di Arkwright in una valle, fine Settecento", "p1": "Un grande edificio a più piani in una valle, accanto a un corso d’acqua: uno dei primi stabilimenti tessili, mossi dall’acqua.", "p2": ["Perché la fabbrica sta qui e non in città? Che cosa la libererà dai fiumi?", "Chi ci lavora, e da dove arriva?"], "p3": ["Il pittore mette la fabbrica dentro un paesaggio di rocce e boschi: celebrazione, inquietudine o semplice veduta?"], "src": ""},
+{"f": "spinning-mule", "cap": "Incisione: lo spinning mule di Crompton", "p1": "Il mulo di Crompton (1779) incrocia i rulli del water frame e il carrello della jenny.", "p2": ["Che filo produce, e perché batte i tessuti indiani?", "Ora c’è troppo filo: quale macchina riporta la meccanizzazione alla tessitura, e con quale diffusione?"], "p3": ["Ogni invenzione apre uno squilibrio: è una catena obbligata o una serie di risposte possibili?"], "src": ""},
+{"f": "newcomen", "cap": "Henry Beighton, «The Engine for Raising Water (with a power made) by Fire», incisione, 1717: la macchina di Newcomen", "p1": "La macchina a vapore nasce sottoterra, per svuotare d’acqua le miniere di carbone (Newcomen, 1712).", "p2": ["La macchina brucia carbone per estrarre altro carbone: che cosa le manca per uscire dalla miniera?", "Che cosa cambia Watt?"], "p3": ["Il titolo parla di una forza «fatta dal fuoco»: perché per i contemporanei era una novità?"], "src": ""},
+{"f": "watt", "cap": "Illustrazione moderna: la macchina a vapore di Watt a moto rotatorio", "p1": "Watt (1769-1784): condensatore separato e moto rotatorio. L’energia diventa costante e collocabile ovunque.", "p2": ["Trova la grande ruota: perché il moto rotatorio è decisivo?", "Carbone, vapore, ferro, ferrovie: come ogni anello rinforza il successivo?"], "p3": ["Watt era un costruttore di strumenti di precisione: le prime macchine nascono dalla scienza teorica o dall’ingegno pratico?"], "src": ""},
+{"f": "ferriera", "cap": "Litografia a colori, fine Ottocento: operai ai forni di una ferriera", "p1": "Il puddellaggio di Henry Cort (1783-1784) trasforma la ghisa, dura e fragile, in ferro dolce e lavorabile.", "p2": ["Perché l’Inghilterra era «bloccata due volte» nella produzione del ferro?", "La ghisa passa da 68.000 tonnellate (1788) a quasi 600.000 (1825): chi assorbe tutto quel ferro?"], "p3": ["L’illustrazione è molto più tarda dell’invenzione: che cosa ci dice del lavoro in ferriera, e che cosa no?"], "src": ""},
+{"f": "rocket", "cap": "Incisione: la locomotiva Rocket con il tender, 1829", "p1": "La Rocket (1829). Le locomotive di Stephenson nascono dall’idea di portare il carbone dai pozzi ai porti su rotaie di ferro.", "p2": ["Che cosa trasporta il carro dietro la locomotiva? Collega carbone e vapore.", "Perché le ferrovie fanno triplicare in vent’anni la produzione di ferro e di carbone?"], "p3": ["Nata per il carbone, la ferrovia diventa un mezzo per merci e persone: un esito progettato o un uso che si aprì strada facendo?"], "src": ""},
+{"f": "liverpool-manchester", "cap": "I. Shaw, «Travelling on the Liverpool and Manchester Railway», acquatinta, Londra, 1831", "p1": "Due treni sulla linea Liverpool-Manchester (1830): sopra la prima classe con la posta, sotto la seconda classe con i passeggeri all’aperto.", "p2": ["Fra il 1830 e il 1850 undicimila chilometri di linee: che cosa muove questa espansione?", "Liverpool è il porto del cotone: che cosa collega questa linea?"], "p3": ["Prima e seconda classe sullo stesso binario: che cosa racconta l’immagine della nuova società?"], "src": ""},
+{"f": "nave-negriera", "cap": "Pianta di una nave negriera con la disposizione dei prigionieri sui ponti, stampa di fine Settecento", "p1": "Le navi negriere: la tratta dall’Africa alle Americhe nel commercio triangolare.", "p2": ["Ricostruisci il triangolo: che cosa parte da Liverpool e Bristol, che cosa arriva in Europa?", "Dove finisce la maggior parte dei deportati, e per quale coltura? Il cotone arriva prima o dopo?"], "p3": ["Chi poteva avere interesse a disegnare e diffondere una pianta come questa, e per ottenere che cosa?"], "src": ""},
+{"f": "raccolta-cotone", "cap": "Incisione colorata dell’Ottocento: schiavi africani nella raccolta del cotone", "p1": "Il cotone grezzo arriva in grandi quantità e a basso costo dalle piantagioni schiaviste.", "p2": ["«Schiavismo e cotone marciarono di pari passo» (Hobsbawm): che cosa accade dal 1790 nel Sud degli Stati Uniti?", "Perché il cotone, a differenza della lana, non incontra i limiti della terra europea?"], "p3": ["La macchina più moderna alimentata dalla forma di lavoro più brutale: quanto pesò la schiavitù nell’industrializzazione?"], "src": ""},
+{"f": "tessitore-indiano", "cap": "Incisione dell’Ottocento: un tessitore indiano al telaio a mano", "p1": "L’India aveva una manifattura tessile antica, capace fino a poco prima di produrre cotoni migliori di quelli inglesi.", "p2": ["Con quali mezzi la Gran Bretagna la deindustrializza?", "Il libero scambio «in una direzione sola»: che cosa significa?"], "p3": ["Concorrenza vinta sul mercato o imposizione politica? Che cosa cambia nel giudizio?"], "src": ""},
+{"f": "battaglia-navale", "cap": "Dipinto moderno: battaglia navale fra flotta britannica e flotta francese nell’età napoleonica", "p1": "Le guerre del 1793-1815 danno alla Gran Bretagna il dominio sui mari.", "p2": ["Che cosa c’entra una flotta con le fabbriche? Pensa ai mercati esteri e alle colonie.", "La Compagnia delle Indie Orientali, autorizzata a usare le armi: che ruolo ha?"], "p3": ["Il mercato estero fu trovato o conquistato? Con quali mezzi?"], "src": ""},
+{"f": "queen-bee-hive", "cap": "«The Queen Bee in her Hive!!!», stampa satirica, Londra, 1837: la società inglese come un alveare", "p1": "La società come un alveare a piani: in cima la regina, poi i fuchi che godono del miele, signori, esercito e marina, professioni; in basso le api operaie.", "p2": ["Ordini o classi? Che cosa decide il posto di ciascuno in questa piramide?", "Chi produce il miele e chi lo consuma? Collega con il passaggio da «ricchi e poveri» alla percezione di una classe."], "p3": ["Il motto in alto: l’ape offre il miele ma porta il pungiglione. A chi è rivolto l’avvertimento?", "Chiamare «classe» un gruppo è già un’interpretazione: perché?"], "src": ""},
+{"f": "regolamento-fabbrica", "cap": "«Regulations to be observed by persons employed in the Boott Cotton Mills», regolamento di un cotonificio, Ottocento", "p1": "Le regole per chi lavora in un cotonificio: puntualità, assenze, condotta, licenziamento.", "p2": ["Che cosa sostituisce l’orologio al tempo delle stagioni e della famiglia?", "Perché l’orologio diventa un «nuovo genere di carceriere»?"], "p3": ["Leggi le regole: che cosa si punisce, chi le firma, chi le deve accettare?"], "src": ""},
+{"f": "bambini-filanda", "cap": "Incisione dell’Ottocento: bambini e donne al lavoro in una filanda, sotto lo sguardo dei sorveglianti", "p1": "Fra il 1834 e il 1847 solo un quarto degli addetti dei cotonifici inglesi era costituito da uomini adulti.", "p2": ["Perché ai padroni convengono donne e bambini?", "Factory Acts, dal 1802: che cosa stabiliscono, e perché lo Stato interviene?"], "p3": ["Per le donne la fabbrica fu gabbia o spiraglio? Si possono tenere insieme le due letture?"], "src": ""},
+{"f": "manchester-kersal-moor", "cap": "William Wyld, «Manchester from Kersal Moor», dipinto, metà Ottocento", "p1": "Manchester vista dalla collina: una distesa di camini sotto una cappa di fumo. Fra il 1760 e il 1830 la città sestuplica la popolazione.", "p2": ["Che cosa c’è sotto quel fumo? Case schiena contro schiena, cantine, niente fognature.", "Perché la miseria diventa una «questione sociale»?"], "p3": ["Il quadro guarda la città da lontano, dalla campagna, in pace: che cosa resta fuori dall’inquadratura?"], "src": ""},
+{"f": "over-london-by-rail", "cap": "Gustave Doré, «Over London by Rail», incisione, 1872: case operaie lungo un viadotto ferroviario", "p1": "Case addossate le une alle altre, cortili minuscoli, il treno che passa sopra: gli slums.", "p2": ["Sovraffollamento, cantine, niente acqua corrente: che cosa ne segue per la salute?", "Chi vive qui, e da dove è arrivato?"], "p3": ["È un’immagine del 1872, più tarda del periodo: è ancora la stessa città degli anni Trenta?"], "src": ""},
+{"f": "king-cholera", "cap": "«A Court for King Cholera», vignetta, 1852: un cortile di una città inglese", "p1": "Dal 1831 il colera colpisce soprattutto i poveri dei sobborghi, senza fognature né acqua corrente.", "p2": ["Che cosa vedi nel cortile che spiega l’epidemia?", "Public Health Act (1848): perché lo Stato interviene?"], "p3": ["Le «classi pericolose» ◆: chi le chiama così, e che cosa teme?"], "src": ""},
+{"f": "leader-luddites", "cap": "«The Leader of the Luddites», stampa satirica, Londra, 1812", "p1": "Il capo dei luddisti, in abiti da donna, guida la folla mentre un edificio brucia.", "p2": ["Che cosa colpivano i luddisti: la macchina o l’uso che il padrone ne faceva?", "Perché distruggere i telai era la sola pressione possibile? Come risponde il governo nel 1812?"], "p3": ["«Luddismo» ◆ porta un giudizio di irrazionalità. La stampa dice di essere «disegnata dal vero da un ufficiale»: da quale punto di vista vediamo i luddisti?"], "src": ""},
+{"f": "kennington-common", "cap": "William Kilburn, dagherrotipo del raduno cartista di Kennington Common, Londra, 10 aprile 1848", "p1": "Una folla enorme in un prato, una ciminiera sullo sfondo: il cartismo (1838-1848).", "p2": ["Che cosa chiede la «Carta del popolo»? Dal salario al voto.", "Luddismo, mutuo soccorso, sindacati, cartismo: come cambiano le forme della protesta?"], "p3": ["È una delle prime fotografie di una folla: che cosa mostra una fotografia che una stampa non mostra, e viceversa?"], "src": ""},
+{"f": "certificato-sindacato", "cap": "Certificato d’iscrizione all’Amalgamated Society of Carpenters and Joiners, sindacato britannico, seconda metà dell’Ottocento", "p1": "L’attestato di iscrizione a un sindacato di carpentieri e falegnami.", "p2": ["Trade Unions legali dal 1824, Trade Unions Congress nel 1868: qual è la loro arma tipica?", "Che differenza c’è fra una società di mutuo soccorso e un sindacato?"], "p3": ["Allegorie dell’Industria, della Giustizia, della Verità, il motto «Industry and Benevolence»: che immagine di sé vuole dare il sindacato?"], "src": ""},
+{"f": "crystal-palace", "cap": "Litografia a colori: l’interno del Crystal Palace all’Esposizione universale di Londra, 1851", "p1": "Un’architettura di ferro e vetro di metà secolo: la nuova civiltà espone le sue merci.", "p2": ["Che cosa diventa il progresso per il borghese dell’Ottocento? Confronta con quello dei philosophes.", "Liberismo, positivismo, darwinismo sociale ◆: le tre impalcature della fede nel progresso."], "p3": ["«Progresso, sì, ma a spese di chi?» Chi manca in questa immagine?"], "src": ""},
+{"f": "new-harmony", "cap": "Stedman Whitwell, progetto per la comunità di New Harmony di Robert Owen, incisione, 1825", "p1": "Il progetto di una comunità modello: un grande quadrilatero autosufficiente, fra boschi e campi.", "p2": ["Che cosa propone Owen, industriale del cotone? Cooperazione al posto della concorrenza.", "Saint-Simon, Owen, Fourier: come pensano di convincere la società?"], "p3": ["Socialismo utopistico ◆: chi ha scelto questa etichetta, e perché?"], "src": ""},
+{"f": "falansterio", "cap": "Litografia dell’Ottocento: veduta di un falansterio fourierista", "p1": "Fourier, il più diffidente verso l’industria: piccole comunità autosufficienti, i falansteri.", "p2": ["Che differenza c’è fra la comunità di Owen e il falansterio di Fourier?"], "p3": ["«Utopistici» ◆ perché impossibili, o perché nessuno li ha sostenuti? Che cosa sarebbe servito perché funzionassero?"], "src": ""},
+{"f": "manifesto-1848", "cap": "Copertina della prima edizione del «Manifest der Kommunistischen Partei», Londra, 1848", "p1": "Marx ed Engels, 1848: lo stesso anno del Public Health Act e dell’ultimo anno del cartismo.", "p2": ["Che cosa cambia rispetto ai socialisti precedenti: il capitalismo «dovrebbe» essere sostituito o «sarà» sostituito?", "Leggi il motto in fondo alla pagina: a chi si rivolge?"], "p3": ["Socialismo scientifico ◆: l’aggettivo descrive o rivendica?"], "src": ""},
+{"f": "marx", "cap": "Fotografia di Karl Marx, 1875", "p1": "Karl Marx: il Capitale (1867), il plusvalore.", "p2": ["Che cos’è il plusvalore? Perché per Marx lo sfruttamento non è un abuso ma il meccanismo stesso della produzione?", "Marx contro Bakunin nella Prima Internazionale (1864): su che cosa si dividono?"], "p3": ["Il crollo del capitalismo era una tesi o un fatto? Che cosa ha in comune con la mano invisibile ◆?"], "src": ""},
+{"f": "diffusione-europa-atlante", "cap": "Carta: la diffusione della rivoluzione industriale in Europa, dalla fine del Settecento alla fine dell’Ottocento", "p1": "Gli Stati colorati secondo il periodo in cui si industrializzano; in rosso le principali regioni industriali.", "p2": ["Le macchie rosse seguono la distanza dall’Inghilterra o carbone e ferro? Trova Ruhr, Alta Slesia, Boemia, Sassonia, Mosca.", "Chi arriva dopo copia il modello inglese? Che ruolo hanno lo Stato e le banche miste?"], "p3": ["Colorare gli Stati è comodo: che cosa nasconde, se a industrializzarsi sono alcune regioni e non interi paesi?", "«Arrivare secondi non è arrivare primi in ritardo»: che cosa significa?"], "src": "Atlante del manuale, cartina 2"},
+{"f": "zollverein", "cap": "Carta moderna (in occitano): lo Zollverein nel 1834 e gli Stati rimasti fuori", "p1": "In azzurro gli Stati dello Zollverein, l’unione doganale tedesca del 1834; in verde quelli rimasti fuori.", "p2": ["Perché un’unione doganale conta per l’industria? Pensa ai mercati frammentati dalle barriere.", "Germania: Zollverein, istruzione tecnica, industria pesante, banche miste."], "p3": ["Dalla frammentazione al primato: quali scelte, e di chi?"], "src": ""},
+{"f": "filanda-meiji", "cap": "Stampa giapponese a colori in tre fogli: una filanda di epoca Meiji", "p1": "Una fabbrica di stile occidentale in Giappone: l’era Meiji, dal 1868.", "p2": ["Chi fonda e finanzia le prime industrie in Giappone, e a chi le cede?", "Perché il Giappone compete invece di diventare colonia?"], "p3": ["«Arrivare secondi non è arrivare primi in ritardo»: che cosa significa nel caso giapponese?"], "src": ""},
+{"f": "recinzioni-atlante", "cap": "Carta: la recinzione dei campi comuni in Inghilterra, 1700-1800", "p1": "In verde e in azzurro le terre già in gran parte recintate entro il 1700; in rosso quelle recintate per legge del Parlamento prima del 1801.", "p2": ["Dove si concentra il rosso? Perché nelle Midlands e nell’Est la recinzione è rapida e imposta dall’alto?", "Che cosa accade a chi perde i diritti d’uso sulle terre comuni?"], "p3": ["Le enclosures sono un evento o due? Che cosa cambia nel giudizio fra un assestamento lento e un’operazione parlamentare di pochi decenni?"], "src": "Atlante del manuale, cartina 1"},
+{"f": "regno-unito-atlante", "cap": "Carta: lo sviluppo industriale del Regno Unito (carbone, ferro, regioni industriali)", "p1": "Giacimenti di carbone e di ferro, regioni industriali, industrie della lana, del ferro e del cotone.", "p2": ["Le regioni industriali si disegnano attorno alle città più popolose o sopra il carbone?", "Manchester, Liverpool, Leeds, Sheffield: quanto sono vicine? Che cosa dice questo della simultaneità delle condizioni?"], "p3": ["Il simbolo del cotone sta a Liverpool, sull’Atlantico: da dove veniva quel cotone, e perché la carta non lo mostra?", "Perché proprio l’Inghilterra: merito o fortuna?"], "src": "Atlante del manuale, cartina 3"},
+{"f": "commercio-atlantico-atlante", "cap": "Carta: le rotte del commercio transatlantico (schiavi, merci, cotone)", "p1": "Dall’Europa all’Africa, dall’Africa alle Americhe, dalle Americhe all’Europa: il commercio triangolare.", "p2": ["Segui le frecce dei deportati: arrivano soprattutto in Nord America o in Brasile e nei Caraibi? Per quale coltura?", "Trova la rotta del cotone: arriva prima o dopo lo zucchero e il tabacco?"], "p3": ["Il «triangolo» era l’itinerario delle navi o un sistema? Che cosa suggerisce la carta, e che cosa no?"], "src": "Atlante del manuale, cartina 4"},
+{"f": "bill-of-rights-1689", "cap": "Il Bill of Rights inglese, manoscritto, 1689", "p1": "Dopo la Gloriosa Rivoluzione (1688-1689) il potere in Inghilterra è vincolato dal Parlamento. Il testo si apre con i Lords e i Comuni riuniti a Westminster.", "p2": ["Che cosa c’entra un documento politico con le fabbriche? Pensa a proprietà, investimenti, brevetti, corporazioni.", "Sul continente dominano le monarchie assolute: perché questa è la condizione più distintiva del caso inglese?"], "p3": ["Prese una a una, quasi nessuna delle condizioni era esclusiva dell’Inghilterra: una coincidenza è un destino?"], "src": ""},
+{"f": "telaio-meccanico", "cap": "Incisione di fine Ottocento: un telaio meccanico in ghisa", "p1": "Il telaio meccanico, progettato da Edmund Cartwright nel 1785 e brevettato nel 1787, riporta la meccanizzazione alla tessitura.", "p2": ["Perché, dopo jenny, water frame e mule, c’è «troppo filo»?", "Che cosa accade al tessitore a mano, la figura più abile e indipendente del lavoro di allora?"], "p3": ["La diffusione del telaio meccanico fu lenta e contrastata: perché una macchina più produttiva non si impone subito?", "Questo telaio è di un secolo più tardo di quello di Cartwright: che cosa è cambiato?"], "src": ""},
+{"f": "officina-macchine-utensili", "cap": "Incisione dell’Ottocento: la grande sala di un’officina meccanica con macchine utensili", "p1": "Macchine utensili allineate in un grande capannone, mosse da alberi di trasmissione e cinghie.", "p2": ["Sistema americano di fabbrica: macchine utensili di precisione, parti standardizzate e intercambiabili. Perché negli Stati Uniti? Pensa alla penuria di manodopera.", "Di che cosa è premessa la produzione per parti intercambiabili?"], "p3": ["Nulla nell’immagine dice dove sia questa officina: che cosa servirebbe per stabilire se è americana?"], "src": ""}];
+const $=s=>document.querySelector(s);
+let ordine=[],visibili=[],corrente=-1;
+function mescola(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function disegna(){
+  visibili=ordine.slice();
+  const g=$("#griglia");g.innerHTML="";
+    visibili.forEach((c,i)=>{
+    const b=document.createElement("button");b.className="carta";b.type="button";
+    b.innerHTML='<div class="riq"><img loading="lazy" alt=""></div><p></p>';
+    b.querySelector("img").src="img/"+c.f+".jpg";
+    b.querySelector("img").alt="Immagine "+(i+1);
+    b.querySelector("p").textContent=c.cap;
+    b.onclick=()=>apri(i);g.appendChild(b);
+  });
+  $("#conta").textContent=visibili.length+(visibili.length===1?" immagine":" immagini");
+}
+function blocco(t,cont){const f=document.createDocumentFragment();const h=document.createElement("h3");h.textContent=t;f.appendChild(h);f.appendChild(cont);return f}
+function ul(arr){const u=document.createElement("ul");arr.forEach(t=>{const l=document.createElement("li");l.textContent=t;u.appendChild(l)});return u}
+function premi(b,on){b.setAttribute("aria-pressed",on)}
+function apri(i){
+  corrente=i;const c=visibili[i];
+  $("#f-img").src="img/"+c.f+".jpg";$("#f-img").alt="Immagine estratta";
+  const cap=$("#f-cap");cap.textContent=c.cap;cap.hidden=true;premi($("#b-cap"),false);$("#b-cap").textContent="Mostra didascalia";
+  $("#finestra").classList.remove("con-spunti");premi($("#b-spunti"),false);
+  const s=$("#spunti");s.innerHTML="";
+  const p=document.createElement("p");p.textContent=c.p1;s.appendChild(blocco("Il contesto",p));
+  if(c.p2&&c.p2.length)s.appendChild(blocco("Collegamenti",ul(c.p2)));
+  if(c.p3&&c.p3.length)s.appendChild(blocco("Da discutere",ul(c.p3)));
+  const fo=document.createElement("p");fo.className="fonte";if(c.src){fo.textContent="Immagine: "+c.src;s.appendChild(fo);}
+  $("#velo").classList.add("aperto");$("#b-cap").focus();
+}
+function chiudi(){$("#velo").classList.remove("aperto");corrente=-1}
+$("#mescola").onclick=()=>{ordine=mescola(CARTE);disegna()};
+$("#didascalie").onclick=e=>{const on=document.body.classList.toggle("con-didascalie");premi(e.target,on);e.target.textContent=on?"Nascondi didascalie":"Mostra didascalie"};
+$("#b-cap").onclick=e=>{const cap=$("#f-cap");cap.hidden=!cap.hidden;premi(e.target,!cap.hidden);e.target.textContent=cap.hidden?"Mostra didascalia":"Nascondi didascalia"};
+$("#b-spunti").onclick=e=>{const on=$("#finestra").classList.toggle("con-spunti");premi(e.target,on)};
+$("#estrai").onclick=()=>{if(visibili.length)apri(Math.floor(Math.random()*visibili.length))};
+$("#prec").onclick=()=>apri((corrente-1+visibili.length)%visibili.length);
+$("#succ").onclick=()=>apri((corrente+1)%visibili.length);
+$("#chiudi").onclick=chiudi;
+$("#velo").onclick=e=>{if(e.target.id==="velo"||e.target.classList.contains("imm"))chiudi()};
+document.addEventListener("keydown",e=>{if(corrente<0)return;if(e.key==="Escape")chiudi();if(e.key==="ArrowRight")$("#succ").click();if(e.key==="ArrowLeft")$("#prec").click()});
+ordine=mescola(CARTE);disegna();
+</script>
+</body>
+</html>
