@@ -71,6 +71,22 @@
       "classe": "quarta",
       "descrizione": "Lezione interattiva (Storia IV, Percorso 2, Fase 0): guerra ed equilibrio, le cinque macchine di potere, l'Illuminismo come metodo, le riforme e i privilegi, perché in Francia la strada si chiude. Fonti minime, carte e una tabella.",
       "percorso": "lezioni_storia_settecento"
+    },
+    {
+      "file": "storia_rivoluzione_russa.html",
+      "titolo": "La rivoluzione russa (1917-1921)",
+      "materia": "storia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Storia V): febbraio e ottobre 1917, il doppio potere, Lenin e i primi decreti, la Costituente sciolta, Brest-Litovsk, la guerra civile, il comunismo di guerra, Kronstadt e la NEP. Fonti minime, una tabella, carte autoprodotte.",
+      "percorso": "lezioni_storia_rivoluzione_russa"
+    },
+    {
+      "file": "storia_urss_stalin.html",
+      "titolo": "L'URSS di Stalin (1922-1938)",
+      "materia": "storia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Storia V): la successione di Lenin, rivoluzione permanente e socialismo in un solo paese, la rivoluzione dall'alto, i piani quinquennali e la collettivizzazione, la carestia del 1932-1933, il Grande Terrore e la storia riscritta. Fonti minime, una tabella, due fotografie.",
+      "percorso": "lezioni_storia_urss_stalin"
     }
   ]
 }
