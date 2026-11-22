@@ -7,7 +7,7 @@
 <meta name="portale:titolo" content="La rivoluzione russa (1917-1921)">
 <meta name="portale:materia" content="storia">
 <meta name="portale:tipologia" content="lezione">
-<meta name="portale:descrizione" content="Lezione interattiva (Storia V): febbraio e ottobre 1917, il doppio potere, Lenin e i primi decreti, la Costituente sciolta, Brest-Litovsk, la guerra civile, il comunismo di guerra, Kronstadt e la NEP. Fonti minime, una tabella, carte autoprodotte.">
+<meta name="portale:descrizione" content="Lezione interattiva (Storia V): febbraio e ottobre 1917, il doppio potere, Lenin e i primi decreti, la Costituente sciolta, Brest-Litovsk, la guerra civile, il comunismo di guerra e la NEP. Fonti minime, una tabella, carte autoprodotte.">
 <meta name="portale:uso" content="lezione">
 <meta name="portale:classe" content="quinta">
 <link rel="stylesheet" href="../lib/aula.v1.css">
@@ -56,6 +56,49 @@
   .due-foto figcaption{font-size:21px;margin-top:6px;line-height:1.3}
   /* righe di tabella a frammenti: senza bordi finché non compaiono */
   .tabella-dati tr.aula-f-off>*{border-color:transparent}
+
+  /* grafica: blocchi, frecce, linee del tempo, barre */
+  .gx{display:flex;align-items:center;gap:14px}
+  .gx3{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;margin:6px 0}
+  .bx{background:var(--grigio);border-radius:14px;padding:14px 20px;line-height:1.2;text-align:center;flex:1}
+  .bx .k{font-size:21px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tenue);margin-bottom:6px}
+  .bx .big{display:block;font-size:56px;line-height:1.05;font-weight:700;color:var(--rosso-scuro);font-family:var(--serif)}
+  .bx .s{font-size:29px;margin-top:6px;line-height:1.22}
+  .bx.rs{background:var(--rosso-scuro);color:#fff}.bx.rs .k,.bx.rs .big{color:#fff}
+  .bx.bl{background:var(--blu);color:#fff}.bx.bl .k{color:#CFE0F1}
+  .bx.sc{background:#23262D;color:#fff}.bx.sc .k{color:#FFB3B5}.bx.sc .big{color:#fff}
+  .bx.ch{background:#FBEDEE}.bx.gl{background:var(--giallo)}.bx.bi{background:#fff;border:2px solid var(--bordo)}
+  .bx.az{background:#E6EDF4}
+  .frw{flex:none;display:flex;align-items:center;justify-content:center}
+  .fr{display:block}
+  .tl{position:relative;display:grid;gap:16px}
+  .tl::before{content:"";position:absolute;left:0;right:0;top:15px;height:6px;background:var(--bordo);border-radius:3px}
+  .tn{position:relative;padding-top:44px}
+  .tn::before{content:"";position:absolute;left:50%;margin-left:-16px;top:5px;width:26px;height:26px;border-radius:50%;background:var(--rosso);border:3px solid #fff;box-shadow:0 0 0 3px var(--rosso)}
+  .tn.ult::before{background:var(--rosso-scuro);box-shadow:0 0 0 3px var(--rosso-scuro)}
+  .tn .dt{text-align:center;font-size:33px;font-weight:700;color:var(--rosso-scuro);line-height:1.1}
+  .tn .dt small{display:block;font-size:21px;font-weight:400;color:var(--tenue)}
+  .tn .bx{margin-top:10px}
+  .dp{display:grid;grid-template-columns:1fr 190px 1fr;gap:12px 14px;align-items:stretch}
+  .dp .eti{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:23px;text-transform:uppercase;letter-spacing:1px;color:var(--tenue);text-align:center}
+  .dp .bx{font-size:30px;display:flex;align-items:center;justify-content:center}
+  .cc .eti{display:flex;align-items:center;font-weight:700;font-size:23px;text-transform:uppercase;letter-spacing:1px;color:var(--tenue)}
+  .cc{display:grid;grid-template-columns:1fr 84px 1fr;gap:12px 6px;align-items:stretch}
+  .cc .bx{font-size:31px;display:flex;align-items:center;justify-content:center}
+  .rw{display:grid;grid-template-columns:150px 1fr 76px 1fr;gap:12px 6px;align-items:stretch}
+  .rw .d{display:flex;align-items:center;font-weight:700;font-size:30px;color:var(--rosso-scuro)}
+  .rw .bx{font-size:27px;display:flex;align-items:center;justify-content:center}
+  .istog{display:flex;align-items:flex-end;gap:22px;height:320px;border-bottom:4px solid #23262D;padding:0 14px}
+  .istog .cl{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+  .istog .cl i{display:block;width:100%;border-radius:6px 6px 0 0}
+  .istog .cl b{font-size:30px;margin-bottom:4px}
+  .asse-g{display:flex;gap:22px;padding:6px 14px;font-size:24px;color:var(--tenue)}.asse-g span{flex:1;text-align:center}
+  .bx small{font-size:.78em;opacity:.85}
+  .titolo-g{font-size:26px;font-weight:700;margin:0 0 10px;text-align:center}
+  .seggi{display:flex;height:96px;border-radius:10px;overflow:hidden;margin:10px 0 8px}
+  .seggi div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:30px}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:22px}
+  .leg i{display:inline-block;width:18px;height:18px;border-radius:4px;margin-right:8px;vertical-align:-2px}
 </style>
 </head>
 <body>
@@ -70,6 +113,25 @@
   var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
   function st(occhiello, h) { return '<div class="st"><div class="occhiello">' + occhiello + '</div>' + h + '</div>'; }
   function lettura(h) { return '<div class="lettura">' + h + '</div>'; }
+
+  var FORME = { giu: '25,0 75,0 75,50 100,50 50,100 0,50 25,50', su: '25,100 75,100 75,50 100,50 50,0 0,50 25,50', dx: '0,25 0,75 50,75 50,100 100,50 50,0 50,25' };
+  function fa(f) { return f ? ' data-f="' + f + '"' : ''; }
+  function fr(d, w, h, f) {
+    return '<div class="frw"' + fa(f) + '><svg class="fr" viewBox="0 0 100 100" preserveAspectRatio="none" style="width:' + w + 'px;height:' + h + 'px" aria-hidden="true">' +
+      '<polygon points="' + FORME[d] + '" fill="var(--freccia)" stroke="var(--rosso)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg></div>';
+  }
+  function bx(cls, k, big, s, f, stile) {
+    return '<div class="bx ' + (cls || '') + '"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '>' + (k ? '<div class="k">' + k + '</div>' : '') +
+      (big ? '<b class="big">' + big + '</b>' : '') + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
+  }
+  function nodo(dt, cls, k, s, f) {
+    return '<div class="tn' + (cls === 'rs' ? ' ult' : '') + '"' + fa(f) + '><div class="dt">' + dt + '</div>' + bx(cls, k, '', s) + '</div>';
+  }
+  function barre(vals, etich, max, colore) {
+    var h = '';
+    vals.forEach(function (v) { h += '<div class="cl"><b>' + String(v).replace('.', ',') + '</b><i style="height:' + Math.round(v / max * 255) + 'px;background:' + colore + '"></i></div>'; });
+    return '<div class="istog">' + h + '</div><div class="asse-g">' + etich.map(function (e) { return '<span>' + e + '</span>'; }).join('') + '</div>';
+  }
 
   // ------------------------------------------------------------ carte
   // Autoprodotte dai dati Natural Earth (pubblico dominio), coste attuali; confini e fronti tracciati a mano, approssimativi.
@@ -93,14 +155,6 @@
     '<p><b>Decreto sulla terra.</b> 1. La grande proprietà fondiaria è abolita immediatamente, senza alcun indennizzo.<br>2. Le tenute dei grandi proprietari, come pure tutte le terre della Corona, dei monasteri e delle chiese, con il bestiame e gli attrezzi ' + MIO + ', passano a disposizione dei comitati agrari di distretto e dei soviet dei deputati contadini, <u>fino all’Assemblea costituente</u>.</p></div>' +
     '<div class="fonte"><b>Decreti approvati dal II Congresso panrusso dei soviet</b>, 26 ottobre (8 novembre) 1917: decreto sulla pace, inizio; decreto sulla terra, artt. 1-2. Traduzione di lavoro dal russo. ' + MIO + ' = taglio per la lezione. Sottolineatura per la lezione.</div>';
 
-  var KRONSTADT = '<span class="etichetta autore">Marinai di Kronstadt</span> ' + TRAD +
-    '<div class="brano">' +
-    '<p><span class="n">1.</span> Poiché i soviet attuali non esprimono la volontà degli operai e dei contadini, <u>rieleggere subito i soviet a scrutinio segreto</u>, con libera propaganda preliminare fra tutti gli operai e i contadini.</p>' +
-    '<p><span class="n">2.</span> Libertà di parola e di stampa per gli operai e i contadini, per gli anarchici e per i partiti socialisti di sinistra.</p>' +
-    '<p><span class="n">8.</span> Togliere tutti i reparti di sbarramento.</p>' +
-    '<p><span class="n">11.</span> Dare ai contadini pieno diritto di disporre di tutta la terra come desiderano, e di tenere bestiame, purché lo curino con le proprie forze, cioè senza lavoro salariato.</p></div>' +
-    '<div class="fonte"><b>Risoluzione degli equipaggi delle corazzate <i>Petropavlovsk</i> e <i>Sevastopol’</i></b>, 28 febbraio 1921, approvata dall’assemblea di Kronstadt il 1° marzo; in «Izvestija» del Comitato rivoluzionario provvisorio di Kronstadt, n. 1, 3 marzo 1921. Punti 1, 2, 8, 11. Traduzione di lavoro dal russo. Sottolineatura per la lezione.</div>';
-
   // seggi dell'Assemblea costituente (deputati registrati all'apertura, gennaio 1918)
   function tabellaCostituente(cls) {
     return '<table class="tabella-dati ' + (cls || '') + '"><caption>Assemblea costituente: i deputati registrati all’apertura (gennaio 1918)</caption>' +
@@ -117,54 +171,72 @@
   var RIF_COSTITUENTE = 'Elezioni del novembre 1917. Seggi secondo W.S. Woytinsky, <i>Stormy Passage</i>, New York 1961. Le ricostruzioni divergono di qualche decina di seggi; i bolscevichi ebbero circa un quarto dei voti.';
   var COSTITUENTE_DISP = '<div class="scorre">' + tabellaCostituente() + '</div><div class="fonte">' + RIF_COSTITUENTE + '</div>';
 
+
+  // barra dei seggi (proiezione); sui telefoni resta la tabella
+  function seggiBarra() {
+    var G = [['Socialrivoluzionari', 370, '#D9772B'], ['Bolscevichi', 175, '#8B0000'], ['Minoranze nazionali', 86, '#6C727B'], ['Socialriv. di sinistra', 40, '#E7A29E'], ['Cadetti', 17, '#1F4E79'], ['Menscevichi', 16, '#6FA8DC'], ['Non indicati', 3, '#BBB']];
+    var b = '<div class="seggi">', l = '<div class="leg">';
+    G.forEach(function (g) {
+      b += '<div style="width:' + (g[1] / 707 * 100) + '%;background:' + g[2] + '">' + (g[1] >= 80 ? g[1] : '') + '</div>';
+      l += '<span><i style="background:' + g[2] + '"></i>' + g[0] + ' <b>' + g[1] + '</b></span>';
+    });
+    return b + '</div>' + l + '<span><b>Totale 707</b></span></div>';
+  }
+
   // ------------------------------------------------------------ slide ricomposte
   var S_DOMANDA = '<p class="att-consegna" style="font-family:var(--serif);font-size:44px;font-weight:700;margin:0 0 8px">Ottobre 1917: rivoluzione o colpo di Stato?</p>' +
     '<p class="att-consegna" style="font-size:26px;margin:0">Sul telefono: rispondete con quello che sapete adesso. La stessa domanda torna più avanti.</p>';
 
   var S_1917 = st('Prima di febbraio',
-    '<p class="intro">Nel 1917 la Russia è in guerra da quasi tre anni. L’autocrazia zarista non ha più margini: non cade perché qualcuno la abbatte con un piano, ma perché <b>non ha più nulla con cui rispondere</b>.</p>' +
-    '<div class="griglia" style="grid-template-columns:repeat(3,1fr)">' +
-    '<div class="scheda"><h3>Al fronte</h3>Un esercito di contadini dissanguato da sconfitte e perdite enormi; i soldati chiedono la pace.</div>' +
-    '<div class="scheda"><h3>Nelle città</h3>Lo Stato non riesce più a nutrire Pietrogrado e Mosca: code per il pane, scioperi.</div>' +
-    '<div class="scheda"><h3>Nelle campagne</h3>La terra resta in gran parte ai grandi proprietari; i contadini la reclamano.</div></div>');
+    '<div class="gx" style="align-items:stretch;gap:24px">' +
+    bx('', 'Al fronte', 'PACE', 'Un esercito di contadini dissanguato da sconfitte e perdite') +
+    bx('', 'Nelle città', 'PANE', 'Code e scioperi: lo Stato non nutre più Pietrogrado e Mosca') +
+    bx('', 'Nelle campagne', 'TERRA', 'I grandi proprietari la tengono; i contadini la reclamano') + '</div>' +
+    '<div class="gx3"' + fa(1) + '>' + fr('giu', 110, 80) + fr('giu', 110, 80) + fr('giu', 110, 80) + '</div>' +
+    bx('rs', '', '', 'L’autocrazia zarista non ha più nulla con cui rispondere', 1, 'font-size:38px;font-weight:700;padding:26px'));
 
   var S_FEBBRAIO = st('1917 · la prima rivoluzione',
-    '<div class="cron">' +
-    '<div class="d">23 febbraio<small>8 marzo</small></div><div>Giornata della donna: le operaie tessili di Pietrogrado scioperano per il pane. In pochi giorni lo sciopero diventa generale.</div>' +
-    '<div class="d">26-27 febbraio<small>11-12 marzo</small></div><div>I reparti mandati a reprimere <b>fraternizzano</b> con gli scioperanti: l’insurrezione di operai e soldati è spontanea, nessun partito la dirige.</div>' +
-    '<div class="d evid">2 marzo<small>15 marzo</small></div><div class="evid">Nicola II abdica. Finisce la dinastia dei Romanov, al potere da oltre tre secoli.</div></div>' +
+    '<div class="tl" style="grid-template-columns:repeat(3,1fr);margin-top:16px">' +
+    nodo('23 febbraio<small>8 marzo</small>', '', 'Sciopero', 'Giornata della donna: le operaie tessili di Pietrogrado chiedono pane. In pochi giorni lo sciopero è generale') +
+    nodo('26-27 febbraio<small>11-12 marzo</small>', '', 'Fraternizzazione', 'I soldati mandati a reprimere passano con gli scioperanti: insurrezione spontanea, nessun partito la dirige') +
+    nodo('2 marzo<small>15 marzo</small>', 'rs', 'Abdica lo zar', 'Nicola II: finiscono i Romanov, al potere da oltre tre secoli') + '</div>' +
     '<p class="nota-piccola" data-f="1" style="font-size:23px">In rosso le date del calendario giuliano, allora in vigore in Russia; sotto, quelle del nostro calendario (13 giorni dopo). Per questo la «rivoluzione di febbraio» cade a marzo e la «rivoluzione d’ottobre» a novembre.</p>');
 
   var S_DOPPIO = st('Marzo-ottobre 1917',
-    '<table class="tabella-dati grande" style="margin:0"><thead><tr><th></th><th>Governo provvisorio</th><th>Soviet</th></tr></thead><tbody>' +
-    '<tr><td class="titr">Chi</td><td>Liberali (il principe L’vov, poi Kerenskij); appoggio di cadetti, menscevichi, socialrivoluzionari</td><td>Delegati eletti da operai, soldati e contadini</td></tr>' +
-    '<tr data-f="1"><td class="titr">Autorità</td><td>Di diritto: è il governo legale</td><td>Di fatto: a Pietrogrado i soviet controllano fabbriche e caserme</td></tr>' +
-    '<tr data-f="2"><td class="titr">Guerra</td><td>Continuarla a fianco dell’Intesa</td><td>Pace immediata</td></tr>' +
-    '<tr data-f="3"><td class="titr">Obiettivo</td><td>Uno Stato liberale di tipo occidentale, con un’Assemblea costituente</td><td>Potere diffuso dal basso</td></tr>' +
-    '</tbody></table><p class="riga-fine" data-f="4">Due autorità, nessuna delle quali riesce a subordinare l’altra. I bolscevichi restano fuori da entrambe.</p>');
+    '<div class="dp">' +
+    bx('bl', '', '', 'Governo provvisorio', '', 'font-size:32px;font-weight:700') + '<div class="eti">contro</div>' + bx('rs', '', '', 'Soviet', '', 'font-size:32px;font-weight:700') +
+    bx('az', '', '', 'Liberali: il principe L’vov, poi Kerenskij') + '<div class="eti">Chi</div>' + bx('ch', '', '', 'Delegati eletti da operai, soldati e contadini') +
+    bx('az', '', '', 'Di diritto: è il governo legale', 1) + '<div class="eti"' + fa(1) + '>Autorità</div>' + bx('ch', '', '', 'Di fatto: controllano fabbriche e caserme', 1) +
+    bx('az', '', '', 'Continuarla con l’Intesa', 2) + '<div class="eti"' + fa(2) + '>La guerra</div>' + bx('ch', '', '', 'Pace immediata', 2) +
+    bx('az', '', '', 'Stato liberale, con una Costituente', 3) + '<div class="eti"' + fa(3) + '>Obiettivo</div>' + bx('ch', '', '', 'Potere diffuso dal basso', 3) + '</div>' +
+    bx('gl', '', '', 'Due autorità, nessuna prevale. I bolscevichi restano fuori da entrambe.', 4, 'font-size:30px;font-weight:700;margin-top:16px'));
 
   var S_LUGLIO = st('1917 · verso la seconda rivoluzione',
-    '<div class="cron">' +
-    '<div class="d">Luglio</div><div>Insurrezione armata a Pietrogrado contro l’invio di nuovi reparti al fronte. Fallisce: Lenin fugge in Finlandia, diversi dirigenti bolscevichi sono arrestati.</div>' +
-    '<div class="d" data-f="1">Fine agosto<small>inizio settembre</small></div><div data-f="1">Il generale Kornilov marcia su Pietrogrado contro il governo Kerenskij. Lo fermano le forze socialiste unite, con un ruolo di primo piano dei bolscevichi.</div>' +
-    '<div class="d" data-f="2">Settembre</div><div data-f="2">I bolscevichi conquistano la maggioranza nei soviet di Pietrogrado e di Mosca. Trockij presiede il soviet di Pietrogrado.</div>' +
-    '<div class="d evid" data-f="3">25 ottobre<small>7 novembre</small></div><div class="evid" data-f="3">Insurrezione diretta da Trockij: soldati e guardie rosse occupano il Palazzo d’Inverno quasi senza resistenza. Nasce il Consiglio dei commissari del popolo, governo di soli bolscevichi presieduto da Lenin.</div></div>');
+    '<div class="gx" style="align-items:stretch;gap:8px;margin-top:10px">' +
+    bx('', 'Luglio', 'Fallisce', 'Insurrezione armata a Pietrogrado. Lenin fugge in Finlandia, arresti fra i bolscevichi') +
+    fr('dx', 46, 60, 1) + bx('', 'Fine agosto', 'Kornilov', 'Il generale marcia su Pietrogrado. Lo fermano i socialisti uniti, bolscevichi in testa', 1) +
+    fr('dx', 46, 60, 2) + bx('', 'Settembre', 'Maggioranza', 'I bolscevichi guidano i soviet di Pietrogrado e di Mosca. Trockij presiede quello di Pietrogrado', 2) +
+    fr('dx', 46, 60, 3) + bx('rs', '25 ottobre · 7 novembre', 'Palazzo d’Inverno', 'Insurrezione di Trockij, quasi senza resistenza. Governo di soli bolscevichi: presidente Lenin', 3) + '</div>');
 
   var S_ABB = '<p class="att-consegna">Sul telefono: sei fatti del 1917. Appartengono alla rivoluzione di febbraio o a quella d’ottobre?</p>';
 
-  var S_COSTITUENTE_ATT = '<p class="att-consegna" style="font-size:26px;margin:0 0 10px">Eletta a suffragio universale nel novembre 1917, l’Assemblea si riunisce il 18 gennaio 1918. Il giorno dopo le guardie rosse impediscono ai deputati di rientrare: il governo la scioglie. <b>Sul telefono: che cosa dice la tabella?</b></p>' +
-    '<table class="tabella-dati media" style="margin:0"><thead><tr><th class="num">Socialriv.</th><th class="num">Bolscevichi</th><th class="num">Minoranze naz.</th><th class="num">Socialriv. di sinistra</th><th class="num">Cadetti</th><th class="num">Menscevichi</th><th class="num">Non indicati</th><th class="num">Totale</th></tr></thead>' +
-    '<tbody><tr><td class="num">370</td><td class="num">175</td><td class="num">86</td><td class="num">40</td><td class="num">17</td><td class="num">16</td><td class="num">3</td><td class="num"><b>707</b></td></tr></tbody></table>' +
+  var S_COSTITUENTE_ATT = '<p class="att-consegna" style="font-size:26px;margin:0 0 6px">Eletta a suffragio universale nel novembre 1917, l’Assemblea si riunisce il 18 gennaio 1918. Il giorno dopo le guardie rosse impediscono ai deputati di rientrare: il governo la scioglie. <b>Sul telefono: che cosa dice la tabella?</b></p>' +
+    seggiBarra() +
     '<p class="credito" style="margin:4px 0 0">' + RIF_COSTITUENTE + '</p>';
 
   var S_DOMANDA2 = '<p class="att-consegna" style="font-family:var(--serif);font-size:44px;font-weight:700;margin:0 0 8px">Ottobre 1917: rivoluzione o colpo di Stato?</p>' +
     '<p class="att-consegna" style="font-size:26px;margin:0">Sul telefono: la stessa domanda dell’inizio. Avete cambiato idea?</p>';
 
   var S_DUE_LETTURE = st('Gli storici si dividono',
-    '<div class="griglia" style="grid-template-columns:1fr 1fr">' +
-    '<div class="scheda bianca"><h3>Un colpo di Stato</h3>Un atto di forza deciso da un gruppo ristretto, diretto da un partito minoritario. La prova: appena le urne danno torto ai bolscevichi, la Costituente viene sciolta.</div>' +
-    '<div class="scheda bianca"><h3>Una rivoluzione popolare</h3>L’approdo di un movimento di massa: i soviet, i soldati, i contadini. La prova: i decreti sulla pace e sulla terra rispondono a domande già diffuse.</div></div>' +
-    '<p style="font-size:29px;margin-top:26px" data-f="1"><span class="voce-manuale">Le due letture fotografano due momenti diversi: il consenso che porta i bolscevichi al potere, e la rapidità con cui smettono di sottoporsi al giudizio delle urne.</span></p>');
+    '<div class="gx" style="align-items:stretch;gap:20px">' +
+    bx('bi', '', 'Un colpo di Stato', 'Un atto di forza deciso da un gruppo ristretto, diretto da un partito minoritario.', '', 'padding:24px') +
+    '<div class="frw" style="font-size:34px;font-weight:700;color:var(--tenue)">contro</div>' +
+    bx('bi', '', 'Una rivoluzione popolare', 'L’approdo di un movimento di massa: i soviet, i soldati, i contadini.', '', 'padding:24px') + '</div>' +
+    '<div class="gx" style="align-items:stretch;gap:20px;margin-top:14px">' +
+    bx('ch', 'La prova', '', 'La Costituente sciolta quando le urne danno torto ai bolscevichi', '', 'font-size:27px') +
+    '<div class="frw" style="width:90px"></div>' +
+    bx('ch', 'La prova', '', 'I decreti su pace e terra rispondono a domande già diffuse', '', 'font-size:27px') + '</div>' +
+    '<p style="font-size:29px;margin-top:22px" data-f="1"><span class="voce-manuale">Le due letture fotografano due momenti diversi: il consenso che porta i bolscevichi al potere, e la rapidità con cui smettono di sottoporsi al giudizio delle urne.</span></p>');
 
   var S_BREST = '<div class="carta-riga">' + CARTA_BREST +
     '<div class="legenda-carta"><p style="font-size:30px;font-weight:700;color:var(--rosso-scuro);margin-bottom:20px">Brest-Litovsk, 3 marzo 1918</p>' +
@@ -183,28 +255,28 @@
     '<p class="credito" style="margin-top:14px">' + CREDITO_CARTA + '</p></div></div>';
 
   var S_COMUNISMO = st('La guerra civile · l’economia, dall’estate 1918',
-    '<table class="tabella-dati grande" style="margin:0;width:100%"><thead><tr><th>Misura</th><th>Conseguenza</th></tr></thead><tbody>' +
-    '<tr><td>Requisizione forzata dei raccolti</td><td data-f="1">I contadini seminano solo per sé, macellano il bestiame piuttosto che consegnarlo</td></tr>' +
-    '<tr><td>Nazionalizzazione dell’industria</td><td data-f="2">Nel 1920 la produzione industriale è un settimo di quella del 1913</td></tr>' +
-    '<tr><td>Divieto del commercio privato</td><td data-f="3">Baratto e borsa nera; le città si svuotano per la fame</td></tr>' +
-    '<tr><td>Salari in natura: la moneta crolla</td><td data-f="4">Carestia del 1921 in Russia e in Ucraina: almeno tre milioni di morti</td></tr>' +
-    '</tbody></table>');
+    '<div class="cc" style="margin-top:6px">' +
+    bx('', '', '', 'Requisizione forzata dei raccolti') + fr('dx', 56, 48, 1) + bx('ch', '', '', 'I contadini seminano solo per sé e macellano il bestiame', 1) +
+    bx('', '', '', 'Nazionalizzazione dell’industria') + fr('dx', 56, 48, 2) + bx('ch', '', '', 'Nel 1920 la produzione è un settimo di quella del 1913', 2) +
+    bx('', '', '', 'Divieto del commercio privato') + fr('dx', 56, 48, 3) + bx('ch', '', '', 'Baratto e borsa nera; le città si svuotano per la fame', 3) +
+    bx('', '', '', 'Salari in natura: la moneta crolla') + fr('dx', 56, 48, 4) + bx('rs', '', '', 'Carestia del 1921: almeno tre milioni di morti', 4) + '</div>');
 
   var S_CEKA = st('La guerra civile · la repressione',
-    '<div class="cron" style="grid-template-columns:250px 1fr">' +
-    '<div class="d">Dicembre 1917</div><div>Nasce la <b>Čeka</b>, polizia politica, con un Tribunale rivoluzionario.</div>' +
-    '<div class="d" data-f="1">Giugno 1918</div><div data-f="1">I partiti di opposizione sono messi fuori legge; torna la pena di morte.</div>' +
-    '<div class="d" data-f="2">Luglio 1918</div><div data-f="2">A Ekaterinburg il soviet locale fa uccidere l’ex zar con tutta la famiglia.</div>' +
-    '<div class="d evid" data-f="3">Dal settembre 1918</div><div class="evid" data-f="3">Il <b>terrore rosso</b>: arresti arbitrari ed esecuzioni sommarie, contro gli oppositori e contro intere categorie sociali, i «borghesi» e i kulaki.</div></div>' +
+    '<div class="gx" style="align-items:stretch;gap:8px;margin-top:10px">' +
+    bx('', 'Dicembre 1917', 'Čeka', 'Nasce la polizia politica, con un Tribunale rivoluzionario') +
+    fr('dx', 46, 60, 1) + bx('', 'Giugno 1918', 'Fuori legge', 'I partiti di opposizione sono vietati; torna la pena di morte', 1) +
+    fr('dx', 46, 60, 2) + bx('', 'Luglio 1918', 'Ekaterinburg', 'Il soviet locale fa uccidere l’ex zar con tutta la famiglia', 2) +
+    fr('dx', 46, 60, 3) + bx('rs', 'Dal settembre 1918', 'Terrore rosso', 'Arresti ed esecuzioni sommarie contro gli oppositori e intere categorie: «borghesi» e kulaki', 3) + '</div>' +
     '<p class="riga-fine" data-f="4">Si colpisce qualcuno per ciò che è, non per ciò che ha fatto.</p>');
 
   var S_NEP = st('Marzo 1921 · Nuova politica economica',
-    '<table class="tabella-dati grande" style="margin:0;width:100%"><thead><tr><th></th><th>Comunismo di guerra</th><th>NEP (dal 1921)</th></tr></thead><tbody>' +
-    '<tr><td class="titr">Contadini</td><td>Requisizione dei raccolti</td><td>Un’imposta in natura fissa; le eccedenze si vendono</td></tr>' +
-    '<tr><td class="titr">Commercio</td><td>Vietato ai privati</td><td>Liberalizzato</td></tr>' +
-    '<tr><td class="titr">Industria</td><td>Tutta allo Stato</td><td>Piccola industria libera; allo Stato grande industria, banche, commercio estero</td></tr>' +
-    '<tr data-f="1"><td class="titr">Esito</td><td>Crollo, carestia, rivolte</td><td>Ripresa; tornano i <b>kulaki</b> nelle campagne, compaiono i <b>nepman</b> nelle città</td></tr>' +
-    '</tbody></table><p class="riga-fine" data-f="2">Lenin la presenta come una ritirata, da abbandonare appena possibile.</p>');
+    '<div class="cc" style="grid-template-columns:185px 1fr 84px 1fr;gap:14px 6px">' +
+    '<div></div>' + bx('sc', '', '', 'Comunismo di guerra', '', 'font-size:30px;font-weight:700') + fr('dx', 56, 48) + bx('bl', '', '', 'NEP', '', 'font-size:30px;font-weight:700') +
+    '<div class="eti">Contadini</div>' + bx('', '', '', 'Requisizione dei raccolti') + fr('dx', 56, 48) + bx('az', '', '', 'Imposta in natura fissa; le eccedenze si vendono') +
+    '<div class="eti">Commercio</div>' + bx('', '', '', 'Vietato ai privati') + fr('dx', 56, 48) + bx('az', '', '', 'Liberalizzato') +
+    '<div class="eti">Industria</div>' + bx('', '', '', 'Tutta allo Stato') + fr('dx', 56, 48) + bx('az', '', '', 'Piccola industria libera; allo Stato grande industria, banche, commercio estero') +
+    '<div class="eti" data-f="1">Esito</div>' + bx('ch', '', '', 'Crollo, carestia, rivolte', 1) + fr('dx', 56, 48, 1) + bx('gl', '', '', 'Ripresa: tornano i <b>kulaki</b>, compaiono i <b>nepman</b>', 1) + '</div>' +
+    '<p class="riga-fine" data-f="2">Lenin la presenta come una ritirata, da abbandonare appena possibile.</p>');
 
   var S_CHIUSURA = '<div class="st"><p class="domanda-fine">Nel 1921 i bolscevichi hanno vinto la guerra civile<br>e governano da soli.<br>Chi governerà il partito?</p>' +
     '<p class="riga-fine" data-f="1">Dicembre 1922: nasce l’Unione delle repubbliche socialiste sovietiche. Lenin è già malato.</p></div>';
@@ -236,13 +308,13 @@
       note: '<p><b>Sondaggio d’ingresso</b> (1 min). È la domanda storiografica della lezione: falla votare senza spiegare nulla.</p><p><b>Ripresa</b>: mostra le barre ma <b>non commentarle</b>. Di’ solo che la domanda torna dopo la Costituente (passo 11), dove il sondaggio mostrerà il prima e il dopo.</p>' },
 
     { titolo: 'La Russia nel 1917', html: S_1917, minuti: 1.5,
-      note: '<p>Tre anni di guerra hanno consumato i margini del regime. Il Settecento e l’Ottocento della classe: un’autocrazia senza corpi intermedi, quindi senza nessuno che la sostenga quando cede l’esercito.</p><p>Le cifre delle perdite non sono sulla slide: se le vuoi dare, controllale prima, perché le stime variano molto.</p>' },
+      note: '<p>Clic 1: la conclusione. Pace, pane, terra: le tre richieste che il regime non soddisfa. Tre anni di guerra hanno consumato i margini del regime. Il Settecento e l’Ottocento della classe: un’autocrazia senza corpi intermedi, quindi senza nessuno che la sostenga quando cede l’esercito.</p><p>Le cifre delle perdite non sono sulla slide: se le vuoi dare, controllale prima, perché le stime variano molto.</p>' },
 
     { titolo: 'Febbraio 1917: cade lo zar', html: S_FEBBRAIO, minuti: 2,
-      note: '<p>Insisti su <b>spontanea</b> e su <b>fraternizzano</b>: servono all’abbinamento del passo 9. Clic 1: la nota sui due calendari.</p><p>Il 23 febbraio giuliano è l’8 marzo gregoriano, Giornata internazionale della donna: è la data che compare nel tuo schema («8 marzo 1917»). Le date di questa slide sono quelle comunemente accettate; il manuale non le dà giorno per giorno.</p>' },
+      note: '<p>Insisti su <b>spontanea</b> e su <b>fraternizzazione</b>: servono all’abbinamento del passo 9. Clic 1: la nota sui due calendari.</p><p>Il 23 febbraio giuliano è l’8 marzo gregoriano, Giornata internazionale della donna: è la data che compare nel tuo schema («8 marzo 1917»). Le date di questa slide sono quelle comunemente accettate; il manuale non le dà giorno per giorno.</p>' },
 
     { titolo: 'Il doppio potere', html: S_DOPPIO, minuti: 2.5,
-      note: '<p>Righe a frammenti (clic 1-3), clic 4 la riga finale. Il punto è la riga «Guerra»: il governo provvisorio resta in guerra, ed è lì che perde consenso.</p><p>Nel tuo schema la Duma sta dal lato dei liberali: il governo provvisorio nasce dal comitato della Duma.</p>' },
+      note: '<p>Righe a frammenti (clic 1-3), clic 4 la barra finale. Il punto è la riga «Guerra»: il governo provvisorio resta in guerra, ed è lì che perde consenso.</p><p>Nel tuo schema la Duma sta dal lato dei liberali: il governo provvisorio nasce dal comitato della Duma.</p>' },
 
     { titolo: 'Lenin, aprile 1917', html: lettura(TESI), dispositivo: TESI, minuti: 2,
       note: '<p><b>Lettura</b> (circa 130 parole), anche sui telefoni. Lenin rientra dalla Svizzera con un viaggio favorito dalle autorità tedesche.</p><p><b>Punta</b> sulle due sottolineature: niente appoggio al governo provvisorio, repubblica dei soviet al posto di quella parlamentare. È la rottura con l’ortodossia dei socialisti russi, che attendevano una lunga fase borghese. La formula «tutto il potere ai soviet» non è nel testo delle tesi: è la parola d’ordine che le riassume.</p><p><b>Traduzione di lavoro mia dal russo, non collazionata</b> con un’edizione italiana (Opere complete, vol. 24).</p>' },
@@ -283,11 +355,8 @@
     { titolo: 'La Čeka e il terrore rosso', html: S_CEKA, minuti: 1.5,
       note: '<p>Clic 1-4. L’ultima riga è la lettura del manuale: il terrore colpisce categorie, e così sostituisce la solidarietà con il sospetto. Torna nella seconda lezione, negli anni Trenta.</p><p>Il decreto «sul terrore rosso» è del 5 settembre 1918, dopo l’attentato a Lenin del 30 agosto: non è nella Sintesi, controllalo se lo citi.</p>' },
 
-    { titolo: 'Kronstadt, marzo 1921', html: lettura(KRONSTADT), dispositivo: KRONSTADT, minuti: 2,
-      note: '<p><b>Lettura</b> (circa 100 parole), anche sui telefoni. Chiedi a voce: <b>chi</b> protesta e <b>contro chi</b>? I marinai di Kronstadt erano stati fra i più fedeli alla rivoluzione nel 1917: chiedono soviet eletti liberamente, la fine delle requisizioni, la terra ai contadini. La rivolta è repressa nel sangue.</p><p>«Reparti di sbarramento»: i posti di blocco armati che sequestravano il cibo portato in città dalle campagne.</p><p><b>Traduzione di lavoro mia dal russo, non collazionata.</b></p>' },
-
     { titolo: 'La NEP', html: S_NEP, minuti: 2,
-      note: '<p>Varata al X congresso, nello stesso marzo 1921 di Kronstadt: Kronstadt convinse Lenin che non si poteva continuare. Clic 1: l’esito; clic 2: la «ritirata tattica». Per i più intransigenti è un tradimento.</p>' },
+      note: '<p>Varata al X congresso, nel marzo 1921, dopo carestia e rivolte (fra queste quella dei marinai di Kronstadt, repressa nel sangue): Lenin capì che non si poteva continuare. Clic 1: l’esito; clic 2: la «ritirata tattica». Per i più intransigenti è un tradimento.</p>' },
 
     { titolo: TITOLO, html: S_CHIUSURA, minuti: 0.5,
       note: '<p>La domanda apre la seconda lezione: la successione di Lenin. Clic 1: la nascita dell’URSS (30 dicembre 1922).</p>' }
