@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quattro filosofi davanti alla stessa esperienza</title>
+<meta name="portale:titolo" content="Quattro filosofi davanti alla stessa esperienza">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="contestualizzare">
+<meta name="portale:descrizione" content="A coppie: come interpretano Cartesio, Locke, Hume e Kant la stessa situazione, e quanto è certa la conoscenza in gioco. Risposte in diretta alla LIM.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--acc:#b45309;--accbg:#fdf3e4}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--acc:#f0b35a;--accbg:#33250f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.3rem 0 .2rem}
+h2{font-size:1.2rem;margin:.2rem 0 .6rem}
+h3{font-size:1.08rem;margin:0 0 .3rem}
+.sub{color:var(--muted);margin:0 0 .8rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.pill{display:inline-block;font-size:.8rem;font-weight:600;background:var(--accbg);color:var(--acc);border-radius:99px;padding:2px 10px;margin-bottom:6px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.sit{background:var(--accbg);border-radius:10px;padding:12px 14px;margin:8px 0}
+.guida{font-weight:600;margin:.6rem 0 0}
+.aut{border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg)}
+.opt[aria-pressed=true]::before{content:"✓ ";font-weight:700}
+.scale{display:flex;flex-wrap:wrap;gap:8px}
+.scale .opt{flex:1 1 140px;margin:0;text-align:center;font-size:.95rem}
+.nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.nums .opt{margin:0;text-align:center}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px;flex-wrap:wrap}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea{width:100%;min-height:88px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.lab{font-size:.92rem;font-weight:600;margin:.6rem 0 .3rem}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.92rem;border-left:4px solid var(--acc);background:var(--accbg);padding:8px 12px;margin:10px 0;border-radius:0 8px 8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+details p{margin:.5rem 0}
+.res{border-radius:10px;padding:10px 14px;margin:8px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.res.di{background:var(--accbg);border-left:5px solid var(--acc)}
+.lbl{font-weight:700}
+.mine{white-space:pre-wrap;border:1px dashed var(--line);border-radius:8px;padding:8px 10px;margin:6px 0 10px}
+ul.chk{margin:.4rem 0 0 1.1rem;padding:0}
+ul.chk li{margin:.25rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var LAB_ID = "filosofia_quattro_filosofi_stessa_esperienza";
+  var TITLE = "Quattro filosofi davanti alla stessa esperienza";
+  var KEY = "addestr_state_" + LAB_ID;
+  var MAXC = 250, MINC = 20, MAXL = 1500;
+  var D = {"SCALA":["Certa","Probabile","Solo credenza o abitudine","Dubbia o non conoscibile"],"AUTORI":[{"k":"cartesio","n":"Cartesio","r":"La certezza è nella ragione. Vero è ciò che è chiaro e distinto; il dubbio metodico colpisce sensi (anche il sogno) e matematica (genio maligno), finché resta il cogito. Dio, che non inganna, garantisce le idee chiare e distinte e l'esistenza del mondo. Due sostanze: res cogitans e res extensa; nei corpi sono oggettive solo le proprietà quantitative."},{"k":"locke","n":"Locke","r":"Nessuna idea innata: la mente è una tabula rasa e tutto viene dall'esperienza (sensazione e riflessione). Qualità primarie nei corpi, secondarie solo nel soggetto. La sostanza è un substrato supposto ma sconosciuto. Tre certezze: l'io per intuizione, matematica e Dio per dimostrazione, le cose esterne per sensazione attuale; il resto è probabile."},{"k":"hume","n":"Hume","r":"Ogni idea deriva da un'impressione. Relazioni di idee (matematica): certe, ma non parlano del mondo. Materie di fatto: parlano del mondo, ma il contrario è sempre possibile. La causalità nasce dall'abitudine; oggetto e io sono fasci di percezioni. Mondo esterno, io e nessi causali sono oggetto di credenza, che è ineliminabile."},{"k":"kant","n":"Kant","r":"La conoscenza è sintesi di materia (a posteriori) e forma (a priori, comune a tutti). Spazio e tempo ordinano la sensibilità e fondano la matematica; le categorie (sostanza, causa…) ordinano l'intelletto. L'io penso unifica: è attività, non sostanza. Giudizi sintetici a priori universali e necessari. Conosciamo i fenomeni, non la cosa in sé."}],"CARTE":[{"k":"sogno","tipo":"ragione","titolo":"Sto sognando e non lo so","testo":"Stanotte ho sognato di essere a scuola: tutto sembrava vero, e non sapevo di sognare. Come posso essere certo, adesso, di non sognare?","guida":"Quanto è certo che il mondo che percepisco esista davvero?","a":{"cartesio":{"cert":0,"disc":true,"chk":["il sogno è un argomento del dubbio sui sensi: non c'è un criterio sicuro per distinguere sonno e veglia","anche se sogno, resta certo che penso e dunque esisto (cogito)","la certezza del mondo esterno arriva solo con Dio, che non inganna: ciò che è chiaro e distinto è vero"],"perche":"Alla fine del percorso la certezza c'è, garantita da Dio. «Dubbia» va bene se vi riferivate al momento del dubbio, e lo avete detto."},"locke":{"cert":0,"disc":true,"chk":["tutte le idee vengono dall'esperienza: la sensazione attuale ci fa conoscere l'esistenza delle cose esterne","ma solo nel momento in cui le percepiamo: è il grado più debole di certezza","che le cose continuino a esistere quando non le percepisco è solo probabile; Locke non è scettico: certezza «sufficiente per tutti gli scopi umani»"],"perche":"Per Locke la sensazione attuale è una forma di certezza, la più debole. «Probabile» va bene se riferito all'esistenza delle cose quando non le percepiamo."},"hume":{"cert":2,"disc":false,"chk":["abbiamo solo impressioni: un mondo esterno distinto dalle percezioni non si giustifica né con le impressioni né con la causalità","Hume non dimostra che il mondo non esiste: mostra che non si può giustificare","eppure la credenza nel mondo esterno è ineliminabile: «di qui a un'ora» ci crederemo di nuovo"],"perche":"Per Hume l'esistenza del mondo esterno è oggetto di credenza, non di conoscenza."},"kant":{"cert":0,"disc":true,"chk":["ciò che conosciamo è il fenomeno: soggettivo ma universale, non un'illusione","la conoscenza dei fenomeni è possibile perché le forme a priori sono comuni a tutti i soggetti","la cosa in sé resta pensabile ma non conoscibile","va bene anche notare che la Sintesi non affronta direttamente il sogno: conta spostare la domanda sul piano del fenomeno"],"perche":"Certa per i fenomeni. «Dubbia o non conoscibile» va bene solo se vi riferivate alla cosa in sé."}}},{"k":"712","tipo":"ragione","titolo":"7 + 5 = 12","testo":"Sette più cinque fa dodici. Lo sapevo prima di contare sulle dita, e nessuno mi convincerà del contrario.","guida":"Quanto è certo che 7 + 5 = 12?","a":{"cartesio":{"cert":0,"disc":true,"chk":["la matematica è il modello del metodo: un'idea chiara e distinta, vera nel sonno e nella veglia","il dubbio iperbolico (il genio maligno, o un Dio che avrebbe potuto stabilirla diversamente) la rende dubbia","Dio, che non inganna, ne garantisce la verità: certezza a priori, dalla ragione"],"perche":"Certa, perché garantita da Dio. «Dubbia» va bene se vi riferivate all'ipotesi del genio maligno."},"locke":{"cert":0,"disc":false,"chk":["la matematica si conosce per dimostrazione: una catena di passaggi intuitivi attraverso idee intermedie","è certa, anche se meno dell'intuizione quando le catene sono lunghe","le idee in gioco non sono innate: vengono dall'esperienza e la mente le combina"],"perche":"Per Locke la dimostrazione è il secondo grado di certezza: la matematica è certa."},"hume":{"cert":0,"disc":false,"chk":["è una relazione di idee: si fonda sul solo pensiero e sul principio di non contraddizione","il contrario è contraddittorio","è certa, ma non dice nulla del mondo: varrebbe anche se non esistesse niente da contare"],"perche":"Errore frequente: «credenza». Per Hume la matematica è certa; è incerta la conoscenza dei fatti."},"kant":{"cert":0,"disc":false,"chk":["è un giudizio sintetico a priori: il 12 non è contenuto nei concetti di 7 e di 5, il predicato aggiunge qualcosa","è universale e necessario, quindi non viene dall'esperienza","si fonda sul tempo, forma a priori del senso interno (il numero nasce dalla successione)","per questo vale necessariamente per tutti i fenomeni; Hume lo considerava analitico: qui Kant si separa da lui"],"perche":"Certa: è l'esempio stesso di giudizio sintetico a priori."}}},{"k":"io","tipo":"ragione","titolo":"Sto leggendo, e so che sono io","testo":"Sto leggendo questa frase, e so che sono io a leggerla.","guida":"Quanto è certo che ci sia un io che legge, e che cosa è?","a":{"cartesio":{"cert":0,"disc":false,"chk":["è il cogito: un'autoevidenza, un'intuizione immediata, non la conclusione di un ragionamento","leggere e capire sono atti del pensiero: esisto come res cogitans, una cosa che pensa","per Cartesio l'io è una sostanza, il punto fermo su cui ricostruire il sapere"],"perche":"Per Cartesio è la prima e più salda certezza."},"locke":{"cert":0,"disc":true,"chk":["l'esistenza dell'io si conosce per intuizione, la forma più certa (qui Locke segue Cartesio)","l'identità della persona sta nella coscienza: non solo percepiamo, ma percepiamo di percepire","però la sostanza spirituale, come quella corporea, è un substrato inconoscibile"],"perche":"Certa l'esistenza dell'io. «Dubbia o non conoscibile» va bene se vi riferivate a che cosa sia l'io come sostanza."},"hume":{"cert":2,"disc":false,"chk":["non c'è alcuna impressione dell'io: troviamo solo percezioni che si succedono, come su un teatro","l'io è un fascio di percezioni","crediamo in un io unitario e identico nel tempo: è una credenza, ineliminabile"],"perche":"Per Hume l'io unitario è oggetto di credenza: c'è la percezione della frase, non un io che la possiede."},"kant":{"cert":0,"disc":true,"chk":["è l'io penso, che «deve poter accompagnare tutte le mie rappresentazioni»","non è l'io psicologico di una persona, ma la struttura comune a tutti","è un'attività di sintesi, non una sostanza: non posso conoscerlo come cosa (a differenza della res cogitans)","senza l'io penso non ci sarebbe una frase unitaria, solo parole sparse"],"perche":"Certo come attività che unifica. «Dubbia o non conoscibile» va bene se vi riferivate all'io come sostanza: è il punto di disaccordo più interessante con Cartesio."}}},{"k":"sole","tipo":"esperienza","titolo":"Domani sorgerà il sole","testo":"Domani mattina il sole sorgerà, come è sempre successo.","guida":"Quanto è certa questa previsione?","a":{"cartesio":{"cert":0,"disc":true,"chk":["il mondo fisico è materia in movimento, retta da una necessità causale senza eccezioni (meccanicismo = determinismo)","le leggi della natura (inerzia, conservazione della quantità di moto) derivano dall'immutabilità di Dio","la fisica si deduce da pochi principi evidenti: è il suo apriorismo, senza conferma sperimentale"],"perche":"Discutibile: Cartesio crede che la natura sia conoscibile con certezza perché deriva da principi evidenti garantiti da Dio. «Probabile» va bene se motivato con il limite dell'apriorismo."},"locke":{"cert":1,"disc":false,"chk":["non è intuizione, né dimostrazione, né sensazione attuale: rientra nella conoscenza probabile","si fonda sulla conformità con l'esperienza passata","è ragionevole e basta per agire, ma non è certa"],"perche":"Per Locke gran parte del sapere sui fatti è probabile: questa previsione ne è un esempio."},"hume":{"cert":2,"disc":true,"chk":["è una materia di fatto: «il sole domani non si leverà» non è contraddittorio","l'esperienza illumina il passato, non il futuro; ogni argomento dall'esperienza presuppone che il futuro somigli al passato","l'aspettativa nasce dall'abitudine: guida infallibile per la vita, ma non conoscenza certa"],"perche":"Per Hume si regge sull'abitudine e sulla credenza. «Probabile» va bene: anche la Sintesi dice che per Hume la conoscenza dei fatti è soltanto probabile."},"kant":{"cert":1,"disc":true,"chk":["che ogni fenomeno abbia una causa e obbedisca a leggi è a priori (categoria di causalità)","quale legge particolare governi il fenomeno va ricavato dall'esperienza","la previsione è un giudizio d'esperienza, sintetico a posteriori: non è necessaria","Kant non sa a priori che il sole sorgerà; sa a priori che qualunque cosa accada avrà una causa"],"perche":"La previsione è empirica, quindi non necessaria. «Certa» va bene se vi riferivate al principio di causalità, non alla previsione."}}},{"k":"cera","tipo":"esperienza","titolo":"Il pezzo di cera vicino al fuoco","testo":"Avvicino al fuoco un pezzo di cera: cambiano colore, odore, forma e durezza. Eppure diciamo che è la stessa cera.","guida":"Quanto è certo che cosa sia la cera che «resta»?","a":{"cartesio":{"cert":0,"disc":false,"chk":["le qualità sensibili cambiano, ma resta «qualcosa di esteso, di flessibile, di mutevole»","lo coglie solo l'intelletto, non i sensi né l'immaginazione","oggettive sono le proprietà quantitative (estensione); colori e odori sono soggettivi: la cera è res extensa"],"perche":"Per Cartesio l'intelletto coglie con chiarezza e distinzione ciò che resta: l'estensione."},"locke":{"cert":3,"disc":true,"chk":["le qualità primarie (estensione, figura, movimento) sono nei corpi; le secondarie (colore, odore) solo nel soggetto","le qualità si presentano sempre insieme e supponiamo un substrato che le sostenga","ma questo substrato è «il supposto ma sconosciuto sostegno»: la sostanza è inconoscibile"],"perche":"Ciò che «resta» è la sostanza, che per Locke non si può conoscere. «Certa» va bene se vi riferivate alle qualità primarie percepite."},"hume":{"cert":2,"disc":false,"chk":["abbiamo solo impressioni, e cambiano tutte","coerenza e costanza ci fanno riunire impressioni discontinue in un oggetto stabile","l'oggetto è un fascio di sensazioni: la cera che «resta» è una credenza"],"perche":"Per Hume non c'è impressione della sostanza: resta la credenza."},"kant":{"cert":0,"disc":false,"chk":["colore, odore, durezza sono materia della sensazione: a posteriori e mutevoli","pensare qualcosa che resta e qualità che cambiano dipende dalla categoria di sostanza e accidente: forma a priori","la sostanza non è un substrato inconoscibile (Locke), ma una categoria valida per il fenomeno","conosciamo la cera come fenomeno, non come cosa in sé"],"perche":"Certa, perché la sostanza è una categoria che vale necessariamente per i fenomeni."}}},{"k":"temporale","tipo":"esperienza","titolo":"Il temporale","testo":"Io e un amico vediamo lo stesso temporale. Lui sente il tuono fortissimo, io quasi non lo sento; ma tutti e due diciamo che prima è venuto il lampo e poi il tuono.","guida":"Quanto è certo che lampo e tuono siano collegati, prima uno e poi l'altro, per tutti?","a":{"cartesio":{"cert":0,"disc":false,"chk":["il suono come lo sentiamo è una proprietà soggettiva: per questo cambia da persona a persona","nei corpi ci sono solo proprietà quantitative: grandezza, figura, movimento, durata","la natura è meccanismo: il moto si trasmette per urto, con una necessità causale senza eccezioni, garantita da Dio"],"perche":"Per Cartesio il nesso è una necessità reale del mondo meccanico, garantita da Dio."},"locke":{"cert":1,"disc":false,"chk":["l'intensità del suono è una qualità secondaria: esiste solo nel soggetto, per questo varia","lampo e tuono si percepiscono con la sensazione attuale","il nesso causa-effetto è un'idea complessa di relazione, formata dalla mente; che si ripeta sempre così è probabile, fondato sull'esperienza passata"],"perche":"Per Locke ciò che va oltre la sensazione attuale, come un nesso che vale sempre, è probabile."},"hume":{"cert":2,"disc":false,"chk":["lampo e tuono sono impressioni vivide","il nesso è associazione (contiguità, causalità) prodotta dall'abitudine","vediamo che il tuono segue il lampo, non che deve seguirlo; l'accordo tra noi si spiega con abitudini simili, non con una necessità"],"perche":"Per Hume la connessione necessaria è un'aspettativa nata dall'abitudine."},"kant":{"cert":0,"disc":false,"chk":["l'intensità del suono è materia della sensazione: a posteriori, varia da persona a persona","l'ordine nel tempo (prima e dopo) e il nesso di causa sono forma: il tempo e la categoria di causalità, comuni a tutti i soggetti","per questo l'accordo è universale e necessario per ogni fenomeno","quale sia la causa fisica del tuono lo dice l'esperienza"],"perche":"Certa: tempo e causalità sono forme a priori, uguali per tutti. È la carta che mostra meglio la differenza tra materia e forma."}}}],"ASSEGNA":[null,["sogno","sole"],["712","cera"],["io","temporale"],["sogno","cera"],["712","temporale"],["io","sole"],["sogno","temporale"],["712","sole"],["io","cera"],["sogno","sole"],["712","cera"],["io","temporale"],["sogno","cera"],["712","temporale"]],"EST":{"id":"estensione","prompt":"Facoltativa. Quale delle vostre due carte mette più in difficoltà ciascun autore, e perché?","model":"Una buona risposta:","chk":["indica una carta per ciascun autore (anche la stessa per più autori)","dice quale tesi dell'autore viene messa sotto pressione, con un concetto della Sintesi (chiaro e distinto, relazioni di idee e materie di fatto, sostanza, sintetico a priori…)","esempi possibili: Cartesio è in difficoltà con il sole (apriorismo, nessuna conferma sperimentale) o con il sogno (serve Dio, e c'è il circolo); Locke con la cera (la sostanza è inconoscibile); Hume con l'io (resta solo la credenza); Kant con il sogno o con l'io (la cosa in sé, l'io che non è sostanza)","va bene anche una scelta diversa, se argomentata"]},"REV":{"model":"Una buona motivazione:","chk":["dice che cosa è emerso nella discussione (un argomento, un disaccordo) che vi ha fatto cambiare idea o confermare la scelta","lo collega a un concetto preciso della Sintesi, non a «ci siamo sbagliati»","se non avete cambiato nulla, spiega perché la vostra risposta regge anche dopo il confronto"]}};
+  var SC = D.SCALA, AU = D.AUTORI, CARTE = {}; D.CARTE.forEach(function (c) { CARTE[c.k] = c; });
+  var NMAX = D.ASSEGNA.length - 1;
+
+  // step: intro | numero | g0 | g1 | attesa | rev | (sub)
+  var S = { step: "intro", n: null, t: {}, c: {}, est: "", revCell: null, revT: "", revC: null, revP: "", sub: false, ok: null };
+  var app;
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function btn(text, cls) { var b = el("button", cls || "btn", text); b.type = "button"; return b; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function mie() { return S.n ? D.ASSEGNA[S.n] : []; }
+  function cid(ck, ak) { return ck + "_" + ak; }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Contestualizzare e collegare"));
+    h.appendChild(el("h1", null, TITLE));
+    if (S.n) h.appendChild(el("p", "sub", "Coppia " + S.n + " · carte: " + mie().map(function (k) { return CARTE[k].titolo; }).join(" e ")));
+    return h;
+  }
+  function progress(n) { var b = el("div", "bar"), f = el("i"); f.style.width = n + "%"; b.appendChild(f); return b; }
+  function counter(ta, max) { var c = el("div", "cnt"); function u() { c.textContent = ta.value.length + " / " + max; } u(); ta.addEventListener("input", u); return c; }
+
+  function render() {
+    clear(); app.appendChild(header());
+    if (S.sub) return renderReview();
+    ({ intro: renderIntro, numero: renderNumero, g0: function () { renderGriglia(0); }, g1: function () { renderGriglia(1); }, attesa: renderAttesa, rev: renderRev })[S.step]();
+    window.scrollTo(0, 0);
+  }
+
+  function renderIntro() {
+    var c = el("div", "card");
+    c.appendChild(el("h2", null, "Come funziona"));
+    c.appendChild(el("p", null, "Lavorate in coppia, su un solo dispositivo. Avrete due situazioni. Per ciascuna scrivete, per ogni autore, una o due righe su come la interpreterebbe, e scegliete quanto è certa la conoscenza in gioco."));
+    var ul = el("ul");
+    ["Griglia (circa 15 minuti): due carte, quattro autori ciascuna.",
+     "Discussione in classe (circa 12 minuti): le risposte di tutte le coppie compaiono alla lavagna, senza nomi.",
+     "Revisione (circa 3 minuti): potete correggere una casella e dire perché.",
+     "Poi consegnate e vedete la correzione."].forEach(function (t) { ul.appendChild(el("li", null, t)); });
+    c.appendChild(ul);
+    c.appendChild(el("p", "note", "Non serve dire chi siete: nella schermata iniziale, al posto del nome, scrivete «Coppia» e il numero che vi dà il docente (per esempio «Coppia 3»). Le risposte vengono salvate e lette dal docente."));
+    app.appendChild(c);
+    var go = btn("Avanti"); go.onclick = function () { S.step = "numero"; persist(); render(); }; app.appendChild(go);
+  }
+
+  function renderNumero() {
+    var c = el("div", "card");
+    c.appendChild(el("h2", null, "Il vostro numero di coppia"));
+    c.appendChild(el("p", "sub", "Scegliete il numero che vi ha dato il docente. Il file vi assegnerà le due carte."));
+    var g = el("div", "nums"); g.setAttribute("role", "group"); g.setAttribute("aria-label", "Numero di coppia");
+    for (var i = 1; i <= NMAX; i++) (function (i) {
+      var b = btn(String(i), "opt"); b.setAttribute("aria-pressed", S.n === i ? "true" : "false");
+      b.onclick = function () { S.n = i; persist(); render(); }; g.appendChild(b);
+    })(i);
+    c.appendChild(g);
+    if (S.n) c.appendChild(el("p", "warn", "Coppia " + S.n + ": le vostre carte sono «" + CARTE[mie()[0]].titolo + "» e «" + CARTE[mie()[1]].titolo + "». Controllate il numero: dopo non si cambia."));
+    var row = el("div", "row");
+    var back = btn("Indietro", "btn sec"); back.onclick = function () { S.step = "intro"; persist(); render(); };
+    var go = btn("Inizia la griglia"); go.disabled = !S.n; go.onclick = function () { S.step = "g0"; persist(); render(); };
+    row.appendChild(back); row.appendChild(go); c.appendChild(row); app.appendChild(c);
+  }
+
+  function cellOk(ck, ak) { return (S.t[cid(ck, ak)] || "").trim().length >= MINC && S.c[cid(ck, ak)] != null; }
+  function cardOk(ck) { return AU.every(function (a) { return cellOk(ck, a.k); }); }
+
+  function renderGriglia(i) {
+    var ck = mie()[i], C = CARTE[ck];
+    var c = el("div", "card");
+    c.appendChild(el("span", "pill", "Carta " + (i + 1) + " di 2"));
+    c.appendChild(progress(15 + i * 30));
+    c.appendChild(el("h2", null, C.titolo));
+    var sit = el("div", "sit"); sit.appendChild(el("div", null, C.testo)); sit.appendChild(el("p", "guida", "Certezza: " + C.guida)); c.appendChild(sit);
+    var next = btn(i === 0 ? "Seconda carta" : "Conferma la griglia");
+    function refresh() { next.disabled = !(i === 0 ? cardOk(ck) : cardOk(mie()[0]) && cardOk(ck)); }
+    AU.forEach(function (a) {
+      var id = cid(ck, a.k), box = el("div", "aut");
+      box.appendChild(el("h3", null, a.n));
+      box.appendChild(el("div", "lab", "Come interpreterebbe la situazione? (una o due righe)"));
+      var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.t[id] || ""; ta.setAttribute("aria-label", a.n + ": interpretazione");
+      ta.oninput = function () { S.t[id] = ta.value; persist(); refresh(); };
+      box.appendChild(ta); box.appendChild(counter(ta, MAXC));
+      box.appendChild(el("div", "lab", "Per " + a.n + ", questa conoscenza è…"));
+      var g = el("div", "scale"); g.setAttribute("role", "group"); g.setAttribute("aria-label", a.n + ": certezza");
+      SC.forEach(function (lab, k) {
+        var b = btn(lab, "opt"); b.setAttribute("aria-pressed", S.c[id] === k ? "true" : "false");
+        b.onclick = function () { S.c[id] = k; persist(); Array.prototype.forEach.call(g.children, function (x, j) { x.setAttribute("aria-pressed", j === k ? "true" : "false"); }); refresh(); };
+        g.appendChild(b);
+      });
+      box.appendChild(g); c.appendChild(box);
+    });
+    var r = el("details"); r.appendChild(el("summary", null, "Ripasso: i quattro autori in breve"));
+    AU.forEach(function (a) { var p = el("p"); p.appendChild(el("strong", null, a.n + ". ")); p.appendChild(document.createTextNode(a.r)); r.appendChild(p); });
+    c.appendChild(r);
+    c.appendChild(el("p", "note", "Almeno " + MINC + " caratteri per casella, al massimo " + MAXC + ". Usate i concetti, non solo i nomi."));
+    if (i === 1) c.appendChild(el("p", "warn", "Quando confermate, la griglia va alla lavagna e non si modifica più (tranne una casella nella revisione, dopo la discussione)."));
+    var row = el("div", "row");
+    if (i === 1) { var back = btn("Prima carta", "btn sec"); back.onclick = function () { S.step = "g0"; persist(); render(); }; row.appendChild(back); } else row.appendChild(el("span"));
+    next.onclick = function () {
+      if (i === 0) { S.step = "g1"; persist(); render(); return; }
+      S.step = "attesa"; persist();
+      mie().forEach(function (k) { condividi("carta_" + k, idsCarta(k)); });
+      render();
+    };
+    row.appendChild(next); c.appendChild(row); refresh(); app.appendChild(c);
+  }
+
+  function idsCarta(k) { var o = []; AU.forEach(function (a) { o.push(cid(k, a.k) + "_txt", cid(k, a.k) + "_cert"); }); return o; }
+
+  function renderAttesa() {
+    var c = el("div", "card");
+    c.appendChild(el("span", "pill", "Discussione in classe"));
+    c.appendChild(progress(70));
+    c.appendChild(el("h2", null, "Griglia inviata alla lavagna"));
+    c.appendChild(el("p", null, "Ora si discute insieme. Seguite la lavagna: le vostre risposte sono lì, accanto a quelle delle altre coppie con le stesse carte, senza nomi."));
+    c.appendChild(el("p", "note", "Mentre aspettate che gli altri finiscano, potete fare la domanda facoltativa qui sotto."));
+    app.appendChild(c);
+    var e = el("div", "card");
+    e.appendChild(el("h2", null, "Domanda in più (facoltativa)"));
+    e.appendChild(el("p", "lab", D.EST.prompt));
+    var ta = el("textarea"); ta.maxLength = MAXL; ta.value = S.est || ""; ta.setAttribute("aria-label", "Domanda facoltativa");
+    var save = btn("Invia alla lavagna", "btn sec"); var msg = el("div", "cnt");
+    ta.oninput = function () { S.est = ta.value; persist(); save.disabled = ta.value.trim().length < MINC; msg.textContent = ""; };
+    save.disabled = (S.est || "").trim().length < MINC;
+    save.onclick = function () { condividi("difficolta", [D.EST.id]); msg.textContent = "Inviata."; };
+    e.appendChild(ta); e.appendChild(counter(ta, MAXL));
+    var r1 = el("div", "row"); r1.appendChild(msg); r1.appendChild(save); e.appendChild(r1);
+    app.appendChild(e);
+    var go = btn("La discussione è finita: passa alla revisione");
+    go.onclick = function () { S.step = "rev"; persist(); render(); };
+    app.appendChild(el("p", "warn", "Passate alla revisione solo quando il docente lo dice."));
+    app.appendChild(go);
+  }
+
+  function cells() { var o = []; mie().forEach(function (k) { AU.forEach(function (a) { o.push({ k: k, a: a, id: cid(k, a.k), lab: CARTE[k].titolo + " · " + a.n }); }); }); return o; }
+
+  function renderRev() {
+    var c = el("div", "card");
+    c.appendChild(el("span", "pill", "Revisione"));
+    c.appendChild(progress(85));
+    c.appendChild(el("h2", null, "Dopo la discussione: cambiate qualcosa?"));
+    c.appendChild(el("p", "sub", "Potete correggere una sola casella. Se non cambiate nulla, ditelo e spiegate perché la vostra griglia regge."));
+    var g = el("div");
+    var list = cells().map(function (x) { return { v: x.id, lab: x.lab }; }).concat([{ v: "nessuna", lab: "Non cambiamo nulla" }]);
+    list.forEach(function (x) {
+      var b = btn(x.lab, "opt"); b.setAttribute("aria-pressed", S.revCell === x.v ? "true" : "false");
+      b.onclick = function () { if (S.revCell !== x.v) { S.revCell = x.v; if (x.v !== "nessuna") { S.revT = S.t[x.v] || ""; S.revC = S.c[x.v]; } persist(); render(); } };
+      g.appendChild(b);
+    });
+    c.appendChild(g);
+    var go = btn("Consegna"); var err = el("div", "err");
+    function refresh() {
+      var ok = S.revCell && (S.revP || "").trim().length >= MINC;
+      if (S.revCell && S.revCell !== "nessuna") ok = ok && (S.revT || "").trim().length >= MINC && S.revC != null;
+      go.disabled = !ok || sending;
+    }
+    if (S.revCell && S.revCell !== "nessuna") {
+      var box = el("div", "aut");
+      box.appendChild(el("div", "lab", "Nuova versione della casella"));
+      var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.revT || ""; ta.setAttribute("aria-label", "Nuova interpretazione");
+      ta.oninput = function () { S.revT = ta.value; persist(); refresh(); };
+      box.appendChild(ta); box.appendChild(counter(ta, MAXC));
+      var sg = el("div", "scale");
+      SC.forEach(function (lab, k) {
+        var b = btn(lab, "opt"); b.setAttribute("aria-pressed", S.revC === k ? "true" : "false");
+        b.onclick = function () { S.revC = k; persist(); Array.prototype.forEach.call(sg.children, function (x, j) { x.setAttribute("aria-pressed", j === k ? "true" : "false"); }); refresh(); };
+        sg.appendChild(b);
+      });
+      box.appendChild(sg); c.appendChild(box);
+    }
+    if (S.revCell) {
+      c.appendChild(el("div", "lab", S.revCell === "nessuna" ? "Perché la vostra griglia regge anche dopo il confronto?" : "Perché cambiate? Che cosa è emerso nella discussione?"));
+      var tp = el("textarea"); tp.maxLength = MAXL; tp.value = S.revP || ""; tp.setAttribute("aria-label", "Motivazione");
+      tp.oninput = function () { S.revP = tp.value; persist(); refresh(); };
+      c.appendChild(tp); c.appendChild(counter(tp, MAXL));
+    }
+    c.appendChild(el("p", "note", "Dopo la consegna vedrete la correzione: per ogni casella, che cosa dovrebbe contenere una buona risposta."));
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(el("span")); row.appendChild(go); c.appendChild(row);
+    go.onclick = function () { consegna(go, err); };
+    refresh(); app.appendChild(c);
+  }
+
+  function finalT(id) { return S.revCell === id ? S.revT : S.t[id]; }
+  function finalC(id) { return S.revCell === id ? S.revC : S.c[id]; }
+
+  function buildAnswers() {
+    var list = [];
+    mie().forEach(function (k) {
+      AU.forEach(function (a) {
+        var id = cid(k, a.k), m = CARTE[k].a[a.k];
+        var t = (S.t[id] || "").trim();
+        if (t) list.push({ id: id + "_txt", prompt: (CARTE[k].titolo + " · " + a.n + ": come la interpreta").slice(0, 300), type: "essay", answer: t, correct: null });
+        if (S.c[id] != null) list.push({ id: id + "_cert", prompt: (CARTE[k].titolo + " · " + a.n + ": " + CARTE[k].guida).slice(0, 300), type: "mc", answer: SC[S.c[id]], correct: S.c[id] === m.cert });
+      });
+    });
+    if ((S.est || "").trim()) list.push({ id: D.EST.id, prompt: D.EST.prompt.slice(0, 300), type: "essay", answer: S.est.trim().slice(0, 4000), correct: null });
+    if (S.revCell) {
+      var lab = S.revCell === "nessuna" ? "Non cambiamo nulla" : cells().filter(function (x) { return x.id === S.revCell; })[0].lab;
+      list.push({ id: "rev_cella", prompt: "Revisione: casella scelta", type: "essay", answer: lab, correct: null });
+      if (S.revCell !== "nessuna") {
+        list.push({ id: "rev_txt", prompt: "Revisione: nuova interpretazione", type: "essay", answer: (S.revT || "").trim(), correct: null });
+        if (S.revC != null) list.push({ id: "rev_cert", prompt: "Revisione: nuova certezza", type: "essay", answer: SC[S.revC], correct: null });
+      }
+      if ((S.revP || "").trim()) list.push({ id: "rev_perche", prompt: "Revisione: perché", type: "essay", answer: S.revP.trim().slice(0, 4000), correct: null });
+    }
+    return list;
+  }
+
+  // Vista classe: una fase per carta (carta_<k>) e una per la domanda facoltativa (difficolta). Anonima, mai bloccante.
+  function condividi(fase, ids) {
+    try {
+      if (!window.Addestramento || typeof window.Addestramento.condividi !== "function") return;
+      var l = buildAnswers().filter(function (x) { return ids.indexOf(x.id) >= 0; });
+      Promise.resolve(window.Addestramento.condividi(fase, l)).catch(function () {});
+    } catch (e) {}
+  }
+
+  var sending = false, tentativi = 0;
+  function consegna(b, err) {
+    if (sending) return; sending = true; b.disabled = true; err.textContent = "Consegna in corso…";
+    var list = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(list, null)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && window.Addestramento && ++tentativi < 2) { sending = false; b.disabled = false; err.textContent = "Invio non riuscito: controllate la connessione e riprovate."; return; }
+      S.sub = true; S.ok = window.Addestramento ? (ok !== false) : null; persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    c.appendChild(el("h2", null, "La correzione"));
+    c.appendChild(el("p", null, "Per ogni casella trovate la vostra risposta, la certezza più vicina alla Sintesi e che cosa dovrebbe contenere una buona interpretazione. Alcune caselle sono discutibili: lo trovate scritto, e lì conta l'argomento più dell'etichetta."));
+    if (S.ok === false) c.appendChild(el("p", "warn", "Attenzione: il risultato NON è stato registrato (connessione assente o bloccata). Avvisate il docente."));
+    else if (S.ok === null) c.appendChild(el("p", "warn", "Il sistema di registrazione non si è caricato: il risultato NON è stato registrato. Avvisate il docente."));
+    else c.appendChild(el("p", "note", "Risultato registrato."));
+    app.appendChild(c);
+    mie().forEach(function (k) {
+      var C = CARTE[k];
+      app.appendChild(el("h2", null, C.titolo));
+      app.appendChild(el("p", "sub", "Certezza: " + C.guida));
+      AU.forEach(function (a) {
+        var id = cid(k, a.k), m = C.a[a.k], d = el("div", "card");
+        d.appendChild(el("h3", null, a.n + (S.revCell === id ? " (casella rivista)" : "")));
+        d.appendChild(el("div", "lbl", "La vostra interpretazione"));
+        d.appendChild(el("div", "mine", finalT(id) || "(nessuna)"));
+        var fc = finalC(id), good = fc === m.cert;
+        var r = el("div", "res " + (good ? "ok" : (m.disc ? "di" : "ko")));
+        r.appendChild(el("span", "lbl", good ? "Certezza: come la Sintesi — " : (m.disc ? "Certezza: discutibile — " : "Certezza: diversa dalla Sintesi — ")));
+        r.appendChild(document.createTextNode("avete scelto «" + (fc == null ? "nessuna" : SC[fc]) + "»; riferimento: «" + SC[m.cert] + "». " + m.perche));
+        d.appendChild(r);
+        d.appendChild(el("div", "lbl", "Una buona interpretazione contiene almeno due di questi punti:"));
+        var ul = el("ul", "chk"); m.chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul);
+        app.appendChild(d);
+      });
+    });
+    if ((S.est || "").trim()) app.appendChild(openBox(D.EST.prompt, S.est, D.EST.model, D.EST.chk));
+    if (S.revCell) app.appendChild(openBox("Revisione: la vostra motivazione", S.revP, D.REV.model, D.REV.chk));
+    app.appendChild(el("p", "note", "Confrontate punto per punto: che cosa avevate già scritto? Che cosa vi è sfuggito?"));
+  }
+  function openBox(prompt, txt, model, chk) {
+    var d = el("div", "card"); d.appendChild(el("p", "lbl", prompt));
+    d.appendChild(el("div", "mine", txt || "(nessuna)")); d.appendChild(el("div", "lbl", model));
+    var ul = el("ul", "chk"); chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul); return d;
+  }
+
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: LAB_ID, title: TITLE,
+      salvaRisposte: true,     // necessario per la Vista classe
+      tempoAtteso: 1080,       // circa 18 minuti attivi (griglia + revisione)
+      caratteriAttesi: 1000,   // otto caselle brevi
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
