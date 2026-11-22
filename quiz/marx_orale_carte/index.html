@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<title>Marx · carte dell'orale</title>
+<style>
+:root{--bg:#F7F9FC;--ink:#1B2433;--acc:#255F99;--soft:#DEEAF6;--rule:#A9C4DF;--mut:#5B6675;--used:#C9D3DE}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:Georgia,'Times New Roman',serif}
+button{font:inherit;cursor:pointer}
+#home{max-width:1100px;margin:0 auto;padding:28px 20px 40px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+#home h1{font-family:Georgia,serif;font-weight:600;color:var(--acc);margin:0 0 4px;font-size:28px}
+#home p.sub{margin:0 0 22px;color:var(--mut)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
+.bar button{border:1px solid var(--rule);background:#fff;border-radius:8px;padding:9px 14px;color:var(--ink)}
+.bar button.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
+h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:20px 0 10px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:10px}
+.grid button{aspect-ratio:1.25;border:1px solid var(--rule);background:#fff;border-radius:10px;font-size:22px;font-weight:600;color:var(--acc)}
+.grid button.used{background:var(--used);color:#6b7785;border-color:var(--used);text-decoration:line-through}
+.keys{margin-top:26px;color:var(--mut);font-size:14px}
+#card{display:none;position:fixed;inset:0;background:var(--bg);cursor:pointer;user-select:none}
+#stage{position:absolute;inset:0;padding:5vh 7vw max(5vh,58px);overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+#inner{max-width:1300px;margin:0 auto;width:100%}
+.stim{line-height:1.42;margin:0}
+.fonte{font-family:system-ui,sans-serif;font-size:.5em;color:var(--mut);margin:.6em 0 0}
+.step{margin-top:.9em;padding-top:.7em;border-top:2px solid var(--rule)}
+.dom{font-weight:600;color:var(--acc)}
+.lab{font-family:system-ui,sans-serif;font-size:.42em;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);display:block;margin-bottom:.3em}
+.step ul{margin:0;padding-left:1.1em}.step li{margin:.15em 0;line-height:1.35}
+#nav{position:absolute;right:14px;bottom:10px;display:flex;gap:8px;opacity:.25;transition:opacity .2s;font-family:system-ui,sans-serif}
+#nav:hover{opacity:1}
+@media (hover:none){#nav{opacity:.85}}
+#nav button{border:1px solid var(--rule);background:#fff;border-radius:6px;padding:4px 10px;font-size:14px;color:var(--ink)}
+@media (prefers-color-scheme:dark){:root{--bg:#121820;--ink:#E8EDF3;--acc:#8DBAE6;--soft:#1E2A38;--rule:#36506B;--mut:#9AA7B6;--used:#2A3440}
+.bar button,.grid button,#nav button{background:#1A2330;color:var(--ink)}.grid button{color:var(--acc)}.bar button.pri{background:#2F75B5;color:#fff}}
+</style></head><body>
+<div id="home">
+  <h1>Marx · carte dell'orale</h1>
+  <p class="sub">Scegli una carta o estraila a caso. Le carte già uscite restano segnate.</p>
+  <div class="bar">
+    <button class="pri" data-r="1">Estrai a caso · livello 1</button>
+    <button class="pri" data-r="2">Estrai a caso · livello 2</button>
+    <button id="reset">Azzera le carte uscite</button>
+    <button id="fs">Schermo intero</button>
+  </div>
+  <h2>Livello 1 · L'essenziale</h2><div class="grid" id="g1"></div>
+  <h2>Livello 2 · Capire e collegare</h2><div class="grid" id="g2"></div>
+  <p class="keys">Nella carta: clic, barra spaziatrice o freccia a destra per il passo successivo (domanda, rilanci, collegamenti); freccia a sinistra per tornare indietro; Esc per tornare qui. Tasto F: schermo intero.</p>
+</div>
+<div id="card"><div id="stage"><div id="inner"></div></div>
+  <div id="nav"><button id="back">← Elenco</button><button id="prev">‹</button><button id="next">›</button></div></div>
+<script>
+const CARTE = [{"id": "1.1", "l": 1, "s": "«La legge garantisce a tutti la libertà di stampa». Ma fondare un quotidiano nazionale costa milioni.", "f": "", "d": "Che cosa ne direbbe Marx?", "r": ["Che differenza c'è tra emancipazione politica ed emancipazione umana?", "Per Marx l'uguaglianza davanti alla legge è un inganno senza valore?"], "c": ["E l'articolo 3 della Costituzione?", "Che cosa ne direbbe un liberale come Popper?"]}, {"id": "1.2", "l": 1, "s": "Un imprenditore, la domenica, partecipa a un'assemblea di quartiere sul bene comune; il lunedì licenzia trenta dipendenti per aumentare i profitti.", "f": "", "d": "Che cosa ci vedrebbe Marx?", "r": ["Che cosa sono il <em>bourgeois</em> e il <em>citoyen</em>?", "In che senso, per Marx, la vita nello Stato è «in cielo»?"], "c": ["Da chi Marx riprende la distinzione tra società civile e Stato?", "Come si supera, per lui, la doppia vita?"]}, {"id": "1.3", "l": 1, "s": "«Il potere statale moderno non è che un comitato che amministra gli affari comuni di tutta la classe borghese» (<em>Manifesto</em>).", "f": "", "d": "Che cos'è lo Stato per Marx?", "r": ["Se lo Stato è uno strumento di classe, che cosa deve fare la rivoluzione?", "Che cosa succede allo Stato quando le classi scompaiono?"], "c": ["Che cosa risponderebbe Popper a chi vuole spezzare lo Stato?", "Lo Stato liberale ha mai fatto leggi contro gli interessi della borghesia?"]}, {"id": "1.4", "l": 1, "s": "«La storia di ogni società sinora esistita è storia di lotte di classi» (<em>Manifesto</em>).", "f": "", "d": "Che cosa significa? Fammi due esempi.", "r": ["Che rapporto c'è tra la lotta di classe e la contraddizione tra forze produttive e rapporti di produzione?", "Perché, per il <em>Manifesto</em>, la borghesia ha avuto una funzione rivoluzionaria?"], "c": ["È una legge della storia o una tendenza?", "Che cosa ne direbbe Popper?", "E per Hegel, che cosa muove la storia?"]}, {"id": "1.5", "l": 1, "s": "Il <em>Manifesto</em> si chiude con l'appello: «Proletari di tutti i paesi, unitevi!».", "f": "", "d": "Perché «di tutti i paesi»?", "r": ["Perché il proletariato, liberando se stesso, libera tutta la società?", "In che cosa il socialismo di Marx si distingue da quello degli utopisti?"], "c": ["Che cosa è successo, dopo Marx, a questo appello?", "Perché è stata proprio la borghesia a unificare il mondo?"]}, {"id": "1.6", "l": 1, "s": "Un economista: «Il mercato funziona secondo leggi naturali ed eterne, come la gravità».", "f": "", "d": "Che cosa gli obietterebbe Marx?", "r": ["Che cosa Marx riconosce agli economisti classici, e che cosa rimprovera loro?", "Il capitalismo è sempre esistito?"], "c": ["Popper accusa Marx di credere in leggi della storia: chi crede davvero nelle leggi eterne?", "Che differenza c'è tra una legge e una tendenza?"]}, {"id": "1.7", "l": 1, "s": "Un servo della gleba del Medioevo e un operaio salariato dell'Ottocento.", "f": "", "d": "Chi è più libero, per Marx?", "r": ["Come è nato il capitalismo, secondo Marx?", "Il pluslavoro l'ha inventato il capitale?"], "c": ["E la Dichiarazione del 1789, che dichiara gli uomini liberi e uguali nei diritti?", "Come si estorce il pluslavoro nei due casi?"]}, {"id": "1.8", "l": 1, "s": "Per Marx la religione è «il gemito della creatura oppressa», «l'oppio dei popoli».", "f": "", "d": "Che cosa intende?", "r": ["In che cosa la sua critica della religione è diversa da quella di Feuerbach?", "Basta dimostrare che Dio non esiste per eliminare la religione?"], "c": ["Che cosa c'entra la religione con l'ideologia?", "E con la doppia vita, celeste e terrena, dell'uomo moderno?"]}, {"id": "1.9", "l": 1, "s": "Marx dice che in Hegel la dialettica «cammina sulla testa» e che va rimessa «sui piedi».", "f": "", "d": "Che cosa significa questa immagine?", "r": ["Chi è il soggetto della storia per Hegel, e chi per Marx?", "Che cosa conserva Marx di Hegel?"], "c": ["Che cosa prende Marx da Feuerbach per rovesciare Hegel?", "Perché, per Popper, Hegel e Marx sono nemici della società aperta?"]}, {"id": "1.10", "l": 1, "s": "Un'operaia monta ogni giorno centinaia di smartphone di lusso, che con il suo salario non potrà mai permettersi.", "f": "", "d": "Quale aspetto dell'alienazione mostra questo caso?", "r": ["Quali sono gli altri aspetti dell'alienazione?", "Qual è la causa, e come si supera?"], "c": ["E il feticismo delle merci?", "Che differenza c'è con l'alienazione di cui parla Feuerbach?"]}, {"id": "1.11", "l": 1, "s": "Un risparmiatore: «I miei soldi in banca lavorano per me: crescono da soli».", "f": "", "d": "Che cosa gli risponderebbe Marx?", "r": ["Che differenza c'è tra il ciclo M-D-M e il ciclo D-M-D′?", "Da dove viene, per Marx, il «di più»?"], "c": ["Che cosa c'entra con la critica dell'economia politica classica?", "Il capitale è una cosa?"]}, {"id": "1.12", "l": 1, "s": "Un'azienda chiede ai dipendenti di lavorare un'ora in più al giorno, con lo stesso salario.", "f": "", "d": "Che cosa succede, secondo Marx?", "r": ["C'è un altro modo, per il capitalista, di aumentare il plusvalore senza allungare la giornata?", "Perché le macchine non producono plusvalore?"], "c": ["Una legge che limita l'orario di lavoro conferma Marx o lo smentisce?", "Che cosa c'entra l'esercito di riserva?"]}, {"id": "1.13", "l": 1, "s": "Un datore di lavoro, a un operaio che chiede un aumento: «Se non ti va bene, fuori c'è la fila».", "f": "", "d": "Quale contraddizione del capitalismo descrive questa frase?", "r": ["Da dove vengono i disoccupati, secondo Marx?", "Quali altre contraddizioni del capitalismo conosci?"], "c": ["E le nuove tecnologie che sostituiscono il lavoro umano?", "Perché i salari tendono verso il minimo?"]}, {"id": "1.14", "l": 1, "s": "Durante una crisi, alcuni produttori versano nei campi migliaia di litri di latte invenduto, mentre molte famiglie faticano a comprarlo.", "f": "", "d": "Come spiegherebbe Marx una cosa del genere?", "r": ["Che differenza c'è tra le crisi del passato e quelle del capitalismo?", "Da quale contraddizione di fondo derivano?"], "c": ["Le crisi annunciano la fine del capitalismo?", "Che cosa ne direbbe Popper?", "Che cosa c'entra il ciclo D-M-D′?"]}, {"id": "1.15", "l": 1, "s": "Una proposta: «Tutto diventi proprietà dello Stato, tutti ricevano lo stesso salario, nessuno possieda nulla più degli altri».", "f": "", "d": "È questo il comunismo di Marx?", "r": ["Che cosa intende Marx per uomo «onnilaterale»?", "Come si distribuiscono i beni nelle due fasi della società comunista?"], "c": ["Un diritto uguale per tutti è sempre giusto?", "Che cosa vuol dire che il libero sviluppo di ciascuno è la condizione del libero sviluppo di tutti?"]}, {"id": "2.1", "l": 2, "s": "«Nella produzione sociale della loro esistenza, gli uomini entrano in rapporti determinati, necessari, indipendenti dalla loro volontà, in rapporti di produzione che corrispondono a un determinato grado di sviluppo delle loro forze produttive materiali. L'insieme di questi rapporti di produzione costituisce la struttura economica della società, ossia la base reale sulla quale si eleva una sovrastruttura giuridica e politica e alla quale corrispondono determinate forme sociali della coscienza. [...] Non è la coscienza degli uomini che determina il loro essere, ma è, al contrario, il loro essere sociale che determina la loro coscienza.»", "f": "<em>Per la critica dell'economia politica</em>, «Prefazione», 1859; Abbagnano, p. 140", "d": "Spiega i concetti del testo. Che cosa ne segue per il diritto e per lo Stato?", "r": ["La sovrastruttura è un riflesso meccanico della struttura?", "Perché questo testo è il fondamento della critica del liberalismo?"], "c": ["Il diritto può cambiare l'economia? Pensa all'articolo 3 della Costituzione.", "Questa idea vale anche per le idee di Marx?"]}, {"id": "2.2", "l": 2, "s": "«Il lavoro resta <em>esterno</em> all'operaio, cioè non appartiene al suo essere, e [...] l'operaio quindi non si afferma nel suo lavoro, bensì si nega, non si sente appagato ma infelice [...]. L'operaio si sente quindi con se stesso soltanto fuori dal lavoro, e fuori di sé nel lavoro. Il suo lavoro non è volontario, bensì forzato, è lavoro costrittivo. Il lavoro non è quindi la soddisfazione di un bisogno, bensì è soltanto un <em>mezzo</em> per soddisfare dei bisogni esterni a esso.»", "f": "<em>Manoscritti economico-filosofici</em>, 1844; Antologia, testo 6", "d": "Quale aspetto dell'alienazione descrive il testo?", "r": ["Quali sono gli altri aspetti?", "Che differenza c'è tra l'alienazione per Hegel, per Feuerbach e per Marx?", "Qual è la causa, e come si supera?"], "c": ["E il plusvalore?", "Esiste ancora oggi il lavoro alienato?"]}, {"id": "2.3", "l": 2, "s": "«Le idee della classe dominante sono in ogni epoca le idee dominanti; cioè, la classe che è la potenza materiale dominante della società è in pari tempo la sua potenza spirituale dominante. La classe che dispone dei mezzi della produzione materiale dispone con ciò, in pari tempo, dei mezzi della produzione intellettuale [...]. Le idee dominanti non sono altro che l'espressione ideale dei rapporti materiali dominanti.»", "f": "<em>L'ideologia tedesca</em>, 1845-1846; Antologia, testo 5", "d": "Che cos'è l'ideologia per Marx? Fammi un esempio.", "r": ["L'ideologia è una menzogna consapevole?", "In che senso le idee di libertà e di uguaglianza della società borghese sono ideologia?"], "c": ["E i diritti dell'uomo del 1789?", "Vale anche per le idee di Marx?"]}, {"id": "2.4", "l": 2, "s": "«Essi, è vero, sono coscienti di patrocinare nei loro progetti principalmente gli interessi della classe operaia come classe che soffre più di tutte le altre; ma il proletariato esiste per loro soltanto sotto l'aspetto di classe che soffre più di tutte. [...] Essi vogliono migliorare le condizioni d'esistenza di tutti i membri della società, anche dei più favoriti. Perciò fanno appello continuamente a tutta la società senza distinzione, anzi, si rivolgono di preferenza alla classe dominante.»", "f": "<em>Manifesto del partito comunista</em>, 1848; Cioffi, p. 529", "d": "Chi sono i socialisti di cui parla il testo, e che cosa rimprovera loro Marx?", "r": ["Che cosa distingue il socialismo «scientifico» da quello utopistico?", "Quali altri «falsi socialismi» critica il <em>Manifesto</em>?"], "c": ["Marx stesso disegna la società futura?", "Che cosa ne direbbe Popper dei progetti di società perfetta?"]}, {"id": "2.5", "l": 2, "s": "«Là dove lo Stato politico ha raggiunto il suo vero sviluppo, l'uomo conduce [...] una doppia vita, una celeste e una terrena, la vita nella comunità politica nella quale egli si afferma come ente comunitario, e la vita nella società civile nella quale agisce come uomo privato, che considera gli altri uomini come mezzo, degrada se stesso a mezzo e diviene trastullo di forze estranee.»", "f": "<em>Sulla questione ebraica</em>, 1844; Antologia, testo 1", "d": "Che cosa sono le due vite? Che cosa c'entra questo testo con la critica dello Stato liberale?", "r": ["Che differenza c'è tra emancipazione politica ed emancipazione umana?", "Perché Marx rifiuta anche la rappresentanza e la libertà individuale?"], "c": ["L'articolo 3 della Costituzione supera la doppia vita?", "Da chi viene la distinzione tra società civile e Stato?"]}, {"id": "2.6", "l": 2, "s": "«Chiamo dunque <em>tempo di lavoro necessario</em> la parte della giornata lavorativa nella quale si svolge questa riproduzione, e chiamo <em>lavoro necessario</em> il lavoro speso durante di essa. [...] Il secondo periodo del processo lavorativo, nel quale l'operaio sgobba oltre i limiti del lavoro necessario, gli costa certo lavoro, dispendio di forza-lavoro, ma per lui non crea <em>nessun valore</em>. Esso crea <em>plusvalore</em>, che sorride al capitalista con tutto il fascino d'una creazione dal nulla.»", "f": "<em>Il capitale</em>, libro I, 1867; Abbagnano, pp. 144-145", "d": "Spiega il testo. Di quale «riproduzione» si parla all'inizio?", "r": ["Perché il plusvalore sembra una «creazione dal nulla»?", "Che differenza c'è tra saggio del plusvalore e saggio del profitto?"], "c": ["Perché il contratto tra capitalista e operaio sembra giusto?", "Che cosa c'entra con la critica dell'uguaglianza formale?"]}, {"id": "2.7", "l": 2, "s": "«Poiché il capitale non ha come fine la soddisfazione dei bisogni ma la produzione del profitto, e poiché può realizzare questo fine solo usando dei metodi che regolano la massa dei prodotti secondo la scala della produzione e non inversamente, si deve necessariamente venire a creare un continuo conflitto fra le dimensioni limitate del consumo su basi capitalistiche ed una produzione che tende continuamente a superare questo limite che le è assegnato.»", "f": "<em>Il capitale</em>, libro III; Cioffi, p. 535", "d": "Quale contraddizione del capitalismo descrive il testo?", "r": ["Che cosa c'entra con il ciclo D-M-D′?", "Quali altre contraddizioni conosci, e da quale contraddizione di fondo derivano?"], "c": ["E il ciclo M-D-M?", "Le crisi portano necessariamente alla fine del capitalismo?", "Che cosa ne direbbe Popper?"]}, {"id": "2.8", "l": 2, "s": "«Quel che qui assume per gli uomini la forma fantasmagorica di un rapporto fra cose è soltanto il rapporto sociale determinato che esiste fra gli uomini stessi. Quindi, per trovare un'analogia, dobbiamo involarci nella regione nebulosa del mondo religioso. Quivi, i prodotti del cervello umano paiono figure indipendenti, dotate di vita propria [...]. Così, nel mondo delle merci, fanno i prodotti della mano umana.»", "f": "<em>Il capitale</em>, libro I, 1867; Abbagnano, p. 127", "d": "Che cos'è il feticismo delle merci? Perché Marx usa il paragone con la religione?", "r": ["Da che cosa dipende il valore di una merce?", "In che senso anche il capitale «non è una cosa»?"], "c": ["E Feuerbach e la religione?", "Che cosa c'entra con l'ideologia?"]}];
+const KEY = 'marx-orale-usate';
+let usate = new Set();
+try { usate = new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch (e) {}
+function salva(){ try { localStorage.setItem(KEY, JSON.stringify([...usate])); } catch (e) {} }
+let cur = null, step = 0;
+function griglia(){
+  [1,2].forEach(l => {
+    const g = document.getElementById('g'+l); g.innerHTML = '';
+    CARTE.filter(c => c.l === l).forEach(c => {
+      const b = document.createElement('button'); b.textContent = c.id;
+      if (usate.has(c.id)) b.className = 'used';
+      b.onclick = () => apri(c); g.appendChild(b);
+    });
+  });
+}
+function apri(c){ cur = c; step = 0; usate.add(c.id); salva(); document.getElementById('home').style.display='none';
+  document.getElementById('card').style.display='block'; disegna(); }
+function chiudi(){ cur = null; document.getElementById('card').style.display='none'; document.getElementById('home').style.display='block'; griglia(); }
+function disegna(){
+  const c = cur; let h = '<p class="stim">' + c.s + '</p>';
+  if (c.f) h += '<p class="fonte">' + c.f + '</p>';
+  if (step >= 1) h += '<div class="step dom">' + c.d + '</div>';
+  if (step >= 2) h += '<div class="step"><span class="lab">E poi</span><ul>' + c.r.map(x => '<li>'+x+'</li>').join('') + '</ul></div>';
+  if (step >= 3) h += '<div class="step"><span class="lab">Collegamenti</span><ul>' + c.c.map(x => '<li>'+x+'</li>').join('') + '</ul></div>';
+  const inner = document.getElementById('inner'); inner.innerHTML = h; adatta();
+}
+function adatta(){
+  const st = document.getElementById('stage'), inner = document.getElementById('inner');
+  const cs = getComputedStyle(st);
+  const H = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+  const W = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  let lo = 14, hi = 120;
+  for (let i = 0; i < 18; i++) { const m = (lo + hi) / 2; inner.style.fontSize = m + 'px';
+    if (inner.scrollHeight <= H - 2 && inner.scrollWidth <= W) lo = m; else hi = m; }
+  inner.style.fontSize = Math.min(lo, cur && cur.l === 2 ? 64 : 84) + 'px';
+}
+function avanti(){ if (step < 3) { step++; disegna(); } }
+function indietro(){ if (step > 0) { step--; disegna(); } }
+function estrai(l){ const libere = CARTE.filter(c => c.l === l && !usate.has(c.id));
+  if (!libere.length) { alert('Tutte le carte del livello ' + l + ' sono già uscite.'); return; }
+  apri(libere[Math.floor(Math.random() * libere.length)]); }
+function schermo(){ const e = document.documentElement;
+  if (!document.fullscreenElement) { (e.requestFullscreen || e.webkitRequestFullscreen || function(){}).call(e); }
+  else { (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document); } }
+document.querySelectorAll('[data-r]').forEach(b => b.onclick = () => estrai(+b.dataset.r));
+document.getElementById('reset').onclick = () => { if (confirm('Rimettere in gioco tutte le carte?')) { usate.clear(); salva(); griglia(); } };
+document.getElementById('fs').onclick = schermo;
+document.getElementById('stage').onclick = avanti;
+document.getElementById('next').onclick = e => { e.stopPropagation(); avanti(); };
+document.getElementById('prev').onclick = e => { e.stopPropagation(); indietro(); };
+document.getElementById('back').onclick = e => { e.stopPropagation(); chiudi(); };
+document.addEventListener('keydown', e => {
+  if (e.key === 'f' || e.key === 'F') { schermo(); return; }
+  if (!cur) return;
+  if (e.key === ' ' || e.key === 'ArrowRight' || e.key === 'Enter' || e.key === 'PageDown') { e.preventDefault(); avanti(); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); indietro(); }
+  else if (e.key === 'Escape') chiudi();
+});
+window.addEventListener('resize', () => { if (cur) adatta(); });
+griglia();
+</script></body></html>
