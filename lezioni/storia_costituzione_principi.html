@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Costituzione: caratteri e principi</title>
+<meta name="portale:titolo" content="La Costituzione: caratteri e principi">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Storia V): come si scrive la Costituzione, le tre culture politiche, gli articoli 1, 2, 3 (con il «di fatto» di Teresa Mattei), 7 e 11, l&#x27;architettura dei poteri e l&#x27;attuazione ritardata.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quinta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* stili comuni alle quattro lezioni sulla Costituente (slide ricomposte come testo e grafica) */
+  .st{font-size:30px;line-height:1.32;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+  .st{position:relative;padding-top:30px}
+  .st>.occhiello{position:absolute;top:0;left:0;margin:0}
+  .att-consegna{padding-right:170px}
+  .st .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:var(--rosso-scuro);text-transform:uppercase;margin:0 0 14px}
+  .st .intro{font-size:32px;line-height:1.36;margin:0 0 22px;max-width:1440px}
+  .st .intro b{color:var(--rosso-scuro)}
+  .riga-fine{font-family:var(--serif);font-style:italic;font-size:33px;color:var(--rosso-scuro);margin-top:20px;line-height:1.3}
+  .nota-piccola{font-size:20px;color:var(--tenue);margin-top:10px;line-height:1.35}
+  .credito{font-size:15px;color:var(--tenue);line-height:1.35}
+  .domanda-fine{font-family:var(--serif);font-size:50px;line-height:1.25;font-weight:700;margin:40px 0 30px}
+  .lettura .brano u{text-decoration-color:var(--rosso);text-decoration-thickness:2px}
+
+  /* blocchi, frecce, linee del tempo */
+  .gx{display:flex;align-items:center;gap:14px}
+  .gx3{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;margin:6px 0}
+  .bx{background:var(--grigio);border-radius:14px;padding:14px 20px;line-height:1.2;text-align:center;flex:1;min-width:0}
+  .bx .k{font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tenue);margin-bottom:6px}
+  .bx .big{display:block;font-size:54px;line-height:1.05;font-weight:700;color:var(--rosso-scuro);font-family:var(--serif)}
+  .bx .s{font-size:28px;margin-top:6px;line-height:1.22}
+  .bx.rs{background:var(--rosso-scuro);color:#fff}.bx.rs .k,.bx.rs .big{color:#fff}
+  .bx.bl{background:var(--blu);color:#fff}.bx.bl .k{color:#CFE0F1}.bx.bl .big{color:#fff}
+  .bx.sc{background:#23262D;color:#fff}.bx.sc .k{color:#FFB3B5}.bx.sc .big{color:#fff}
+  .bx.ch{background:#FBEDEE}.bx.gl{background:var(--giallo)}.bx.bi{background:#fff;border:2px solid var(--bordo)}
+  .bx.az{background:#E6EDF4}.bx.vd{background:var(--verde)}
+  .bx.ag{background:#FDF0D5}.bx.ag .big{color:#8A5300}
+  .bx small{font-size:.78em;opacity:.85}
+  .frw{flex:none;display:flex;align-items:center;justify-content:center}
+  .fr{display:block}
+  .tl{position:relative;display:grid;gap:16px}
+  .tl::before{content:"";position:absolute;left:0;right:0;top:15px;height:6px;background:var(--bordo);border-radius:3px}
+  .tn{position:relative;padding-top:44px}
+  .tn::before{content:"";position:absolute;left:50%;margin-left:-16px;top:5px;width:26px;height:26px;border-radius:50%;background:var(--rosso);border:3px solid #fff;box-shadow:0 0 0 3px var(--rosso)}
+  .tn.ult::before{background:var(--rosso-scuro);box-shadow:0 0 0 3px var(--rosso-scuro)}
+  .tn.gr::before{background:#9AA0A6;box-shadow:0 0 0 3px #9AA0A6}
+  .tn .dt{text-align:center;font-size:31px;font-weight:700;color:var(--rosso-scuro);line-height:1.1}
+  .tn .dt small{display:block;font-size:20px;font-weight:400;color:var(--tenue)}
+  .tn .bx{margin-top:10px}
+  .tn .bx .s{font-size:24px}
+  .dp{display:grid;grid-template-columns:1fr 150px 1fr;gap:12px 14px;align-items:stretch}
+  .dp .eti{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:1px;color:var(--tenue);text-align:center}
+  .colonna{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .gx>*{min-width:0}
+  .colonna>.bx{flex:none}
+  .titolo-g{font-size:25px;font-weight:700;margin:0 0 10px;text-align:center}
+
+  /* barre orizzontali (risultati, candidature) */
+  .bh{display:grid;grid-template-columns:var(--eti,330px) 1fr var(--num,120px);gap:10px 16px;align-items:center;font-size:27px}
+  .bh .e{text-align:right;line-height:1.15}
+  .bh .b{height:42px;background:#F2F3F5;border-radius:6px;overflow:hidden}
+  .bh .b i{display:block;height:100%;border-radius:6px}
+  .bh .n{font-weight:700;font-variant-numeric:tabular-nums}
+  .bh .n small{font-weight:400;color:var(--tenue)}
+
+  /* emiciclo a quadretti: un quadretto per seggio */
+  .quadretti{display:grid;gap:3px}
+  .quadretti i{display:block;aspect-ratio:1;border-radius:2px;background:#D5D8DC}
+  .seggi{display:flex;height:84px;border-radius:10px;overflow:hidden;margin:10px 0 8px}
+  .seggi div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:26px;min-width:0;overflow:hidden;white-space:nowrap}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:22px}
+  .leg i{display:inline-block;width:18px;height:18px;border-radius:4px;margin-right:8px;vertical-align:-2px}
+
+  /* articoli della Costituzione */
+  .art{background:#FFFDF6;border:2px solid #E2D7B5;border-left:12px solid var(--rosso-scuro);border-radius:10px;padding:16px 22px 14px;font-family:var(--serif);font-size:30px;line-height:1.42}
+  .art .n{font-family:var(--sans);font-size:19px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--rosso-scuro);display:block;margin-bottom:6px}
+  .art mark{background:#FDE7A8;padding:0 3px;border-radius:3px}
+  .art mark.ros{background:#FBD3D5}
+  .art .fonte-art{font-family:var(--sans);font-size:16px;color:var(--tenue);margin-top:8px}
+  .chip{display:inline-block;background:#fff;border:2px solid var(--blu);color:var(--blu);border-radius:30px;padding:4px 16px;font-size:24px;font-weight:700;margin:4px 6px 4px 0}
+  .chip.ros{border-color:var(--rosso-scuro);color:var(--rosso-scuro)}
+
+  /* citazioni brevi sulle slide */
+  .cit{font-family:var(--serif);font-size:32px;line-height:1.38;font-style:italic;border-left:8px solid var(--rosso);padding:6px 0 6px 22px;margin:0}
+  .cit .fonte{display:block;font-family:var(--sans);font-style:normal;font-size:19px;color:var(--tenue);margin-top:10px;line-height:1.35}
+
+  /* carta */
+  .carta-riga{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start}
+  .carta-riga svg{height:650px;width:auto;display:block}
+  .legenda-carta{font-size:22px;line-height:1.25;display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+  .legenda-carta p{margin:0 0 6px}
+  .legenda-carta .seg{display:inline-block;width:34px;height:22px;vertical-align:-4px;margin-right:10px;border-radius:3px}
+  .seg.nv{background:repeating-linear-gradient(45deg,#999 0 3px,#eee 3px 8px)}
+  .tabella-dati.media{font-size:25px}
+  .tabella-dati.media th,.tabella-dati.media td{padding:8px 14px}
+  .tabella-dati tr.aula-f-off>*{border-color:transparent}
+  .opzioni-stampa{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+  .opzioni-stampa div{background:#F2F3F5;border-radius:10px;padding:12px 20px;font-size:28px}
+  .opzioni-stampa div b{color:var(--blu);margin-right:12px}
+
+  /* colore delle lezioni sulla Costituente: banda e titoli in verde (le altre lezioni restano rosse) */
+  :root{--banda:#2E6B3F;--banda-scuro:#245632}
+  .aula-testata,.disp-testata{background:var(--banda)}
+  .st .occhiello,.tn .dt,.riga-fine,.titolo-g{color:var(--banda)}
+  .bx .big{color:var(--banda)}
+  .bx.rs .big,.bx.bl .big,.bx.sc .big{color:#fff}
+  .tn::before{background:var(--banda);box-shadow:0 0 0 3px var(--banda)}
+  .tn.ult::before{background:var(--banda-scuro);box-shadow:0 0 0 3px var(--banda-scuro)}
+  .tn.gr::before{background:#9AA0A6;box-shadow:0 0 0 3px #9AA0A6}
+  .art{border-left-color:var(--banda)}
+  .art .n{color:var(--banda)}
+  .aula-piede .firma{color:var(--banda)}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  // ------------------------------------------------------------ strumenti di composizione (comuni alle lezioni sulla Costituente)
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  function st(occhiello, h) { return '<div class="st">' + (occhiello ? '<div class="occhiello">' + occhiello + '</div>' : '') + h + '</div>'; }
+  function lettura(h) { return '<div class="lettura">' + h + '</div>'; }
+  var FORME = { giu: '25,0 75,0 75,50 100,50 50,100 0,50 25,50', su: '25,100 75,100 75,50 100,50 50,0 0,50 25,50', dx: '0,25 0,75 50,75 50,100 100,50 50,0 50,25', sx: '100,25 100,75 50,75 50,100 0,50 50,0 50,25' };
+  function fa(f) { return f ? ' data-f="' + f + '"' : ''; }
+  function fr(d, w, h, f) {
+    return '<div class="frw"' + fa(f) + '><svg class="fr" viewBox="0 0 100 100" preserveAspectRatio="none" style="width:' + w + 'px;height:' + h + 'px" aria-hidden="true">' +
+      '<polygon points="' + FORME[d] + '" fill="var(--freccia)" stroke="var(--rosso)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg></div>';
+  }
+  function bx(cls, k, big, s, f, stile) {
+    return '<div class="bx ' + (cls || '') + '"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '>' + (k ? '<div class="k">' + k + '</div>' : '') +
+      (big ? '<b class="big">' + big + '</b>' : '') + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
+  }
+  function nodo(dt, cls, k, s, f) {
+    return '<div class="tn' + (cls === 'rs' ? ' ult' : cls === 'gr' ? ' gr' : '') + '"' + fa(f) + '><div class="dt">' + dt + '</div>' + bx(cls === 'gr' ? 'bi' : cls, k, '', s) + '</div>';
+  }
+  // barre orizzontali: righe = [[etichetta, valore, testo del numero, colore, frammento]]
+  function barreH(righe, max, eti, num) {
+    var h = '<div class="bh" style="' + (eti ? '--eti:' + eti + 'px;' : '') + (num ? '--num:' + num + 'px' : '') + '">';
+    righe.forEach(function (r) {
+      var f = fa(r[4]);
+      h += '<div class="e"' + f + '>' + r[0] + '</div><div class="b"' + f + '><i style="width:' + (r[1] / max * 100).toFixed(1) + '%;background:' + r[3] + '"></i></div><div class="n"' + f + '>' + r[2] + '</div>';
+    });
+    return h + '</div>';
+  }
+  function art(n, testo, fonte, f, stile) {
+    return '<div class="art"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '><span class="n">' + n + '</span>' + testo + (fonte ? '<div class="fonte-art">' + fonte + '</div>' : '') + '</div>';
+  }
+  function cit(testo, fonte, f, stile) {
+    return '<p class="cit"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '>«' + testo + '»<span class="fonte">' + fonte + '</span></p>';
+  }
+  function opzioniStampa(op) {
+    return '<div class="opzioni-stampa">' + op.map(function (o, i) { return '<div><b>' + 'ABCDEF'[i] + '</b>' + o + '</div>'; }).join('') + '</div>';
+  }
+  var DB_URL = 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app';
+
+  var TITOLO = 'La Costituzione: caratteri e principi';
+  var FONDAMENTI = '<i>I fondamenti della Costituzione repubblicana</i>, Camera dei deputati, 2023';
+
+  // ------------------------------------------------------------ slide
+  var S_PARADOSSO = st('1947 · un paradosso',
+    '<div class="gx" style="align-items:stretch;gap:24px;margin-top:10px">' +
+    bx('sc', 'Maggio 1947 · al governo', 'Rottura', 'De Gasperi esclude comunisti e socialisti: comincia la guerra fredda anche in Italia', '', 'padding:24px') +
+    bx('vd', '22 dicembre 1947 · in Assemblea', '453 a 62', 'Gli stessi partiti approvano insieme la Costituzione', 1, 'padding:24px') + '</div>' +
+    '<p class="domanda-fine" style="font-size:44px;margin-top:40px"' + fa(2) + '>Come si scrivono regole comuni con l’avversario?</p>');
+
+  function passo(dt, t, cls, f) { return bx(cls || 'bi', dt, '', t, f, 'font-size:24px;padding:12px 10px'); }
+  var S_PROCEDURA = st('Come si scrive una costituzione',
+    '<div class="gx" style="align-items:stretch;gap:8px">' +
+    passo('25 giugno 1946', 'L’Assemblea si riunisce: 556 deputati', 'az') + fr('dx', 36, 50) +
+    passo('Luglio 1946', 'Commissione dei 75, presieduta da Meuccio Ruini', 'az', 1) + fr('dx', 36, 50, 1) +
+    passo('31 gennaio 1947', 'Il Progetto di Costituzione', 'gl', 2) + fr('dx', 36, 50, 2) +
+    passo('4 marzo - 22 dicembre 1947', 'L’Aula discute e vota articolo per articolo', 'az', 3) + fr('dx', 36, 50, 3) +
+    passo('1° gennaio 1948', 'Entra in vigore', 'rs', 4) + '</div>' +
+    '<div class="gx" style="align-items:stretch;gap:18px;margin-top:26px"' + fa(1) + '>' +
+    bx('ch', 'I Sottocommissione', '', 'Diritti e doveri dei cittadini', '', 'font-size:26px') +
+    bx('ch', 'II Sottocommissione', '', 'Organizzazione dello Stato', '', 'font-size:26px') +
+    bx('ch', 'III Sottocommissione', '', 'Rapporti economici e sociali', '', 'font-size:26px') +
+    bx('bi', 'Comitato di redazione', '', '18 membri: unifica i testi', '', 'font-size:26px') + '</div>' +
+    '<p class="nota-piccola" style="font-size:23px"' + fa(4) + '>Approvata il 22 dicembre 1947, firmata dal capo provvisorio dello Stato Enrico De Nicola il 27 dicembre.</p>');
+
+  var S_CULTURE = st('Tre culture politiche',
+    '<div class="gx" style="align-items:stretch;gap:20px">' +
+    bx('az', 'Cattolico-democratica · DC', '', 'La <b>persona</b> viene prima dello Stato; famiglia, comunità, corpi intermedi<br><small>Dossetti · La Pira · Moro · Fanfani</small>', '', 'font-size:27px') +
+    bx('ch', 'Socialista e comunista · PCI, PSIUP', '', 'Il <b>lavoro</b>; diritti sociali; un’uguaglianza non solo sulla carta<br><small>Togliatti · Basso · Iotti</small>', 1, 'font-size:27px') +
+    bx('gl', 'Liberale e laico-democratica', '', 'Le <b>libertà</b> e i limiti al potere: garanzie, controlli<br><small>Einaudi · Calamandrei · Ruini</small>', 2, 'font-size:27px') + '</div>' +
+    '<div class="gx3"' + fa(3) + '>' + fr('giu', 80, 50) + fr('giu', 80, 50) + fr('giu', 80, 50) + '</div>' +
+    bx('rs', '', 'Un compromesso', 'Un testo che nessuna delle tre, da sola, avrebbe scritto così', 3, 'flex:none;padding:14px'));
+
+  var OPZ_ART1 = ['«L’Italia è una Repubblica democratica di lavoratori»', '«L’Italia è una Repubblica democratica, fondata sui diritti di libertà e del lavoro»', '«L’Italia è una Repubblica democratica, fondata sul lavoro»'];
+  var S_ART1_ATT = '<p class="att-consegna">22 marzo 1947. Tre formule per aprire la Costituzione. Sul telefono: quale avreste votato?</p>';
+  var S_ART1_STAMPA = st('22 marzo 1947 · tre formule per l’articolo 1',
+    '<div class="colonna" style="gap:16px">' +
+    bx('ch', 'Comunisti e socialisti', '', OPZ_ART1[0], '', 'font-size:32px;font-family:var(--serif);text-align:left') +
+    bx('gl', 'Repubblicani', '', OPZ_ART1[1], '', 'font-size:32px;font-family:var(--serif);text-align:left') +
+    bx('az', 'Democristiani', '', OPZ_ART1[2], '', 'font-size:32px;font-family:var(--serif);text-align:left') + '</div>');
+
+  var S_ART1 = st('Articolo 1 · «fondata sul lavoro»',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start">' +
+    '<div><p class="titolo-g" style="text-align:left">«Repubblica democratica di lavoratori»</p>' +
+    barreH([['No', 239, '239', 'var(--blu)'], ['Sì', 227, '227', 'var(--rosso-scuro)']], 239, 80, 90) +
+    '<p class="nota-piccola" style="font-size:22px">Respinta per 12 voti. Passa la formula di Fanfani, accettata anche da Togliatti.</p></div>' +
+    '<div class="colonna"' + fa(1) + '>' + bx('ch', '«di lavoratori»', '', 'Il lavoro come <b>appartenenza</b>: chi lavora è dentro, chi no?', '', 'font-size:27px') +
+    fr('giu', 70, 36) + bx('az', '«fondata sul lavoro»', '', 'Il lavoro come <b>valore di tutti</b>, non come requisito di cittadinanza', '', 'font-size:27px') + '</div></div>' +
+    cit('Dicendo che la Repubblica è fondata sul lavoro, si esclude che possa fondarsi sul privilegio, sulla nobiltà ereditaria, sulla fatica altrui.', 'Amintore Fanfani, Assemblea costituente, 22 marzo 1947, resoconto p. 2369.', 2, 'font-size:28px;margin-top:20px'));
+
+  var S_ART2 = st('Articolo 2 · la persona',
+    art('Articolo 2', 'La Repubblica <mark>riconosce</mark> e garantisce i diritti inviolabili dell’uomo, sia come singolo sia <mark>nelle formazioni sociali</mark> ove si svolge la sua personalità, e richiede l’adempimento dei doveri inderogabili di <mark class="ros">solidarietà</mark> politica, economica e sociale.') +
+    '<div class="gx" style="align-items:stretch;gap:14px;margin-top:22px"' + fa(1) + '>' +
+    bx('rs', '', 'Persona', 'i diritti vengono prima dello Stato', '', 'flex:.9') + fr('dx', 50, 56) +
+    bx('ch', 'Formazioni sociali', '', 'famiglia · scuola · Chiesa · sindacato · partito · associazioni', '', 'flex:1.4;font-size:26px') + fr('dx', 50, 56) +
+    bx('az', '', 'Stato', 'li <b>riconosce</b>, non li concede', '', 'flex:.9') + '</div>' +
+    '<p class="riga-fine" style="font-size:30px"' + fa(2) + '>L’opposto del «tutto nello Stato, niente fuori dello Stato».</p>');
+
+  var CHIPS = ['sesso', 'razza', 'lingua', 'religione', 'opinioni politiche', 'condizioni personali e sociali'];
+  var S_ART3A = st('Articolo 3 · primo comma',
+    art('Articolo 3, primo comma', 'Tutti i cittadini hanno <mark>pari dignità sociale</mark> e sono <mark>eguali davanti alla legge</mark>, senza distinzione di sesso, di razza, di lingua, di religione, di opinioni politiche, di condizioni personali e sociali.') +
+    '<div style="margin-top:22px"' + fa(1) + '>' + CHIPS.map(function (c, i) { return '<span class="chip' + (i < 2 ? ' ros' : '') + '">' + c + '</span>'; }).join('') + '</div>' +
+    '<div class="gx" style="align-items:stretch;gap:18px;margin-top:16px"' + fa(2) + '>' +
+    bx('ch', 'Sesso', '', 'Per la prima volta in una legge fondamentale italiana', '', 'font-size:26px') +
+    bx('ch', 'Razza', '', 'Dieci anni dopo le leggi razziste del 1938', '', 'font-size:26px') +
+    bx('bi', 'L’uguaglianza formale', '', 'La legge è uguale per tutti. Basta?', '', 'font-size:26px') + '</div>');
+
+  var MATTEI = '<span class="etichetta autore">Teresa Mattei (PCI)</span>' +
+    '<div class="brano piccolo"><p>Io torno a proporre che sia migliorata la forma del secondo comma ' + MIO + ': «È compito della Repubblica rimuovere gli ostacoli d’ordine economico e sociale che limitano “<u>di fatto</u>” – noi vogliamo che sia aggiunto – la libertà e l’eguaglianza degli individui ' + MIO + '».</p>' +
+    '<p>Voi direte che questo è un pleonasmo. Noi però riteniamo che occorra specificare «di fatto». ' + MIO + ' Nella democratica Inghilterra le donne hanno conquistato formalmente il riconoscimento della parità assoluta dei diritti circa trent’anni fa ' + MIO + ' Ma ancora oggi ' + MIO + ' poco si è fatto, perché <u>ci si è limitati a sancire formalmente una conquista, che poi nessuno ha voluto realizzare nella pratica</u>.</p></div>' +
+    '<div class="fonte"><b>Teresa Mattei</b>, Assemblea costituente, seduta del 18 marzo 1947, discussione sulle disposizioni generali (art. 7 del Progetto, poi art. 3). Testo dal facsimile del resoconto in ' + FONDAMENTI + ', p. 143. ' + MIO + ' = taglio per la lezione. Sottolineature per la lezione.</div>';
+  var S_MATTEI_ATT = '<p class="att-consegna">Sul telefono: «di fatto» è davvero un pleonasmo? Che cosa cambia aggiungendolo? Se volete, un esempio di oggi.</p>';
+
+  var S_ART3B = st('Articolo 3 · secondo comma',
+    art('Articolo 3, secondo comma', 'È compito della Repubblica <mark class="ros">rimuovere gli ostacoli</mark> di ordine economico e sociale, che, limitando <mark>di fatto</mark> la libertà e l’eguaglianza dei cittadini, impediscono il pieno sviluppo della persona umana e l’effettiva partecipazione di tutti i lavoratori all’organizzazione politica, economica e sociale del Paese.') +
+    '<div class="gx" style="align-items:stretch;gap:18px;margin-top:22px"' + fa(1) + '>' +
+    bx('bi', 'Uguaglianza formale · comma 1', '', 'La legge non distingue', '', 'font-size:27px') + fr('dx', 60, 60) +
+    bx('bi', 'Ma di fatto', '', 'Povertà, ignoranza, tradizione, mentalità: gli ostacoli restano', '', 'font-size:27px') + fr('dx', 60, 60) +
+    bx('rs', 'Uguaglianza sostanziale · comma 2', '', 'La Repubblica deve <b>agire</b> per rimuoverli', '', 'font-size:27px') + '</div>');
+
+  var S_ART7_11 = st('Due scelte',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start">' +
+    '<div class="colonna">' + art('Articolo 7', 'Lo Stato e la Chiesa cattolica sono, ciascuno nel proprio ordine, indipendenti e sovrani. I loro rapporti sono regolati dai <mark>Patti Lateranensi</mark>. ' + MIO, '', '', 'font-size:25px;line-height:1.36') +
+    bx('ch', '25 marzo 1947', '', 'Vota a favore anche il PCI di Togliatti: nessuna frattura religiosa con le masse cattoliche. I socialisti votano contro', 1, 'font-size:25px') + '</div>' +
+    '<div class="colonna"' + fa(2) + '>' + art('Articolo 11', 'L’Italia <mark class="ros">ripudia la guerra</mark> come strumento di offesa alla libertà degli altri popoli e come mezzo di risoluzione delle controversie internazionali; consente, in condizioni di parità con gli altri Stati, alle <mark>limitazioni di sovranità</mark> necessarie ad un ordinamento che assicuri la pace e la giustizia fra le Nazioni; promuove e favorisce le organizzazioni internazionali rivolte a tale scopo.', '', '', 'font-size:25px;line-height:1.36') +
+    bx('ch', 'Dopo vent’anni di guerre fasciste', '', 'Etiopia, Spagna, Albania, la guerra mondiale', '', 'font-size:25px') + '</div></div>');
+
+  var S_CONTRO_ATT = '<p class="att-consegna">Sul telefono: a che cosa del passato risponde ciascuna scelta della Costituzione?</p>';
+  function organo(cls, k, s, stile) { return bx(cls, k, '', s, '', 'font-size:23px;padding:10px 12px;' + (stile || '')); }
+  var S_ARCHITETTURA = st('Un’architettura contro l’autoritarismo',
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 26px;align-items:stretch">' +
+    '<div></div>' + organo('sc', 'Popolo', 'Elegge le Camere; il referendum abrogativo') + '<div></div>' +
+    '<div></div><div style="display:flex;justify-content:center">' + fr('giu', 70, 36) + '</div><div></div>' +
+    organo('bi', 'Presidente della Repubblica', 'Eletto dal Parlamento per 7 anni: garante, non capo politico', 'border-color:var(--blu)') +
+    organo('rs', 'Parlamento', 'Camera e Senato, con gli stessi poteri') +
+    organo('az', 'Governo', 'Governa solo con la fiducia delle due Camere') +
+    organo('gl', 'Corte costituzionale', 'Annulla le leggi contrarie alla Costituzione') +
+    organo('bi', 'Costituzione rigida', 'Si cambia solo con una procedura aggravata (art. 138)', 'border-color:var(--rosso)') +
+    organo('gl', 'Consiglio superiore della magistratura', 'I giudici si governano da sé') + '</div>' +
+    '<p class="riga-fine" style="font-size:30px;margin-top:22px"' + fa(1) + '>Pensata per impedire l’autoritarismo, non per garantire governi forti: due obiettivi difficili da tenere insieme.</p>');
+
+  var S_INATTUATA = st('Una Costituzione a lungo inattuata',
+    '<div class="tl" style="grid-template-columns:repeat(4,1fr)">' +
+    nodo('1948', '', 'Il testo', 'Prevede Corte, CSM, Regioni, referendum') +
+    nodo('1956', 'gr', 'Corte costituzionale', 'Otto anni dopo', 1) +
+    nodo('1958', 'gr', 'CSM', 'Dieci anni dopo', 2) +
+    nodo('1970', 'rs', 'Regioni e referendum', 'Ventidue anni dopo', 3) + '</div>' +
+    '<p class="riga-fine"' + fa(4) + '>Prudenza o sabotaggio? Tre ritardi, tre motivi diversi, uno stesso effetto: per vent’anni il paese legale resta indietro.</p>');
+
+  var S_CHIUSURA = '<div class="st"><div class="gx" style="align-items:stretch;gap:18px;margin-top:40px">' +
+    bx('az', '', 'Persona', 'art. 2', '', 'padding:26px 10px') + bx('ch', '', 'Lavoro', 'art. 1', '', 'padding:26px 10px') + bx('gl', '', 'Uguaglianza', 'art. 3', '', 'padding:26px 10px') + bx('bi', '', 'Pace', 'art. 11', '', 'padding:26px 10px') + '</div>' +
+    '<p class="riga-fine" data-f="1" style="margin-top:40px">Prossima lezione: che cosa promette la Costituzione alle donne in famiglia, nel lavoro, nelle cariche pubbliche. E con quali riserve.</p></div>';
+
+  // ------------------------------------------------------------ attività
+  var ART1 = { id: 'formula_art1', tipo: 'sondaggio', minuti: 1.5, domanda: '22 marzo 1947: quale formula avreste votato per l’articolo 1?', opzioni: OPZ_ART1 };
+  var DIFATTO = { id: 'di_fatto', tipo: 'breve', minuti: 3, max: 200, domanda: '«Di fatto» è davvero un pleonasmo? Che cosa cambia aggiungendolo? (Se volete, un esempio di oggi.)', segnaposto: 'Secondo noi…', testo: MATTEI, testoAperto: true };
+  var CONTRO = {
+    id: 'contro_che_cosa', tipo: 'abbinamento', minuti: 3,
+    consegna: 'A che cosa del passato risponde ciascuna scelta della Costituzione?',
+    categorie: ['Statuto svuotato', 'Leggi fascistissime', 'Censura', 'Capo del governo (1925)', 'Giudici dipendenti'],
+    voci: [
+      { testo: 'Costituzione rigida: si cambia solo con una procedura aggravata (art. 138)', atteso: 0 },
+      { testo: 'Una Corte annulla le leggi contrarie alla Costituzione', atteso: 1 },
+      { testo: 'La stampa non può essere soggetta ad autorizzazioni o censure (art. 21)', atteso: 2 },
+      { testo: 'Il governo deve avere la fiducia delle due Camere (art. 94)', atteso: 3 },
+      { testo: 'Un Consiglio superiore governa la magistratura (art. 104-105)', atteso: 4 }
+    ]
+  };
+
+  // ------------------------------------------------------------ passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO, note: '<p>Lascia il QR sullo schermo mentre la classe entra (Q lo riapre).</p>' },
+
+    { titolo: 'Un paradosso', html: S_PARADOSSO, minuti: 2,
+      note: '<p>Clic 1: il voto finale; clic 2: la domanda della lezione. Voto finale del 22 dicembre 1947: 453 sì, 62 no su 515 presenti. Il governo De Gasperi IV, senza le sinistre, nasce il 31 maggio 1947.</p>' },
+
+    { titolo: 'Come si scrive una costituzione', html: S_PROCEDURA, minuti: 3,
+      note: '<p>Clic 1-4 la sequenza, con le sottocommissioni al clic 1. La Commissione per la Costituzione lavora dal 20 luglio 1946; il Comitato di redazione (detto «dei 18») unifica i testi. L’Aula comincia il 4 marzo 1947. Fonti: ' + FONDAMENTI + '; Senato della Repubblica, <i>La storia della nostra Costituzione</i>.</p>' },
+
+    { titolo: 'Tre culture politiche', html: S_CULTURE, minuti: 2,
+      note: '<p>Clic 1-3. Per il manuale (<i>Italia repubblicana</i>, «Un compromesso tra culture diverse») il compromesso non annacqua le differenze: cerca, articolo per articolo, la formula che ciascuna può accettare senza rinunciare al proprio nucleo. Calamandrei è del Partito d’Azione; Ruini della Democrazia del lavoro: li metto nella cultura laico-democratica.</p>' },
+
+    { titolo: 'Tre formule per l’articolo 1', html: S_ART1_ATT, stampa: S_ART1_STAMPA, minuti: 3, attivita: ART1,
+      note: '<p><b>Sondaggio</b> (90 secondi): le tre formule senza i partiti; i partiti compaiono nel passo successivo.</p><p><b>Ripresa</b>: le barre; poi avanti. Il manuale (<i>Democrazie</i>, focus «Una parola sola») scrive «Repubblica dei lavoratori»: la formula votata e respinta era «Repubblica democratica di lavoratori» (emendamento Amendola e altri). La formula repubblicana la riporto come il manuale; il testo esatto dell’emendamento è da controllare sul resoconto del 22 marzo.</p>' },
+
+    { titolo: '«Fondata sul lavoro»', html: S_ART1, minuti: 2,
+      note: '<p>Clic 1: la differenza tra le formule; clic 2: Fanfani. 239 no, 227 sì sulla formula di sinistra (cifre del manuale). La frase di Fanfani l’ho trovata citata in un commento all’art. 1 (fonte di seconda mano, con il rimando al resoconto, p. 2369): da controllare sull’originale prima dell’uso.</p>' },
+
+    { titolo: 'La persona e le formazioni sociali', html: S_ART2, minuti: 2,
+      note: '<p>Clic 1: lo schema; clic 2: la riga finale, che rovescia la formula di Mussolini (discorso alla Scala, 1925: «Tutto nello Stato, niente al di fuori dello Stato, nulla contro lo Stato»). L’ispirazione personalista viene da La Pira e Dossetti (relazione La Pira sui principi dei rapporti civili, in ' + FONDAMENTI + ').</p>' },
+
+    { titolo: 'Eguali davanti alla legge', html: S_ART3A, minuti: 1.5,
+      note: '<p>Clic 1: le sei distinzioni vietate; clic 2: due di esse e la domanda. «Sesso» c’era già nell’art. 7 del Progetto, come ricorda Mattei nel brano del passo successivo.</p>' },
+
+    { titolo: '«Di fatto»', html: lettura(MATTEI), dispositivo: MATTEI, minuti: 2,
+      note: '<p><b>Lettura</b> (circa 120 parole), anche sui telefoni. Leggila tu, poi passa alla domanda.</p><p><b>Testo</b>: letto con OCR dal facsimile del resoconto; da confrontare con il resoconto originale (seduta del 18 marzo 1947, p. 2270). Mattei parla del 1919 inglese (Sex Disqualification Removal Act); il voto alle inglesi alle stesse condizioni degli uomini è del 1928: se qualcuno lo sa, è un buon esempio dello scarto tra formale e reale.</p>' },
+
+    { titolo: 'Un pleonasmo?', html: S_MATTEI_ATT, stampa: '', minuti: 5, attivita: DIFATTO,
+      note: '<p><b>Risposta breve</b> (3 minuti). Il brano è sui telefoni, aperto sopra la domanda.</p><p><b>Ripresa</b>: il muro delle risposte. <b>Punta il commento</b> sulla distinzione: «di fatto» sposta lo sguardo dalla legge alla realtà, e trasforma il comma in un compito per la Repubblica. L’esempio inglese di Mattei: parità formale (1919) senza attuazione. Poi chiedi un esempio di oggi tra quelli del muro.</p>' },
+
+    { titolo: 'L’uguaglianza sostanziale', html: S_ART3B, minuti: 2,
+      note: '<p>Clic 1: lo schema. «Di fatto» è entrato nel testo definitivo. Il comma parla di «lavoratori» e di «Paese»: tiene insieme la cultura socialista (gli ostacoli economici) e quella cattolica (il pieno sviluppo della persona).</p>' },
+
+    { titolo: 'Patti Lateranensi e ripudio della guerra', html: S_ART7_11, minuti: 2,
+      note: '<p>Clic 1: il voto sull’art. 7; clic 2: l’art. 11. Art. 7 approvato il 25 marzo 1947 (350 sì, 149 no secondo le ricostruzioni correnti: cifre da controllare); il manuale ne fa la prova che il compromesso resse anche a rottura vicina. L’art. 11 è riportato per intero: le limitazioni di sovranità e le organizzazioni internazionali preparano l’adesione all’ONU (1955) e alle Comunità europee (1957).</p>' },
+
+    { titolo: 'Contro che cosa?', html: S_CONTRO_ATT, stampa: '', minuti: 5, attivita: CONTRO,
+      note: '<p><b>Abbinamento</b> (3 minuti). <b>Ripresa</b>: le barre a colori. <b>Punta il commento</b> sulla rigidità: lo Statuto albertino non fu mai abrogato, fu svuotato con leggi ordinarie. Poi sul capo del governo: la legge 24 dicembre 1925 lo rende responsabile solo verso il re. Il passo successivo mette tutto insieme.</p>' },
+
+    { titolo: 'L’architettura dei poteri', html: S_ARCHITETTURA, minuti: 2,
+      note: '<p>Clic 1: la riga finale, che è la tesi del manuale (focus «L’architettura dei pesi e contrappesi»). Corte: 15 giudici, un terzo nominati dal Presidente, un terzo dal Parlamento, un terzo dalle magistrature supreme. CSM: due terzi magistrati, un terzo eletti dal Parlamento.</p>' },
+
+    { titolo: 'Una Costituzione inattuata', html: S_INATTUATA, minuti: 2,
+      note: '<p>Clic 1-3, clic 4 la riga finale, che riprende il nodo storiografico del manuale («Vent’anni di ritardo: prudenza politica, o sabotaggio costituzionale?»). Il referendum abrogativo: legge del 1970; il primo referendum è quello sul divorzio del 1974.</p>' },
+
+    { titolo: TITOLO, html: S_CHIUSURA, minuti: 1, note: '<p>Quattro parole e quattro articoli. Clic 1: aggancio alla lezione 4.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Il compromesso costituente e i principi fondamentali · Storia V',
+    percorso: 'lezioni_storia_costituzione_principi',
+    database: DB_URL,
+    passi: passi
+  });
+
+})();
+</script>
+</body>
+</html>
