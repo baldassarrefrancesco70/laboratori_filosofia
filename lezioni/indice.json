@@ -73,6 +73,22 @@
       "percorso": "lezioni_storia_settecento"
     },
     {
+      "file": "storia_costituzione_genere.html",
+      "titolo": "Famiglia, lavoro, cariche pubbliche",
+      "materia": "storia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Storia V): la condizione giuridica delle donne nel 1946, le relazioni delle costituenti sulla famiglia, gli articoli 29, 37 e 51 e le leggi che li hanno attuati, dal 1960 al 2003.",
+      "percorso": "lezioni_storia_costituzione_genere"
+    },
+    {
+      "file": "storia_costituzione_principi.html",
+      "titolo": "La Costituzione: caratteri e principi",
+      "materia": "storia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Storia V): come si scrive la Costituzione, le tre culture politiche, gli articoli 1, 2, 3 (con il «di fatto» di Teresa Mattei), 7 e 11, l&#x27;architettura dei poteri e l&#x27;attuazione ritardata.",
+      "percorso": "lezioni_storia_costituzione_principi"
+    },
+    {
       "file": "storia_rivoluzione_russa.html",
       "titolo": "La rivoluzione russa (1917-1921)",
       "materia": "storia",
@@ -87,6 +103,22 @@
       "classe": "quinta",
       "descrizione": "Lezione interattiva (Storia V): la successione di Lenin, rivoluzione permanente e socialismo in un solo paese, la rivoluzione dall'alto, i piani quinquennali e la collettivizzazione, la carestia del 1932-1933, il Grande Terrore e la storia riscritta. Fonti minime, una tabella, due fotografie.",
       "percorso": "lezioni_storia_urss_stalin"
+    },
+    {
+      "file": "storia_verso_costituente.html",
+      "titolo": "Dalla guerra alla Costituente (1943-1946)",
+      "materia": "storia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Storia V): l&#x27;Italia divisa dopo l&#x27;8 settembre, la svolta di Salerno, il decreto del 1944, Parri e De Gasperi, il 2 giugno 1946. Una tabella e una carta del referendum per circoscrizione, i partiti della Costituente.",
+      "percorso": "lezioni_storia_verso_costituente"
+    },
+    {
+      "file": "storia_voto_donne.html",
+      "titolo": "Il voto alle donne e le 21 costituenti",
+      "materia": "storia",
+      "classe": "quinta",
+      "descrizione": "Lezione interattiva (Storia V): la lunga attesa del voto femminile, il fascismo, la Resistenza, il carteggio Togliatti-De Gasperi, i decreti del 1945-46, il primo voto, le 21 elette e la Commissione dei 75. Un sondaggio prima e dopo.",
+      "percorso": "lezioni_storia_voto_donne"
     }
   ]
 }
