@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Famiglia, lavoro, cariche: la differenza di genere nella Costituzione</title>
+<meta name="portale:titolo" content="Famiglia, lavoro, cariche pubbliche">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Storia V): la condizione giuridica delle donne nel 1946, le relazioni delle costituenti sulla famiglia, gli articoli 29, 37 e 51 e le leggi che li hanno attuati, dal 1960 al 2003.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quinta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* stili comuni alle quattro lezioni sulla Costituente (slide ricomposte come testo e grafica) */
+  .st{font-size:30px;line-height:1.32;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+  .st{position:relative;padding-top:30px}
+  .st>.occhiello{position:absolute;top:0;left:0;margin:0}
+  .att-consegna{padding-right:170px}
+  .st .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:var(--rosso-scuro);text-transform:uppercase;margin:0 0 14px}
+  .st .intro{font-size:32px;line-height:1.36;margin:0 0 22px;max-width:1440px}
+  .st .intro b{color:var(--rosso-scuro)}
+  .riga-fine{font-family:var(--serif);font-style:italic;font-size:33px;color:var(--rosso-scuro);margin-top:20px;line-height:1.3}
+  .nota-piccola{font-size:20px;color:var(--tenue);margin-top:10px;line-height:1.35}
+  .credito{font-size:15px;color:var(--tenue);line-height:1.35}
+  .domanda-fine{font-family:var(--serif);font-size:50px;line-height:1.25;font-weight:700;margin:40px 0 30px}
+  .lettura .brano u{text-decoration-color:var(--rosso);text-decoration-thickness:2px}
+
+  /* blocchi, frecce, linee del tempo */
+  .gx{display:flex;align-items:center;gap:14px}
+  .gx3{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;margin:6px 0}
+  .bx{background:var(--grigio);border-radius:14px;padding:14px 20px;line-height:1.2;text-align:center;flex:1;min-width:0}
+  .bx .k{font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tenue);margin-bottom:6px}
+  .bx .big{display:block;font-size:54px;line-height:1.05;font-weight:700;color:var(--rosso-scuro);font-family:var(--serif)}
+  .bx .s{font-size:28px;margin-top:6px;line-height:1.22}
+  .bx.rs{background:var(--rosso-scuro);color:#fff}.bx.rs .k,.bx.rs .big{color:#fff}
+  .bx.bl{background:var(--blu);color:#fff}.bx.bl .k{color:#CFE0F1}.bx.bl .big{color:#fff}
+  .bx.sc{background:#23262D;color:#fff}.bx.sc .k{color:#FFB3B5}.bx.sc .big{color:#fff}
+  .bx.ch{background:#FBEDEE}.bx.gl{background:var(--giallo)}.bx.bi{background:#fff;border:2px solid var(--bordo)}
+  .bx.az{background:#E6EDF4}.bx.vd{background:var(--verde)}
+  .bx.ag{background:#FDF0D5}.bx.ag .big{color:#8A5300}
+  .bx small{font-size:.78em;opacity:.85}
+  .frw{flex:none;display:flex;align-items:center;justify-content:center}
+  .fr{display:block}
+  .tl{position:relative;display:grid;gap:16px}
+  .tl::before{content:"";position:absolute;left:0;right:0;top:15px;height:6px;background:var(--bordo);border-radius:3px}
+  .tn{position:relative;padding-top:44px}
+  .tn::before{content:"";position:absolute;left:50%;margin-left:-16px;top:5px;width:26px;height:26px;border-radius:50%;background:var(--rosso);border:3px solid #fff;box-shadow:0 0 0 3px var(--rosso)}
+  .tn.ult::before{background:var(--rosso-scuro);box-shadow:0 0 0 3px var(--rosso-scuro)}
+  .tn.gr::before{background:#9AA0A6;box-shadow:0 0 0 3px #9AA0A6}
+  .tn .dt{text-align:center;font-size:31px;font-weight:700;color:var(--rosso-scuro);line-height:1.1}
+  .tn .dt small{display:block;font-size:20px;font-weight:400;color:var(--tenue)}
+  .tn .bx{margin-top:10px}
+  .tn .bx .s{font-size:24px}
+  .dp{display:grid;grid-template-columns:1fr 150px 1fr;gap:12px 14px;align-items:stretch}
+  .dp .eti{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:1px;color:var(--tenue);text-align:center}
+  .colonna{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .gx>*{min-width:0}
+  .colonna>.bx{flex:none}
+  .titolo-g{font-size:25px;font-weight:700;margin:0 0 10px;text-align:center}
+
+  /* barre orizzontali (risultati, candidature) */
+  .bh{display:grid;grid-template-columns:var(--eti,330px) 1fr var(--num,120px);gap:10px 16px;align-items:center;font-size:27px}
+  .bh .e{text-align:right;line-height:1.15}
+  .bh .b{height:42px;background:#F2F3F5;border-radius:6px;overflow:hidden}
+  .bh .b i{display:block;height:100%;border-radius:6px}
+  .bh .n{font-weight:700;font-variant-numeric:tabular-nums}
+  .bh .n small{font-weight:400;color:var(--tenue)}
+
+  /* emiciclo a quadretti: un quadretto per seggio */
+  .quadretti{display:grid;gap:3px}
+  .quadretti i{display:block;aspect-ratio:1;border-radius:2px;background:#D5D8DC}
+  .seggi{display:flex;height:84px;border-radius:10px;overflow:hidden;margin:10px 0 8px}
+  .seggi div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:26px;min-width:0;overflow:hidden;white-space:nowrap}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:22px}
+  .leg i{display:inline-block;width:18px;height:18px;border-radius:4px;margin-right:8px;vertical-align:-2px}
+
+  /* articoli della Costituzione */
+  .art{background:#FFFDF6;border:2px solid #E2D7B5;border-left:12px solid var(--rosso-scuro);border-radius:10px;padding:16px 22px 14px;font-family:var(--serif);font-size:30px;line-height:1.42}
+  .art .n{font-family:var(--sans);font-size:19px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--rosso-scuro);display:block;margin-bottom:6px}
+  .art mark{background:#FDE7A8;padding:0 3px;border-radius:3px}
+  .art mark.ros{background:#FBD3D5}
+  .art .fonte-art{font-family:var(--sans);font-size:16px;color:var(--tenue);margin-top:8px}
+  .chip{display:inline-block;background:#fff;border:2px solid var(--blu);color:var(--blu);border-radius:30px;padding:4px 16px;font-size:24px;font-weight:700;margin:4px 6px 4px 0}
+  .chip.ros{border-color:var(--rosso-scuro);color:var(--rosso-scuro)}
+
+  /* citazioni brevi sulle slide */
+  .cit{font-family:var(--serif);font-size:32px;line-height:1.38;font-style:italic;border-left:8px solid var(--rosso);padding:6px 0 6px 22px;margin:0}
+  .cit .fonte{display:block;font-family:var(--sans);font-style:normal;font-size:19px;color:var(--tenue);margin-top:10px;line-height:1.35}
+
+  /* carta */
+  .carta-riga{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start}
+  .carta-riga svg{height:650px;width:auto;display:block}
+  .legenda-carta{font-size:22px;line-height:1.25;display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+  .legenda-carta p{margin:0 0 6px}
+  .legenda-carta .seg{display:inline-block;width:34px;height:22px;vertical-align:-4px;margin-right:10px;border-radius:3px}
+  .seg.nv{background:repeating-linear-gradient(45deg,#999 0 3px,#eee 3px 8px)}
+  .tabella-dati.media{font-size:25px}
+  .tabella-dati.media th,.tabella-dati.media td{padding:8px 14px}
+  .tabella-dati tr.aula-f-off>*{border-color:transparent}
+  .opzioni-stampa{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+  .opzioni-stampa div{background:#F2F3F5;border-radius:10px;padding:12px 20px;font-size:28px}
+  .opzioni-stampa div b{color:var(--blu);margin-right:12px}
+
+  /* colore delle lezioni sulla Costituente: banda e titoli in verde (le altre lezioni restano rosse) */
+  :root{--banda:#2E6B3F;--banda-scuro:#245632}
+  .aula-testata,.disp-testata{background:var(--banda)}
+  .st .occhiello,.tn .dt,.riga-fine,.titolo-g{color:var(--banda)}
+  .bx .big{color:var(--banda)}
+  .bx.rs .big,.bx.bl .big,.bx.sc .big{color:#fff}
+  .tn::before{background:var(--banda);box-shadow:0 0 0 3px var(--banda)}
+  .tn.ult::before{background:var(--banda-scuro);box-shadow:0 0 0 3px var(--banda-scuro)}
+  .tn.gr::before{background:#9AA0A6;box-shadow:0 0 0 3px #9AA0A6}
+  .art{border-left-color:var(--banda)}
+  .art .n{color:var(--banda)}
+  .aula-piede .firma{color:var(--banda)}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  // ------------------------------------------------------------ strumenti di composizione (comuni alle lezioni sulla Costituente)
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  function st(occhiello, h) { return '<div class="st">' + (occhiello ? '<div class="occhiello">' + occhiello + '</div>' : '') + h + '</div>'; }
+  function lettura(h) { return '<div class="lettura">' + h + '</div>'; }
+  var FORME = { giu: '25,0 75,0 75,50 100,50 50,100 0,50 25,50', su: '25,100 75,100 75,50 100,50 50,0 0,50 25,50', dx: '0,25 0,75 50,75 50,100 100,50 50,0 50,25', sx: '100,25 100,75 50,75 50,100 0,50 50,0 50,25' };
+  function fa(f) { return f ? ' data-f="' + f + '"' : ''; }
+  function fr(d, w, h, f) {
+    return '<div class="frw"' + fa(f) + '><svg class="fr" viewBox="0 0 100 100" preserveAspectRatio="none" style="width:' + w + 'px;height:' + h + 'px" aria-hidden="true">' +
+      '<polygon points="' + FORME[d] + '" fill="var(--freccia)" stroke="var(--rosso)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg></div>';
+  }
+  function bx(cls, k, big, s, f, stile) {
+    return '<div class="bx ' + (cls || '') + '"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '>' + (k ? '<div class="k">' + k + '</div>' : '') +
+      (big ? '<b class="big">' + big + '</b>' : '') + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
+  }
+  function nodo(dt, cls, k, s, f) {
+    return '<div class="tn' + (cls === 'rs' ? ' ult' : cls === 'gr' ? ' gr' : '') + '"' + fa(f) + '><div class="dt">' + dt + '</div>' + bx(cls === 'gr' ? 'bi' : cls, k, '', s) + '</div>';
+  }
+  // barre orizzontali: righe = [[etichetta, valore, testo del numero, colore, frammento]]
+  function barreH(righe, max, eti, num) {
+    var h = '<div class="bh" style="' + (eti ? '--eti:' + eti + 'px;' : '') + (num ? '--num:' + num + 'px' : '') + '">';
+    righe.forEach(function (r) {
+      var f = fa(r[4]);
+      h += '<div class="e"' + f + '>' + r[0] + '</div><div class="b"' + f + '><i style="width:' + (r[1] / max * 100).toFixed(1) + '%;background:' + r[3] + '"></i></div><div class="n"' + f + '>' + r[2] + '</div>';
+    });
+    return h + '</div>';
+  }
+  function art(n, testo, fonte, f, stile) {
+    return '<div class="art"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '><span class="n">' + n + '</span>' + testo + (fonte ? '<div class="fonte-art">' + fonte + '</div>' : '') + '</div>';
+  }
+  function cit(testo, fonte, f, stile) {
+    return '<p class="cit"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '>«' + testo + '»<span class="fonte">' + fonte + '</span></p>';
+  }
+  function opzioniStampa(op) {
+    return '<div class="opzioni-stampa">' + op.map(function (o, i) { return '<div><b>' + 'ABCDEF'[i] + '</b>' + o + '</div>'; }).join('') + '</div>';
+  }
+  var DB_URL = 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app';
+
+  var TITOLO = 'Famiglia, lavoro, cariche: la differenza di genere nella Costituzione';
+  var TITOLO_BREVE = 'Famiglia, lavoro, cariche pubbliche';
+  var FONDAMENTI = '<i>I fondamenti della Costituzione repubblicana</i>, Camera dei deputati, 2023';
+  var CAT21 = '<i>Le 21 deputate all’Assemblea costituente</i>, Camera dei deputati, 2023';
+
+  // ------------------------------------------------------------ slide
+  var S_PARTENZA = st('Nel 1946, la legge dice che…',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">' +
+    bx('ch', 'In famiglia · codice civile del 1942', '', 'Il marito è il <b>capo della famiglia</b>: la moglie ne assume il cognome e lo segue dove lui fissa la residenza; la patria potestà sui figli è del padre', '', 'font-size:26px;text-align:left') +
+    bx('ch', 'L’onore · codice penale del 1930', '', 'L’adulterio è reato per la moglie, per il marito solo se convive con l’amante; chi uccide «per causa d’onore» ha una pena ridotta', 1, 'font-size:26px;text-align:left') +
+    bx('az', 'Negli uffici pubblici · legge del 1919', '', 'Le donne non possono fare le magistrate, le prefette, le diplomatiche, le ufficiali', 2, 'font-size:26px;text-align:left') +
+    bx('az', 'Nel lavoro', '', 'Salari più bassi; clausole che obbligano a lasciare il posto se ci si sposa', 3, 'font-size:26px;text-align:left') + '</div>' +
+    '<p class="riga-fine"' + fa(4) + '>Dal 1946 le donne votano e siedono nell’Assemblea costituente. Il resto è ancora tutto qui.</p>');
+
+  var S_DOVE = st('Dove lavorano le costituenti',
+    '<div class="gx" style="align-items:stretch;gap:24px">' +
+    bx('ch', 'I Sottocommissione · diritti e doveri', '', '<b>Nilde Iotti</b> (PCI): relazione sulla famiglia', '', 'font-size:28px') +
+    bx('ch', 'III Sottocommissione · rapporti economici e sociali', '', '<b>Maria Federici</b> (DC) · <b>Lina Merlin</b> (PSIUP) · <b>Teresa Noce</b> (PCI): garanzie economiche e sociali per la famiglia', '', 'font-size:28px') + '</div>' +
+    '<p class="riga-fine" style="font-size:30px">Quattro relazioni, tre partiti, un tema: la famiglia. Su che cosa sono d’accordo?</p>');
+
+  var VOCI = [
+    { testo: '«Uno dei coniugi, la donna, era ed è tuttora legata a condizioni arretrate che la pongono in stato di inferiorità e fanno sì che la vita familiare sia per essa un peso.»', fonte: 'Nilde Iotti, Relazione sulla famiglia', atteso: 0 },
+    { testo: '«Un articolo che sancisse la protezione dello Stato […] per l’istituto familiare non avrebbe in realtà alcuna specifica rilevanza concreta.»', fonte: 'Lina Merlin, Garanzie economiche e sociali per l’esistenza della famiglia', atteso: 2 },
+    { testo: '«Alla lavoratrice capo di famiglia, per qualunque motivo essa venga ad assumere tale figura, vanno assicurati tutti i diritti riconosciuti al lavoratore capo di famiglia.»', fonte: 'Maria Federici, Garanzie economico-sociali per l’esistenza della famiglia', atteso: 1 },
+    { testo: '«Saremmo contrari a inserire nella Costituzione stessa il principio dell’indissolubilità […].»', fonte: 'Nilde Iotti, Relazione sulla famiglia', atteso: 0 },
+    { testo: '«Mettere al mondo le nuove generazioni non è solo un “affare privato”, perché l’infanzia è l’avvenire del Paese.»', fonte: 'Teresa Noce, Garanzie economico-sociali per l’assistenza della famiglia', atteso: 0 },
+    { testo: '«Il compenso si articolerebbe in due parti: […] una parte che varia in relazione al carico familiare.»', fonte: 'Maria Federici, Garanzie economico-sociali per l’esistenza della famiglia', atteso: 1 }
+  ];
+  var FONTE_REL = 'Relazioni presentate nella Commissione per la Costituzione (I e III Sottocommissione, 1946), facsimili in ' + CAT21 + ', p. 113-127. […] = taglio per la lezione.';
+  var REL_DISP = '<div class="fonte">' + FONTE_REL + '</div>';
+  var S_REL_ATT = '<p class="att-consegna">Sul telefono: chi ha scritto ciascuna di queste frasi?</p>';
+  var S_REL_STAMPA = st('Le relazioni sulla famiglia',
+    '<div class="colonna" style="gap:8px">' + VOCI.map(function (v) { return '<div class="bx bi" style="text-align:left;font-size:21px;padding:8px 14px;font-family:var(--serif)">' + v.testo + ' <span style="font-family:var(--sans);font-size:17px;color:var(--tenue)">' + v.fonte + '</span></div>'; }).join('') + '</div>' +
+    '<p class="credito" style="margin-top:8px">' + FONTE_REL + '</p>');
+
+  var S_CONVERGENZE = st('Accordi e disaccordi',
+    '<div class="gx" style="align-items:stretch;gap:22px">' +
+    '<div class="colonna" style="flex:1"><div class="titolo-g" style="color:var(--verde-testo)">D’accordo, da PCI a DC</div>' +
+    bx('vd', '', '', 'La maternità va protetta dallo Stato', '', 'font-size:26px') +
+    bx('vd', '', '', 'Un salario che tenga conto della famiglia', 1, 'font-size:26px') +
+    bx('vd', '', '', 'La lavoratrice con gli stessi diritti del lavoratore', 2, 'font-size:26px') + '</div>' +
+    '<div class="colonna" style="flex:1"' + fa(3) + '><div class="titolo-g" style="color:var(--rosso-scuro)">In disaccordo</div>' +
+    bx('ch', '', '', 'Il matrimonio indissolubile in Costituzione: sì per la DC, no per le sinistre', '', 'font-size:26px') +
+    bx('ch', '', '', 'Serve un articolo sulla famiglia? Sì per Iotti e Federici, inutile per Merlin', '', 'font-size:26px') +
+    bx('ch', '', '', 'Figli nati fuori dal matrimonio: gli stessi diritti, chiedono le sinistre', '', 'font-size:26px') + '</div></div>' +
+    '<p class="riga-fine" style="font-size:30px"' + fa(4) + '>Il disaccordo non passa sempre fra donne e uomini: passa anche fra culture politiche.</p>');
+
+  var S_ART29 = st('La famiglia · articolo 29',
+    art('Articolo 29', 'La Repubblica riconosce i diritti della famiglia come società naturale fondata sul matrimonio. Il matrimonio è ordinato sull’<mark>eguaglianza morale e giuridica dei coniugi</mark>, <mark class="ros">con i limiti stabiliti dalla legge a garanzia dell’unità familiare</mark>.', '', '', 'font-size:29px') +
+    '<div class="gx" style="align-items:stretch;gap:10px;margin-top:20px">' +
+    bx('az', '1 · Proposta di Iotti (1946)', '', 'Coniugi <b>eguali</b>, senza riserve', 1, 'font-size:26px') + fr('dx', 44, 56, 2) +
+    bx('gl', '2 · Testo approvato (1947)', '', 'Eguali, ma la legge può porre <b>limiti</b> in nome dell’unità familiare', 2, 'font-size:26px') + fr('dx', 44, 56, 3) +
+    bx('rs', '3 · Effetto', '', 'Il codice del 1942 resta: il marito è capofamiglia fino al 1975', 3, 'font-size:26px') + '</div>' +
+    '<div class="gx" style="margin-top:16px"' + fa(4) + '>' +
+    bx('bi', '23 aprile 1947 · voto segreto', '', 'La parola «indissolubile» è tolta dall’articolo: <b>194 voti a 191</b>. Il divorzio resta possibile per legge (arriverà nel 1970)', '', 'font-size:25px') + '</div>');
+
+  var S_ART37 = st('Il lavoro · articolo 37',
+    art('Articolo 37, primo comma', 'La donna lavoratrice ha <mark>gli stessi diritti</mark> e, a parità di lavoro, <mark>le stesse retribuzioni</mark> che spettano al lavoratore. Le condizioni di lavoro devono consentire l’adempimento della sua <mark class="ros">essenziale funzione familiare</mark> e assicurare alla madre e al bambino una speciale adeguata protezione.') +
+    '<div class="gx" style="align-items:stretch;gap:18px;margin-top:22px"' + fa(1) + '>' +
+    bx('az', 'Proposta di Noce, 1946', '', 'Le condizioni di lavoro devono consentire il completo adempimento della <b>funzione sociale</b> della maternità', '', 'font-size:26px;font-family:var(--serif)') + fr('dx', 60, 60) +
+    bx('ch', 'Testo definitivo', '', 'La sua <b>essenziale funzione familiare</b>', '', 'font-size:26px;font-family:var(--serif)') + '</div>' +
+    '<p class="riga-fine" style="font-size:28px"' + fa(2) + '>Parità nel salario; ma la famiglia resta un compito della donna, non della coppia.</p>');
+
+  var MATTEI_MAG = '<span class="etichetta autore">Teresa Mattei (PCI)</span>' +
+    '<div class="brano piccolo"><p>Anche ammesso ' + MIO + ' che il futuro ordinamento giudiziario sia ben migliore di quello vigente, noi non possiamo ammettere che <u>alle donne, in quanto tali, rimangano chiuse porte che sono invece aperte agli uomini</u>. <i>(Commenti)</i>. Sia tolto ogni senso di limitazione e sia anzi affermato, in forma esplicita e piena, il diritto delle donne ad accedere, in libero agone, ad ogni grado della Magistratura, come di ogni altra carriera.</p></div>' +
+    '<div class="fonte"><b>Teresa Mattei</b>, Assemblea costituente, 18 marzo 1947, sull’art. 98 del Progetto. Facsimile del resoconto in ' + FONDAMENTI + ', p. 143. ' + MIO + ' = taglio per la lezione. Sottolineatura per la lezione.</div>';
+  var S_ART51 = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start"><div class="st"><div class="occhiello">Le cariche pubbliche</div>' +
+    art('Progetto, art. 98 · la magistratura', 'Possono essere nominate anche le donne nei casi previsti dall’ordinamento giudiziario.', 'Comitato di redazione, gennaio 1947', '', 'font-size:26px;border-left-color:var(--blu)') +
+    '<div style="text-align:center;margin:6px 0">' + fr('giu', 70, 34, 1) + '</div>' +
+    art('Articolo 51 · testo definitivo', 'Tutti i cittadini <mark>dell’uno o dell’altro sesso</mark> possono accedere agli uffici pubblici e alle cariche elettive in condizioni di eguaglianza, <mark class="ros">secondo i requisiti stabiliti dalla legge</mark>.', '', 1, 'font-size:26px') + '</div>' +
+    lettura(MATTEI_MAG) + '</div>';
+
+  var OPZ_REQ = ['Nessuno: è una formula tecnica', 'Permette alla legge di continuare a escludere le donne da alcune carriere', 'Obbliga il Parlamento a riservare posti alle donne', 'Rinvia la parità a una legge che deve ancora essere scritta'];
+  var S_REQ_ATT = '<div class="art" style="font-size:28px;margin-bottom:14px"><span class="n">Articolo 51</span>… in condizioni di eguaglianza, <mark class="ros">secondo i requisiti stabiliti dalla legge</mark>.</div>' +
+    '<p class="att-consegna">Sul telefono: nel 1948, che effetto ha questa clausola?</p>';
+  var S_REQ_STAMPA = st('«Secondo i requisiti stabiliti dalla legge»',
+    '<p class="domanda-fine" style="font-size:40px;margin:10px 0 20px">Nel 1948, che effetto ha questa clausola?</p>' + opzioniStampa(OPZ_REQ));
+
+  var S_MAGISTRATE = st('La magistratura · 1948-1965',
+    '<div class="tl" style="grid-template-columns:repeat(4,1fr)">' +
+    nodo('1948', 'gr', 'Art. 51', 'La legge del 1919 resta in vigore: nessuna donna in magistratura') +
+    nodo('1960', '', 'Corte costituzionale', 'Rosa Oliva, esclusa dal concorso per prefetto, ricorre: la Corte le dà ragione', 1) +
+    nodo('1963', '', 'Legge n. 66', 'Le donne accedono a tutte le cariche, compresa la magistratura', 2) +
+    nodo('1965', 'rs', 'Le prime otto', 'magistrate entrano in servizio', 3) + '</div>' +
+    '<p class="riga-fine"' + fa(4) + '>Diciassette anni tra la Costituzione e la prima magistrata.</p>');
+
+  var S_LEGGI_ATT = '<p class="att-consegna">Sul telefono: in quale periodo cade ciascuna di queste regole?</p>';
+  var S_LEGGI = st('Dalla Carta alle leggi',
+    '<div class="tl" style="grid-template-columns:repeat(6,1fr)">' +
+    nodo('1963', '', 'Lavoro e uffici', 'Vietato licenziare per matrimonio; aperte tutte le carriere') +
+    nodo('1968-69', '', 'Corte costituzionale', 'Cade l’adulterio come reato solo della moglie', 1) +
+    nodo('1975', '', 'Diritto di famiglia', 'Coniugi eguali; finisce il capofamiglia', 2) +
+    nodo('1977', '', 'Parità nel lavoro', 'Vietate le discriminazioni nell’assunzione e nel salario', 3) +
+    nodo('1981', '', 'Onore', 'Abrogati delitto d’onore e matrimonio riparatore', 4) +
+    nodo('2003', 'rs', 'Art. 51', '«La Repubblica promuove […] le pari opportunità tra donne e uomini»', 5) + '</div>' +
+    '<p class="riga-fine" style="font-size:30px"' + fa(6) + '>La Costituzione non ha cambiato da sola le leggi: ha dato a chi le voleva cambiare un argomento che nessuno poteva più respingere.</p>');
+
+  var S_FINE = '<div class="st">' +
+    cit('Il riconoscimento della raggiunta parità esiste per ora negli articoli della nuova Costituzione. Questo è un buon punto di partenza per le donne italiane, ma non certo un punto di arrivo. Guai se considerassimo questo un punto di arrivo, un approdo.',
+      'Teresa Mattei, Assemblea costituente, 18 marzo 1947. Facsimile del resoconto in ' + FONDAMENTI + ', p. 142.', '', 'font-size:36px;margin-top:30px') +
+    '<p class="domanda-fine" style="font-size:44px;margin-top:50px"' + fa(1) + '>E oggi: punto di partenza o punto di arrivo?</p></div>';
+
+  // ------------------------------------------------------------ attività
+  var RELAZIONI = {
+    id: 'chi_scrive', tipo: 'abbinamento', minuti: 4, fontiDopo: true,
+    consegna: 'Sei frasi dalle relazioni sulla famiglia (1946), senza nome. Chi le ha scritte?',
+    categorie: ['Una comunista (PCI)', 'Una democristiana (DC)', 'Una socialista (PSIUP)'],
+    voci: VOCI, testo: REL_DISP
+  };
+  var REQUISITI = { id: 'requisiti_legge', tipo: 'sondaggio', minuti: 1.5, domanda: 'Art. 51, «secondo i requisiti stabiliti dalla legge»: nel 1948, che effetto ha questa clausola?', opzioni: OPZ_REQ };
+  var LEGGI = {
+    id: 'quando_cade', tipo: 'abbinamento', minuti: 3,
+    consegna: 'In quale periodo la legge o la Corte costituzionale hanno cancellato ciascuna di queste regole?',
+    categorie: ['Anni Sessanta', 'Anni Settanta', 'Dal 1981 in poi'],
+    voci: [
+      { testo: 'Si può licenziare una lavoratrice perché si sposa', atteso: 0 },
+      { testo: 'L’adulterio è reato solo per la moglie', atteso: 0 },
+      { testo: 'Il marito è il capo della famiglia', atteso: 1 },
+      { testo: 'Si possono pagare meno le donne o non assumerle perché donne', atteso: 1 },
+      { testo: 'Chi uccide «per causa d’onore» ha una pena ridotta', atteso: 2 },
+      { testo: 'La Repubblica non ha il compito di promuovere le donne nelle cariche elettive', atteso: 2 }
+    ]
+  };
+
+  // ------------------------------------------------------------ passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO_BREVE, note: '<p>Lascia il QR sullo schermo mentre la classe entra (Q lo riapre).</p>' },
+
+    { titolo: 'Il punto di partenza', html: S_PARTENZA, minuti: 3,
+      note: '<p>Clic 1-3, clic 4 la riga finale. Codice civile 1942, art. 144 (capofamiglia, cognome, residenza) e art. 316 (patria potestà). Codice penale 1930, art. 559 (adulterio della moglie), 560 (concubinato del marito), 587 (omicidio per causa d’onore), 544 (matrimonio riparatore, da citare a voce). Legge 17 luglio 1919, n. 1176, art. 7. Le clausole di nubilato: le denuncia Mattei in Aula il 18 marzo 1947 (infermiere costrette a non sposarsi per non perdere il lavoro).</p><p>Articoli dei codici citati a memoria e controllati su fonti di seconda mano: da verificare sui testi prima dell’uso pubblico.</p>' },
+
+    { titolo: 'Dove lavorano le costituenti', html: S_DOVE, minuti: 1,
+      note: '<p>Raccordo con la lezione 2 (Commissione dei 75). La domanda introduce l’attività.</p>' },
+
+    { titolo: 'Chi l’ha scritto?', html: S_REL_ATT, stampa: S_REL_STAMPA, minuti: 8, attivita: RELAZIONI,
+      note: '<p><b>Abbinamento</b> (4 minuti). Le relazioni di Merlin contengono anche un passo sulla pari dignità del lavoro domestico e di quello fuori casa: lo puoi leggere a voce nella ripresa. Le autrici compaiono solo nella ripresa.</p><p><b>Ripresa</b>: nomi e titoli in chiaro. <b>Punta il commento</b> sulle sorprese: è la socialista Merlin a giudicare inutile un articolo sulla protezione della famiglia, mentre la comunista Iotti la vuole in Costituzione; è la democristiana Federici a pensare alla lavoratrice capofamiglia. Il criterio «a sinistra l’emancipazione, al centro la famiglia» non basta.</p><p><b>Testi</b>: letti con OCR dai facsimili (' + CAT21 + '), ripuliti a mano; vanno confrontati con le pagine prima dell’uso. La frase sull’indissolubilità prosegue: «considerandolo tema della legislazione civile» (lettura incerta).</p>' },
+
+    { titolo: 'Accordi e disaccordi', html: S_CONVERGENZE, minuti: 3,
+      note: '<p>Clic 1-3, clic 4 la riga finale. Sui figli nati fuori dal matrimonio: Iotti propone «le stesse condizioni giuridiche»; l’art. 30 definitivo dà «ogni tutela giuridica e sociale, compatibile con i diritti dei membri della famiglia legittima». La parità arriverà con la riforma del 2012.</p>' },
+
+    { titolo: 'La famiglia', html: S_ART29, minuti: 3,
+      note: '<p>Prima il testo; clic 1-3 la sequenza proposta → testo → effetto; clic 4 l’indissolubilità. La proposta di Iotti diceva: «Il matrimonio è basato sul principio della eguaglianza giuridica dei coniugi» (relazione sulla famiglia). <b>Punta</b> sulle due aggiunte del testo definitivo: «morale» e soprattutto «con i limiti stabiliti dalla legge a garanzia dell’unità familiare», che consente al codice di tenere il marito capofamiglia fino al 1975. Indissolubilità: emendamento del socialista Grilli, votato a scrutinio segreto il 23 aprile 1947, 194 sì e 191 no (cifre da fonte di seconda mano, «Avvenire»; da controllare sul resoconto).</p>' },
+
+    { titolo: 'Il lavoro', html: S_ART37, minuti: 2,
+      note: '<p>Clic 1: la proposta di Noce accanto al testo; clic 2: la riga finale. La proposta di Noce è letta con OCR dal facsimile della sua relazione (articoli proposti): da confrontare.</p>' },
+
+    { titolo: 'Le cariche pubbliche', html: S_ART51, dispositivo: MATTEI_MAG, minuti: 3,
+      note: '<p>Clic 1: l’art. 51. <b>Lettura</b> del brano di Mattei (circa 70 parole), anche sui telefoni. Nel testo definitivo la frase dell’art. 98 sparisce, ma la riserva torna in forma generale nell’art. 51. Brano letto con OCR dal facsimile: da confrontare con il resoconto.</p>' },
+
+    { titolo: '«Secondo i requisiti stabiliti dalla legge»', html: S_REQ_ATT, stampa: S_REQ_STAMPA, minuti: 3, attivita: REQUISITI,
+      note: '<p><b>Sondaggio</b> (90 secondi). <b>Ripresa</b>: la risposta attesa è la seconda. La quarta coglie una parte del problema, ma la legge c’era già: quella del 1919, che continua a escludere le donne. La terza descrive il 2003, non il 1948.</p>' },
+
+    { titolo: 'Diciassette anni', html: S_MAGISTRATE, minuti: 1,
+      note: '<p>Clic 1-3, clic 4 la riga finale. Corte costituzionale, sentenza 13 maggio 1960, n. 33 (Rosa Oliva, avvocato Costantino Mortati, costituente): illegittimo l’art. 7 della legge 1176/1919 nella parte che escludeva le donne dagli uffici con potestà politiche. Legge 9 febbraio 1963, n. 66. Le prime otto magistrate entrano nel 1965 (catalogo della Camera, 2016: «due anni più tardi»).</p>' },
+
+    { titolo: 'Quando cade?', html: S_LEGGI_ATT, stampa: '', minuti: 6, attivita: LEGGI,
+      note: '<p><b>Abbinamento</b> (3 minuti). <b>Ripresa</b>: le barre, poi la linea del tempo del passo successivo. <b>Punta il commento</b> su quanto tempo passa: la Costituzione è del 1948, il capofamiglia cade nel 1975. La magistratura non è tra le voci perché è appena stata vista.</p>' },
+
+    { titolo: 'Dalla Carta alle leggi', html: S_LEGGI, minuti: 2,
+      note: '<p>Clic 1-5, clic 6 la riga finale. Leggi: 9 gennaio 1963, n. 7 (licenziamento per matrimonio) e n. 66; Corte costituzionale n. 126 del 1968 e n. 147 del 1969 (adulterio e concubinato); legge 19 maggio 1975, n. 151; legge 9 dicembre 1977, n. 903; legge 5 agosto 1981, n. 442; legge costituzionale 30 maggio 2003, n. 1. Cronologia: catalogo della Camera, 2016; numeri delle leggi da fonti di seconda mano.</p>' },
+
+    { titolo: '«Un buon punto di partenza»', html: S_FINE, minuti: 3,
+      note: '<p>Chiudi sulla citazione. Clic 1: la domanda, aperta, senza attività. Se c’è tempo, lascia due o tre interventi a voce.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO_BREVE,
+    sottotitolo: 'La differenza di genere nella Costituzione: articoli 29, 37, 51 · Storia V',
+    percorso: 'lezioni_storia_costituzione_genere',
+    database: DB_URL,
+    passi: passi
+  });
+
+})();
+</script>
+</body>
+</html>
