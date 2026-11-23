@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marx · correzione in classe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: una «lavagna» a tutto schermo; il caso resta in alto, i passi si aggiungono sotto, la barra dei comandi sta in fondo. */
+:root{
+  --bg:#F5F8FC; --paper:#FFFFFF; --ink:#16212F; --mut:#5A6878; --rule:#C9D7E6;
+  --accent:#255F99; --accent-soft:#E3EDF8;
+  --wrong:#A2412F; --wrong-soft:#F8E9E5; --right:#2E6B3F; --right-soft:#E6F2E8;
+  --serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --sans:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10161E; --paper:#18212C; --ink:#E6ECF3; --mut:#9AA8B8; --rule:#2E3F52;
+  --accent:#8CB8E6; --accent-soft:#1E2E40;
+  --wrong:#E89A86; --wrong-soft:#3A2420; --right:#8FCB9C; --right-soft:#1E3324; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161E; --paper:#18212C; --ink:#E6ECF3; --mut:#9AA8B8; --rule:#2E3F52;
+  --accent:#8CB8E6; --accent-soft:#1E2E40;
+  --wrong:#E89A86; --wrong-soft:#3A2420; --right:#8FCB9C; --right-soft:#1E3324; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0}
+#app{height:100%;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  border-bottom:1px solid var(--rule);font-size:14px;color:var(--mut)}
+header strong{color:var(--ink);font-weight:600}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dots button{font:inherit;font-size:13px;min-width:34px;height:30px;border-radius:6px;border:1px solid var(--rule);background:var(--paper);color:var(--mut);cursor:pointer}
+.dots button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+#stage{flex:1;min-height:0;overflow:auto;cursor:pointer;
+  padding-block:3vh;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#inner{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:.75em}
+.eyebrow{font-family:var(--sans);font-size:.5em;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.case{font-family:var(--serif);line-height:1.4}
+.case h2{font-family:var(--sans);font-size:.62em;font-weight:600;color:var(--accent);margin:0 0 .25em;letter-spacing:.01em}
+.case p{margin:0}
+.block{border-radius:10px;padding:.55em .8em;font-family:var(--serif);line-height:1.38;animation:in .25s ease-out}
+.block .lab{display:block;font-family:var(--sans);font-size:.48em;letter-spacing:.09em;text-transform:uppercase;font-weight:600;margin-bottom:.25em}
+.wrong{background:var(--wrong-soft)} .wrong .lab{color:var(--wrong)}
+.why{background:var(--paper);border:1px solid var(--rule)} .why .lab{color:var(--wrong)}
+.right{background:var(--right-soft)} .right .lab{color:var(--right)}
+.mot{background:var(--paper);border:1px solid var(--rule)} .mot .lab{color:var(--accent)}
+.opt{font-weight:600}
+.marx{margin-top:.5em;padding-top:.45em;border-top:1px solid var(--rule)}
+.marx q{font-style:italic;quotes:"«" "»"}
+.marx .src{display:block;font-family:var(--sans);font-size:.62em;color:var(--mut);margin-top:.15em}
+.tesi{font-family:var(--serif);font-style:italic;line-height:1.4;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:.55em .8em}
+.tesi p{margin:.15em 0}
+ol.el{margin:0;padding-left:1.2em} ol.el li{margin:.2em 0}
+footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  border-top:1px solid var(--rule);font-size:14px;color:var(--mut)}
+footer .btns{display:flex;gap:8px;flex-wrap:wrap}
+footer button{font:inherit;font-size:14px;padding:8px 14px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
+footer button.pri{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:600}
+footer button:disabled{opacity:.4;cursor:default}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.steps{display:flex;gap:5px;align-items:center}
+.steps i{width:9px;height:9px;border-radius:50%;background:var(--rule);display:block}
+.steps i.on{background:var(--accent)}
+@keyframes in{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.block{animation:none}}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header>
+    <div><strong>Marx · verifica scritta</strong> — correzione in classe</div>
+    <nav class="dots" id="dots" aria-label="Vai al caso"></nav>
+  </header>
+  <main id="stage" aria-live="polite"><div id="inner"></div></main>
+  <footer>
+    <div class="steps" id="steps" aria-hidden="true"></div>
+    <span id="hint">Clic o barra spaziatrice: passo successivo · ←: indietro</span>
+    <div class="btns">
+      <button id="prev" type="button">Indietro</button>
+      <button id="next" type="button">Avanti</button>
+      <button id="nextCase" class="pri" type="button" hidden>Caso successivo</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+const CASI = [
+ { titolo:'Caso 1 · Una legge uguale per tutti',
+   testo:'Un comune approva un regolamento: è vietato a chiunque, ricco o povero, dormire sulle panchine dei giardini pubblici. Come giudicherebbe Marx questo regolamento?',
+   errata:'È una legge ingiusta perché viola i diritti dell’uomo del 1789, che per Marx sono la vera garanzia contro la disuguaglianza.',
+   perche:'Marx non difende i diritti del 1789: li critica. Per lui sono i diritti dell’uomo egoista della società civile, e proclamare l’uguaglianza davanti alla legge non elimina le disuguaglianze reali. Il regolamento, del resto, rispetta perfettamente l’uguaglianza formale: vale per tutti.',
+   giusta:'È un caso di uguaglianza formale: la legge vale per tutti, ma di fatto colpisce soltanto chi non ha una casa.',
+   motivazione:'L’uguaglianza davanti alla legge presuppone le disuguaglianze reali e le lascia operare: sulle panchine dorme solo chi non ha una casa. È l’emancipazione politica senza emancipazione umana. Per Marx è un grande passo avanti rispetto ai privilegi feudali, ma non la liberazione dell’uomo.',
+   marx:{q:'l’uomo conduce [...] una doppia vita, una celeste e una terrena', src:'Sulla questione ebraica (1844) · Antologia, testo 1 · Sintesi § 1.2, D'} },
+ { titolo:'Caso 2 · La povertà come colpa',
+   testo:'Un quotidiano inglese dell’Ottocento scrive: «La povertà è il frutto della pigrizia. Chi lavora e risparmia diventa proprietario». Che cos’è, per Marx, questa idea?',
+   errata:'Una menzogna consapevole, che i capitalisti diffondono pur sapendola falsa per tenere tranquilli gli operai.',
+   perche:'L’ideologia non è una bugia detta apposta. Chi la diffonde, di solito, ci crede: le idee sembrano indipendenti dalla vita materiale, e proprio per questo appaiono naturali e convincono anche chi ne è danneggiato.',
+   giusta:'Un’ideologia: un’idea della classe dominante che presenta come naturale e meritata una condizione nata dalla storia.',
+   motivazione:'Le idee dominanti sono le idee della classe dominante: fanno apparire naturale ciò che è storico. Il capitale non nasce dal risparmio dei più laboriosi, ma dall’accumulazione originaria: i contadini furono separati dalla terra, anche con la violenza, e diventarono lavoratori salariati.',
+   marx:{q:'Le idee della classe dominante sono in ogni epoca le idee dominanti', src:'L’ideologia tedesca (1845-1846) · Antologia, testo 5 · e Il capitale, libro I, sull’accumulazione originaria · Sintesi § 1.2, G e I'} },
+ { titolo:'Caso 3 · Vivo solo il fine settimana',
+   testo:'Un magazziniere, dipendente di un grande centro di spedizioni, lavora dieci ore al giorno. Segue i percorsi decisi da un software, non sceglie nulla del proprio lavoro e dice: «Mi sento vivo solo il fine settimana». Come leggerebbe Marx la sua condizione?',
+   errata:'È alienato perché lavora troppe ore: con un orario più breve l’alienazione scomparirebbe del tutto.',
+   perche:'L’orario pesa, ma non è la radice. Anche con meno ore il lavoro resterebbe forzato, un mezzo per vivere deciso da altri, e il prodotto apparterrebbe ad altri. La causa dell’alienazione è la proprietà privata dei mezzi di produzione.',
+   giusta:'È alienato dalla propria attività: il lavoro è forzato, solo un mezzo per vivere, e lui si sente uomo soltanto fuori dal lavoro.',
+   motivazione:'Nel lavoro alienato l’operaio si sente uomo solo quando mangia, beve, riposa. Gli altri aspetti dell’alienazione: dal prodotto, dalla propria essenza, dagli altri uomini. Non è un fatto di coscienza, come per Feuerbach, e riguarda il lavoro salariato, qualunque sia la tecnologia.',
+   marx:{q:'L’operaio si sente quindi con se stesso soltanto fuori dal lavoro, e fuori di sé nel lavoro', src:'Manoscritti economico-filosofici (1844) · Antologia, testo 6 · Sintesi § 1.2, E'} },
+ { titolo:'Caso 4 · Lo smartphone che cambia la vita',
+   testo:'Una pubblicità dice: «Questo smartphone ti cambierà la vita». Che cosa ci vedrebbe Marx?',
+   errata:'L’utilità dello smartphone, che ne determina il valore: quanto più un bene soddisfa i bisogni, tanto più vale.',
+   perche:'L’utilità dà alla merce il suo valore d’uso, non il suo valore. Per Marx il valore dipende dal lavoro socialmente necessario a produrla: un bene utilissimo può valere poco, se per produrlo serve poco lavoro.',
+   giusta:'Il feticismo delle merci: il rapporto tra cose (la merce, il prezzo) nasconde il rapporto tra gli uomini che l’hanno prodotta.',
+   motivazione:'Nel capitalismo le merci sembrano dotate di vita propria, come le figure della religione: è lo smartphone a «cambiarti la vita». I rapporti tra gli uomini che l’hanno prodotto appaiono come rapporti tra cose.',
+   marx:{q:'i prodotti del cervello umano paiono figure indipendenti, dotate di vita propria [...]. Così, nel mondo delle merci, fanno i prodotti della mano umana', src:'Il capitale, libro I (1867), «Il carattere di feticcio della merce e il suo arcano» · Sintesi § 1.2, I'} },
+ { titolo:'Caso 5 · Il premio del rischio',
+   testo:'Un imprenditore spiega in un’intervista: «Il mio guadagno è giusto: è il premio per il rischio che corro, per il denaro che ho investito e per le macchine che ho comprato». Che cosa gli risponderebbe Marx?',
+   errata:'Ha torto: il guadagno nasce nello scambio, perché l’imprenditore compra le merci a poco e le rivende a un prezzo più alto.',
+   perche:'Comprare a poco e vendere caro non crea valore nuovo: quello che uno guadagna, un altro lo perde. Nel complesso lo scambio avviene tra equivalenti. Il valore in più nasce nella produzione.',
+   giusta:'Ha torto: il profitto deriva dal plusvalore, cioè dal lavoro non pagato degli operai, la sola fonte di nuovo valore.',
+   motivazione:'La forza-lavoro produce più valore di quanto costa, cioè del salario: il pluslavoro è lavoro non pagato, e da esso deriva il profitto. Le macchine, il capitale costante, trasferiscono al prodotto il proprio valore senza accrescerlo.',
+   marx:{q:'Esso crea plusvalore, che sorride al capitalista con tutto il fascino d’una creazione dal nulla', src:'Il capitale, libro I (1867), sul pluslavoro · Sintesi § 1.2, I'} },
+ { titolo:'Caso 6 · Vietare l’intelligenza artificiale?',
+   testo:'Un sistema di intelligenza artificiale potrebbe svolgere in poche ore il lavoro che oggi richiede migliaia di impiegati. Le aziende che lo adottano licenziano; per proteggere i posti di lavoro, un governo propone di vietarlo. Come leggerebbe la situazione il materialismo storico?',
+   errata:'Il divieto è la soluzione giusta: per Marx il progresso tecnico è la causa dell’alienazione e dello sfruttamento, e va fermato.',
+   perche:'Marx non è contro le macchine. Il problema non è la tecnica, ma chi la possiede: le stesse macchine, senza proprietà privata dei mezzi di produzione, ridurrebbero la fatica di tutti. Vietarle significa bloccare lo sviluppo delle forze produttive.',
+   giusta:'Il problema non è la tecnica ma la proprietà: forze produttive sempre più potenti entrano in contraddizione con rapporti di produzione privati, che ne fanno disoccupazione.',
+   motivazione:'È la contraddizione di fondo del capitalismo: forze produttive sempre più potenti e sociali, rapporti di produzione privati. Dentro il capitalismo il progresso tecnico produce disoccupazione, l’esercito industriale di riserva. Quando i rapporti di produzione frenano le forze produttive, si apre un’epoca di trasformazione sociale.',
+   marx:{q:'Questi rapporti, da forme di sviluppo delle forze produttive, si convertono in loro catene. E allora subentra un’epoca di rivoluzione sociale', src:'Per la critica dell’economia politica, «Prefazione» (1859) · Sintesi § 1.2, G e I'} },
+];
+const FINALE = {
+  titolo:'Parte B · Le Tesi su Feuerbach',
+  tesi:['6. Feuerbach risolve l’essenza religiosa nell’essenza umana. Ma l’essenza umana non è qualcosa di astratto che sia immanente all’individuo singolo. Nella sua realtà essa è l’insieme dei rapporti sociali.',
+        '11. I filosofi hanno soltanto diversamente interpretato il mondo; si tratta di trasformarlo.'],
+  domanda:'Che cosa rimprovera Marx a Feuerbach in queste due tesi? Collega almeno una delle due tesi a un altro aspetto del pensiero di Marx.',
+  passi:[
+    {lab:'1 · La tesi 6', t:'Feuerbach ha ricondotto la religione all’uomo, ma pensa l’uomo come un’essenza astratta, uguale in ogni individuo e in ogni tempo. Per Marx l’essenza umana è l’insieme dei rapporti sociali: è storica, cambia con la società. Feuerbach coglie la naturalità dell’uomo, non la sua storicità.'},
+    {lab:'2 · La tesi 11', t:'Il rimprovero si allarga a tutto il vecchio materialismo: è contemplativo, si limita a interpretare. Il compito è trasformare il mondo: è la prassi.'},
+    {lab:'3 · Un collegamento, spiegato', t:'Ne basta uno, purché spiegato. Per esempio: la religione come prodotto sociale, che si supera cambiando la società e non solo criticandola; il materialismo storico, per cui l’essere sociale determina la coscienza; l’individuo egoista dei diritti dell’uomo, che appartiene a una forma sociale determinata; il legame tra filosofia e azione rivoluzionaria.'},
+  ],
+  esempio:'Nella tesi 6 Marx riconosce a Feuerbach di aver ricondotto la religione all’uomo, ma gli rimprovera di pensare l’essenza umana come qualcosa di astratto, uguale in ogni individuo e in ogni epoca. Per Marx l’uomo è l’insieme dei rapporti sociali: ciò che siamo dipende dalla società storica in cui viviamo, dal modo in cui si produce e da come è divisa la proprietà. Nella tesi 11 il rimprovero si estende a tutta la filosofia precedente, che si è limitata a interpretare il mondo, mentre il compito è trasformarlo. Le due tesi portano al materialismo storico: se l’essenza umana è sociale, non è la coscienza a determinare l’essere, ma l’essere sociale a determinare la coscienza. Per questo anche la religione non si supera soltanto criticandola, come voleva Feuerbach, ma cambiando la società che la produce.'
+};
+const N = CASI.length;           // 6 casi + la Parte B
+const MAXSTEP_CASO = 4, MAXSTEP_FIN = 5;
+let idx = 0, step = 0;
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function dots(){
+  $('dots').innerHTML = CASI.map((c,i)=>`<button type="button" data-i="${i}" aria-current="${i===idx}" title="${esc(c.titolo)}">${i+1}</button>`).join('')
+    + `<button type="button" data-i="${N}" aria-current="${idx===N}" title="Parte B">B</button>`;
+  $('dots').querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation(); vai(+b.dataset.i);});
+}
+function maxStep(){ return idx<N ? MAXSTEP_CASO : MAXSTEP_FIN; }
+function render(){
+  let h='';
+  if (idx<N){
+    const c=CASI[idx];
+    h+=`<div class="case"><h2>${esc(c.titolo)}</h2><p>${esc(c.testo)}</p></div>`;
+    if(step>=1) h+=`<div class="block wrong"><span class="lab">Una risposta sbagliata</span><span class="opt">${esc(c.errata)}</span></div>`;
+    if(step>=2) h+=`<div class="block why"><span class="lab">Perché è sbagliata</span>${esc(c.perche)}</div>`;
+    if(step>=3) h+=`<div class="block right"><span class="lab">La risposta giusta</span><span class="opt">${esc(c.giusta)}</span></div>`;
+    if(step>=4) h+=`<div class="block mot"><span class="lab">La motivazione</span>${esc(c.motivazione)}<div class="marx"><q>${esc(c.marx.q)}</q><span class="src">${esc(c.marx.src)}</span></div></div>`;
+  } else {
+    const f=FINALE;
+    h+=`<div class="case"><h2>${esc(f.titolo)}</h2></div><div class="tesi">${f.tesi.map(t=>`<p>${esc(t)}</p>`).join('')}</div>`;
+    if(step>=1) h+=`<div class="block mot"><span class="lab">La domanda</span>${esc(f.domanda)}</div>`;
+    f.passi.forEach((p,i)=>{ if(step>=i+2) h+=`<div class="block why" style="border-color:var(--rule)"><span class="lab" style="color:var(--accent)">${esc(p.lab)}</span>${esc(p.t)}</div>`; });
+    if(step>=5) h+=`<div class="block right"><span class="lab">Una risposta possibile</span>${esc(f.esempio)}</div>`;
+  }
+  $('inner').innerHTML=h;
+  $('steps').innerHTML=Array.from({length:maxStep()+1},(_,i)=>`<i class="${i<=step?'on':''}"></i>`).join('');
+  $('prev').disabled = (idx===0 && step===0);
+  const fine = step>=maxStep();
+  $('next').hidden = fine;
+  $('nextCase').hidden = !fine || idx===N;
+  $('nextCase').textContent = idx===N-1 ? 'Parte B' : 'Caso successivo';
+  $('hint').textContent = idx===N && fine ? 'Fine della correzione' : 'Clic o barra spaziatrice: passo successivo · ←: indietro';
+  dots(); adatta();
+  if (step>0) { const last=$('inner').lastElementChild; if(last) last.scrollIntoView({block:'nearest'}); }
+}
+function adatta(){
+  const st=$('stage'), inner=$('inner');
+  let lo=15, hi=44;
+  for(let i=0;i<14;i++){ const m=(lo+hi)/2; inner.style.fontSize=m+'px';
+    if(inner.scrollHeight<=st.clientHeight-8) lo=m; else hi=m; }
+  inner.style.fontSize=Math.max(lo, window.innerWidth<600?15:18)+'px';
+}
+function avanti(){ if(step<maxStep()){step++;render();} }
+function indietro(){ if(step>0){step--;render();} else if(idx>0){ idx--; step=maxStep(); render(); } }
+function vai(i){ idx=Math.max(0,Math.min(N,i)); step=0; render(); $('stage').scrollTop=0; }
+$('stage').addEventListener('click', avanti);
+$('next').onclick=avanti;
+$('prev').onclick=indietro;
+$('nextCase').onclick=()=>vai(idx+1);
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON' && (e.key===' '||e.key==='Enter')) return;
+  if(e.key===' '||e.key==='ArrowRight'||e.key==='PageDown'){ e.preventDefault(); if(step>=maxStep() && idx<N) vai(idx+1); else avanti(); }
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); indietro(); }
+});
+window.addEventListener('resize', adatta);
+render();
+</script>
+</body>
+</html>
