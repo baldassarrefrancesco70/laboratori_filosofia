@@ -43,6 +43,7 @@ header strong{color:var(--ink);font-weight:600}
 .case p{margin:0}
 .block{border-radius:10px;padding:.55em .8em;font-family:var(--serif);line-height:1.38;animation:in .25s ease-out}
 .block .lab{display:block;font-family:var(--sans);font-size:.48em;letter-spacing:.09em;text-transform:uppercase;font-weight:600;margin-bottom:.25em}
+.neutral{background:var(--paper);border:2px dashed var(--rule)} .neutral .lab{color:var(--mut)}
 .wrong{background:var(--wrong-soft)} .wrong .lab{color:var(--wrong)}
 .why{background:var(--paper);border:1px solid var(--rule)} .why .lab{color:var(--wrong)}
 .right{background:var(--right-soft)} .right .lab{color:var(--right)}
@@ -92,43 +93,37 @@ button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 const CASI = [
  { titolo:'Caso 1 · Una legge uguale per tutti',
    testo:'Un comune approva un regolamento: è vietato a chiunque, ricco o povero, dormire sulle panchine dei giardini pubblici. Come giudicherebbe Marx questo regolamento?',
-   errata:'È una legge ingiusta perché viola i diritti dell’uomo del 1789, che per Marx sono la vera garanzia contro la disuguaglianza.',
-   perche:'Marx non difende i diritti del 1789: li critica. Per lui sono i diritti dell’uomo egoista della società civile, e proclamare l’uguaglianza davanti alla legge non elimina le disuguaglianze reali. Il regolamento, del resto, rispetta perfettamente l’uguaglianza formale: vale per tutti.',
+   errate:[{"t": "È una legge giusta: trattando tutti allo stesso modo, realizza l’uguaglianza conquistata dalla Rivoluzione francese.", "p": "Trattare tutti allo stesso modo è proprio l’uguaglianza formale che Marx critica. La legge è uguale, ma le condizioni reali no: il divieto pesa solo su chi non ha una casa."}, {"t": "È una legge ingiusta perché viola i diritti dell’uomo del 1789, che per Marx sono la vera garanzia contro la disuguaglianza.", "p": "Marx non difende i diritti del 1789: li critica. Per lui sono i diritti dell’uomo egoista della società civile, e proclamare l’uguaglianza davanti alla legge non elimina le disuguaglianze reali. Il regolamento, del resto, rispetta perfettamente l’uguaglianza formale: vale per tutti."}, {"t": "È un residuo del mondo feudale, che la borghesia, fedele ai suoi principi di uguaglianza, finirà per abolire.", "p": "Il regolamento non ha nulla di feudale: non distingue ceti né privilegi, vale per tutti. È tipico dello Stato borghese, che ha abolito i privilegi di nascita. E per Marx la borghesia non realizza l’uguaglianza reale."}],
    giusta:'È un caso di uguaglianza formale: la legge vale per tutti, ma di fatto colpisce soltanto chi non ha una casa.',
    motivazione:'L’uguaglianza davanti alla legge presuppone le disuguaglianze reali e le lascia operare: sulle panchine dorme solo chi non ha una casa. È l’emancipazione politica senza emancipazione umana. Per Marx è un grande passo avanti rispetto ai privilegi feudali, ma non la liberazione dell’uomo.',
    marx:{q:'l’uomo conduce [...] una doppia vita, una celeste e una terrena', src:'Sulla questione ebraica (1844) · Antologia, testo 1 · Sintesi § 1.2, D'} },
  { titolo:'Caso 2 · La povertà come colpa',
    testo:'Un quotidiano inglese dell’Ottocento scrive: «La povertà è il frutto della pigrizia. Chi lavora e risparmia diventa proprietario». Che cos’è, per Marx, questa idea?',
-   errata:'Una menzogna consapevole, che i capitalisti diffondono pur sapendola falsa per tenere tranquilli gli operai.',
-   perche:'L’ideologia non è una bugia detta apposta. Chi la diffonde, di solito, ci crede: le idee sembrano indipendenti dalla vita materiale, e proprio per questo appaiono naturali e convincono anche chi ne è danneggiato.',
+   errate:[{"t": "Un’opinione personale del giornalista, che non ha alcun legame con la struttura economica della società.", "p": "Per Marx le idee non nascono isolate: sono legate ai rapporti di produzione. Quell’idea si diffonde perché esprime il punto di vista della classe che possiede i mezzi di produzione."}, {"t": "Una menzogna consapevole, che i capitalisti diffondono pur sapendola falsa per tenere tranquilli gli operai.", "p": "L’ideologia non è una bugia detta apposta. Chi la diffonde, di solito, ci crede: le idee sembrano indipendenti dalla vita materiale, e proprio per questo appaiono naturali e convincono anche chi ne è danneggiato."}, {"t": "Una verità dell’economia politica, che Marx accetta ma vorrebbe applicare finalmente anche agli operai.", "p": "Marx respinge questa spiegazione. Il capitale non nasce dal risparmio dei più laboriosi, ma dall’accumulazione originaria: i contadini furono separati dalla terra, anche con la violenza."}],
    giusta:'Un’ideologia: un’idea della classe dominante che presenta come naturale e meritata una condizione nata dalla storia.',
    motivazione:'Le idee dominanti sono le idee della classe dominante: fanno apparire naturale ciò che è storico. Il capitale non nasce dal risparmio dei più laboriosi, ma dall’accumulazione originaria: i contadini furono separati dalla terra, anche con la violenza, e diventarono lavoratori salariati.',
    marx:{q:'Le idee della classe dominante sono in ogni epoca le idee dominanti', src:'L’ideologia tedesca (1845-1846) · Antologia, testo 5 · e Il capitale, libro I, sull’accumulazione originaria · Sintesi § 1.2, G e I'} },
  { titolo:'Caso 3 · Vivo solo il fine settimana',
    testo:'Un magazziniere, dipendente di un grande centro di spedizioni, lavora dieci ore al giorno. Segue i percorsi decisi da un software, non sceglie nulla del proprio lavoro e dice: «Mi sento vivo solo il fine settimana». Come leggerebbe Marx la sua condizione?',
-   errata:'È alienato perché lavora troppe ore: con un orario più breve l’alienazione scomparirebbe del tutto.',
-   perche:'L’orario pesa, ma non è la radice. Anche con meno ore il lavoro resterebbe forzato, un mezzo per vivere deciso da altri, e il prodotto apparterrebbe ad altri. La causa dell’alienazione è la proprietà privata dei mezzi di produzione.',
+   errate:[{"t": "È alienato perché lavora troppe ore: con un orario più breve l’alienazione scomparirebbe del tutto.", "p": "L’orario pesa, ma non è la radice. Anche con meno ore il lavoro resterebbe forzato, un mezzo per vivere deciso da altri, e il prodotto apparterrebbe ad altri. La causa dell’alienazione è la proprietà privata dei mezzi di produzione."}, {"t": "È alienato perché non ha ancora capito la propria condizione: basterebbe prenderne coscienza per superarla.", "p": "È la logica di Feuerbach, per cui l’alienazione è un fatto di coscienza. Per Marx è una condizione reale: capirla non basta, bisogna cambiare i rapporti di produzione."}, {"t": "Non è alienato, perché l’alienazione riguarda solo l’operaio di fabbrica dell’Ottocento, non il lavoro di oggi con le tecnologie digitali.", "p": "L’alienazione non dipende dalla tecnologia né dal tipo di lavoro: riguarda il lavoro salariato, in cui l’attività e il prodotto appartengono a un altro. Il magazziniere è un dipendente: vale anche per lui."}],
    giusta:'È alienato dalla propria attività: il lavoro è forzato, solo un mezzo per vivere, e lui si sente uomo soltanto fuori dal lavoro.',
    motivazione:'Nel lavoro alienato l’operaio si sente uomo solo quando mangia, beve, riposa. Gli altri aspetti dell’alienazione: dal prodotto, dalla propria essenza, dagli altri uomini. Non è un fatto di coscienza, come per Feuerbach, e riguarda il lavoro salariato, qualunque sia la tecnologia.',
    marx:{q:'L’operaio si sente quindi con se stesso soltanto fuori dal lavoro, e fuori di sé nel lavoro', src:'Manoscritti economico-filosofici (1844) · Antologia, testo 6 · Sintesi § 1.2, E'} },
  { titolo:'Caso 4 · Lo smartphone che cambia la vita',
    testo:'Una pubblicità dice: «Questo smartphone ti cambierà la vita». Che cosa ci vedrebbe Marx?',
-   errata:'L’utilità dello smartphone, che ne determina il valore: quanto più un bene soddisfa i bisogni, tanto più vale.',
-   perche:'L’utilità dà alla merce il suo valore d’uso, non il suo valore. Per Marx il valore dipende dal lavoro socialmente necessario a produrla: un bene utilissimo può valere poco, se per produrlo serve poco lavoro.',
+   errate:[{"t": "L’utilità dello smartphone, che ne determina il valore: quanto più un bene soddisfa i bisogni, tanto più vale.", "p": "L’utilità dà alla merce il suo valore d’uso, non il suo valore. Per Marx il valore dipende dal lavoro socialmente necessario a produrla: un bene utilissimo può valere poco, se per produrlo serve poco lavoro."}, {"t": "Un’alienazione religiosa: il consumatore proietta nell’oggetto la propria essenza, come l’uomo religioso in Dio.", "p": "È la teoria di Feuerbach sulla religione. Il feticismo è un’altra cosa: non riguarda la psicologia del consumatore, ma il fatto che nel capitalismo i rapporti tra uomini appaiono come rapporti tra cose."}, {"t": "Un inganno del pubblicitario, che mente sapendo di mentire e che una legge sulla trasparenza basterebbe a eliminare.", "p": "Il feticismo non è la bugia di qualcuno, che una legge potrebbe vietare: nasce dal modo stesso in cui si producono e si scambiano le merci. Anche il pubblicitario ne è preso."}],
    giusta:'Il feticismo delle merci: il rapporto tra cose (la merce, il prezzo) nasconde il rapporto tra gli uomini che l’hanno prodotta.',
    motivazione:'Nel capitalismo le merci sembrano dotate di vita propria, come le figure della religione: è lo smartphone a «cambiarti la vita». I rapporti tra gli uomini che l’hanno prodotto appaiono come rapporti tra cose.',
    marx:{q:'i prodotti del cervello umano paiono figure indipendenti, dotate di vita propria [...]. Così, nel mondo delle merci, fanno i prodotti della mano umana', src:'Il capitale, libro I (1867), «Il carattere di feticcio della merce e il suo arcano» · Sintesi § 1.2, I'} },
  { titolo:'Caso 5 · Il premio del rischio',
    testo:'Un imprenditore spiega in un’intervista: «Il mio guadagno è giusto: è il premio per il rischio che corro, per il denaro che ho investito e per le macchine che ho comprato». Che cosa gli risponderebbe Marx?',
-   errata:'Ha torto: il guadagno nasce nello scambio, perché l’imprenditore compra le merci a poco e le rivende a un prezzo più alto.',
-   perche:'Comprare a poco e vendere caro non crea valore nuovo: quello che uno guadagna, un altro lo perde. Nel complesso lo scambio avviene tra equivalenti. Il valore in più nasce nella produzione.',
+   errate:[{"t": "Ha ragione in parte: il profitto è il compenso del lavoro di organizzazione che il capitalista svolge al posto degli operai.", "p": "Per Marx il profitto non è uno stipendio per il lavoro del capitalista: deriva dal plusvalore, cioè dal lavoro non pagato degli operai. Il capitalista guadagna in quanto possiede il capitale, non in quanto lavora."}, {"t": "Ha torto: il guadagno nasce nello scambio, perché l’imprenditore compra le merci a poco e le rivende a un prezzo più alto.", "p": "Comprare a poco e vendere caro non crea valore nuovo: quello che uno guadagna, un altro lo perde. Nel complesso lo scambio avviene tra equivalenti. Il valore in più nasce nella produzione."}, {"t": "Ha ragione sulle macchine: sono loro a produrre il valore in più, e il profitto spetta a chi ne è proprietario.", "p": "Le macchine sono capitale costante: trasferiscono al prodotto il proprio valore, consumandosi, ma non ne creano di nuovo. Solo la forza-lavoro, il capitale variabile, produce più valore di quanto costa."}],
    giusta:'Ha torto: il profitto deriva dal plusvalore, cioè dal lavoro non pagato degli operai, la sola fonte di nuovo valore.',
    motivazione:'La forza-lavoro produce più valore di quanto costa, cioè del salario: il pluslavoro è lavoro non pagato, e da esso deriva il profitto. Le macchine, il capitale costante, trasferiscono al prodotto il proprio valore senza accrescerlo.',
    marx:{q:'Esso crea plusvalore, che sorride al capitalista con tutto il fascino d’una creazione dal nulla', src:'Il capitale, libro I (1867), sul pluslavoro · Sintesi § 1.2, I'} },
  { titolo:'Caso 6 · Vietare l’intelligenza artificiale?',
    testo:'Un sistema di intelligenza artificiale potrebbe svolgere in poche ore il lavoro che oggi richiede migliaia di impiegati. Le aziende che lo adottano licenziano; per proteggere i posti di lavoro, un governo propone di vietarlo. Come leggerebbe la situazione il materialismo storico?',
-   errata:'Il divieto è la soluzione giusta: per Marx il progresso tecnico è la causa dell’alienazione e dello sfruttamento, e va fermato.',
-   perche:'Marx non è contro le macchine. Il problema non è la tecnica, ma chi la possiede: le stesse macchine, senza proprietà privata dei mezzi di produzione, ridurrebbero la fatica di tutti. Vietarle significa bloccare lo sviluppo delle forze produttive.',
+   errate:[{"t": "Il divieto è la soluzione giusta: per Marx il progresso tecnico è la causa dell’alienazione e dello sfruttamento, e va fermato.", "p": "Marx non è contro le macchine. Il problema non è la tecnica, ma chi la possiede: le stesse macchine, senza proprietà privata dei mezzi di produzione, ridurrebbero la fatica di tutti. Vietarle significa bloccare lo sviluppo delle forze produttive."}, {"t": "Decideranno le opinioni dei cittadini sull’intelligenza artificiale: sono le idee a orientare l’economia, non i rapporti di proprietà.", "p": "È la lettura idealistica, che Marx rovescia: non sono le idee a orientare l’economia, ma i rapporti di produzione a condizionare le idee."}, {"t": "È un conflitto tra singoli individui, informatici e impiegati, che si risolverà con un accordo tra gli interessati.", "p": "Per Marx non si tratta di singoli individui, ma di classi: chi possiede i mezzi di produzione e chi vende la propria forza-lavoro. Un accordo tra singoli non tocca la contraddizione di fondo."}],
    giusta:'Il problema non è la tecnica ma la proprietà: forze produttive sempre più potenti entrano in contraddizione con rapporti di produzione privati, che ne fanno disoccupazione.',
    motivazione:'È la contraddizione di fondo del capitalismo: forze produttive sempre più potenti e sociali, rapporti di produzione privati. Dentro il capitalismo il progresso tecnico produce disoccupazione, l’esercito industriale di riserva. Quando i rapporti di produzione frenano le forze produttive, si apre un’epoca di trasformazione sociale.',
    marx:{q:'Questi rapporti, da forme di sviluppo delle forze produttive, si convertono in loro catene. E allora subentra un’epoca di rivoluzione sociale', src:'Per la critica dell’economia politica, «Prefazione» (1859) · Sintesi § 1.2, G e I'} },
@@ -157,16 +152,19 @@ function dots(){
     + `<button type="button" data-i="${N}" aria-current="${idx===N}" title="Parte B">B</button>`;
   $('dots').querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation(); vai(+b.dataset.i);});
 }
-function maxStep(){ return idx<N ? MAXSTEP_CASO : MAXSTEP_FIN; }
+function maxStep(){ return idx<N ? 2*(CASI[idx].errate.length+1) : MAXSTEP_FIN; }
 function render(){
   let h='';
   if (idx<N){
     const c=CASI[idx];
     h+=`<div class="case"><h2>${esc(c.titolo)}</h2><p>${esc(c.testo)}</p></div>`;
-    if(step>=1) h+=`<div class="block wrong"><span class="lab">Una risposta sbagliata</span><span class="opt">${esc(c.errata)}</span></div>`;
-    if(step>=2) h+=`<div class="block why"><span class="lab">Perché è sbagliata</span>${esc(c.perche)}</div>`;
-    if(step>=3) h+=`<div class="block right"><span class="lab">La risposta giusta</span><span class="opt">${esc(c.giusta)}</span></div>`;
-    if(step>=4) h+=`<div class="block mot"><span class="lab">La motivazione</span>${esc(c.motivazione)}<div class="marx"><q>${esc(c.marx.q)}</q><span class="src">${esc(c.marx.src)}</span></div></div>`;
+    if(step>=1){
+      const k=Math.floor((step-1)/2), svelata=(step-1)%2===1, tot=c.errate.length+1, giusta=(k===c.errate.length);
+      const testo = giusta ? c.giusta : c.errate[k].t;
+      h+=`<div class="block ${svelata ? (giusta?'right':'wrong') : 'neutral'}"><span class="lab">Risposta ${k+1} di ${tot}${svelata ? (giusta?' · giusta':' · sbagliata') : ''}</span><span class="opt">${esc(testo)}</span></div>`;
+      if(svelata && !giusta) h+=`<div class="block why"><span class="lab">Perché è sbagliata</span>${esc(c.errate[k].p)}</div>`;
+      if(svelata && giusta) h+=`<div class="block mot"><span class="lab">Perché è giusta</span>${esc(c.motivazione)}<div class="marx"><q>${esc(c.marx.q)}</q><span class="src">${esc(c.marx.src)}</span></div></div>`;
+    }
   } else {
     const f=FINALE;
     h+=`<div class="case"><h2>${esc(f.titolo)}</h2></div><div class="tesi">${f.tesi.map(t=>`<p>${esc(t)}</p>`).join('')}</div>`;
@@ -183,7 +181,7 @@ function render(){
   $('nextCase').textContent = idx===N-1 ? 'Parte B' : 'Caso successivo';
   $('hint').textContent = idx===N && fine ? 'Fine della correzione' : 'Clic o barra spaziatrice: passo successivo · ←: indietro';
   dots(); adatta();
-  if (step>0) { const last=$('inner').lastElementChild; if(last) last.scrollIntoView({block:'nearest'}); }
+  
 }
 function adatta(){
   const st=$('stage'), inner=$('inner');
