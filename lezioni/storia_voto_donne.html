@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il voto alle donne e le 21 costituenti</title>
+<meta name="portale:titolo" content="Il voto alle donne e le 21 costituenti">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="lezione">
+<meta name="portale:descrizione" content="Lezione interattiva (Storia V): la lunga attesa del voto femminile, il fascismo, la Resistenza, il carteggio Togliatti-De Gasperi, i decreti del 1945-46, il primo voto, le 21 elette e la Commissione dei 75. Un sondaggio prima e dopo.">
+<meta name="portale:uso" content="lezione">
+<meta name="portale:classe" content="quinta">
+<link rel="stylesheet" href="../lib/aula.v1.css">
+<style>
+  /* stili comuni alle quattro lezioni sulla Costituente (slide ricomposte come testo e grafica) */
+  .st{font-size:30px;line-height:1.32;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+  .st{position:relative;padding-top:30px}
+  .st>.occhiello{position:absolute;top:0;left:0;margin:0}
+  .att-consegna{padding-right:170px}
+  .st .occhiello{font-size:19px;font-weight:700;letter-spacing:1px;color:var(--rosso-scuro);text-transform:uppercase;margin:0 0 14px}
+  .st .intro{font-size:32px;line-height:1.36;margin:0 0 22px;max-width:1440px}
+  .st .intro b{color:var(--rosso-scuro)}
+  .riga-fine{font-family:var(--serif);font-style:italic;font-size:33px;color:var(--rosso-scuro);margin-top:20px;line-height:1.3}
+  .nota-piccola{font-size:20px;color:var(--tenue);margin-top:10px;line-height:1.35}
+  .credito{font-size:15px;color:var(--tenue);line-height:1.35}
+  .domanda-fine{font-family:var(--serif);font-size:50px;line-height:1.25;font-weight:700;margin:40px 0 30px}
+  .lettura .brano u{text-decoration-color:var(--rosso);text-decoration-thickness:2px}
+
+  /* blocchi, frecce, linee del tempo */
+  .gx{display:flex;align-items:center;gap:14px}
+  .gx3{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;margin:6px 0}
+  .bx{background:var(--grigio);border-radius:14px;padding:14px 20px;line-height:1.2;text-align:center;flex:1;min-width:0}
+  .bx .k{font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tenue);margin-bottom:6px}
+  .bx .big{display:block;font-size:54px;line-height:1.05;font-weight:700;color:var(--rosso-scuro);font-family:var(--serif)}
+  .bx .s{font-size:28px;margin-top:6px;line-height:1.22}
+  .bx.rs{background:var(--rosso-scuro);color:#fff}.bx.rs .k,.bx.rs .big{color:#fff}
+  .bx.bl{background:var(--blu);color:#fff}.bx.bl .k{color:#CFE0F1}.bx.bl .big{color:#fff}
+  .bx.sc{background:#23262D;color:#fff}.bx.sc .k{color:#FFB3B5}.bx.sc .big{color:#fff}
+  .bx.ch{background:#FBEDEE}.bx.gl{background:var(--giallo)}.bx.bi{background:#fff;border:2px solid var(--bordo)}
+  .bx.az{background:#E6EDF4}.bx.vd{background:var(--verde)}
+  .bx.ag{background:#FDF0D5}.bx.ag .big{color:#8A5300}
+  .bx small{font-size:.78em;opacity:.85}
+  .frw{flex:none;display:flex;align-items:center;justify-content:center}
+  .fr{display:block}
+  .tl{position:relative;display:grid;gap:16px}
+  .tl::before{content:"";position:absolute;left:0;right:0;top:15px;height:6px;background:var(--bordo);border-radius:3px}
+  .tn{position:relative;padding-top:44px}
+  .tn::before{content:"";position:absolute;left:50%;margin-left:-16px;top:5px;width:26px;height:26px;border-radius:50%;background:var(--rosso);border:3px solid #fff;box-shadow:0 0 0 3px var(--rosso)}
+  .tn.ult::before{background:var(--rosso-scuro);box-shadow:0 0 0 3px var(--rosso-scuro)}
+  .tn.gr::before{background:#9AA0A6;box-shadow:0 0 0 3px #9AA0A6}
+  .tn .dt{text-align:center;font-size:31px;font-weight:700;color:var(--rosso-scuro);line-height:1.1}
+  .tn .dt small{display:block;font-size:20px;font-weight:400;color:var(--tenue)}
+  .tn .bx{margin-top:10px}
+  .tn .bx .s{font-size:24px}
+  .dp{display:grid;grid-template-columns:1fr 150px 1fr;gap:12px 14px;align-items:stretch}
+  .dp .eti{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:1px;color:var(--tenue);text-align:center}
+  .colonna{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .gx>*{min-width:0}
+  .colonna>.bx{flex:none}
+  .titolo-g{font-size:25px;font-weight:700;margin:0 0 10px;text-align:center}
+
+  /* barre orizzontali (risultati, candidature) */
+  .bh{display:grid;grid-template-columns:var(--eti,330px) 1fr var(--num,120px);gap:10px 16px;align-items:center;font-size:27px}
+  .bh .e{text-align:right;line-height:1.15}
+  .bh .b{height:42px;background:#F2F3F5;border-radius:6px;overflow:hidden}
+  .bh .b i{display:block;height:100%;border-radius:6px}
+  .bh .n{font-weight:700;font-variant-numeric:tabular-nums}
+  .bh .n small{font-weight:400;color:var(--tenue)}
+
+  /* emiciclo a quadretti: un quadretto per seggio */
+  .quadretti{display:grid;gap:3px}
+  .quadretti i{display:block;aspect-ratio:1;border-radius:2px;background:#D5D8DC}
+  .seggi{display:flex;height:84px;border-radius:10px;overflow:hidden;margin:10px 0 8px}
+  .seggi div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:26px;min-width:0;overflow:hidden;white-space:nowrap}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:22px}
+  .leg i{display:inline-block;width:18px;height:18px;border-radius:4px;margin-right:8px;vertical-align:-2px}
+
+  /* articoli della Costituzione */
+  .art{background:#FFFDF6;border:2px solid #E2D7B5;border-left:12px solid var(--rosso-scuro);border-radius:10px;padding:16px 22px 14px;font-family:var(--serif);font-size:30px;line-height:1.42}
+  .art .n{font-family:var(--sans);font-size:19px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--rosso-scuro);display:block;margin-bottom:6px}
+  .art mark{background:#FDE7A8;padding:0 3px;border-radius:3px}
+  .art mark.ros{background:#FBD3D5}
+  .art .fonte-art{font-family:var(--sans);font-size:16px;color:var(--tenue);margin-top:8px}
+  .chip{display:inline-block;background:#fff;border:2px solid var(--blu);color:var(--blu);border-radius:30px;padding:4px 16px;font-size:24px;font-weight:700;margin:4px 6px 4px 0}
+  .chip.ros{border-color:var(--rosso-scuro);color:var(--rosso-scuro)}
+
+  /* citazioni brevi sulle slide */
+  .cit{font-family:var(--serif);font-size:32px;line-height:1.38;font-style:italic;border-left:8px solid var(--rosso);padding:6px 0 6px 22px;margin:0}
+  .cit .fonte{display:block;font-family:var(--sans);font-style:normal;font-size:19px;color:var(--tenue);margin-top:10px;line-height:1.35}
+
+  /* carta */
+  .carta-riga{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start}
+  .carta-riga svg{height:650px;width:auto;display:block}
+  .legenda-carta{font-size:22px;line-height:1.25;display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+  .legenda-carta p{margin:0 0 6px}
+  .legenda-carta .seg{display:inline-block;width:34px;height:22px;vertical-align:-4px;margin-right:10px;border-radius:3px}
+  .seg.nv{background:repeating-linear-gradient(45deg,#999 0 3px,#eee 3px 8px)}
+  .tabella-dati.media{font-size:25px}
+  .tabella-dati.media th,.tabella-dati.media td{padding:8px 14px}
+  .tabella-dati tr.aula-f-off>*{border-color:transparent}
+  .opzioni-stampa{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+  .opzioni-stampa div{background:#F2F3F5;border-radius:10px;padding:12px 20px;font-size:28px}
+  .opzioni-stampa div b{color:var(--blu);margin-right:12px}
+
+  /* colore delle lezioni sulla Costituente: banda e titoli in verde (le altre lezioni restano rosse) */
+  :root{--banda:#2E6B3F;--banda-scuro:#245632}
+  .aula-testata,.disp-testata{background:var(--banda)}
+  .st .occhiello,.tn .dt,.riga-fine,.titolo-g{color:var(--banda)}
+  .bx .big{color:var(--banda)}
+  .bx.rs .big,.bx.bl .big,.bx.sc .big{color:#fff}
+  .tn::before{background:var(--banda);box-shadow:0 0 0 3px var(--banda)}
+  .tn.ult::before{background:var(--banda-scuro);box-shadow:0 0 0 3px var(--banda-scuro)}
+  .tn.gr::before{background:#9AA0A6;box-shadow:0 0 0 3px #9AA0A6}
+  .art{border-left-color:var(--banda)}
+  .art .n{color:var(--banda)}
+  .aula-piede .firma{color:var(--banda)}
+</style>
+</head>
+<body>
+<noscript>Questa lezione richiede JavaScript.</noscript>
+<script src="../lib/vendor/qrcode.js"></script>
+<script src="../lib/aula.v1.js"></script>
+<script>
+(function () {
+  'use strict';
+  // ------------------------------------------------------------ strumenti di composizione (comuni alle lezioni sulla Costituente)
+  var MIO = '<span class="taglio taglio-mio" title="taglio per la lezione">[…]</span>';
+  function st(occhiello, h) { return '<div class="st">' + (occhiello ? '<div class="occhiello">' + occhiello + '</div>' : '') + h + '</div>'; }
+  function lettura(h) { return '<div class="lettura">' + h + '</div>'; }
+  var FORME = { giu: '25,0 75,0 75,50 100,50 50,100 0,50 25,50', su: '25,100 75,100 75,50 100,50 50,0 0,50 25,50', dx: '0,25 0,75 50,75 50,100 100,50 50,0 50,25', sx: '100,25 100,75 50,75 50,100 0,50 50,0 50,25' };
+  function fa(f) { return f ? ' data-f="' + f + '"' : ''; }
+  function fr(d, w, h, f) {
+    return '<div class="frw"' + fa(f) + '><svg class="fr" viewBox="0 0 100 100" preserveAspectRatio="none" style="width:' + w + 'px;height:' + h + 'px" aria-hidden="true">' +
+      '<polygon points="' + FORME[d] + '" fill="var(--freccia)" stroke="var(--rosso)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg></div>';
+  }
+  function bx(cls, k, big, s, f, stile) {
+    return '<div class="bx ' + (cls || '') + '"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '>' + (k ? '<div class="k">' + k + '</div>' : '') +
+      (big ? '<b class="big">' + big + '</b>' : '') + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
+  }
+  function nodo(dt, cls, k, s, f) {
+    return '<div class="tn' + (cls === 'rs' ? ' ult' : cls === 'gr' ? ' gr' : '') + '"' + fa(f) + '><div class="dt">' + dt + '</div>' + bx(cls === 'gr' ? 'bi' : cls, k, '', s) + '</div>';
+  }
+  // barre orizzontali: righe = [[etichetta, valore, testo del numero, colore, frammento]]
+  function barreH(righe, max, eti, num) {
+    var h = '<div class="bh" style="' + (eti ? '--eti:' + eti + 'px;' : '') + (num ? '--num:' + num + 'px' : '') + '">';
+    righe.forEach(function (r) {
+      var f = fa(r[4]);
+      h += '<div class="e"' + f + '>' + r[0] + '</div><div class="b"' + f + '><i style="width:' + (r[1] / max * 100).toFixed(1) + '%;background:' + r[3] + '"></i></div><div class="n"' + f + '>' + r[2] + '</div>';
+    });
+    return h + '</div>';
+  }
+  function art(n, testo, fonte, f, stile) {
+    return '<div class="art"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '><span class="n">' + n + '</span>' + testo + (fonte ? '<div class="fonte-art">' + fonte + '</div>' : '') + '</div>';
+  }
+  function cit(testo, fonte, f, stile) {
+    return '<p class="cit"' + fa(f) + (stile ? ' style="' + stile + '"' : '') + '>«' + testo + '»<span class="fonte">' + fonte + '</span></p>';
+  }
+  function opzioniStampa(op) {
+    return '<div class="opzioni-stampa">' + op.map(function (o, i) { return '<div><b>' + 'ABCDEF'[i] + '</b>' + o + '</div>'; }).join('') + '</div>';
+  }
+  var DB_URL = 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app';
+
+  var TITOLO = 'Il voto alle donne e le 21 costituenti';
+  var CAT = '<i>1946. L’anno della svolta. Le donne al voto</i>, catalogo della mostra, Camera dei deputati, 2016';
+  var CAT21 = '<i>Le 21 deputate all’Assemblea costituente</i>, Camera dei deputati, 2023';
+  var COL = { DC: '#3A78C2', PSIUP: '#E8743B', PCI: '#C40000', UQ: '#555B63', PDA: '#8BC34A', UDN: '#B8A23A', ALTRI: '#BBBBBB' };
+
+  // ------------------------------------------------------------ slide
+  var OPZ_CONQ = ['Una conquista delle donne, dopo decenni di lotte', 'Una concessione dei partiti, che ne avevano bisogno', 'Una conseguenza della guerra e della Resistenza', 'Un esito inevitabile: in Europa votavano già quasi ovunque'];
+  var S_CONQ_ATT = '<p class="att-consegna">Febbraio 1945: le italiane ottengono il diritto di voto. Sul telefono: conquista o concessione?</p>';
+  var S_CONQ_STAMPA = st('Febbraio 1945', '<p class="domanda-fine" style="margin:10px 0 24px">Il voto alle donne: conquista o concessione?</p>' + opzioniStampa(OPZ_CONQ));
+
+  var S_ATTESA = st('Una lunga attesa · 1867-1925',
+    '<div class="tl" style="grid-template-columns:repeat(5,1fr)">' +
+    nodo('1867', 'gr', 'Salvatore Morelli', 'Il «deputato delle donne» propone i diritti civili e politici: in Aula si ride') +
+    nodo('1877-1906', 'gr', 'Anna Maria Mozzoni', 'Due petizioni al Parlamento per il voto politico', 1) +
+    nodo('1912', '', 'Suffragio maschile', 'Votano quasi tutti gli uomini. Le donne no: per Giolitti sarebbe «un salto nel buio» (1907)', 2) +
+    nodo('1919', '', 'Quasi fatto', 'La Camera approva il voto alle donne; la legislatura finisce prima del Senato. Cade l’autorizzazione maritale', 3) +
+    nodo('1925', 'rs', 'Un voto vuoto', 'Il fascismo concede il voto amministrativo ad alcune donne, poi abolisce le elezioni locali', 4) + '</div>' +
+    '<p class="riga-fine"' + fa(5) + '>Sessant’anni di richieste, e nessun voto.</p>');
+
+  var S_FASCISMO = st('Il fascismo · moglie e madre',
+    '<div class="gx" style="align-items:stretch;gap:20px;margin-top:6px">' +
+    bx('ch', 'La politica', '', 'Nessun voto, per nessuno: le donne inquadrate nei Fasci femminili e nelle organizzazioni di massa') +
+    bx('ch', 'Il lavoro', '10%', 'Dal 1938 un tetto per le donne negli uffici pubblici e privati', 1) +
+    bx('ch', 'La famiglia', '', 'Il codice civile del 1942 conferma la soggezione della moglie al marito', 2) + '</div>' +
+    '<div class="gx3" style="grid-template-columns:1fr">' + fr('giu', 100, 60, 3) + '</div>' +
+    bx('sc', '', '', 'La donna «moglie e madre»: fare figli per la nazione, restare in casa', 3, 'flex:none;font-size:32px;padding:18px'));
+
+  var S_RESISTENZA = st('1943-1945 · guerra e Resistenza',
+    '<div class="gx" style="align-items:stretch;gap:20px">' +
+    bx('az', 'Nelle città', '', 'Le donne sostituiscono gli uomini al lavoro, tengono in piedi le famiglie sotto i bombardamenti', '', 'font-size:27px') +
+    bx('rs', 'Nella Resistenza', '', 'Staffette, partigiane, organizzatrici: un contributo volontario e decisivo', 1, 'font-size:27px') + '</div>' +
+    '<div class="gx" style="align-items:stretch;gap:20px;margin-top:20px">' +
+    bx('ch', 'Novembre 1943 · Milano', 'Gruppi di difesa della donna', 'Comuniste, socialiste, azioniste: lotta al nazifascismo e insieme parità di salario e diritti politici', 2, 'font-size:26px') +
+    bx('gl', '25 agosto 1944 · Carnia', 'Primo voto', 'La Repubblica partigiana della Carnia dà il voto alle donne capofamiglia: l’unica a farlo', 3, 'font-size:26px') + '</div>');
+
+  var S_ORGANIZZAZIONI = st('1944-1946 · le donne si organizzano',
+    '<div class="gx" style="align-items:stretch;gap:20px">' +
+    bx('ch', 'Settembre 1944', 'UDI', 'Unione donne italiane: senza tessere di partito, ma soprattutto comuniste e socialiste') +
+    bx('az', '1945', 'CIF', 'Centro italiano femminile, cattolico, presieduto da Maria Federici') + '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;justify-items:center;margin:4px 0"' + fa(1) + '>' + fr('giu', 80, 56) + fr('giu', 80, 56) + '</div>' +
+    bx('sc', 'Ottobre 1944', 'Un fronte comune per il voto', 'UDI, donne democristiane, repubblicane, comuniste, socialiste, azioniste, liberali e le laureate della FILDIS insieme', 1, 'flex:none;padding:16px'));
+
+  var S_CARTEGGIO = st('20 gennaio 1945 · i due grandi partiti',
+    '<div class="gx" style="align-items:stretch;gap:20px">' +
+    bx('ch', 'Togliatti (PCI) scrive a De Gasperi (DC)', '', 'Chiediamo insieme al presidente del Consiglio di mettere all’ordine del giorno il voto alle donne', '', 'font-size:28px') +
+    fr('dx', 70, 70) +
+    bx('az', 'De Gasperi risponde lo stesso giorno', '', '«Ho fatto più rapidamente ancora di quanto mi chiedi…»', '', 'font-size:30px;font-family:var(--serif);font-style:italic') + '</div>' +
+    '<div class="gx" style="align-items:stretch;gap:20px;margin-top:24px"' + fa(1) + '>' +
+    bx('bi', 'Perché i partiti di massa lo vogliono', '', 'Milioni di nuove elettrici da conquistare; nessuno dei due vuole lasciarle all’altro', '', 'font-size:27px') +
+    bx('bi', 'Come le immaginano', '', 'De Gasperi, Natale 1944: fare politica non per uscire dalla famiglia, ma per difenderla', 2, 'font-size:27px') + '</div>' +
+    '<p class="credito" style="margin-top:12px">Lettera di De Gasperi a Togliatti, 20 gennaio 1945, Archivio della Fondazione Gramsci, in ' + CAT + '.</p>');
+
+  var S_DECRETI = st('Tre decreti',
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;align-items:end;height:470px">' +
+    bx('az', '1° febbraio 1945', 'Votare', '«Il diritto di voto è esteso alle donne»: dai 21 anni<br><small>decreto n. 23, governo Bonomi</small>', '', 'height:300px;display:flex;flex-direction:column;justify-content:center') +
+    bx('bl', '7 gennaio 1946', 'Elette nei comuni', 'Le donne possono essere elette nei consigli comunali<br><small>decreto n. 1</small>', 1, 'height:380px;display:flex;flex-direction:column;justify-content:center') +
+    bx('rs', '10 marzo 1946', 'Elette alla Costituente', 'Eleggibili cittadini «e cittadine» dai 25 anni<br><small>decreto n. 74</small>', 2, 'height:460px;display:flex;flex-direction:column;justify-content:center') + '</div>' +
+    '<p class="riga-fine"' + fa(3) + '>Prima il diritto di eleggere, poi quello di essere elette.</p>');
+
+  var S_PRIMO = st('Marzo-aprile 1946 · il primo voto',
+    '<div class="gx" style="align-items:stretch;gap:24px;margin-top:10px">' +
+    bx('gl', '10 marzo - 7 aprile 1946', '5.722 comuni', 'Elezioni amministrative: <b>le donne votano per la prima volta</b>, e le prime sono elette nei consigli comunali', '', 'font-size:30px;padding:24px') +
+    fr('dx', 70, 70) +
+    bx('rs', '2 giugno 1946', 'Prima volta nazionale', 'Referendum e Costituente', '', 'padding:24px') + '</div>' +
+    '<p class="nota-piccola" style="font-size:24px;margin-top:24px">Si legge spesso che le donne votarono per la prima volta il 2 giugno: è vero solo per il voto politico nazionale.</p>');
+
+  var CESPEDES = '<span class="etichetta autore">Alba De Céspedes</span>' +
+    '<div class="brano"><p>Con quel segno in croce sulla scheda mi pareva di aver disegnato uno di quei fregi che sostituiscono la parola <u>fine</u>. Uscii, poi, <u>liberata e giovane</u>, come quando ci si sente i capelli ben ravviati sulla fronte.</p></div>' +
+    '<div class="fonte"><b>Alba De Céspedes</b>, in «Mercurio», 1946, n. 27-28 (novembre-dicembre), p. 138-139: numero speciale in cui scrittori e artisti ricordano l’anno 1946. Citata in ' + CAT + '. Sottolineature per la lezione.</div>';
+  var S_CESPEDES_ATT = '<p class="att-consegna">Sul telefono: una parola (o poche) per dire che cosa è stato quel voto per Alba De Céspedes.</p>';
+
+  var OPZ_STIMA = ['5', '21', '56', '120'];
+  var S_STIMA_ATT = '<p class="att-consegna">L’Assemblea Costituente ha 556 deputati. Sul telefono: quante sono le donne elette?</p>';
+
+  var QUAD = (function () { var h = '<div class="quadretti" style="grid-template-columns:repeat(28,1fr);width:640px">'; var colori = []; var i;
+    for (i = 0; i < 9; i++) colori.push(COL.PCI); for (i = 0; i < 9; i++) colori.push(COL.DC); colori.push(COL.PSIUP, COL.PSIUP, COL.UQ);
+    for (i = 0; i < 556; i++) h += '<i' + (i < 21 ? ' style="background:' + colori[i] + '"' : '') + '></i>';
+    return h + '</div>'; })();
+
+  var S_ELETTE = st('2 giugno 1946 · candidate ed elette',
+    '<div style="display:grid;grid-template-columns:1fr 640px;gap:44px;align-items:start">' +
+    '<div><p class="titolo-g" style="text-align:left">226 candidate, per lista</p>' +
+    barreH([['Comunisti', 68, '68', COL.PCI], ['Democristiani', 29, '29', COL.DC], ['Socialisti', 16, '16', COL.PSIUP], ['Partito d’Azione', 14, '14', COL.PDA], ['Liberali (UDN)', 8, '8', COL.UDN], ['Uomo Qualunque', 7, '7', COL.UQ], ['Altre liste', 84, '84', COL.ALTRI]], 84, 250, 70) + '</div>' +
+    '<div' + fa(1) + '><p class="titolo-g" style="text-align:left">21 elette su 556 · 3,8%</p>' + QUAD +
+    '<div class="leg" style="margin-top:12px"><span><i style="background:' + COL.PCI + '"></i>9 PCI</span><span><i style="background:' + COL.DC + '"></i>9 DC</span><span><i style="background:' + COL.PSIUP + '"></i>2 PSIUP</span><span><i style="background:' + COL.UQ + '"></i>1 Uomo Qualunque</span></div></div></div>');
+
+  function nomi(p, col, l) { return '<div class="bx bi" style="text-align:left;border-left:10px solid ' + col + ';padding:10px 16px"><div class="k" style="color:' + col + '">' + p + '</div><div class="s" style="font-size:22px;line-height:1.35">' + l + '</div></div>'; }
+  var S_VENTUNO = st('Le 21',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">' +
+    nomi('Comuniste · 9', COL.PCI, 'Adele Bei · Nadia Gallico Spano · Nilde Iotti · Teresa Mattei · Angiola Minella · Rita Montagnana · Teresa Noce · Elettra Pollastrini · Maria Maddalena Rossi') +
+    nomi('Democristiane · 9', COL.DC, 'Laura Bianchini · Elisabetta Conci · Filomena Delli Castelli · Maria De Unterrichter · Maria Federici · Angela Gotelli · Angela Maria Guidi Cingolani · Maria Nicotra · Vittoria Titomanlio') +
+    nomi('Socialiste · 2', COL.PSIUP, 'Bianca Bianchi · Lina Merlin') +
+    nomi('Uomo Qualunque · 1', COL.UQ, 'Ottavia Penna') + '</div>' +
+    '<p class="riga-fine" style="font-size:30px"' + fa(1) + '>Diverse per età, studi, fede e partito; quasi tutte venivano dall’antifascismo, dalla Resistenza o dall’associazionismo cattolico.</p>');
+
+  var S_75 = st('Nella Commissione dei 75',
+    bx('sc', 'Luglio 1946 · presieduta da Meuccio Ruini', 'Commissione per la Costituzione', '75 deputati scrivono il Progetto · segretaria: Nilde Iotti', '', 'flex:none;padding:14px;width:900px;margin:0 auto') +
+    '<div class="gx3">' + fr('giu', 80, 46) + fr('giu', 80, 46) + fr('giu', 80, 46) + '</div>' +
+    '<div class="gx" style="align-items:stretch;gap:18px">' +
+    bx('ch', 'I · diritti e doveri dei cittadini', '', '<b>Nilde Iotti</b> (PCI)<br><b>Angela Gotelli</b> (DC), dal 1947', '', 'font-size:27px') +
+    bx('bi', 'II · ordinamento dello Stato', '', 'nessuna donna', '', 'font-size:27px;color:var(--tenue)') +
+    bx('ch', 'III · rapporti economici e sociali', '', '<b>Maria Federici</b> (DC)<br><b>Lina Merlin</b> (PSIUP)<br><b>Teresa Noce</b> (PCI)', '', 'font-size:27px') + '</div>' +
+    '<p class="riga-fine" style="font-size:30px"' + fa(1) + '>Cinque su 75; e le relazioni che scrivono riguardano tutte la famiglia.</p>');
+
+  var S_ORLANDO = st('25 giugno 1946 · la prima seduta',
+    cit('Il popolo italiano è rappresentato nella sua totalità perfetta, senza distinzione né di sesso, né di classi…', 'Vittorio Emanuele Orlando, presidente provvisorio dell’Assemblea costituente come deputato più anziano, seduta del 25 giugno 1946, in ' + CAT + '.') +
+    '<div class="gx" style="align-items:stretch;gap:24px;margin-top:26px"' + fa(1) + '>' +
+    bx('gl', 'Le donne elette', '3,8%', '21 su 556') +
+    bx('ch', 'Marzo 1947, in Aula', '', 'Un deputato della destra: «Sono di genere femminile e quindi sempre infide»', 2, 'font-size:28px;font-family:var(--serif);font-style:italic') + '</div>' +
+    '<p class="credito" style="margin-top:10px"' + fa(2) + '>La frase la riferisce Teresa Mattei nel suo intervento in Aula del 18 marzo 1947, senza nominare il deputato.</p>');
+
+  var S_DOPO_ATT = '<p class="att-consegna">Di nuovo: il voto alle donne fu una conquista o una concessione? Sul telefono potete cambiare idea.</p>';
+  var S_CHIUSURA = '<div class="st"><div class="gx" style="align-items:stretch;gap:18px;margin-top:40px">' +
+    bx('bi', '1945-1946', 'Il voto', 'Eleggere ed essere elette', '', 'padding:26px 10px') + fr('dx', 80, 70) +
+    bx('rs', '1946-1947', 'La Carta', 'Che cosa scriveranno le 21, e che cosa riusciranno a far scrivere?', '', 'padding:26px 10px') + '</div>' +
+    '<p class="riga-fine" data-f="1" style="margin-top:40px">Prossime lezioni: i principi della Costituzione; poi famiglia, lavoro e cariche pubbliche.</p></div>';
+
+  // ------------------------------------------------------------ attività
+  var CONQ1 = { id: 'conquista_prima', tipo: 'sondaggio', minuti: 1.5, domanda: 'Il voto alle donne del 1945: conquista o concessione?', opzioni: OPZ_CONQ };
+  var CONQ2 = { id: 'conquista_dopo', tipo: 'sondaggio', minuti: 1.5, domanda: 'Il voto alle donne del 1945: conquista o concessione?', opzioni: OPZ_CONQ,
+    confronta: 'conquista_prima', etichette: ['Inizio lezione', 'Ora'] };
+  var PAROLA = { id: 'parola_voto', tipo: 'breve', minuti: 2, max: 60, domanda: 'Una parola (o poche) per dire che cosa è stato quel voto per Alba De Céspedes.', segnaposto: 'una parola…', testo: CESPEDES, testoAperto: true };
+  var STIMA = { id: 'stima_elette', tipo: 'sondaggio', minuti: 1, domanda: 'L’Assemblea Costituente ha 556 deputati. Quante sono le donne elette?', opzioni: OPZ_STIMA };
+
+  // ------------------------------------------------------------ passi
+  var passi = [
+    { tipo: 'copertina', titolo: TITOLO, note: '<p>Lascia il QR sullo schermo mentre la classe entra (Q lo riapre).</p>' },
+
+    { titolo: 'Conquista o concessione?', html: S_CONQ_ATT, stampa: S_CONQ_STAMPA, minuti: 3, attivita: CONQ1,
+      note: '<p><b>Sondaggio d’apertura</b> (90 secondi), senza risposta giusta. Non commentare ora: lo stesso sondaggio torna al passo 16, e il confronto è la ripresa.</p><p>La quarta opzione è falsa: in Francia le donne votano per la prima volta nell’aprile 1945, in Belgio nel 1948 (politiche 1949), in Svizzera nel 1971. Se la scelgono in molti, tienilo per la ripresa finale.</p>' },
+
+    { titolo: 'Una lunga attesa', html: S_ATTESA, minuti: 3,
+      note: '<p>Una sola cronologia, a voce e veloce. Clic 1-4, clic 5 la riga finale. Morelli: proposta del 1867, deriso in Aula («ilarità», «si ride» nei resoconti). Mozzoni: petizioni del 1877 e del 1906; la seconda è discussa alla Camera il 25 febbraio 1907, e Giolitti parla di «salto nel buio». 1912: suffragio per gli uomini dai 30 anni (dai 21 con alcuni requisiti). 1919: legge Sacchi e proposta Martini-Gasparotto approvata alla Camera. 1925: voto amministrativo ad alcune categorie di donne, reso vano dall’abolizione delle elezioni comunali (podestà, 1926).</p><p>Fonte di tutte le date: ' + CAT + ' (testi delle sezioni I-III e cronologia).</p>' },
+
+    { titolo: 'Il fascismo', html: S_FASCISMO, minuti: 2,
+      note: '<p>Clic 1-3. Il tetto del 10% è un decreto del 1938 (cronologia del catalogo; estremi non controllati). Il codice civile del 1942: potestà maritale, il marito capo della famiglia, che sceglie la residenza (lezione 4).</p>' },
+
+    { titolo: 'Guerra e Resistenza', html: S_RESISTENZA, minuti: 3,
+      note: '<p>Clic 1-3. I Gruppi di difesa della donna nascono a Milano in un incontro promosso dalla comunista Rina (Caterina) Picolato con Giovanna Barcellona, Lina Fibbi, la socialista Lina Merlin e l’azionista Ada Gobetti. Carnia: verbale del CLN della Carnia, 25 agosto 1944 (Biblioteca civica di Udine). Fonte: ' + CAT + '.</p>' },
+
+    { titolo: 'Le donne si organizzano', html: S_ORGANIZZAZIONI, minuti: 2,
+      note: '<p>Clic 1: il fronte comune. Le differenze restano (UDI a sinistra, CIF cattolico), ma il terreno comune è la militanza paritaria. Nel 1945, l’8 marzo è celebrato per la prima volta in Italia libera. Fonte: ' + CAT + '.</p>' },
+
+    { titolo: 'Togliatti e De Gasperi', html: S_CARTEGGIO, minuti: 3,
+      note: '<p>Clic 1-2. La lettera di Togliatti è una minuta; la risposta di De Gasperi è autografa (Archivio della Fondazione Gramsci). La frase di De Gasperi del Natale 1944 (messaggio su «Azione femminile», 25 dicembre 1944) è riassunta dal catalogo, non citata: per questo è senza virgolette.</p><p><b>Punta</b> sul doppio volto: il voto è voluto, ma pensato dentro il ruolo familiare. Torna nella propaganda del 1946: i manifesti chiamano la donna a votare per i figli e per la pace.</p>' },
+
+    { titolo: 'Tre decreti', html: S_DECRETI, minuti: 2,
+      note: '<p>Clic 1-3. Decreto legislativo luogotenenziale 1° febbraio 1945, n. 23; 7 gennaio 1946, n. 1; 10 marzo 1946, n. 74. Il decreto del 1945 rinvia ai requisiti della legge elettorale del 1919: le donne maggiorenni con i diritti civili e politici.</p>' },
+
+    { titolo: 'Il primo voto', html: S_PRIMO, minuti: 1,
+      note: '<p>Correzione di un luogo comune, che compare anche nel manuale (<i>L’Italia nella guerra</i>, paragrafo «Dalla guerra alla Repubblica»: «per la prima volta votarono anche le donne» riferito al 2 giugno). Le amministrative si svolgono in cinque domeniche tra il 10 marzo e il 7 aprile 1946; negli altri comuni dopo il referendum. Fonte: ' + CAT + '.</p>' },
+
+    { titolo: '«Liberata e giovane»', html: lettura(CESPEDES), dispositivo: CESPEDES, minuti: 1.5,
+      note: '<p><b>Lettura</b> (circa 40 parole), anche sui telefoni. Leggila tu; la parola la scrivono nel passo successivo.</p>' },
+
+    { titolo: 'Una parola per quel voto', html: S_CESPEDES_ATT, stampa: '', minuti: 2.5, attivita: PAROLA,
+      note: '<p><b>Risposta breve</b> (2 minuti): un muro di parole. Il brano è sui telefoni, aperto sopra la domanda.</p><p><b>Ripresa</b>: il muro. Un clic evidenzia una parola, Maiusc+clic la nasconde (solo su questo computer). <b>Punta il commento</b> su «fine» e «liberata»: per De Céspedes il voto chiude un tempo umiliante; il segno sulla scheda è anche la fine del fascismo. Non è la voce di tutte: è una scrittrice affermata, a Roma.</p>' },
+
+    { titolo: 'Quante?', html: S_STIMA_ATT, stampa: '', minuti: 2, attivita: STIMA,
+      note: '<p><b>Sondaggio-stima</b> (1 minuto). <b>Ripresa</b>: non dire la risposta; passa al passo successivo, che la mostra.</p>' },
+
+    { titolo: 'Candidate ed elette', html: S_ELETTE, minuti: 3,
+      note: '<p>Clic 1: i 556 quadretti, 21 colorati. Il PCI candida più donne di tutti (68 su 226) e ne elegge 9; la DC ne candida 29 e ne elegge 9. Fonte delle cifre: ' + CAT21 + ', Introduzione.</p>' },
+
+    { titolo: 'Le 21', html: S_VENTUNO, minuti: 2,
+      note: '<p>Solo i nomi: i profili sono materia della mostra, non di questa lezione. Clic 1: la riga finale. Teresa Mattei, 25 anni, è la più giovane; Lina Merlin (1887) tra le più anziane. Due sono abruzzesi: Maria Federici (L’Aquila) e Filomena Delli Castelli (Città Sant’Angelo).</p><p>Grafia: il catalogo scrive «Maria Madalena Rossi» e l’opuscolo del 2023 «Maria Maddalena Rossi»; seguo il secondo. Angiola Minella: l’opuscolo scrive «Minelli» nell’introduzione; il nome corretto è Minella. Da controllare sui profili.</p>' },
+
+    { titolo: 'Nella Commissione dei 75', html: S_75, minuti: 2,
+      note: '<p>Clic 1: la riga finale. Angela Gotelli entra in febbraio 1947 al posto di Carmelo Caristia. Le relazioni: Iotti sulla famiglia (I Sottocommissione); Federici, Merlin e Noce sulle garanzie economico-sociali per la famiglia (III). Sono il punto di partenza della lezione 4.</p>' },
+
+    { titolo: '«Nella sua totalità perfetta»', html: S_ORLANDO, minuti: 2,
+      note: '<p>Clic 1-2. <b>Punta</b> sullo scarto tra la frase di Orlando, che è vera (per la prima volta l’Assemblea è eletta da tutti), e il 3,8%; poi sulla mentalità che Mattei denuncia in Aula. La frase del deputato è riferita da Mattei: testo letto nel facsimile del resoconto (<i>I fondamenti della Costituzione repubblicana</i>, Camera dei deputati, 2023, p. 142), da confrontare con l’originale.</p>' },
+
+    { titolo: 'Conquista o concessione? Di nuovo', html: S_DOPO_ATT, stampa: '', minuti: 4, attivita: CONQ2,
+      note: '<p><b>Sondaggio</b> (90 secondi), confrontato con quello d’apertura: barre chiare all’inizio, scure ora.</p><p><b>Ripresa</b>: chi ha cambiato idea, e perché? <b>Punta il commento</b> sul fatto che le prime tre risposte non si escludono: decenni di richieste, la guerra e la Resistenza che le rendono impossibili da ignorare, i partiti di massa che decidono quando e come. Il catalogo della Camera insiste sulla conquista («non sono caduti dal cielo»); il carteggio Togliatti-De Gasperi mostra la decisione dall’alto. Se qualcuno ha scelto la quarta: in Francia il primo voto delle donne è dell’aprile 1945, in Svizzera del 1971.</p>' },
+
+    { titolo: TITOLO, html: S_CHIUSURA, minuti: 1, note: '<p>Clic 1: aggancio alle lezioni 3 e 4.</p>' }
+  ];
+
+  Aula.avvia({
+    titolo: TITOLO,
+    sottotitolo: 'Dal decreto del 1° febbraio 1945 alla Commissione dei 75 · Storia V',
+    percorso: 'lezioni_storia_voto_donne',
+    database: DB_URL,
+    passi: passi
+  });
+
+})();
+</script>
+</body>
+</html>
