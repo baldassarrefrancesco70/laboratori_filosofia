@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Correggi l'intelligenza artificiale (individuale)</title>
+<meta name="portale:titolo" content="Correggi l'intelligenza artificiale (individuale)">
+<meta name="portale:materia" content="filosofia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Individuale, a casa: controllare sulla Sintesi quattro spiegazioni di un assistente AI su Cartesio, Locke, Hume e Kant, correggere e citare il paragrafo.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--acc:#2b6cb0;--accbg:#e8f0fa}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--acc:#7fb2f0;--accbg:#16243a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.3rem 0 .2rem}
+h2{font-size:1.2rem;margin:.2rem 0 .6rem}
+h3{font-size:1.08rem;margin:0 0 .3rem}
+.sub{color:var(--muted);margin:0 0 .8rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.pill{display:inline-block;font-size:.8rem;font-weight:600;background:var(--accbg);color:var(--acc);border-radius:99px;padding:2px 10px;margin-bottom:6px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.sit{background:var(--accbg);border-radius:10px;padding:12px 14px;margin:8px 0}
+.guida{font-weight:600;margin:.6rem 0 0}
+.aut{border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg)}
+.opt[aria-pressed=true]::before{content:"✓ ";font-weight:700}
+.scale{display:flex;flex-wrap:wrap;gap:8px}
+.scale .opt{flex:1 1 140px;margin:0;text-align:center;font-size:.95rem}
+.nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.nums .opt{margin:0;text-align:center}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px;flex-wrap:wrap}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea{width:100%;min-height:88px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.lab{font-size:.92rem;font-weight:600;margin:.6rem 0 .3rem}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.92rem;border-left:4px solid var(--acc);background:var(--accbg);padding:8px 12px;margin:10px 0;border-radius:0 8px 8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+details p{margin:.5rem 0}
+.res{border-radius:10px;padding:10px 14px;margin:8px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.res.di{background:var(--accbg);border-left:5px solid var(--acc)}
+.lbl{font-weight:700}
+.mine{white-space:pre-wrap;border:1px dashed var(--line);border-radius:8px;padding:8px 10px;margin:6px 0 10px}
+ul.chk{margin:.4rem 0 0 1.1rem;padding:0}
+ul.chk li{margin:.25rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+
+.ai{background:var(--accbg);border-radius:10px;padding:10px 14px;margin:8px 0;font-style:italic}
+.fr{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.fr[aria-pressed=true]{border-color:var(--ko);background:var(--kobg)}
+.fr .st{display:block;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:2px}
+.fr[aria-pressed=true] .st{color:var(--ko)}
+.fix{border-left:4px solid var(--ko);padding:4px 0 4px 12px;margin:0 0 14px}
+select{width:100%;min-height:48px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit}
+a.link{color:var(--pri);font-weight:600}
+.score{font-family:Georgia,serif;font-size:1.5rem;margin:.2rem 0}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var LAB_ID = "filosofia_correggi_l_ia_individuale";
+  var TITLE = "Correggi l'intelligenza artificiale (individuale)";
+  var KEY = "addestr_state_" + LAB_ID;
+  var MAXR = 400, MINR = 15;
+  var D = {"SINTESI_URL":"Problema_gnoseologico_1_Sintesi_v2.pdf","PARAGRAFI":["1.1 La domanda","1.2 Cartesio: vita e opere","1.3 Cartesio: il progetto e il metodo","1.4 Cartesio: dal dubbio al cogito","1.5 Cartesio: Dio garante della verità","1.6 Cartesio: l'errore","1.7 Cartesio: il dualismo e il mondo fisico","1.8 Cartesio: la filosofia pratica","1.9 Cartesio: un bilancio","1.10 Locke: la mente come foglio bianco","1.11 Hume: la dissoluzione","1.12 L'impasse: empirismo e scetticismo","1.13 Kant: la rifondazione","1.14 Non una scala, ma tre modi di guardare","2. Glossario"],"SPIEG":[{"k":"cartesio","titolo":"Spiegazione A · Cartesio","domanda":"Mi spieghi in breve la teoria della conoscenza di Cartesio?","frasi":[{"t":"Per Cartesio il criterio della verità è l'evidenza: è vero soltanto ciò che si presenta alla mente in modo chiaro e distinto.","err":false,"par":2},{"t":"Il dubbio metodico non è il punto d'arrivo, come per gli scettici, ma uno strumento per trovare un fondamento davvero certo.","err":false,"par":3},{"t":"Il cogito è la conclusione di un breve ragionamento in tre passaggi: tutto ciò che pensa esiste, io penso, dunque io esisto.","err":true,"par":3,"nuovo":true,"giusta":"Il cogito non è la conclusione di un ragionamento, ma un'intuizione immediata: per dubitare devo esistere.","why":"È l'obiezione di Gassendi (il «sillogismo abbreviato»), non la tesi di Cartesio. Cartesio risponde che il cogito è un'intuizione immediata della mente; il §1.4 lo dice anche tra i suoi tre caratteri."},{"t":"Per passare dalla certezza dell'io a quella del mondo esterno serve Dio, che non inganna e garantisce le idee chiare e distinte.","err":false,"par":4},{"t":"Nei corpi Cartesio distingue le qualità primarie, come estensione e figura, dalle qualità secondarie, come colori e suoni.","err":true,"par":6,"parAlt":[9],"vero":"video e infografiche","giusta":"Nei corpi Cartesio distingue le proprietà oggettive e quantitative (estensione, figura, movimento) da quelle soggettive (colori, suoni, sapori).","why":"La distinzione è di Cartesio (da Galilei), ma i termini «qualità primarie e secondarie» sono di Locke, che li riprende da Boyle (§1.10). Nel §1.7 Cartesio parla di proprietà oggettive e soggettive. È un errore di lessico: chi lo segnala come «impreciso» ha visto giusto."},{"t":"La realtà si divide così in due sostanze: la res cogitans, inestesa e libera, e la res extensa, spaziale e meccanicamente determinata.","err":false,"par":6}]},{"k":"locke","titolo":"Spiegazione B · Locke","domanda":"Che cosa sostiene Locke sull'origine e sui limiti della conoscenza?","frasi":[{"t":"Locke rifiuta le idee innate: all'origine la mente è una tabula rasa, un foglio bianco su cui scrive soltanto l'esperienza.","err":false,"par":9},{"t":"Nel ricevere le idee semplici la mente è passiva; diventa attiva quando le ripete, le confronta e le combina in idee complesse.","err":false,"par":9},{"t":"La sostanza, per Locke, non esiste affatto: è soltanto il nome che diamo per comodità a un gruppo di qualità che vediamo sempre insieme.","err":true,"par":9,"nuovo":true,"giusta":"Locke non nega la sostanza: la dichiara inconoscibile, «il supposto ma sconosciuto sostegno» delle qualità.","why":"Ridurre la sostanza a un fascio di qualità è il passo successivo, che compiranno Berkeley per la materia e Hume anche per lo spirito. Locke la suppone come substrato, ma dice di non conoscerla (l'elefante e la tartaruga)."},{"t":"Locke riconosce tre forme di conoscenza certa: l'intuizione, la dimostrazione e la sensazione attuale delle cose esterne.","err":false,"par":9},{"t":"La matematica si conosce per intuizione immediata, come l'esistenza dell'io, ed è perciò la conoscenza più certa di tutte.","err":true,"par":9,"vero":"video e infografiche (capovolto)","giusta":"La matematica si conosce per dimostrazione, una catena di passaggi intuitivi; per intuizione si conosce l'esistenza dell'io.","why":"Nella tabella del §1.10 l'intuizione rende certa l'esistenza dell'io; la dimostrazione, meno sicura nelle lunghe catene, rende certe la matematica e l'esistenza di Dio."},{"t":"Oltre questi confini si estende la conoscenza probabile, fondata sull'esperienza passata, sulla testimonianza o sull'analogia.","err":false,"par":9}]},{"k":"hume","titolo":"Spiegazione C · Hume","domanda":"Perché Hume è considerato uno scettico?","frasi":[{"t":"Hume divide le percezioni della mente in impressioni, vivide e forti, e idee, che delle impressioni sono copie sbiadite.","err":false,"par":10},{"t":"Le relazioni di idee, come la matematica, sono certe perché il contrario è contraddittorio, ma non dicono nulla del mondo.","err":false,"par":10},{"t":"Il nesso tra causa ed effetto si ricava dall'esperienza ripetuta, che ci mostra che l'effetto deve seguire la causa.","err":true,"par":10,"nuovo":true,"giusta":"L'esperienza mostra solo che l'effetto è seguito alla causa, non che deve seguirla: la connessione necessaria nasce dall'abitudine.","why":"Per Hume la causalità non si fonda né sulla logica né sull'esperienza, che illumina il passato e non il futuro. La necessità è soggettiva: è un'aspettativa prodotta dall'abitudine."},{"t":"L'abitudine è una guida infallibile per la vita pratica, ma spiega perché crediamo nella causalità, non la giustifica.","err":false,"par":10},{"t":"Quanto all'io, Hume conclude che non ne rimane nulla: è soltanto un'illusione, che il filosofo deve abbandonare.","err":true,"par":10,"parAlt":[11],"vero":"video e infografiche (riformulato)","giusta":"Per Hume l'io è un fascio di percezioni; non si può giustificare un io unitario, ma la credenza in esso è ineliminabile.","why":"Hume non dice che l'io «non c'è»: dice che non ne abbiamo impressione e che è un fascio di percezioni. E la credenza nell'io e nel mondo non si abbandona: «di qui a un'ora» il lettore ci crederà di nuovo (§1.11; anche §1.12 sulla credenza)."},{"t":"Il suo scetticismo, che egli stesso chiama «moderato», sveglierà Kant da quello che chiamerà il suo «sonno dogmatico».","err":false,"par":11}]},{"k":"kant","titolo":"Spiegazione D · Kant","domanda":"Come risponde Kant al problema della conoscenza?","frasi":[{"t":"Per Kant ogni conoscenza comincia con l'esperienza, ma da questo non segue che derivi interamente dall'esperienza.","err":false,"par":12},{"t":"Le forme a priori sono strutture che si trovano nei cervelli di tutti gli uomini, come una sorta di eredità biologica.","err":true,"par":12,"vero":"video e infografiche","giusta":"Le forme a priori sono i modi fissi con cui il soggetto ordina l'esperienza, comuni a tutti: condizioni trascendentali, non organi.","why":"«Trascendentale» indica le condizioni a priori che rendono possibile l'esperienza, non una struttura fisiologica. Anche l'io penso «non è l'io psicologico di una persona, ma la struttura comune a tutti» (§1.13). Il cervello è a sua volta un fenomeno."},{"t":"Spazio e tempo sono le forme a priori della sensibilità; le dodici categorie sono le forme a priori dell'intelletto.","err":false,"par":12},{"t":"Il fenomeno è la realtà come ci appare attraverso le forme a priori: soggettivo, ma universale, e non un'illusione.","err":false,"par":12},{"t":"Il noumeno è come l'oceano che circonda l'isola della conoscenza: una realtà vera, ma per noi irraggiungibile.","err":true,"par":12,"vero":"video e infografiche","giusta":"Il noumeno è pensabile ma non conoscibile, un concetto-limite; nella metafora l'oceano è la sede dell'illusione, non della realtà vera.","why":"Nel §1.13 l'isola è la terraferma della verità; l'oceano tempestoso, con nebbie e ghiacci, crea l'illusione di nuove terre. È l'immagine della metafisica che pretende di andare oltre l'esperienza, non del noumeno."},{"t":"Per questo la metafisica è impossibile come scienza di ciò che sta oltre l'esperienza, ma resta un bisogno della ragione.","err":false,"par":12}]}],"RISCR":{"model":"Una buona riscrittura:","chk":["corregge proprio il punto sbagliato, senza cambiare argomento","usa i termini della Sintesi (non una formula «a orecchio»)","indica il paragrafo che la prova, non solo l'autore"]}};
+  var SP = {}; D.SPIEG.forEach(function (s) { SP[s.k] = s; });
+  var ORD = ["cartesio", "locke", "hume", "kant"];
+
+  // step: intro | s0..s3 ; m: {fid: true} frasi segnate ; r: riscritture ; p: paragrafi (indice)
+  var S = { step: "intro", m: {}, r: {}, p: {}, sub: false, ok: null };
+  var app;
+  try { var raw = localStorage.getItem(KEY); if (raw) { var q = JSON.parse(raw); if (q && typeof q === "object") S = Object.assign(S, q); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function btn(text, cls) { var b = el("button", cls || "btn", text); b.type = "button"; return b; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function mie() { return ORD; }
+  function fid(k, i) { return k + "_f" + (i + 1); }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Analizzare testi"));
+    h.appendChild(el("h1", null, TITLE));
+    return h;
+  }
+  function progress(n) { var b = el("div", "bar"), f = el("i"); f.style.width = n + "%"; b.appendChild(f); return b; }
+  function counter(ta, max) { var c = el("div", "cnt"); function u() { c.textContent = ta.value.length + " / " + max; } u(); ta.addEventListener("input", u); return c; }
+  function sintesiLink() {
+    var p = el("p", "note"); p.appendChild(document.createTextNode("Tieni aperta la fonte: "));
+    var a = el("a", "link", "la Sintesi «Il problema gnoseologico» (si apre in una nuova scheda)");
+    a.href = D.SINTESI_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; p.appendChild(a); return p;
+  }
+
+  function render() {
+    clear(); app.appendChild(header());
+    if (S.sub) return renderReview();
+    if (S.step === "intro") renderIntro(); else renderSpieg(Number(S.step.slice(1)));
+    window.scrollTo(0, 0);
+  }
+
+  function renderIntro() {
+    var c = el("div", "card");
+    c.appendChild(el("h2", null, "Come funziona"));
+    c.appendChild(el("p", null, "Hai chiesto a un assistente AI di spiegarti Cartesio, Locke, Hume e Kant. Le risposte sembrano convincenti, ma non tutto è esatto. Il tuo compito è controllarle sulla fonte: la Sintesi. Se l'AI e la Sintesi dicono cose diverse, vale la Sintesi."));
+    var ul = el("ul");
+    ["Quattro spiegazioni, sei frasi ciascuna (circa 35-40 minuti). Segna ogni frase che non torna, riscrivila corretta e indica il paragrafo della Sintesi che lo prova.",
+     "Non ti diciamo quante frasi sono sbagliate: potrebbero essere molte, poche o nessuna. Segna solo quello che riesci a provare con la Sintesi.",
+     "Lavora da solo e con la Sintesi, non con un chatbot: l'esercizio serve proprio a controllare ciò che dice un'AI.",
+     "Puoi interrompere e riprendere: il lavoro resta salvato su questo dispositivo. Alla fine consegni e vedi subito la correzione."].forEach(function (t) { ul.appendChild(el("li", null, t)); });
+    c.appendChild(ul);
+    c.appendChild(el("p", "note", "Le tue risposte vengono salvate e lette dal docente."));
+    c.appendChild(sintesiLink());
+    app.appendChild(c);
+    var go = btn("Inizia"); go.onclick = function () { S.step = "s0"; persist(); render(); }; app.appendChild(go);
+  }
+
+  function fixOk(id) { return !S.m[id] || ((S.r[id] || "").trim().length >= MINR && S.p[id] != null); }
+  function spOk(k) { return SP[k].frasi.every(function (f, i) { return fixOk(fid(k, i)); }); }
+  function nMarked(k) { return SP[k].frasi.filter(function (f, i) { return S.m[fid(k, i)]; }).length; }
+
+  function renderSpieg(j) {
+    var k = mie()[j], s = SP[k];
+    var c = el("div", "card");
+    c.appendChild(el("span", "pill", "Spiegazione " + (j + 1) + " di 4"));
+    c.appendChild(progress(10 + j * 22));
+    c.appendChild(el("h2", null, s.titolo));
+    c.appendChild(el("p", "lab", "Domanda posta all'assistente: «" + s.domanda + "»"));
+    c.appendChild(sintesiLink());
+    c.appendChild(el("p", "sub", "Tocca una frase per segnarla come «non torna» (toccala di nuovo per togliere il segno). Per ogni frase segnata: riscrivila corretta e scegli il paragrafo."));
+    var last = j === ORD.length - 1; var next = btn(last ? "Consegna e vedi la correzione" : "Spiegazione successiva"); var err = el("div", "err");
+    function refresh() { next.disabled = sending || !(last ? ORD.every(spOk) : spOk(k)); }
+    s.frasi.forEach(function (f, i) {
+      var id = fid(k, i);
+      var b = btn("", "fr"); b.setAttribute("aria-pressed", S.m[id] ? "true" : "false");
+      b.appendChild(el("span", "st", "Frase " + (i + 1) + (S.m[id] ? " · NON TORNA" : "")));
+      b.appendChild(el("span", null, f.t));
+      b.onclick = function () { S.m[id] = !S.m[id]; persist(); render(); };
+      c.appendChild(b);
+      if (S.m[id]) {
+        var fx = el("div", "fix");
+        fx.appendChild(el("div", "lab", "Frase corretta"));
+        var ta = el("textarea"); ta.maxLength = MAXR; ta.value = S.r[id] || ""; ta.setAttribute("aria-label", "Frase " + (i + 1) + " corretta");
+        ta.oninput = function () { S.r[id] = ta.value; persist(); refresh(); };
+        fx.appendChild(ta); fx.appendChild(counter(ta, MAXR));
+        fx.appendChild(el("div", "lab", "Paragrafo della Sintesi che lo prova"));
+        var sel = el("select"); sel.setAttribute("aria-label", "Paragrafo per la frase " + (i + 1));
+        var o0 = el("option", null, "— scegliete —"); o0.value = ""; sel.appendChild(o0);
+        D.PARAGRAFI.forEach(function (pt, pi) { var o = el("option", null, pt); o.value = String(pi); if (S.p[id] === pi) o.selected = true; sel.appendChild(o); });
+        sel.onchange = function () { S.p[id] = sel.value === "" ? null : Number(sel.value); persist(); refresh(); };
+        fx.appendChild(sel); c.appendChild(fx);
+      }
+    });
+    var nm = nMarked(k);
+    c.appendChild(el("p", "note", nm === 0 ? "Nessuna frase segnata in questa spiegazione. Se dopo il controllo ti sembra tutta corretta, puoi andare avanti." : nm + (nm === 1 ? " frase segnata." : " frasi segnate.") + " Riscrittura: almeno " + MINR + " caratteri."));
+    if (last) c.appendChild(el("p", "warn", "Prima di consegnare puoi tornare alle spiegazioni precedenti. Dopo la consegna le risposte non si modificano più e compare la correzione."));
+    var row = el("div", "row");
+    if (j > 0) { var back = btn("Spiegazione precedente", "btn sec"); back.onclick = function () { S.step = "s" + (j - 1); persist(); render(); }; row.appendChild(back); } else row.appendChild(el("span"));
+    c.appendChild(err);
+    next.onclick = function () {
+      if (!last) { S.step = "s" + (j + 1); persist(); render(); return; }
+      consegna(next, err);
+    };
+    row.appendChild(next); c.appendChild(row); refresh(); app.appendChild(c);
+  }
+
+  function buildAnswers() {
+    var list = [];
+    mie().forEach(function (k) {
+      SP[k].frasi.forEach(function (f, i) {
+        var id = fid(k, i), marked = !!S.m[id];
+        list.push({ id: id, prompt: (SP[k].titolo + " · frase " + (i + 1) + ": " + f.t).slice(0, 300), type: "mc", answer: marked ? "Non torna" : "Torna", correct: marked === f.err });
+        if (marked) {
+          var r = (S.r[id] || "").trim();
+          if (r) list.push({ id: id + "_riscr", prompt: (SP[k].titolo + " · frase " + (i + 1) + ": riscrittura").slice(0, 300), type: "essay", answer: r, correct: null });
+          if (S.p[id] != null) list.push({ id: id + "_par", prompt: (SP[k].titolo + " · frase " + (i + 1) + ": paragrafo").slice(0, 300), type: "mc", answer: D.PARAGRAFI[S.p[id]], correct: f.err ? parOk(f, S.p[id]) : false });
+        }
+      });
+    });
+    return list;
+  }
+  function parOk(f, p) { return p === f.par || (f.parAlt || []).indexOf(p) >= 0; }
+
+  var sending = false, tentativi = 0;
+  function consegna(b, err) {
+    if (sending) return; sending = true; b.disabled = true; err.textContent = "Consegna in corso…";
+    var list = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(list, null)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && window.Addestramento && ++tentativi < 2) { sending = false; b.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e riprova."; return; }
+      S.sub = true; S.ok = window.Addestramento ? (ok !== false) : null; persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var trovati = 0, tot = 0, falsi = 0;
+    mie().forEach(function (k) { SP[k].frasi.forEach(function (f, i) { var m = !!S.m[fid(k, i)]; if (f.err) { tot++; if (m) trovati++; } else if (m) falsi++; }); });
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    c.appendChild(el("h2", null, "La correzione"));
+    c.appendChild(el("p", "score", "Errori trovati: " + trovati + " su " + tot));
+    c.appendChild(el("p", null, "Frasi corrette che hai segnato come sbagliate: " + falsi + ". Non è una colpa: è il dato più utile, perché mostra dove hai corretto «a orecchio» invece che sulla fonte."));
+    if (S.ok === false) c.appendChild(el("p", "warn", "Attenzione: il risultato NON è stato registrato (connessione assente o bloccata). Avvisa il docente."));
+    else if (S.ok === null) c.appendChild(el("p", "warn", "Il sistema di registrazione non si è caricato: il risultato NON è stato registrato. Avvisa il docente."));
+    else c.appendChild(el("p", "note", "Risultato registrato."));
+    app.appendChild(c);
+    mie().forEach(function (k) {
+      var s = SP[k];
+      app.appendChild(el("h2", null, s.titolo));
+      s.frasi.forEach(function (f, i) {
+        var id = fid(k, i), m = !!S.m[id], d = el("div", "card");
+        d.appendChild(el("p", "lbl", "Frase " + (i + 1)));
+        d.appendChild(el("div", "ai", f.t));
+        var cls, lab;
+        if (f.err && m) { cls = "ok"; lab = "Errore trovato."; }
+        else if (f.err && !m) { cls = "ko"; lab = "Errore non trovato: questa frase era sbagliata."; }
+        else if (!f.err && m) { cls = "di"; lab = "Falso allarme: questa frase è corretta. Controlla sulla Sintesi perché ti sembrava sbagliata."; }
+        else { cls = "ok"; lab = "Frase corretta, e non l'hai segnata: giusto."; }
+        d.appendChild(el("div", "res " + cls, lab));
+        if (m) {
+          d.appendChild(el("div", "lbl", "La tua riscrittura"));
+          d.appendChild(el("div", "mine", (S.r[id] || "(nessuna)") + "\nParagrafo indicato: " + (S.p[id] != null ? D.PARAGRAFI[S.p[id]] : "(nessuno)")));
+        }
+        if (f.err) {
+          d.appendChild(el("div", "lbl", "Una formulazione corretta"));
+          d.appendChild(el("p", null, f.giusta));
+          var pp = "Paragrafo: " + D.PARAGRAFI[f.par] + ((f.parAlt || []).length ? " (va bene anche " + f.parAlt.map(function (x) { return D.PARAGRAFI[x]; }).join(", ") + ")" : "");
+          if (m && S.p[id] != null) pp += parOk(f, S.p[id]) ? " · il tuo paragrafo è giusto." : " · il tuo paragrafo non è quello che lo prova.";
+          d.appendChild(el("p", "note", pp));
+          d.appendChild(el("p", null, f.why));
+          if (m) { var ul = el("ul", "chk"); d.appendChild(el("div", "lbl", D.RISCR.model)); D.RISCR.chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul); }
+        } else if (m) {
+          d.appendChild(el("p", "note", "Dove trovarla nella Sintesi: " + D.PARAGRAFI[f.par] + "."));
+        }
+        app.appendChild(d);
+      });
+    });
+  }
+
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: LAB_ID, title: TITLE,
+      salvaRisposte: true,     // decisione esplicita: il docente legge le risposte
+      tempoAtteso: 2100,       // circa 35 minuti per uno studente concentrato
+      caratteriAttesi: 700,    // sette-otto riscritture brevi
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
