@@ -59,7 +59,8 @@
 <script>
 (function () {
   'use strict';
-  var PIN = '1973';
+  // impronta SHA-256 di 'vico-lezioni:' + PIN (il PIN non è scritto in chiaro)
+  var PIN_HASH = '8261386b96b89c8133bc62e7891b2f799ba2e46a90e862546f00d6e9a7962d5d';
   var DOCENTE = 'francescobaldassarre.docente@convittogbvico.edu.it';
   var DB_PREDEFINITO = 'https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app';
   var FIREBASE = {
@@ -90,15 +91,25 @@
 
   // ------------------------------------------------------------------ PIN
   function chiediPin() {
-    main.innerHTML = '<form class="pin"><p>PIN del docente</p><input type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-label="PIN">' +
+    main.innerHTML = '<form class="pin"><p>PIN del docente<br><small>(6 cifre)</small></p><input type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-label="PIN">' +
       '<div class="err"></div><button class="p pieno" type="submit">Entra</button></form>';
     var f = main.querySelector('form'), i = f.querySelector('input');
     i.focus();
     f.onsubmit = function (e) {
       e.preventDefault();
-      if (i.value === PIN) { scriviSS('portale-lezioni:pin', '1'); carica(); }
-      else { f.querySelector('.err').textContent = 'PIN errato'; i.value = ''; i.focus(); }
+      impronta('vico-lezioni:' + i.value).then(function (h) {
+        if (h === PIN_HASH) { scriviSS('portale-lezioni:pin', '1'); carica(); }
+        else { f.querySelector('.err').textContent = 'PIN errato'; i.value = ''; i.focus(); }
+      });
     };
+  }
+
+  function impronta(testo) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(testo)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+        return ('0' + b.toString(16)).slice(-2);
+      }).join('');
+    });
   }
 
   // ------------------------------------------------------------------ elenco lezioni
